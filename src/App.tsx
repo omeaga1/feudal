@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Keybinds } from "./components/Keybinds";
 import { LiveMatch } from "./components/LiveMatch";
 import { MatchupBrowser } from "./components/MatchupBrowser";
 import { dataMeta } from "./lib/gameData";
@@ -35,14 +36,7 @@ export default function App() {
       <main className="content">
         {view === "live" && <LiveMatch />}
         {view === "browser" && <MatchupBrowser />}
-        {view === "keybinds" && (
-          <section className="panel">
-            <h2>Keybinds</h2>
-            <p className="muted">
-              Coming soon: a full-screen view of your own hotkeys, read from your keybinding profile.
-            </p>
-          </section>
-        )}
+        {view === "keybinds" && <Keybinds />}
       </main>
 
       <footer className="footer">
