@@ -2,7 +2,7 @@
 // and adds them to src/data/generated/danger-windows.json: win rate by game
 // length for every civ pairing, kept for the newest patches only.
 //
-// A scheduled GitHub Action runs this every six hours. AoE4 World serves only
+// A scheduled GitHub Action runs this every four hours. AoE4 World serves only
 // about 20 pages of 50 games and asks bulk readers to filter with `since`, so
 // each run reads the ~950 most recently updated games (about 40 minutes of
 // ranked 1v1), one request a second, and keeps the finished ones.
