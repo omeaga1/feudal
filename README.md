@@ -39,6 +39,10 @@ Unit and civilization data lives in `src/data/generated` and comes from [aoe4wor
 npm run data:sync
 ```
 
+### Website
+
+The landing page is plain HTML in `site/`, with no build step. Open `site/index.html` in a browser to preview it. Pushes to `main` that touch `site/` deploy it to GitHub Pages through `.github/workflows/pages.yml`. The download buttons look up the newest GitHub release and link straight to its installer.
+
 ### Project layout
 
 ```
@@ -49,6 +53,7 @@ src/lib/brief.ts        builds the matchup brief for two civs
 src/data/playbooks/     one hand-written playbook per civ
 src/data/counter-overrides.json   fixes for matchups the math gets wrong
 src-tauri/              desktop shell (Rust)
+site/                   landing page (static, deployed to GitHub Pages)
 ```
 
 ### Writing a playbook
