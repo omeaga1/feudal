@@ -92,6 +92,7 @@ export function LiveMatch() {
             opponentName={opponent.name}
             opponentProfileId={opponent.profileId}
             gameBuild={match.patch}
+            mapName={match.map}
           />
         )}
       </div>
