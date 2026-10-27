@@ -160,6 +160,34 @@ p {
   border-color: var(--accent);
 }
 
+.warn {
+  color: var(--accent);
+}
+
+.pill.tempo {
+  margin-left: 0;
+}
+
+.pill.tempo.early-pressure {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.pill.tempo.long-game {
+  color: var(--live);
+  border-color: var(--live);
+}
+
+.landmarks {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.landmarks b {
+  color: var(--ink);
+}
+
 .match-head {
   display: flex;
   flex-wrap: wrap;

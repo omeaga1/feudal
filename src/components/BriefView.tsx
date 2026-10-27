@@ -1,22 +1,87 @@
 import { useEffect, useMemo, useState } from "react";
-import { fetchMatchupStat, type MatchupStat } from "../lib/aoe4world";
+import { fetchCivStats, fetchMatchupStat, fetchRecentGames, type CivStat, type MatchupStat } from "../lib/aoe4world";
 import { buildBrief } from "../lib/brief";
-import { AGE_NAMES } from "../lib/gameData";
+import { AGE_NAMES, getCiv } from "../lib/gameData";
 import { appFetch } from "../lib/http";
+import { summarizePlayer, type PlayerProfile } from "../lib/opponent";
+import { landmarkChoices } from "../lib/scouting";
+import { civTempo, TEMPO_LABELS } from "../lib/tempo";
 
 interface Props {
   myCivId: string;
   enemyCivId: string;
   opponentName?: string;
+  /** Set during a live match to show the enemy player's habits. */
+  opponentProfileId?: number;
+}
+
+// Civ stats change slowly, so fetch them once per app session.
+let civStatsRequest: Promise<CivStat[]> | null = null;
+function loadCivStats(): Promise<CivStat[]> {
+  civStatsRequest ??= fetchCivStats(appFetch).catch((err) => {
+    civStatsRequest = null;
+    throw err;
+  });
+  return civStatsRequest;
+}
+
+function percent(value: number): string {
+  return `${Math.round(value * 100)}%`;
+}
+
+function PlayerHabits({ name, profile }: { name: string; profile: PlayerProfile }) {
+  const top = profile.civs.slice(0, 3);
+  return (
+    <section className="panel">
+      <h3>{name}'s habits</h3>
+      <p>
+        Won {percent(profile.winRate)} of their last {profile.games} ranked games. Most played:{" "}
+        {top.map((c) => `${getCiv(c.civ)?.name ?? c.civ} ${percent(c.share)} (wins ${percent(c.winRate)})`).join(", ")}.
+      </p>
+      <p className={profile.shortGameShare >= 0.4 ? "warn" : undefined}>
+        {percent(profile.shortGameShare)} of their games end before 15 minutes
+        {profile.shortGameWinRate !== null && <>, and they win {percent(profile.shortGameWinRate)} of those</>}.
+        {profile.medianDuration !== null && <> Their games usually last about {formatMinutes(profile.medianDuration)}.</>}
+      </p>
+    </section>
+  );
 }
 
 function formatMinutes(seconds: number): string {
   return `${Math.round(seconds / 60)} min`;
 }
 
-export function BriefView({ myCivId, enemyCivId, opponentName }: Props) {
+export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId }: Props) {
   const brief = useMemo(() => buildBrief(myCivId, enemyCivId), [myCivId, enemyCivId]);
+  const scouting = useMemo(() => {
+    const enemy = getCiv(enemyCivId);
+    return enemy ? landmarkChoices(enemy) : [];
+  }, [enemyCivId]);
   const [stat, setStat] = useState<MatchupStat | null | "unavailable">(null);
+  const [civStats, setCivStats] = useState<CivStat[] | null>(null);
+  const [profile, setProfile] = useState<PlayerProfile | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadCivStats()
+      .then((s) => !cancelled && setCivStats(s))
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    setProfile(null);
+    if (opponentProfileId === undefined) return;
+    fetchRecentGames(appFetch, opponentProfileId)
+      .then((games) => !cancelled && setProfile(summarizePlayer(games, opponentProfileId)))
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [opponentProfileId]);
 
   useEffect(() => {
     let cancelled = false;
@@ -31,6 +96,7 @@ export function BriefView({ myCivId, enemyCivId, opponentName }: Props) {
 
   if (!brief) return <section className="panel error">No data for this matchup yet.</section>;
   const { me, enemy, enemyPlaybook } = brief;
+  const tempo = civStats ? civTempo(enemy.id, civStats) : null;
 
   return (
     <div className="stack">
@@ -49,8 +115,40 @@ export function BriefView({ myCivId, enemyCivId, opponentName }: Props) {
         ) : (
           <p className="muted">Loading matchup stats from AoE4 World…</p>
         )}
+        {tempo && (
+          <p>
+            <span className={`pill tempo ${tempo.tempo}`}>{TEMPO_LABELS[tempo.tempo]}</span>{" "}
+            <span className="muted">
+              {enemy.name} games last about {formatMinutes(tempo.medianDuration)}, against{" "}
+              {formatMinutes(tempo.ladderMedian)} for a typical civ.
+            </span>
+          </p>
+        )}
         <p className="muted">{enemyPlaybook?.summary ?? enemy.description}</p>
       </section>
+
+      {profile && <PlayerHabits name={opponentName ?? "Your opponent"} profile={profile} />}
+
+      {scouting.length > 0 && (
+        <section className="panel">
+          <h3>What to scout for</h3>
+          <p className="muted">Each age-up, {enemy.name} builds one of these landmarks. Spot which one to read their plan.</p>
+          <div className="stack">
+            {scouting.map((choice) => (
+              <div key={choice.advancingTo}>
+                <b>Going to {AGE_NAMES[choice.advancingTo]}</b>
+                <ul className="landmarks">
+                  {choice.options.map((l) => (
+                    <li key={l.id}>
+                      <b>{l.name}:</b> {l.description.replace(/\n/g, " ")}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {enemyPlaybook && enemyPlaybook.spikes.length > 0 && (
         <section className="panel">

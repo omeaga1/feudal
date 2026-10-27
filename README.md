@@ -11,6 +11,9 @@ Feudal never touches the game. It doesn't read game memory, game files, network 
 | **Live match**: link your AoE4 World profile once, and the brief opens on its own when a game starts | Working |
 | **Matchups**: pick any two civs and read the brief outside a game | Working |
 | **Counters**: computed from unit stats (bonus damage, armor, HP, cost) with a small override list | Working |
+| **Enemy player habits**: their most-played civs, win rate, and how often their games end before 15 minutes | Working |
+| **Tempo tag**: "expect early pressure" or "expect a long game", from how long each civ's ranked games last | Working |
+| **What to scout for**: the enemy civ's landmark options at each age-up, so one look at their landmark tells you their plan | Working |
 | **Civ playbooks**: hand-written power spikes and answers per civ | Format done, HRE draft only |
 | **Danger windows**: win rate by game length per matchup, recomputed each patch | Planned |
 | **Keybinds**: a glanceable view of your own hotkeys | Planned |

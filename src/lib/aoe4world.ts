@@ -20,6 +20,8 @@ export interface ApiPlayer {
 export interface ApiGame {
   game_id: number;
   started_at: string;
+  /** Seconds; null while the game is running. */
+  duration?: number | null;
   map: string;
   kind: string;
   leaderboard: string;
@@ -82,6 +84,34 @@ async function getJson<T>(fetchFn: FetchFn, path: string): Promise<T> {
 export async function fetchLastGame(fetchFn: FetchFn, profileId: number): Promise<Match | null> {
   const game = await getJson<ApiGame>(fetchFn, `/players/${profileId}/games/last`);
   return parseMatch(game, profileId);
+}
+
+/** A player's most recent finished and ongoing games, newest first. */
+export async function fetchRecentGames(
+  fetchFn: FetchFn,
+  profileId: number,
+  leaderboard = "rm_solo",
+  limit = 50,
+): Promise<ApiGame[]> {
+  const body = await getJson<{ games: ApiGame[] }>(
+    fetchFn,
+    `/players/${profileId}/games?leaderboard=${leaderboard}&limit=${limit}`,
+  );
+  return body.games;
+}
+
+export interface CivStat {
+  civilization: string;
+  win_rate: number;
+  pick_rate: number;
+  games_count: number;
+  duration_median: number;
+}
+
+/** Ranked 1v1 win rate, pick rate and median game length for every civ. */
+export async function fetchCivStats(fetchFn: FetchFn): Promise<CivStat[]> {
+  const body = await getJson<CivStat[] | { data: CivStat[] }>(fetchFn, "/stats/rm_solo/civilizations");
+  return Array.isArray(body) ? body : body.data;
 }
 
 export interface MatchupStat {
