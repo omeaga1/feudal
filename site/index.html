@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feudal: a free matchup companion for Age of Empires IV</title>
+    <meta
+      name="description"
+      content="Feudal is a free Windows companion for Age of Empires IV. It detects both civs when your ranked game starts and opens a matchup brief: counters, danger windows and what to scout for. It never touches the game."
+    />
+    <meta property="og:title" content="Feudal: know the matchup before the first villager" />
+    <meta
+      property="og:description"
+      content="Free AoE4 companion. Automatic matchup brief for every civ, using only public AoE4 World data. Ban-safe."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="icon.png" />
+    <meta name="theme-color" content="#14171c" />
+    <link rel="icon" href="favicon.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <header class="nav">
+      <a class="brand" href="#top"><img src="icon.png" alt="" width="28" height="28" />Feudal</a>
+      <nav>
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#safe">Ban-safe</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="btn btn-small" data-download href="https://github.com/omeaga1/feudal/releases/latest">Download</a>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Free companion for Age of Empires IV</p>
+          <h1>Know the matchup before your first villager.</h1>
+          <p class="lede">
+            When your ranked or quick-match game starts, Feudal spots both civilizations and opens a brief: when the
+            enemy is dangerous, what beats their units, and what to scout for. You never have to click it mid-game.
+          </p>
+          <div class="cta">
+            <a class="btn" data-download href="https://github.com/omeaga1/feudal/releases/latest">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path fill="currentColor" d="M3 5.5 10.5 4.5v7H3zM11.5 4.3 21 3v8.5h-9.5zM3 12.5h7.5v7L3 18.5zM11.5 12.5H21V21l-9.5-1.3z" />
+              </svg>
+              <span data-download-label>Download for Windows</span>
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/omeaga1/feudal">View source</a>
+          </div>
+          <p class="fine" data-release-note>Windows 10 and 11. Free forever, no ads, no account.</p>
+        </div>
+
+        <figure class="brief" aria-label="Example matchup brief">
+          <div class="brief-top">
+            <span class="live-dot"></span>
+            <span>Live: ranked 1v1, Dry Arabia</span>
+          </div>
+          <div class="brief-civs">
+            <div>
+              <span class="label">You</span>
+              <strong>English</strong>
+            </div>
+            <span class="vs">vs</span>
+            <div class="right">
+              <span class="label">Enemy</span>
+              <strong>French</strong>
+            </div>
+          </div>
+          <div class="tag tag-danger">Expect early pressure</div>
+          <div class="brief-block">
+            <h3>Danger window</h3>
+            <div class="bar" role="img" aria-label="Enemy strongest from minute 6 to 12">
+              <span style="left: 22%; width: 26%"></span>
+            </div>
+            <div class="bar-scale"><span>0</span><span>10</span><span>20</span><span>30 min</span></div>
+          </div>
+          <div class="brief-block">
+            <h3>Their units, your answers</h3>
+            <ul class="pairs">
+              <li><span>Royal Knight</span><span>Spearman, Longbow behind palings</span></li>
+              <li><span>Arbalétrier</span><span>Man-at-Arms, Horseman</span></li>
+              <li><span>Cannon</span><span>Knights on the flank</span></li>
+            </ul>
+          </div>
+          <div class="brief-block">
+            <h3>Scout for</h3>
+            <p>Feudal landmark: <b>School of Cavalry</b> means knights are coming. Wall the gold.</p>
+          </div>
+          <figcaption>Illustration of a brief. Real briefs come from live game data.</figcaption>
+        </figure>
+      </section>
+
+      <section id="how" class="section">
+        <h2>How it works</h2>
+        <ol class="steps">
+          <li>
+            <span class="step-num">1</span>
+            <h3>Link your profile once</h3>
+            <p>Search your name and pick your AoE4 World profile. That's the only setup.</p>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <h3>Queue up like normal</h3>
+            <p>Leave Feudal open on a second screen or in the background. It checks for a new match every 15 seconds.</p>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <h3>Read the brief on the loading screen</h3>
+            <p>Both civs are detected and the brief opens on its own. Glance at it, then go play.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="features" class="section">
+        <h2>Everything in the brief</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>Automatic matchup brief</h3>
+            <p>Your civ and the enemy's, detected the moment the match goes live. No typing, no alt-tab clicking.</p>
+          </article>
+          <article class="card">
+            <h3>Counters from real unit stats</h3>
+            <p>Bonus damage, armor, HP and cost for every unit, so you know what to build from your own roster.</p>
+          </article>
+          <article class="card">
+            <h3>Civ playbooks</h3>
+            <p>Power spikes, common openings and how to answer them, written for every civilization.</p>
+          </article>
+          <article class="card">
+            <h3>What to scout for</h3>
+            <p>Each landmark the enemy can age up with, and what it tells you about their plan.</p>
+          </article>
+          <article class="card">
+            <h3>Enemy player habits</h3>
+            <p>Their most-played civs, win rate, and how often their games end before 15 minutes.</p>
+          </article>
+          <article class="card">
+            <h3>Tempo tag</h3>
+            <p>"Expect early pressure" or "expect a long game", from how long that civ's ranked games last.</p>
+          </article>
+          <article class="card">
+            <h3>Matchup browser</h3>
+            <p>Pick any two civs and read the brief outside a game, to prep or to learn a new civ.</p>
+          </article>
+          <article class="card soon">
+            <h3>Keybind reference <span class="pill">Coming</span></h3>
+            <p>A glanceable sheet of your own hotkeys for when you're learning a new grid.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="safe" class="section safe">
+        <div>
+          <h2>It never touches the game.</h2>
+          <p class="lede">
+            Feudal doesn't read game memory, game files, network traffic or your screen. It can't trip anti-cheat or
+            put a ranked account at risk. Everything it knows about a live match comes from the public
+            <a href="https://aoe4world.com">AoE4 World</a> API, the same data on your loading screen and public profile.
+          </p>
+        </div>
+        <ul class="checks">
+          <li><span class="no">✕</span>No memory reading or DLL injection</li>
+          <li><span class="no">✕</span>No overlays or DirectX hooks</li>
+          <li><span class="no">✕</span>No screen capture or OCR</li>
+          <li><span class="no">✕</span>No packet sniffing or game file edits</li>
+          <li><span class="yes">✓</span>Public AoE4 World data only</li>
+          <li><span class="yes">✓</span>Open source, so you can check</li>
+        </ul>
+      </section>
+
+      <section id="civs" class="section">
+        <h2>Every civ. Every matchup.</h2>
+        <p class="muted center">
+          All 23 civilizations and variants, so all 529 pairings. Unit data refreshes from the game files every patch.
+        </p>
+        <ul class="civs">
+          <li>Abbasid Dynasty</li>
+          <li>Ayyubids</li>
+          <li>Byzantines</li>
+          <li>Chinese</li>
+          <li>Delhi Sultanate</li>
+          <li>English</li>
+          <li>French</li>
+          <li>Golden Horde</li>
+          <li>Holy Roman Empire</li>
+          <li>House of Lancaster</li>
+          <li>Japanese</li>
+          <li>Jeanne d'Arc</li>
+          <li>Jin Dynasty</li>
+          <li>Knights Templar</li>
+          <li>Macedonian Dynasty</li>
+          <li>Malians</li>
+          <li>Mongols</li>
+          <li>Order of the Dragon</li>
+          <li>Ottomans</li>
+          <li>Rus</li>
+          <li>Sengoku Daimyo</li>
+          <li>Tughlaq Dynasty</li>
+          <li>Zhu Xi's Legacy</li>
+        </ul>
+      </section>
+
+      <section id="faq" class="section faq">
+        <h2>Questions</h2>
+        <details>
+          <summary>Can this get me banned?</summary>
+          <p>
+            Feudal has no connection to the game at all. It's a separate window that reads public match data from AoE4
+            World, the same way the AoE4 World website does. There's nothing for anti-cheat to see.
+          </p>
+        </details>
+        <details>
+          <summary>Which games does it detect?</summary>
+          <p>
+            Ranked and quick-match games, which AoE4 World tracks. For custom lobbies or games against AI, use the
+            matchup browser and pick both civs yourself.
+          </p>
+        </details>
+        <details>
+          <summary>Does it work mid-game?</summary>
+          <p>
+            It's built for the loading screen. The brief appears on its own and doesn't need clicks during a match, so
+            you can keep your hands on the game.
+          </p>
+        </details>
+        <details>
+          <summary>Is it really free?</summary>
+          <p>Yes. No ads, no account, no paid tier. Microsoft's content rules require fan tools like this to stay free.</p>
+        </details>
+        <details>
+          <summary>Windows says the installer is from an unknown publisher.</summary>
+          <p>
+            Feudal isn't code-signed yet, so SmartScreen may warn you. Click "More info", then "Run anyway". The
+            installer is built in the open by GitHub Actions from the source code.
+          </p>
+        </details>
+      </section>
+
+      <section class="section final">
+        <h2>Queue up with a plan.</h2>
+        <a class="btn" data-download href="https://github.com/omeaga1/feudal/releases/latest">
+          <span data-download-label>Download for Windows</span>
+        </a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Age of Empires IV © Microsoft Corporation. Feudal was created under Microsoft's
+        "<a href="https://www.xbox.com/en-US/developers/rules">Game Content Usage Rules</a>" using assets from Age of
+        Empires IV, and it is not endorsed by or affiliated with Microsoft.
+      </p>
+      <p>
+        Live match data from <a href="https://aoe4world.com">AoE4 World</a>. Unit data from
+        <a href="https://github.com/aoe4world/data">aoe4world/data</a>. Thanks to the AoE4 World team.
+      </p>
+    </footer>
+
+    <script src="main.js" defer></script>
+  </body>
+</html>
