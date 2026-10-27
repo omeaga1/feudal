@@ -29,6 +29,10 @@ npm test              # unit tests
 npm run tauri build   # build the Windows installer
 ```
 
+### Releasing
+
+Bump the version in `package.json`, `src-tauri/tauri.conf.json` and `src-tauri/Cargo.toml`, then push a matching tag (`git tag v0.2.0 && git push origin v0.2.0`). The `Release` workflow builds the installers on Windows and publishes them as a GitHub release, which the website's download button and the app's update notice both pick up. The installer isn't code-signed yet, so Windows SmartScreen asks for confirmation the first time.
+
 `npm run dev` runs the UI in a plain browser. The matchup browser works there, but live calls to AoE4 World may be blocked by the browser's CORS rules. The desktop app sends them through Tauri's HTTP plugin instead.
 
 ### Game data

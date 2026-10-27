@@ -36,6 +36,16 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "publisher": "Feudal",
+    "category": "Game",
+    "shortDescription": "Free Age of Empires IV companion",
+    "longDescription": "Automatic matchup briefs, danger windows, map notes and a keybind reference for Age of Empires IV. Not endorsed by or affiliated with Microsoft.",
+    "copyright": "Feudal is free software. Age of Empires IV \u00a9 Microsoft Corporation.",
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser"
+      }
+    }
   }
 }
