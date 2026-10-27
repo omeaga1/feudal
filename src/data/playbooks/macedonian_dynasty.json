@@ -1,0 +1,60 @@
+{
+  "civ": "macedonian_dynasty",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Byzantine variant that mints Silver to upgrade Varangian units at Varangian Arsenals. Early Varangian Guard in Feudal and free reinforcements from the Warcamp.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Early Varangian Guard",
+      "detail": "Early Varangian Guards come in Feudal and hit very hard.",
+      "answer": "Archers and towers; avoid melee fights."
+    },
+    {
+      "age": 3,
+      "label": "Varangian upgrades",
+      "detail": "Silver buys three tiers of Varangian upgrades.",
+      "answer": "Hit them before the Silver upgrades stack up."
+    }
+  ],
+  "scout": [
+    "Varangian Arsenals near Mining Camps",
+    "Varangian Warcamp",
+    "Early Varangian Guards in Feudal"
+  ],
+  "pairings": [
+    {
+      "units": "Varangian Guard + Bogmaðr",
+      "why": "Heavy infantry with archers."
+    },
+    {
+      "units": "Riddari + Atgeirmaðr",
+      "why": "Cavalry with polearms."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Upgraded Varangian army."
+    },
+    {
+      "kind": "economy",
+      "detail": "Silver economy."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

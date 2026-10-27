@@ -1,0 +1,66 @@
+{
+  "civ": "abbasid_dynasty",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Tech and camel civ that ages up through House of Wisdom wings instead of landmarks. Buildings packed around the House of Wisdom push it into a Golden Age that keeps growing its economy.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Wing choice sets the plan",
+      "detail": "Abbasid reach Feudal without pulling villagers off work. The first wing tells you their plan: Economy for a boom, Military for early pressure, Culture for upgrades.",
+      "answer": "Scout the House of Wisdom right after they age up. Against an Economy wing, punish with early pressure on their berries and wood lines."
+    },
+    {
+      "age": 3,
+      "label": "Camel army",
+      "detail": "Camel Archers and Camel Riders weaken nearby horse cavalry, and Ghulams join in Castle Age. Knight and horseman armies trade badly into them.",
+      "answer": "Answer camels with Spearmen, Crossbows and Men-at-Arms rather than horse cavalry."
+    },
+    {
+      "age": 4,
+      "label": "Golden Age economy",
+      "detail": "The Golden Age has five tiers in the current patch, so a game left alone into Imperial favors the Abbasid economy.",
+      "answer": "Pressure before the Golden Age stacks up and target buildings around the House of Wisdom."
+    }
+  ],
+  "scout": [
+    "Which House of Wisdom wing they pick first",
+    "Houses and buildings clustered tightly around the House of Wisdom, which means a Golden Age push",
+    "Mills on berries (Orchards); Abbasid cannot gather boar, so berries are their main early food"
+  ],
+  "pairings": [
+    {
+      "units": "Spearmen + Archers",
+      "why": "The standard Feudal pair that covers cavalry raids and trades well against infantry."
+    },
+    {
+      "units": "Camel Archers + Ghulams",
+      "why": "Ranged damage behind a sturdy melee line, and the camels blunt enemy horse cavalry."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "economy",
+      "detail": "Outscale through Golden Age bonuses and cheap traders."
+    },
+    {
+      "kind": "trade",
+      "detail": "Land traders are a third cheaper, so long trade routes pay off on open maps."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

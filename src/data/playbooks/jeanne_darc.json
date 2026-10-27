@@ -1,0 +1,60 @@
+{
+  "civ": "jeanne_darc",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "French variant where Jeanne d'Arc levels up as a hero. Royal Knights in Feudal, cheap economic upgrades and strong trade.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Jeanne levels up",
+      "detail": "Jeanne starts as a villager and becomes a fighter in Feudal. She gets much stronger as she levels.",
+      "answer": "Kill or zone Jeanne early before she gains levels."
+    },
+    {
+      "age": 3,
+      "label": "Champions and Riders",
+      "detail": "Jeanne's Champions and Riders arrive with her Castle Age forms.",
+      "answer": "Focus Jeanne; her companions are weaker without her."
+    }
+  ],
+  "scout": [
+    "Jeanne's path (fighter or ranged)",
+    "Royal Knights in Feudal",
+    "Trade posts revealed on the minimap"
+  ],
+  "pairings": [
+    {
+      "units": "Royal Knights + Jeanne",
+      "why": "Heavy cavalry led by the hero."
+    },
+    {
+      "units": "Arbalétriers + Jeanne's Champions",
+      "why": "Ranged support with heavy infantry."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Hero-led army pushes."
+    },
+    {
+      "kind": "trade",
+      "detail": "Cheap trade and strong traders."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

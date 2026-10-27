@@ -1,0 +1,60 @@
+{
+  "civ": "tughlaq_dynasty",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Elephant and fort civ. Worker Elephants are mobile drop-offs, research finishes almost instantly but costs more, and Tughlaqabad Forts come in Feudal.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Feudal forts",
+      "detail": "Tughlaqabad Forts act as keeps from Feudal and unlock Governors.",
+      "answer": "Don't attack into the forts; expand and raid elsewhere."
+    },
+    {
+      "age": 3,
+      "label": "Ballista Elephants",
+      "detail": "Ballista Elephants are cheaper and faster to train this patch.",
+      "answer": "Spearmen and crossbows."
+    }
+  ],
+  "scout": [
+    "Worker Elephants at resources",
+    "Tughlaqabad Forts",
+    "Which Governor they pick"
+  ],
+  "pairings": [
+    {
+      "units": "War Elephants + Ballista Elephants",
+      "why": "Heavy melee with ranged elephants."
+    },
+    {
+      "units": "Raider Elephants + Healer Elephants",
+      "why": "Raiding with sustain."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Elephant push."
+    },
+    {
+      "kind": "defense",
+      "detail": "Forts across the map."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

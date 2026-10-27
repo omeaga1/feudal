@@ -1,0 +1,66 @@
+{
+  "civ": "byzantines",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Defensive economy civ built on Cisterns and Aqueducts. Olive Oil hires mercenaries from other civs, and Cataphracts and Greek Fire units make its Castle Age army strong.",
+  "spikes": [
+    {
+      "age": 1,
+      "label": "Limitanei early",
+      "detail": "Limitanei spearmen are available from the Dark Age and can form a shield wall.",
+      "answer": "Don't fight them head on with melee; archers and cavalry raids on their villagers work better."
+    },
+    {
+      "age": 2,
+      "label": "Mercenaries from Olive Oil",
+      "detail": "From Feudal they can hire other civs' unique units with Olive Oil, so their army mix can surprise you.",
+      "answer": "Scout the Mercenary House and adapt to what comes out of it."
+    },
+    {
+      "age": 3,
+      "label": "Cataphracts and Greek Fire",
+      "detail": "Cataphracts trample through infantry and Cheirosiphons spray Greek Fire. Their Castle Age army hits very hard.",
+      "answer": "Spearmen in big numbers, crossbows and focus-firing the Cheirosiphons. Avoid clumping."
+    }
+  ],
+  "scout": [
+    "Cisterns and Aqueduct lines, which mean they plan to stay and boom",
+    "Workers on Olive Groves, berries and fish, which fund mercenaries",
+    "Mercenary House location and which units it trains"
+  ],
+  "pairings": [
+    {
+      "units": "Limitanei + Archers",
+      "why": "A tanky front line that lets archers shoot freely."
+    },
+    {
+      "units": "Cataphracts + Varangian Guard",
+      "why": "Shock cavalry and heavy infantry together overwhelm a mixed army."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "defense",
+      "detail": "Strong cistern-boosted base that is hard to break."
+    },
+    {
+      "kind": "army",
+      "detail": "Castle Age timing with Cataphracts and Greek Fire."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

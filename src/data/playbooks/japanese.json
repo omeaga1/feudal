@@ -1,0 +1,66 @@
+{
+  "civ": "japanese",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Samurai civ with Bannermen that boost nearby units and Town Centers that can be upgraded. Strong infantry and a good late game.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Bannermen and Onna-Bugeisha",
+      "detail": "Bannermen boost nearby units, and Onna-Bugeisha are cheap anti-cavalry infantry.",
+      "answer": "Kill the Bannermen first."
+    },
+    {
+      "age": 3,
+      "label": "Monks or priests",
+      "detail": "Their Castle landmark picks Buddhist Monks or Shinto Priests.",
+      "answer": "Scout which one and plan around it."
+    },
+    {
+      "age": 4,
+      "label": "Ozutsu and Atakebune",
+      "detail": "Imperial gunpowder siege and a heavy warship on water maps.",
+      "answer": "Take fights before Imperial if you can."
+    }
+  ],
+  "scout": [
+    "Town Center upgrades",
+    "Which Castle landmark they build",
+    "Number of Bannermen"
+  ],
+  "pairings": [
+    {
+      "units": "Samurai + Yumi Ashigaru",
+      "why": "Tough melee with archers behind."
+    },
+    {
+      "units": "Onna-Bugeisha + Mounted Samurai",
+      "why": "Cheap spears plus heavy cavalry."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Strong infantry pushes boosted by Bannermen."
+    },
+    {
+      "kind": "economy",
+      "detail": "Upgraded farm Town Centers late game."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

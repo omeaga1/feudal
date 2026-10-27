@@ -1,0 +1,60 @@
+{
+  "civ": "sengoku_daimyo",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Japanese variant with three clans that boost ranged infantry, melee infantry or cavalry. The Matsuri is an early market with food-gathering Yatai.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Clan choice",
+      "detail": "Daimyo Estates are dedicated to a clan that boosts one unit type.",
+      "answer": "Scout which clan and counter it."
+    },
+    {
+      "age": 3,
+      "label": "Tanegashima Ashigaru",
+      "detail": "Gunpowder infantry and Ikko-ikki monks join in Castle.",
+      "answer": "Cavalry against the gunners."
+    }
+  ],
+  "scout": [
+    "Clan dedicated at Daimyo Estates",
+    "Matsuri and Yatai",
+    "Kanabo Samurai or Yari Cavalry in Feudal"
+  ],
+  "pairings": [
+    {
+      "units": "Yumi Ashigaru + Kanabo Samurai",
+      "why": "Archers behind heavy melee."
+    },
+    {
+      "units": "Tanegashima Ashigaru + Yari Cavalry",
+      "why": "Gunpowder infantry with cavalry."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "A clan-boosted army."
+    },
+    {
+      "kind": "economy",
+      "detail": "Matsuri food and trade."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

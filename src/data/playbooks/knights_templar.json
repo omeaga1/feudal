@@ -1,0 +1,60 @@
+{
+  "civ": "knights_templar",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Heavy-unit civ that ages up through Commanderies. Pilgrims make gold at Sacred Sites, and Fortresses come in Feudal.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Commanderie units",
+      "detail": "Each Commanderie unlocks units like Hospitaller Knights or Serjeants.",
+      "answer": "Scout which Commanderie they pick."
+    },
+    {
+      "age": 3,
+      "label": "Heavy army",
+      "detail": "Templar Brothers, Genoese Crossbowmen and Heavy Spearmen join in Castle.",
+      "answer": "Mass ranged units and avoid head-on melee."
+    }
+  ],
+  "scout": [
+    "Which Commanderie they pick on each age up",
+    "Pilgrims walking to Sacred Sites",
+    "Fortresses built in Feudal"
+  ],
+  "pairings": [
+    {
+      "units": "Templar Brothers + Genoese Crossbowmen",
+      "why": "Heavy cavalry with anti-armor ranged support."
+    },
+    {
+      "units": "Serjeants + Hospitaller Knights",
+      "why": "Durable infantry with healing cavalry."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Heavy-unit pushes."
+    },
+    {
+      "kind": "sacred_sites",
+      "detail": "Pilgrims make gold from Sacred Sites."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

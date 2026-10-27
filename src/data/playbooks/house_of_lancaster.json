@@ -1,0 +1,60 @@
+{
+  "civ": "house_of_lancaster",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "English variant built on Manors that passively make food and wood. Strong ranged infantry and shock cavalry, with keeps that spawn Earl's Guards.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Manors and Yeomen",
+      "detail": "Manors give passive income from Feudal, and Yeomen and Hobelars arrive early.",
+      "answer": "Raid the Manors and villagers before the passive income stacks up."
+    },
+    {
+      "age": 3,
+      "label": "Earl's Guard keeps",
+      "detail": "Each keep gives three free Earl's Guards, and active keeps boost Earl's Guards and Demilancers.",
+      "answer": "Don't fight near their keeps; bring siege."
+    }
+  ],
+  "scout": [
+    "Number of Manors",
+    "Sheep spawning at new Town Centers",
+    "Lancaster Castle, which now garrisons eight units"
+  ],
+  "pairings": [
+    {
+      "units": "Yeomen + Hobelars",
+      "why": "Ranged infantry with fast cavalry to clean up."
+    },
+    {
+      "units": "Earl's Guards + Yeomen",
+      "why": "Heavy infantry with ranged support."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "economy",
+      "detail": "Passive Manor income outscales."
+    },
+    {
+      "kind": "defense",
+      "detail": "Keeps backed by Earl's Guards."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

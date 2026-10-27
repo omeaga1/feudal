@@ -1,0 +1,60 @@
+{
+  "civ": "zhu_xis_legacy",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Chinese variant with strong Imperial Officials and many unique technologies. Early Palace Guards, Zhuge Nus and Grenadiers without needing dynasties.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Early Palace Guard",
+      "detail": "Early Palace Guards arrive in Feudal.",
+      "answer": "Archers and towers."
+    },
+    {
+      "age": 3,
+      "label": "Early Grenadiers",
+      "detail": "Early Grenadiers join in Castle without a dynasty.",
+      "answer": "Spread out and use cavalry."
+    }
+  ],
+  "scout": [
+    "Which landmarks they build",
+    "Imperial Officials collecting tax",
+    "Village from the Tang Dynasty"
+  ],
+  "pairings": [
+    {
+      "units": "Palace Guards + Zhuge Nu",
+      "why": "Strong melee with fast crossbows."
+    },
+    {
+      "units": "Grenadiers + Palace Guards",
+      "why": "Area damage with melee in front."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "economy",
+      "detail": "Tax gold and technology."
+    },
+    {
+      "kind": "army",
+      "detail": "Late gunpowder army."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

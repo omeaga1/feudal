@@ -1,0 +1,66 @@
+{
+  "civ": "mongols",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Nomadic raiding civ. Every building can pack up and move, stables come in the Dark Age, and Stone doubles unit production.",
+  "spikes": [
+    {
+      "age": 1,
+      "label": "Dark Age raids",
+      "detail": "Stables in the Dark Age and fast-training horsemen mean early raids.",
+      "answer": "Spearmen early and keep villagers close to the Town Center."
+    },
+    {
+      "age": 2,
+      "label": "Mangudai",
+      "detail": "Mangudai are hard to catch and shoot while moving. Their moving attack was slowed this patch.",
+      "answer": "Archers and towers; don't chase."
+    },
+    {
+      "age": 3,
+      "label": "Double production",
+      "detail": "Stone pays for doubled units and advanced upgrades.",
+      "answer": "Deny their stone and Ovoos."
+    }
+  ],
+  "scout": [
+    "Ovoo on stone",
+    "Outposts near their army paths",
+    "Ger moving location"
+  ],
+  "pairings": [
+    {
+      "units": "Mangudai + Keshik",
+      "why": "Ranged cavalry with heavy cavalry."
+    },
+    {
+      "units": "Horsemen + Spearmen",
+      "why": "Cheap raiding and screening."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Raids that cripple the enemy economy."
+    },
+    {
+      "kind": "economy",
+      "detail": "Double villagers with stone."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

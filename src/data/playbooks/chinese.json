@@ -1,0 +1,66 @@
+{
+  "civ": "chinese",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Dynasty civ that builds both landmarks of an age to unlock bonuses. Song Dynasty speeds up villager production, and Imperial Officials collect tax gold. Very strong late with gunpowder.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Song Dynasty boom",
+      "detail": "Building both Feudal landmarks puts them in the Song Dynasty and speeds up villager production.",
+      "answer": "If you see two Feudal landmarks, they are greedy. Hit them early."
+    },
+    {
+      "age": 3,
+      "label": "Zhuge Nu and Nest of Bees",
+      "detail": "Zhuge Nus shred light units and Nest of Bees siege deals huge area damage in Castle Age.",
+      "answer": "Spread out, and send cavalry to snipe the Nest of Bees."
+    },
+    {
+      "age": 4,
+      "label": "Gunpowder and Grenadiers",
+      "detail": "Grenadiers and handcannons make their Imperial army one of the strongest in the game.",
+      "answer": "Close the game before Imperial or out-tech them in the late game."
+    }
+  ],
+  "scout": [
+    "Two Feudal landmarks means Song Dynasty and a boom",
+    "Barbican of the Sun means a defensive, fast Castle plan",
+    "Many villagers being produced from more than one Town Center"
+  ],
+  "pairings": [
+    {
+      "units": "Zhuge Nu + Spearmen",
+      "why": "Fast-firing crossbows behind cheap spearmen in Feudal."
+    },
+    {
+      "units": "Grenadiers + Palace Guards",
+      "why": "Area gunpowder damage with strong melee in front late game."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "economy",
+      "detail": "Outboom through Song Dynasty villagers and tax gold."
+    },
+    {
+      "kind": "army",
+      "detail": "Imperial gunpowder army."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

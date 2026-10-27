@@ -1,0 +1,66 @@
+{
+  "civ": "french",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Cavalry and trade civ. Royal Knights arrive in Feudal, the Town Center works faster each age, and economic upgrades are cheap.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Royal Knight rush",
+      "detail": "Royal Knights in Feudal hit hard on the charge and raid villagers.",
+      "answer": "Spearmen and a tower near your gold. Keep villagers close to safe spots."
+    },
+    {
+      "age": 3,
+      "label": "Arbalétriers and knights",
+      "detail": "Arbalétriers and Royal Knights together beat most mixed armies in Castle.",
+      "answer": "Spearmen and Men-at-Arms, with a few crossbows."
+    },
+    {
+      "age": 4,
+      "label": "Royal Cannons",
+      "detail": "Royal Cannons and Ribauldequins are cheaper in gold this patch and break armies and buildings.",
+      "answer": "Kill the siege with cavalry or Men-at-Arms."
+    }
+  ],
+  "scout": [
+    "School of Cavalry means fast knight production",
+    "Guild Hall or trade posts means trade",
+    "Royal Knights at your base by Feudal"
+  ],
+  "pairings": [
+    {
+      "units": "Royal Knights + Archers",
+      "why": "Knights pin units while archers shoot."
+    },
+    {
+      "units": "Arbalétriers + Royal Knights",
+      "why": "A strong Castle Age mix."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Knight pressure from Feudal on."
+    },
+    {
+      "kind": "trade",
+      "detail": "Strong traders late game."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

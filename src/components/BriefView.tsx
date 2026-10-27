@@ -4,6 +4,7 @@ import { buildBrief } from "../lib/brief";
 import { AGE_NAMES, getCiv } from "../lib/gameData";
 import { appFetch } from "../lib/http";
 import { summarizePlayer, type PlayerProfile } from "../lib/opponent";
+import { isStale, type Playbook } from "../lib/playbooks";
 import { landmarkChoices } from "../lib/scouting";
 import { civTempo, TEMPO_LABELS } from "../lib/tempo";
 
@@ -13,6 +14,8 @@ interface Props {
   opponentName?: string;
   /** Set during a live match to show the enemy player's habits. */
   opponentProfileId?: number;
+  /** The live game's build, used to flag playbooks written for an older patch. */
+  gameBuild?: number;
 }
 
 // Civ stats change slowly, so fetch them once per app session.
@@ -47,11 +50,44 @@ function PlayerHabits({ name, profile }: { name: string; profile: PlayerProfile 
   );
 }
 
+function PlaybookBadge({ playbook, gameBuild }: { playbook: Playbook; gameBuild?: number }) {
+  if (isStale(playbook, gameBuild)) return <span className="pill draft">Older patch</span>;
+  return playbook.status === "draft" ? <span className="pill draft">Draft</span> : null;
+}
+
+function GamePlan({ civName, playbook, gameBuild }: { civName: string; playbook: Playbook; gameBuild?: number }) {
+  const pairings = playbook.pairings ?? [];
+  const wins = playbook.winConditions ?? [];
+  if (pairings.length === 0 && wins.length === 0) return null;
+  return (
+    <section className="panel">
+      <h3>
+        Your game plan as {civName}
+        <PlaybookBadge playbook={playbook} gameBuild={gameBuild} />
+      </h3>
+      {pairings.length > 0 && (
+        <ul className="plan">
+          {pairings.map((p) => (
+            <li key={p.units}>
+              <b>{p.units}.</b> {p.why}
+            </li>
+          ))}
+        </ul>
+      )}
+      {wins.length > 0 && (
+        <p>
+          <b>How {civName} wins:</b> {wins.map((w) => w.detail).join(" ")}
+        </p>
+      )}
+    </section>
+  );
+}
+
 function formatMinutes(seconds: number): string {
   return `${Math.round(seconds / 60)} min`;
 }
 
-export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId }: Props) {
+export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId, gameBuild }: Props) {
   const brief = useMemo(() => buildBrief(myCivId, enemyCivId), [myCivId, enemyCivId]);
   const scouting = useMemo(() => {
     const enemy = getCiv(enemyCivId);
@@ -95,7 +131,7 @@ export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId
   }, [myCivId, enemyCivId]);
 
   if (!brief) return <section className="panel error">No data for this matchup yet.</section>;
-  const { me, enemy, enemyPlaybook } = brief;
+  const { me, enemy, enemyPlaybook, myPlaybook } = brief;
   const tempo = civStats ? civTempo(enemy.id, civStats) : null;
 
   return (
@@ -154,7 +190,7 @@ export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId
         <section className="panel">
           <h3>
             When {enemy.name} is dangerous
-            {enemyPlaybook.status === "draft" && <span className="pill draft">Draft</span>}
+            <PlaybookBadge playbook={enemyPlaybook} gameBuild={gameBuild} />
           </h3>
           <ul className="spikes">
             {enemyPlaybook.spikes.map((s) => (
@@ -167,8 +203,25 @@ export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId
               </li>
             ))}
           </ul>
+          {enemyPlaybook.scout && enemyPlaybook.scout.length > 0 && (
+            <>
+              <b>Signs to scout for</b>
+              <ul className="plan">
+                {enemyPlaybook.scout.map((s) => (
+                  <li key={s}>{s}</li>
+                ))}
+              </ul>
+            </>
+          )}
+          {enemyPlaybook.winConditions && enemyPlaybook.winConditions.length > 0 && (
+            <p>
+              <b>How {enemy.name} wins:</b> {enemyPlaybook.winConditions.map((w) => w.detail).join(" ")}
+            </p>
+          )}
         </section>
       )}
+
+      {myPlaybook && <GamePlan civName={me.name} playbook={myPlaybook} gameBuild={gameBuild} />}
 
       {brief.ages.map(({ age, threats }) =>
         threats.length === 0 ? null : (

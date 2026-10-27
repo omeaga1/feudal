@@ -1,0 +1,60 @@
+{
+  "civ": "delhi_sultanate",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Research and religion civ. All technology is free but slow, and Scholars capture Sacred Sites early. Elephants make its Castle Age army very tanky.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Early Sacred Sites",
+      "detail": "Scholars are available from the Dark Age, so Delhi can claim Sacred Sites for gold very early.",
+      "answer": "Contest Sacred Sites in Feudal; kill the Scholars."
+    },
+    {
+      "age": 3,
+      "label": "Elephants",
+      "detail": "Tower Elephants and War Elephants arrive in Castle Age and are hard to kill.",
+      "answer": "Spearmen, crossbows and springalds. Don't send archers into elephants."
+    }
+  ],
+  "scout": [
+    "Scholars moving to Sacred Sites in Feudal",
+    "Mosques and Madrasas full of Scholars, which speeds their free research",
+    "Infantry building palisades forward, which signals tower or palisade pressure"
+  ],
+  "pairings": [
+    {
+      "units": "Spearmen + Archers",
+      "why": "Free blacksmith upgrades make their Feudal army trade well."
+    },
+    {
+      "units": "War Elephants + Tower Elephants",
+      "why": "Tanky melee and ranged elephants push through defenses."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "sacred_sites",
+      "detail": "Hold Sacred Sites for gold or a religious victory."
+    },
+    {
+      "kind": "army",
+      "detail": "Castle Age elephant push."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

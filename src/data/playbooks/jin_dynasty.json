@@ -1,0 +1,60 @@
+{
+  "civ": "jin_dynasty",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Cavalry civ with fast Mounted Villagers and Grasslands that spawn horses for War Stables. Emissaries can bribe enemy soldiers.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Grassland cavalry",
+      "detail": "Grasslands spawn horses faster in Feudal this patch, so cavalry comes out quickly from War Stables.",
+      "answer": "Spearmen and towers near your resources."
+    },
+    {
+      "age": 3,
+      "label": "Iron Pagoda and Nest of Bees",
+      "detail": "Iron Pagoda heavy cavalry and Nest of Bees join in Castle.",
+      "answer": "Spearmen in numbers and cavalry to catch the siege."
+    }
+  ],
+  "scout": [
+    "Where they put their Grassland",
+    "Mounted Villagers moving to new resources",
+    "Emissaries near your soldiers (bribe)"
+  ],
+  "pairings": [
+    {
+      "units": "Iron Pagoda + Mohe Tribesmen",
+      "why": "Heavy cavalry with ranged support."
+    },
+    {
+      "units": "Bed Crossbows + infantry",
+      "why": "Feudal siege defense against buildings and cavalry."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Fast cavalry pressure."
+    },
+    {
+      "kind": "economy",
+      "detail": "Tributaries and fast Mounted Villagers."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}
