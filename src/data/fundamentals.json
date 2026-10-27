@@ -1,0 +1,24 @@
+{
+  "note": "Paraphrased from Valdy's 2025-12 to 2026-04 civ guides on YouTube. Shown in every brief before the game.",
+  "openingReads": [
+    { "sign": "A barracks early", "means": "A spear rush is coming. Don't overreact: secure your gold, go Feudal and make archers." },
+    { "sign": "Villagers on stone", "means": "A second Town Center. Punish it with pressure or out-boom it." },
+    { "sign": "Villagers on gold with a tower and no production buildings", "means": "A fast Castle. Wall up and go Castle yourself, or tower their gold." },
+    { "sign": "A mill plus a stable", "means": "Pro Scouts. They'll take deer, so guard yours." },
+    { "sign": "Second Town Center on gold", "means": "Usually a fast Castle. On food, it usually means units are coming." }
+  ],
+  "habits": [
+    "A tower on its own doesn't prove a fast Castle.",
+    "Never delete straggler trees, and use map food before farms.",
+    "Castle Age usually lands around 12 minutes. Plan your army around it.",
+    "Don't sit in base with an aggressive or two-Town-Center build.",
+    "Archers beat spears, spears beat cavalry, knights beat archers and heavy infantry, crossbows beat armor. Knight, spear and archer covers most things in Castle."
+  ],
+  "sources": [
+    { "title": "Valdy: How To Play Abbasid In 2026", "url": "https://www.youtube.com/watch?v=zlFwOhCfX3M", "date": "2026-01-01", "kind": "video" },
+    { "title": "Valdy: How To Play French In 2026", "url": "https://www.youtube.com/watch?v=ZzZICnaDBsQ", "date": "2025-12-26", "kind": "video" },
+    { "title": "Valdy: How To Play Delhi Sultanate In 2026", "url": "https://www.youtube.com/watch?v=dRvmG-HSfz4", "date": "2026-02-23", "kind": "video" },
+    { "title": "Valdy: How To Play Ottomans In 2026", "url": "https://www.youtube.com/watch?v=HdlqFpLRkOk", "date": "2026-01-30", "kind": "video" },
+    { "title": "Valdy: How To Play HRE In 2026", "url": "https://www.youtube.com/watch?v=M961c97ctU4", "date": "2026-03-04", "kind": "video" }
+  ]
+}

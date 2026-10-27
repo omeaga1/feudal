@@ -3,55 +3,63 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Infantry civ with a strong relic game. Prelates speed up its economy early, and relics placed in towers and keeps make its defenses much stronger.",
+  "summary": "Infantry and relic civ. Prelates inspire villagers for a fast Feudal, and relics in towers and keeps make the HRE base very hard to break. Valdy rates HRE as struggling in the current balance.",
+  "openings": [
+    "Prelate inspiring 3 food and 3 gold villagers, Feudal around 2:10 to 2:15, then 7 on wood and 5 on deer with a tower.",
+    "Meinwerk Palace for Feudal games, Aachen Chapel when they fast Castle."
+  ],
   "spikes": [
     {
       "age": 2,
       "label": "Early Men-at-Arms",
-      "detail": "HRE gets Men-at-Arms in the Feudal Age, earlier than most civs, and its infantry move faster.",
-      "answer": "Expect early infantry pressure. Ranged units with bonus damage and a defensive tower near your gold buy time."
+      "detail": "HRE gets Men-at-Arms in Feudal, earlier than most civs, and its infantry move faster.",
+      "answer": "Ranged units with bonus damage and a tower near your gold buy time."
     },
     {
       "age": 3,
       "label": "Relics in towers and keeps",
-      "detail": "Every relic garrisoned in an outpost, tower or keep raises its armor, damage and range by 25%. HRE reaching Castle Age with several relics is hard to break.",
-      "answer": "Contest relics as soon as Castle Age hits, and avoid fighting under their relic towers."
-    },
-    {
-      "age": 4,
-      "label": "Landsknecht and Black Riders",
-      "detail": "Landsknechts (from Castle Age) shred infantry, and Black Riders join in Imperial as strong ranged cavalry.",
-      "answer": "Archers and crossbows against Landsknechts, spearmen and cavalry of your own against Black Riders."
+      "detail": "Castle around 10 to 12 via Regnitz Cathedral (with 3 or more relics) or Burgrave Palace. Each garrisoned relic raises a building's armor, damage and range by 25%.",
+      "answer": "Contest relics as soon as Castle hits and avoid fighting under their relic towers."
     }
   ],
   "scout": [
-    "Prelates inspiring villagers",
-    "Monks heading to relics as soon as Castle Age hits",
-    "Meinwerk Palace or Regnitz Cathedral landmarks"
+    "Meinwerk Palace means a Feudal fight",
+    "Aachen Chapel means a fast Castle",
+    "Monks heading to relics right after Castle means Regnitz Cathedral"
   ],
   "pairings": [
     {
       "units": "Men-at-Arms + Archers",
-      "why": "Early tough infantry with ranged support."
+      "why": "Their Feudal army."
     },
     {
-      "units": "Landsknecht + Crossbows",
-      "why": "Anti-infantry damage with anti-armor support."
+      "units": "Knights + Spearmen + Archers",
+      "why": "Their Castle army."
     }
   ],
   "winConditions": [
     {
       "kind": "relics",
-      "detail": "Relics in keeps and towers make their base very hard to take."
+      "detail": "Relics in keeps and towers, and Regnitz relic gold."
     },
     {
       "kind": "army",
       "detail": "Early Men-at-Arms pressure."
     }
   ],
+  "howToBeat": [
+    "Take relics before they do.",
+    "Use knights and crossbows against their infantry."
+  ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play HRE In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=M961c97ctU4",
+      "date": "2026-03-04",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

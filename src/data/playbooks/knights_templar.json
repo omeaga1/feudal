@@ -3,25 +3,29 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Heavy-unit civ that ages up through Commanderies. Pilgrims make gold at Sacred Sites, and Fortresses come in Feudal.",
+  "summary": "Heavy-unit civ that ages up through Commanderies. Templar players pick 1 TC aggression against fast-Castle civs or 2 TC against Rus, reach Castle around 12 and build Fortresses.",
+  "openings": [
+    "1 TC aggression against fast-Castle civs: Hospitaller at 2:20, double pilgrims, range and barracks, cheap rams.",
+    "2 TC against Rus."
+  ],
   "spikes": [
     {
       "age": 2,
-      "label": "Commanderie units",
-      "detail": "Each Commanderie unlocks units like Hospitaller Knights or Serjeants.",
-      "answer": "Scout which Commanderie they pick."
+      "label": "Early aggression",
+      "detail": "A Hospitaller Knight at 2:20 and cheap rams push against greedy openings.",
+      "answer": "Wall up and keep spearmen ready if you're fast-castling."
     },
     {
       "age": 3,
-      "label": "Heavy army",
-      "detail": "Templar Brothers, Genoese Crossbowmen and Heavy Spearmen join in Castle.",
-      "answer": "Mass ranged units and avoid head-on melee."
+      "label": "Castle around 12",
+      "detail": "The age-up takes about 45 seconds. Fortresses follow, with the Castile or Genoa Commanderies, and Poland late.",
+      "answer": "Bring siege for Fortresses; avoid fighting inside their range."
     }
   ],
   "scout": [
-    "Which Commanderie they pick on each age up",
+    "A Hospitaller around 2:20 means 1 TC aggression",
     "Pilgrims walking to Sacred Sites",
-    "Fortresses built in Feudal"
+    "Which Commanderie they choose each age"
   ],
   "pairings": [
     {
@@ -29,8 +33,8 @@
       "why": "Heavy cavalry with anti-armor ranged support."
     },
     {
-      "units": "Serjeants + Hospitaller Knights",
-      "why": "Durable infantry with healing cavalry."
+      "units": "Spear + horsemen (Antioch)",
+      "why": "Their answer to French knight-archer."
     }
   ],
   "winConditions": [
@@ -43,9 +47,31 @@
       "detail": "Pilgrims make gold from Sacred Sites."
     }
   ],
+  "howToBeat": [
+    "Delhi is favored after holding a Templar spear rush.",
+    "Jeanne d'Arc players harass the pilgrims."
+  ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Knights Templar In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=IFUNfAxEhas",
+      "date": "2026-03-19",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Delhi Sultanate In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=dRvmG-HSfz4",
+      "date": "2026-02-23",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Jeanne D'arc In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=eHln0ZOY9v8",
+      "date": "2026-04-06",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

@@ -3,49 +3,63 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "French variant where Jeanne d'Arc levels up as a hero. Royal Knights in Feudal, cheap economic upgrades and strong trade.",
+  "summary": "Hero civ where Jeanne d'Arc levels up with experience. Jeanne players go a deer opener into double stables, and level 3 Jeanne is their Feudal spike.",
+  "openings": [
+    "Deer opener: a mill on deer, survival techniques, then wheelbarrow, 4 on gold, Feudal around 3:10, double stable."
+  ],
   "spikes": [
     {
       "age": 2,
-      "label": "Jeanne levels up",
-      "detail": "Jeanne starts as a villager and becomes a fighter in Feudal. She gets much stronger as she levels.",
-      "answer": "Kill or zone Jeanne early before she gains levels."
+      "label": "Level 3 Jeanne",
+      "detail": "Jeanne reaching level 3 is their Feudal power spike.",
+      "answer": "Don't feed her experience. Defend and boom, or spear-rush them."
     },
     {
       "age": 3,
-      "label": "Champions and Riders",
-      "detail": "Jeanne's Champions and Riders arrive with her Castle Age forms.",
-      "answer": "Focus Jeanne; her companions are weaker without her."
+      "label": "Knight raids",
+      "detail": "Melee Jeanne leads knights and Ranged Jeanne leads knight plus archer, with constant in-and-out raids healed by Jeanne.",
+      "answer": "Spearmen and towers at your resources."
     }
   ],
   "scout": [
-    "Jeanne's path (fighter or ranged)",
-    "Royal Knights in Feudal",
-    "Trade posts revealed on the minimap"
+    "A mill on deer and double stables",
+    "Which Jeanne path they take: melee means knights, ranged means knight plus archer"
   ],
   "pairings": [
     {
-      "units": "Royal Knights + Jeanne",
-      "why": "Heavy cavalry led by the hero."
+      "units": "Knights + Melee Jeanne",
+      "why": "Pure knight raids."
     },
     {
-      "units": "Arbalétriers + Jeanne's Champions",
-      "why": "Ranged support with heavy infantry."
+      "units": "Knights + Archers + Ranged Jeanne",
+      "why": "A mixed army."
     }
   ],
   "winConditions": [
     {
       "kind": "army",
-      "detail": "Hero-led army pushes."
-    },
-    {
-      "kind": "trade",
-      "detail": "Cheap trade and strong traders."
+      "detail": "Hero-led knight raids."
     }
+  ],
+  "howToBeat": [
+    "Avoid fights that feed Jeanne experience.",
+    "Defend and boom, or spear-rush them."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Jeanne D'arc In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=eHln0ZOY9v8",
+      "date": "2026-04-06",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Japanese In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=MOhYn-gXPjE",
+      "date": "2025-12-30",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

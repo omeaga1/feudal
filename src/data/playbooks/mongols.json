@@ -3,55 +3,60 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Nomadic raiding civ. Every building can pack up and move, stables come in the Dark Age, and Stone doubles unit production.",
+  "summary": "Aggressive civ with a weak economy that needs to deal damage. Mongols often spear or tower rush from the Dark Age, then aim for a Kurultai timing at 12 to 15 minutes with Keshik and archers.",
+  "openings": [
+    "Dark Age barracks with 150 wood for a spear or tower rush, often on the gold.",
+    "Deer Stones, or the Silver Tree on trade maps."
+  ],
   "spikes": [
     {
       "age": 1,
-      "label": "Dark Age raids",
-      "detail": "Stables in the Dark Age and fast-training horsemen mean early raids.",
-      "answer": "Spearmen early and keep villagers close to the Town Center."
-    },
-    {
-      "age": 2,
-      "label": "Mangudai",
-      "detail": "Mangudai are hard to catch and shoot while moving. Their moving attack was slowed this patch.",
-      "answer": "Archers and towers; don't chase."
+      "label": "Dark Age rush",
+      "detail": "A barracks in the Dark Age means spears or a tower on your gold.",
+      "answer": "Pull villagers to fight the tower early, go Feudal and make archers."
     },
     {
       "age": 3,
-      "label": "Double production",
-      "detail": "Stone pays for doubled units and advanced upgrades.",
-      "answer": "Deny their stone and Ovoos."
+      "label": "Kurultai timing",
+      "detail": "Kurultai with Keshik and archers hits at 12 to 15 minutes.",
+      "answer": "Have spearmen and archers grouped when it lands."
     }
   ],
   "scout": [
-    "Ovoo on stone",
-    "Outposts near their army paths",
-    "Ger moving location"
+    "A barracks in the Dark Age means a spear or tower rush",
+    "Deer Stones near hunt"
   ],
   "pairings": [
     {
-      "units": "Mangudai + Keshik",
-      "why": "Ranged cavalry with heavy cavalry."
-    },
-    {
-      "units": "Horsemen + Spearmen",
-      "why": "Cheap raiding and screening."
+      "units": "Keshik + Archers",
+      "why": "Their main army."
     }
   ],
   "winConditions": [
     {
       "kind": "army",
-      "detail": "Raids that cripple the enemy economy."
-    },
-    {
-      "kind": "economy",
-      "detail": "Double villagers with stone."
+      "detail": "They need to deal damage early; their economy is weak."
     }
+  ],
+  "howToBeat": [
+    "Survive the early aggression; their economy falls behind.",
+    "Don't overreact to a spear rush: get the gold, go Feudal, make archers."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Mongols In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=Fgiv2WXO5gw",
+      "date": "2026-02-09",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Delhi Sultanate In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=dRvmG-HSfz4",
+      "date": "2026-02-23",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

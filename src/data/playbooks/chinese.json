@@ -3,55 +3,68 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Dynasty civ that builds both landmarks of an age to unlock bonuses. Song Dynasty speeds up villager production, and Imperial Officials collect tax gold. Very strong late with gunpowder.",
+  "summary": "Fastest Feudal in the game. Chinese collect tax gold with Imperial Officials and grab deer with Pro Scouts, and early pressure barely slows them because training units also makes tax.",
+  "openings": [
+    "Pro Scouts: all on sheep, Feudal around 2:20 with the Imperial Academy touching the mill and wood line, 3 officials, 5 scouts taking 2 deer packs.",
+    "Tax aggression against slow starters (Byzantines, Delhi, 2 TC Abbasid): early range, barracks and stable, 4 officials, Pro Scouts delayed to 6 or 7 minutes."
+  ],
   "spikes": [
     {
       "age": 2,
-      "label": "Song Dynasty boom",
-      "detail": "Building both Feudal landmarks puts them in the Song Dynasty and speeds up villager production.",
-      "answer": "If you see two Feudal landmarks, they are greedy. Hit them early."
+      "label": "Fastest Feudal",
+      "detail": "Feudal at about 2:20 and Pro Scouts taking deer by about 5:30.",
+      "answer": "Deny the Pro Scout deer with units."
     },
     {
       "age": 3,
-      "label": "Zhuge Nu and Nest of Bees",
-      "detail": "Zhuge Nus shred light units and Nest of Bees siege deals huge area damage in Castle Age.",
-      "answer": "Spread out, and send cavalry to snipe the Nest of Bees."
+      "label": "Castle around 9 to 10",
+      "detail": "They hit Castle around 9 to 10 minutes via the Imperial Palace and play knight plus archer.",
+      "answer": "Spearmen and crossbows against knight-archer."
     },
     {
       "age": 4,
-      "label": "Gunpowder and Grenadiers",
-      "detail": "Grenadiers and handcannons make their Imperial army one of the strongest in the game.",
-      "answer": "Close the game before Imperial or out-tech them in the late game."
+      "label": "Song and Yuan",
+      "detail": "Song Dynasty comes once they farm, around 16 to 18 minutes, and Yuan Palace Guards come late at about 120 population.",
+      "answer": "Do your damage before they settle into farms."
     }
   ],
   "scout": [
-    "Two Feudal landmarks means Song Dynasty and a boom",
-    "Barbican of the Sun means a defensive, fast Castle plan",
-    "Many villagers being produced from more than one Town Center"
+    "Imperial Academy at their mill and wood line with scouts on deer means Pro Scouts",
+    "An early range, barracks and stable with extra officials means tax aggression"
   ],
   "pairings": [
     {
-      "units": "Zhuge Nu + Spearmen",
-      "why": "Fast-firing crossbows behind cheap spearmen in Feudal."
+      "units": "Knights + Archers",
+      "why": "Their main Castle army, sometimes with spears or crossbows."
     },
     {
-      "units": "Grenadiers + Palace Guards",
-      "why": "Area gunpowder damage with strong melee in front late game."
+      "units": "Horsemen + Archers",
+      "why": "Their Feudal answer to javelin or longbow plus spear."
     }
   ],
   "winConditions": [
     {
       "kind": "economy",
-      "detail": "Outboom through Song Dynasty villagers and tax gold."
+      "detail": "Tax gold that keeps flowing even while they fight."
     },
     {
       "kind": "army",
-      "detail": "Imperial gunpowder army."
+      "detail": "Late Yuan Palace Guards."
     }
+  ],
+  "howToBeat": [
+    "Deny the Pro Scout deer with your army.",
+    "Their economy shrugs off light raids, so make each attack count."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Chinese In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=EKnex4_ESkU",
+      "date": "2026-01-03",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

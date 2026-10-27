@@ -3,55 +3,66 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Gold and stealth civ. Pit Mines make gold without running out, Cattle replace hunting, and Musofadi units can ambush from stealth.",
+  "summary": "Gold and cattle civ. Malians open with seven houses or a tower depending on the opponent, make Donso and javelin units before cows, and reach Castle after 12 cows.",
+  "openings": [
+    "7-house opener against civs that don't rush.",
+    "Tower opener against spear-rush civs.",
+    "Donso and javelin units first, then 12 cows, then Castle."
+  ],
   "spikes": [
     {
       "age": 2,
-      "label": "Javelins and Musofadi",
-      "detail": "Javelin Throwers beat archers, and Musofadi Warriors ambush from stealth.",
-      "answer": "Men-at-Arms and horsemen; scout for hidden units near your lines."
+      "label": "Javelins and Donso",
+      "detail": "Javelin units and Donso arrive before their cow economy.",
+      "answer": "Men-at-arms and horsemen; scout for hidden Musofadi."
     },
     {
       "age": 3,
-      "label": "Fast veteran upgrades",
-      "detail": "Veteran upgrades are half cost and time, so their army upgrades quickly.",
-      "answer": "Keep pace with blacksmith upgrades."
-    },
-    {
-      "age": 4,
-      "label": "Musofadi Gunners",
-      "detail": "Gunpowder infantry joins in Imperial.",
-      "answer": "Fight before Imperial if you can."
+      "label": "Pit Mine economy",
+      "detail": "A second Pit Mine and cows let them outscale.",
+      "answer": "Deny the second Pit Mine and push with siege before they outscale."
     }
   ],
   "scout": [
-    "Pit Mines on gold",
+    "A tower on resources means they expect a rush",
     "Cattle at mills",
-    "Toll Outposts on trade routes"
+    "A second Pit Mine going up"
   ],
   "pairings": [
     {
-      "units": "Javelin Throwers + Sofa",
-      "why": "Anti-archer infantry with cavalry."
+      "units": "Javelin Throwers + Donso",
+      "why": "Their early army."
     },
     {
-      "units": "Musofadi Warriors + Donso",
-      "why": "Stealth ambush with spears."
+      "units": "Musofadi Warriors + Sofa",
+      "why": "Stealth infantry with cavalry."
     }
   ],
   "winConditions": [
     {
       "kind": "economy",
-      "detail": "Steady gold from Pit Mines."
-    },
-    {
-      "kind": "trade",
-      "detail": "Toll Outposts add bonus gold."
+      "detail": "Pit Mines and cows that keep producing."
     }
+  ],
+  "howToBeat": [
+    "Deny the second Pit Mine.",
+    "Siege push before they outscale; Macedonians do it around 24 minutes."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Malians In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=ApuGahvKpf0",
+      "date": "2025-12-23",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Macedonian Dynasty In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=LKH4uwXd24E",
+      "date": "2026-02-13",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

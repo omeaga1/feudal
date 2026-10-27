@@ -3,13 +3,18 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Elephant and fort civ. Worker Elephants are mobile drop-offs, research finishes almost instantly but costs more, and Tughlaqabad Forts come in Feudal.",
+  "summary": "Elephant and fort civ, near the bottom of Valdy's tier list. Tughlaq players attack with healer elephants via the Dome of the Faith, or go 2 TC with a fort against slow civs.",
+  "openings": [
+    "Healer elephant aggression via the Dome of the Faith.",
+    "2 TC with a fort against Malians.",
+    "Spear or tower rush against Sengoku."
+  ],
   "spikes": [
     {
       "age": 2,
-      "label": "Feudal forts",
-      "detail": "Tughlaqabad Forts act as keeps from Feudal and unlock Governors.",
-      "answer": "Don't attack into the forts; expand and raid elsewhere."
+      "label": "Healer elephants",
+      "detail": "Healer elephants keep their Feudal army alive.",
+      "answer": "Mass archers and spears, and focus the healers."
     },
     {
       "age": 3,
@@ -19,9 +24,9 @@
     }
   ],
   "scout": [
-    "Worker Elephants at resources",
-    "Tughlaqabad Forts",
-    "Which Governor they pick"
+    "Dome of the Faith means healer elephant aggression",
+    "A Tughlaqabad Fort with a second Town Center means 2 TC",
+    "Worker Elephants at resources"
   ],
   "pairings": [
     {
@@ -30,22 +35,31 @@
     },
     {
       "units": "Raider Elephants + Healer Elephants",
-      "why": "Raiding with sustain."
+      "why": "Raiding with healing."
     }
   ],
   "winConditions": [
     {
       "kind": "army",
-      "detail": "Elephant push."
+      "detail": "An elephant push."
     },
     {
       "kind": "defense",
       "detail": "Forts across the map."
     }
   ],
+  "howToBeat": [
+    "Mass archers and spears."
+  ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Tughlaq Dynasty In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=hWkeU9U6Jjk",
+      "date": "2026-03-30",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

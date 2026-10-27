@@ -3,55 +3,63 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Aggressive batch-training cavalry civ. Starts at max population, trains units in batches and has stables in the Dark Age. Ovoos on stone fund its unique technologies.",
+  "summary": "Batch-training cavalry civ. Golden Horde put an Ovoo on stone in Feudal, attack with Batu Khan, Torguuds and Keshiks, and dive during a Muscovy Yasak Castle timing.",
+  "openings": [
+    "Sheep start, Feudal around 2:50, then 8 on wood, an Ovoo on stone around 4:25, a stable and 5 villagers on deer with a Fortified Outpost.",
+    "Usual path: Khan and Torguuds, then Muscovy Yasak, then Yam Network Trade."
+  ],
   "spikes": [
     {
-      "age": 1,
-      "label": "Dark Age cavalry",
-      "detail": "Stables are available from the Dark Age, so early horseman raids are common.",
-      "answer": "Spearmen early and keep villagers near the Town Center."
-    },
-    {
       "age": 2,
-      "label": "Torguud and Keshik batches",
-      "detail": "Torguuds and Keshiks come out in batches in Feudal.",
+      "label": "Khan, Torguuds and Keshiks",
+      "detail": "Batu Khan leads Torguuds and Keshiks out in batches in Feudal.",
       "answer": "Spearmen screens and towers near resources."
     },
     {
       "age": 3,
-      "label": "Kipchak Archers",
-      "detail": "Kipchak Archers and Traction Trebuchets join in Castle.",
-      "answer": "Crossbows and cavalry to catch the siege."
+      "label": "Muscovy Yasak timing",
+      "detail": "They start the Muscovy Yasak age-up around 11:30 for ranged armor and automatic upgrades, then dive while you age up.",
+      "answer": "Don't be mid age-up with no army when they arrive."
     }
   ],
   "scout": [
-    "Stable in the Dark Age",
-    "Golden Tent edict choice",
-    "Fortified Outposts spreading their influence across the map"
+    "An Ovoo on stone around 4:25",
+    "A Fortified Outpost at deer",
+    "A stable in Feudal producing Keshiks"
   ],
   "pairings": [
     {
-      "units": "Keshik + Torguud",
-      "why": "Heavy cavalry with a sturdy melee line."
+      "units": "Keshik + Torguud + Khan",
+      "why": "Their core cavalry army."
     },
     {
-      "units": "Kipchak Archers + Keshik",
-      "why": "Ranged cavalry backed by heavy cavalry."
+      "units": "Archers",
+      "why": "Added against infantry, with men-at-arms in Castle."
     }
   ],
   "winConditions": [
     {
       "kind": "army",
-      "detail": "Constant cavalry pressure."
+      "detail": "Batch-trained cavalry pressure."
     },
     {
       "kind": "economy",
-      "detail": "Stone economy funds unique technologies."
+      "detail": "Stone from the Ovoo funds stone-only technologies."
     }
+  ],
+  "howToBeat": [
+    "Their Ovoo is always exposed; spear-rush it.",
+    "Patches shift this civ a lot, so expect its strength to change."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Golden Horde In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=hxxmbmr9a3M",
+      "date": "2026-03-10",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

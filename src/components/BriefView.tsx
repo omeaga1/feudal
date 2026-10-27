@@ -4,7 +4,8 @@ import { buildBrief } from "../lib/brief";
 import { AGE_NAMES, getCiv } from "../lib/gameData";
 import { appFetch } from "../lib/http";
 import { summarizePlayer, type PlayerProfile } from "../lib/opponent";
-import { isStale, type Playbook } from "../lib/playbooks";
+import { fundamentals } from "../lib/fundamentals";
+import { isStale, type Playbook, type PlaybookSource } from "../lib/playbooks";
 import { landmarkChoices } from "../lib/scouting";
 import { civTempo, TEMPO_LABELS } from "../lib/tempo";
 
@@ -55,16 +56,70 @@ function PlaybookBadge({ playbook, gameBuild }: { playbook: Playbook; gameBuild?
   return playbook.status === "draft" ? <span className="pill draft">Draft</span> : null;
 }
 
+function Bullets({ title, items }: { title: string; items?: string[] }) {
+  if (!items || items.length === 0) return null;
+  return (
+    <>
+      <b>{title}</b>
+      <ul className="plan">
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
+function Sources({ sources }: { sources?: PlaybookSource[] }) {
+  const videos = (sources ?? []).filter((s) => s.kind === "video");
+  if (videos.length === 0) return null;
+  return (
+    <p className="muted small">
+      From guides:{" "}
+      {videos.map((v, i) => (
+        <span key={v.url ?? v.title}>
+          {i > 0 && ", "}
+          {v.url ? (
+            <a href={v.url} target="_blank" rel="noreferrer">
+              {v.title}
+            </a>
+          ) : (
+            v.title
+          )}{" "}
+          ({v.date})
+        </span>
+      ))}
+    </p>
+  );
+}
+
+function OpeningReads() {
+  return (
+    <section className="panel">
+      <h3>Reading their opening</h3>
+      <ul className="plan">
+        {fundamentals.openingReads.map((r) => (
+          <li key={r.sign}>
+            <b>{r.sign}:</b> {r.means}
+          </li>
+        ))}
+      </ul>
+      <Bullets title="Good habits" items={fundamentals.habits} />
+    </section>
+  );
+}
+
 function GamePlan({ civName, playbook, gameBuild }: { civName: string; playbook: Playbook; gameBuild?: number }) {
   const pairings = playbook.pairings ?? [];
   const wins = playbook.winConditions ?? [];
-  if (pairings.length === 0 && wins.length === 0) return null;
+  if (pairings.length === 0 && wins.length === 0 && !playbook.openings?.length) return null;
   return (
     <section className="panel">
       <h3>
         Your game plan as {civName}
         <PlaybookBadge playbook={playbook} gameBuild={gameBuild} />
       </h3>
+      <Bullets title="Openings pros use" items={playbook.openings} />
       {pairings.length > 0 && (
         <ul className="plan">
           {pairings.map((p) => (
@@ -79,6 +134,7 @@ function GamePlan({ civName, playbook, gameBuild }: { civName: string; playbook:
           <b>How {civName} wins:</b> {wins.map((w) => w.detail).join(" ")}
         </p>
       )}
+      <Sources sources={playbook.sources} />
     </section>
   );
 }
@@ -203,23 +259,19 @@ export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId
               </li>
             ))}
           </ul>
-          {enemyPlaybook.scout && enemyPlaybook.scout.length > 0 && (
-            <>
-              <b>Signs to scout for</b>
-              <ul className="plan">
-                {enemyPlaybook.scout.map((s) => (
-                  <li key={s}>{s}</li>
-                ))}
-              </ul>
-            </>
-          )}
+          <Bullets title="Openings to expect" items={enemyPlaybook.openings} />
+          <Bullets title="Signs to scout for" items={enemyPlaybook.scout} />
+          <Bullets title={`How to beat ${enemy.name}`} items={enemyPlaybook.howToBeat} />
           {enemyPlaybook.winConditions && enemyPlaybook.winConditions.length > 0 && (
             <p>
               <b>How {enemy.name} wins:</b> {enemyPlaybook.winConditions.map((w) => w.detail).join(" ")}
             </p>
           )}
+          <Sources sources={enemyPlaybook.sources} />
         </section>
       )}
+
+      <OpeningReads />
 
       {myPlaybook && <GamePlan civName={me.name} playbook={myPlaybook} gameBuild={gameBuild} />}
 

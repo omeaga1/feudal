@@ -3,55 +3,69 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Flexible House of Wisdom civ. Each of its eight wings unlocks a strong bonus at once, and wings bought in later ages are stronger. Desert Raiders and camels give it a mobile army.",
+  "summary": "Aggressive fast-Castle civ. Ayyubids reach Castle with the Industry wing, build many production buildings at once, and push with camel lancers, camel archers and Dervish healing.",
+  "openings": [
+    "Culture Wing (Logistics, Dervish) into Feudal at about 2:15, with 6 on food and 4 on gold and a tower on gold.",
+    "Economic Wing (Industry) into Castle: extra wood and stone and faster building, then 2 to 3 stables and 3 archery ranges at once."
+  ],
   "spikes": [
     {
-      "age": 2,
-      "label": "Desert Raider pressure",
-      "detail": "Desert Raiders arrive in Feudal and can switch between a melee and a ranged weapon, so they raid and skirmish well.",
-      "answer": "Keep spearmen and a tower near your gold and wood lines, and avoid chasing raiders into their army."
+      "age": 3,
+      "label": "Industry Castle burst",
+      "detail": "Right after Castle they mass camel lancers and camel archers, healed by Dervishes. In a pro example the lancers were on the enemy gold at minute 9 to 10.",
+      "answer": "You can't stop the fast Castle outright. Get ahead in Feudal with spear and archer and deny their gold, so they must make ghulams and archers instead of free lancers."
     },
     {
       "age": 3,
-      "label": "Camel Lancers and siege",
-      "detail": "Camel Lancers and Ghulams form the Castle Age army, backed by Manjaniqs or the Tower of the Sultan to break defenses.",
-      "answer": "Spearmen and crossbows hold the camels; send fast units at the siege."
-    },
-    {
-      "age": 4,
-      "label": "Golden Age and wings",
-      "detail": "Wings researched late give their biggest bonus, and the Golden Age keeps their economy ahead late.",
-      "answer": "Force fights before Imperial; long passive games favor them."
+      "label": "Fire mangonel timing",
+      "detail": "About seven mangonels with fire upgrades follow as the siege push.",
+      "answer": "Take fights only when you can actually kill units; healing turns even trades into wins for them."
     }
   ],
   "scout": [
-    "Which wing they research first (it shows on the House of Wisdom)",
-    "Buildings packed around the House of Wisdom for the Golden Age",
-    "Berry orchards; like Abbasid they cannot hunt boar"
+    "Heavy berries and sheep, a back gold with a tower and Culture Wing Dervishes all mean a fast Castle",
+    "Front gold means Feudal units to protect it"
   ],
   "pairings": [
     {
-      "units": "Desert Raiders + Spearmen",
-      "why": "Fast raiding cavalry with a cheap anti-cavalry screen."
+      "units": "Camel Lancers + Camel Archers",
+      "why": "The Castle timing army, kept alive by Dervish healing."
     },
     {
-      "units": "Camel Lancers + Manjaniq",
-      "why": "Heavy camels protect siege that out-ranges defenses."
+      "units": "Mangonels with fire",
+      "why": "Siege timing after the camel burst."
     }
   ],
   "winConditions": [
     {
       "kind": "army",
-      "detail": "Mobile camel and raider army that forces fights across the map."
+      "detail": "A Castle-timing attack where healing wins even fights."
     },
     {
-      "kind": "economy",
-      "detail": "Golden Age bonuses let them outscale if left alone."
+      "kind": "relics",
+      "detail": "Dervishes collect far relics."
     }
+  ],
+  "howToBeat": [
+    "Burn their gold tower or counter-tower it.",
+    "Win Feudal with spear and archer, then go knight, spear and archer in Castle.",
+    "Against Feudal healing, fight only when you can kill units."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Ayyubids In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=t2u-62wAKWU",
+      "date": "2025-12-28",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play HRE In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=M961c97ctU4",
+      "date": "2026-03-04",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

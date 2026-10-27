@@ -3,55 +3,64 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Tech and camel civ that ages up through House of Wisdom wings instead of landmarks. Buildings packed around the House of Wisdom push it into a Golden Age that keeps growing its economy.",
+  "summary": "Booming tech civ that ages up through House of Wisdom wings. The usual pro plan is Economic Wing into a second Town Center, a fast Castle for relics, then a third Town Center.",
+  "openings": [
+    "Economic Wing into 2 TC: Feudal at about 2:15, Fertile Crescent around 4:00, then Fresh Foodstuffs and a second Town Center, usually on the wood line.",
+    "Military Wing into a stable and 2 TC: a flexible opening against long-Feudal civs like Delhi, with the second Town Center on deer around 6:15."
+  ],
   "spikes": [
     {
       "age": 2,
-      "label": "Wing choice sets the plan",
-      "detail": "Abbasid reach Feudal without pulling villagers off work. The first wing tells you their plan: Economy for a boom, Military for early pressure, Culture for upgrades.",
-      "answer": "Scout the House of Wisdom right after they age up. Against an Economy wing, punish with early pressure on their berries and wood lines."
+      "label": "Second Town Center",
+      "detail": "With the Economic Wing the second Town Center lands around 5 to 6 minutes. If it survives to farms at about 22 minutes, Abbasid is usually winning even after losing villagers.",
+      "answer": "Pressure the second Town Center and deny its resources while the start is still slow."
     },
     {
       "age": 3,
-      "label": "Camel army",
-      "detail": "Camel Archers and Camel Riders weaken nearby horse cavalry, and Ghulams join in Castle Age. Knight and horseman armies trade badly into them.",
-      "answer": "Answer camels with Spearmen, Crossbows and Men-at-Arms rather than horse cavalry."
-    },
-    {
-      "age": 4,
-      "label": "Golden Age economy",
-      "detail": "The Golden Age has five tiers in the current patch, so a game left alone into Imperial favors the Abbasid economy.",
-      "answer": "Pressure before the Golden Age stacks up and target buildings around the House of Wisdom."
+      "label": "Fast Castle relics",
+      "detail": "After 2 TC they rush Castle for relics and a third Town Center.",
+      "answer": "Contest relics and keep raiding so they can't sit back and boom."
     }
   ],
   "scout": [
-    "Which House of Wisdom wing they pick first",
-    "Houses and buildings clustered tightly around the House of Wisdom, which means a Golden Age push",
-    "Mills on berries (Orchards); Abbasid cannot gather boar, so berries are their main early food"
+    "Second Town Center going up around 5 to 6 minutes means the Economic Wing boom",
+    "A stable early means the Military Wing opening",
+    "Their House of Wisdom placed forward can be reached with rams, which also blocks their age-up"
   ],
   "pairings": [
     {
       "units": "Spearmen + Archers",
-      "why": "The standard Feudal pair that covers cavalry raids and trades well against infantry."
+      "why": "Wood-heavy and easy to run off two Town Centers."
     },
     {
-      "units": "Camel Archers + Ghulams",
-      "why": "Ranged damage behind a sturdy melee line, and the camels blunt enemy horse cavalry."
+      "units": "Spearmen + Horsemen",
+      "why": "When food is plentiful, and against French knight-archer play."
     }
   ],
   "winConditions": [
     {
       "kind": "economy",
-      "detail": "Outscale through Golden Age bonuses and cheap traders."
+      "detail": "Two-Town-Center economy into Castle relics and a third Town Center."
     },
     {
-      "kind": "trade",
-      "detail": "Land traders are a third cheaper, so long trade routes pay off on open maps."
+      "kind": "army",
+      "detail": "Raids rather than sitting in base."
     }
+  ],
+  "howToBeat": [
+    "Pressure the second Town Center and deny its resources.",
+    "Ram the House of Wisdom if it's placed forward.",
+    "French tools (knights and extra scouts stealing deer) are good against the slow start."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Abbasid In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=zlFwOhCfX3M",
+      "date": "2026-01-01",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"
