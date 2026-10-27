@@ -49,6 +49,14 @@ describe("API calls", () => {
     expect(match?.gameId).toBe(257661876);
   });
 
+  it("reads /games/last, which lists players without the { player } wrapper", async () => {
+    // Shape seen live on 2026-10-27 (patch 11308).
+    const unwrapped = { ...game, teams: game.teams.map((team) => team.map((t) => t.player)) };
+    const match = await fetchLastGame(jsonFetch(unwrapped), 1);
+    expect(match?.me.civ).toBe("english");
+    expect(match?.opponents.map((o) => o.civ)).toEqual(["holy_roman_empire"]);
+  });
+
   it("throws on HTTP errors", async () => {
     const failing: FetchFn = async () => new Response("", { status: 503 });
     await expect(fetchLastGame(failing, 1)).rejects.toThrow("503");

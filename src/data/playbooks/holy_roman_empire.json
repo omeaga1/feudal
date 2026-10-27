@@ -1,6 +1,7 @@
 {
   "civ": "holy_roman_empire",
   "patch": null,
+  "draftedForBuild": 11308,
   "status": "draft",
   "summary": "Infantry civ with a strong relic game. Prelates speed up its economy early, and relics placed in towers and keeps make its defenses much stronger.",
   "spikes": [
@@ -15,6 +16,51 @@
       "label": "Relics in towers and keeps",
       "detail": "Every relic garrisoned in an outpost, tower or keep raises its armor, damage and range by 25%. HRE reaching Castle Age with several relics is hard to break.",
       "answer": "Contest relics as soon as Castle Age hits, and avoid fighting under their relic towers."
+    },
+    {
+      "age": 4,
+      "label": "Landsknecht and Black Riders",
+      "detail": "Landsknechts (from Castle Age) shred infantry, and Black Riders join in Imperial as strong ranged cavalry.",
+      "answer": "Archers and crossbows against Landsknechts, spearmen and cavalry of your own against Black Riders."
+    }
+  ],
+  "scout": [
+    "Prelates inspiring villagers",
+    "Monks heading to relics as soon as Castle Age hits",
+    "Meinwerk Palace or Regnitz Cathedral landmarks"
+  ],
+  "pairings": [
+    {
+      "units": "Men-at-Arms + Archers",
+      "why": "Early tough infantry with ranged support."
+    },
+    {
+      "units": "Landsknecht + Crossbows",
+      "why": "Anti-infantry damage with anti-armor support."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "relics",
+      "detail": "Relics in keeps and towers make their base very hard to take."
+    },
+    {
+      "kind": "army",
+      "detail": "Early Men-at-Arms pressure."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
     }
   ]
 }

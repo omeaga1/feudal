@@ -1,0 +1,59 @@
+{
+  "civ": "order_of_the_dragon",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "HRE variant with gilded units that are much stronger but cost more and take twice the population. Villagers gather faster and carry more.",
+  "spikes": [
+    {
+      "age": 1,
+      "label": "Gilded Spearmen",
+      "detail": "Gilded units are strong from the Dark Age but there are few of them.",
+      "answer": "Out-number them; archers and ranged units trade well."
+    },
+    {
+      "age": 2,
+      "label": "Early Gilded Men-at-Arms",
+      "detail": "Early Gilded Men-at-Arms arrive in Feudal and are very tough.",
+      "answer": "Use crossbows and towers; avoid melee."
+    }
+  ],
+  "scout": [
+    "Gilded Men-at-Arms in Feudal",
+    "Relics garrisoned in towers and keeps"
+  ],
+  "pairings": [
+    {
+      "units": "Gilded Men-at-Arms + Gilded Archers",
+      "why": "A small elite army."
+    },
+    {
+      "units": "Gilded Knights + Gilded Crossbowmen",
+      "why": "Heavy cavalry with anti-armor support."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Small elite army."
+    },
+    {
+      "kind": "relics",
+      "detail": "Relics in keeps."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

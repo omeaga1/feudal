@@ -31,6 +31,21 @@ export interface ApiGame {
   teams: { player: ApiPlayer }[][];
 }
 
+/**
+ * The API is not consistent about team entries: `/games` wraps each player as
+ * `{ player: {...} }`, but `/games/last` lists the player objects directly.
+ */
+type RawTeamEntry = { player: ApiPlayer } | ApiPlayer;
+type RawApiGame = Omit<ApiGame, "teams"> & { teams: RawTeamEntry[][] };
+
+/** Brings either team shape to the wrapped `{ player }` form the rest of the app uses. */
+export function normalizeGame(game: RawApiGame): ApiGame {
+  return {
+    ...game,
+    teams: game.teams.map((team) => team.map((entry) => ("player" in entry ? entry : { player: entry }))),
+  };
+}
+
 export interface MatchPlayer {
   profileId: number;
   name: string;
@@ -82,8 +97,8 @@ async function getJson<T>(fetchFn: FetchFn, path: string): Promise<T> {
 
 /** The player's most recent game. AoE4 World caches this endpoint for polling. */
 export async function fetchLastGame(fetchFn: FetchFn, profileId: number): Promise<Match | null> {
-  const game = await getJson<ApiGame>(fetchFn, `/players/${profileId}/games/last`);
-  return parseMatch(game, profileId);
+  const game = await getJson<RawApiGame>(fetchFn, `/players/${profileId}/games/last`);
+  return parseMatch(normalizeGame(game), profileId);
 }
 
 /** A player's most recent finished and ongoing games, newest first. */
@@ -93,11 +108,11 @@ export async function fetchRecentGames(
   leaderboard = "rm_solo",
   limit = 50,
 ): Promise<ApiGame[]> {
-  const body = await getJson<{ games: ApiGame[] }>(
+  const body = await getJson<{ games: RawApiGame[] }>(
     fetchFn,
     `/players/${profileId}/games?leaderboard=${leaderboard}&limit=${limit}`,
   );
-  return body.games;
+  return body.games.map(normalizeGame);
 }
 
 export interface CivStat {

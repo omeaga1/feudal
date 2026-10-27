@@ -1,0 +1,66 @@
+{
+  "civ": "malians",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Gold and stealth civ. Pit Mines make gold without running out, Cattle replace hunting, and Musofadi units can ambush from stealth.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Javelins and Musofadi",
+      "detail": "Javelin Throwers beat archers, and Musofadi Warriors ambush from stealth.",
+      "answer": "Men-at-Arms and horsemen; scout for hidden units near your lines."
+    },
+    {
+      "age": 3,
+      "label": "Fast veteran upgrades",
+      "detail": "Veteran upgrades are half cost and time, so their army upgrades quickly.",
+      "answer": "Keep pace with blacksmith upgrades."
+    },
+    {
+      "age": 4,
+      "label": "Musofadi Gunners",
+      "detail": "Gunpowder infantry joins in Imperial.",
+      "answer": "Fight before Imperial if you can."
+    }
+  ],
+  "scout": [
+    "Pit Mines on gold",
+    "Cattle at mills",
+    "Toll Outposts on trade routes"
+  ],
+  "pairings": [
+    {
+      "units": "Javelin Throwers + Sofa",
+      "why": "Anti-archer infantry with cavalry."
+    },
+    {
+      "units": "Musofadi Warriors + Donso",
+      "why": "Stealth ambush with spears."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "economy",
+      "detail": "Steady gold from Pit Mines."
+    },
+    {
+      "kind": "trade",
+      "detail": "Toll Outposts add bonus gold."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

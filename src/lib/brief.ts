@@ -16,6 +16,7 @@ export interface MatchupBrief {
   me: Civ;
   enemy: Civ;
   enemyPlaybook?: Playbook;
+  myPlaybook?: Playbook;
   ages: AgeBrief[];
 }
 
@@ -48,5 +49,5 @@ export function buildBrief(myCivId: string, enemyCivId: string, pool: Unit[] = a
     };
   });
 
-  return { me, enemy, enemyPlaybook: getPlaybook(enemy.id), ages };
+  return { me, enemy, enemyPlaybook: getPlaybook(enemy.id), myPlaybook: getPlaybook(me.id), ages };
 }

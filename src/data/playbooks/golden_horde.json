@@ -1,0 +1,66 @@
+{
+  "civ": "golden_horde",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Aggressive batch-training cavalry civ. Starts at max population, trains units in batches and has stables in the Dark Age. Ovoos on stone fund its unique technologies.",
+  "spikes": [
+    {
+      "age": 1,
+      "label": "Dark Age cavalry",
+      "detail": "Stables are available from the Dark Age, so early horseman raids are common.",
+      "answer": "Spearmen early and keep villagers near the Town Center."
+    },
+    {
+      "age": 2,
+      "label": "Torguud and Keshik batches",
+      "detail": "Torguuds and Keshiks come out in batches in Feudal.",
+      "answer": "Spearmen screens and towers near resources."
+    },
+    {
+      "age": 3,
+      "label": "Kipchak Archers",
+      "detail": "Kipchak Archers and Traction Trebuchets join in Castle.",
+      "answer": "Crossbows and cavalry to catch the siege."
+    }
+  ],
+  "scout": [
+    "Stable in the Dark Age",
+    "Golden Tent edict choice",
+    "Fortified Outposts spreading their influence across the map"
+  ],
+  "pairings": [
+    {
+      "units": "Keshik + Torguud",
+      "why": "Heavy cavalry with a sturdy melee line."
+    },
+    {
+      "units": "Kipchak Archers + Keshik",
+      "why": "Ranged cavalry backed by heavy cavalry."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Constant cavalry pressure."
+    },
+    {
+      "kind": "economy",
+      "detail": "Stone economy funds unique technologies."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

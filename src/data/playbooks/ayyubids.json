@@ -1,0 +1,66 @@
+{
+  "civ": "ayyubids",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Flexible House of Wisdom civ. Each of its eight wings unlocks a strong bonus at once, and wings bought in later ages are stronger. Desert Raiders and camels give it a mobile army.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Desert Raider pressure",
+      "detail": "Desert Raiders arrive in Feudal and can switch between a melee and a ranged weapon, so they raid and skirmish well.",
+      "answer": "Keep spearmen and a tower near your gold and wood lines, and avoid chasing raiders into their army."
+    },
+    {
+      "age": 3,
+      "label": "Camel Lancers and siege",
+      "detail": "Camel Lancers and Ghulams form the Castle Age army, backed by Manjaniqs or the Tower of the Sultan to break defenses.",
+      "answer": "Spearmen and crossbows hold the camels; send fast units at the siege."
+    },
+    {
+      "age": 4,
+      "label": "Golden Age and wings",
+      "detail": "Wings researched late give their biggest bonus, and the Golden Age keeps their economy ahead late.",
+      "answer": "Force fights before Imperial; long passive games favor them."
+    }
+  ],
+  "scout": [
+    "Which wing they research first (it shows on the House of Wisdom)",
+    "Buildings packed around the House of Wisdom for the Golden Age",
+    "Berry orchards; like Abbasid they cannot hunt boar"
+  ],
+  "pairings": [
+    {
+      "units": "Desert Raiders + Spearmen",
+      "why": "Fast raiding cavalry with a cheap anti-cavalry screen."
+    },
+    {
+      "units": "Camel Lancers + Manjaniq",
+      "why": "Heavy camels protect siege that out-ranges defenses."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Mobile camel and raider army that forces fights across the map."
+    },
+    {
+      "kind": "economy",
+      "detail": "Golden Age bonuses let them outscale if left alone."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

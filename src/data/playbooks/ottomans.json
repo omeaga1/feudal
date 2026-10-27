@@ -1,0 +1,66 @@
+{
+  "civ": "ottomans",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Military School civ. Schools produce units continuously for free, and Mehter drummers and Janissaries make a strong Castle Age army.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Free unit trickle",
+      "detail": "Military Schools keep producing units for free from Feudal.",
+      "answer": "Pressure early before the free units pile up."
+    },
+    {
+      "age": 3,
+      "label": "Janissaries",
+      "detail": "Janissaries are strong handcannoneers that also repair siege.",
+      "answer": "Mangonels and cavalry against them."
+    },
+    {
+      "age": 4,
+      "label": "Great Bombard",
+      "detail": "Great Bombards out-range defenses.",
+      "answer": "Send cavalry at the bombards."
+    }
+  ],
+  "scout": [
+    "Number of Military Schools",
+    "Sipahi (cost raised this patch)",
+    "Mehters with their army"
+  ],
+  "pairings": [
+    {
+      "units": "Janissaries + Sipahi",
+      "why": "Gunpowder infantry with cavalry."
+    },
+    {
+      "units": "Mehter + any army",
+      "why": "Drums boost the whole group."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Free military school units add up."
+    },
+    {
+      "kind": "defense",
+      "detail": "Strong late siege."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

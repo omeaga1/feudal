@@ -91,6 +91,7 @@ export function LiveMatch() {
             enemyCivId={opponent.civ}
             opponentName={opponent.name}
             opponentProfileId={opponent.profileId}
+            gameBuild={match.patch}
           />
         )}
       </div>

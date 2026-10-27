@@ -247,3 +247,8 @@ p {
   color: var(--muted);
   border-top: 1px solid var(--line);
 }
+
+.plan {
+  margin: 0.25rem 0 0.75rem;
+  padding-left: 1.2rem;
+}

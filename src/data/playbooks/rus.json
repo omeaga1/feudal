@@ -1,0 +1,60 @@
+{
+  "civ": "rus",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Hunting and Wooden Fortress civ. Animals give bounty gold, Hunting Cabins make gold from forests, and Early Knights come in Feudal.",
+  "spikes": [
+    {
+      "age": 2,
+      "label": "Early Knights",
+      "detail": "Rus get Early Knights in Feudal.",
+      "answer": "Spearmen near your resources."
+    },
+    {
+      "age": 3,
+      "label": "Horse Archers and Streltsy",
+      "detail": "Horse Archers in Castle and Streltsy in Imperial.",
+      "answer": "Mangonels against Streltsy and crossbows against horse archers."
+    }
+  ],
+  "scout": [
+    "Hunting Cabins near forests",
+    "Wooden Fortresses",
+    "Scouts hunting deer"
+  ],
+  "pairings": [
+    {
+      "units": "Knights + Horse Archers",
+      "why": "Mobile mixed cavalry."
+    },
+    {
+      "units": "Streltsy + Warrior Monks",
+      "why": "Gunpowder infantry with monk support."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "economy",
+      "detail": "Bounty and Hunting Cabin gold."
+    },
+    {
+      "kind": "army",
+      "detail": "Early Knight pressure."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}

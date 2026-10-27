@@ -1,0 +1,67 @@
+{
+  "civ": "english",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "Defensive farming civ. Cheap farms, Longbowmen and the Network of Castles bonus make it hard to attack near its Town Centers.",
+  "spikes": [
+    {
+      "age": 1,
+      "label": "Vanguard Men-at-Arms",
+      "detail": "English get Vanguard Men-at-Arms in the Dark Age for very early pressure.",
+      "answer": "Wall or palisade your wood line and keep villagers near the Town Center."
+    },
+    {
+      "age": 2,
+      "label": "Longbow push",
+      "detail": "Longbowmen out-range other archers. With Council Hall they train them twice as fast.",
+      "answer": "Horsemen and Men-at-Arms beat longbows; avoid fighting near their Town Center."
+    },
+    {
+      "age": 3,
+      "label": "Fortified base",
+      "detail": "Units near their Town Centers, towers and keeps attack 20% faster. A defensive English player is hard to crack in Castle.",
+      "answer": "Bring siege like Mangonels and Springalds rather than fighting under their buildings."
+    }
+  ],
+  "scout": [
+    "Council Hall means longbow pressure",
+    "Abbey of Kings means sustain and a defensive plan",
+    "King's Palace means a strong Town Center for booming",
+    "Lots of farms early"
+  ],
+  "pairings": [
+    {
+      "units": "Longbowmen + Men-at-Arms",
+      "why": "Long range plus a tough front line."
+    },
+    {
+      "units": "Longbowmen + Spearmen",
+      "why": "Cheap and good against cavalry raids."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "economy",
+      "detail": "Out-farm the opponent and win the late game."
+    },
+    {
+      "kind": "defense",
+      "detail": "Hold the map with towers and keeps, then push with siege."
+    }
+  ],
+  "sources": [
+    {
+      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-27",
+      "kind": "game_data"
+    },
+    {
+      "title": "Age of Empires IV Patch 16.2 balance notes",
+      "url": "https://aoe4.club/en/patchs/age-of-empires-iv-patch-16-2-10475",
+      "date": "2026-06-01",
+      "kind": "patch_notes"
+    }
+  ]
+}
