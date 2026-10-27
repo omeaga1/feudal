@@ -3,55 +3,77 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Cavalry and trade civ. Royal Knights arrive in Feudal, the Town Center works faster each age, and economic upgrades are cheap.",
+  "summary": "Knight civ that takes the map early. The standard French opener is one knight into Pro Scouts and a second stable, about 8 knights by minute 9 and Castle around 12.",
+  "openings": [
+    "Pro Scouts with wheelbarrow: Feudal around 2:30, one knight, then Pro Scouts and an early second stable. They take their own deer first, then yours.",
+    "Against slow starters (2 TC, Byzantines) they open with more scouts and no knight to steal deer."
+  ],
   "spikes": [
     {
       "age": 2,
-      "label": "Royal Knight rush",
-      "detail": "Royal Knights in Feudal hit hard on the charge and raid villagers.",
-      "answer": "Spearmen and a tower near your gold. Keep villagers close to safe spots."
+      "label": "Knight count",
+      "detail": "About 8 knights by minute 9 with 11 to 12 archers behind them.",
+      "answer": "Spearmen and horsemen against knight-archer; spear-rushing their gold also works."
     },
     {
       "age": 3,
-      "label": "Arbalétriers and knights",
-      "detail": "Arbalétriers and Royal Knights together beat most mixed armies in Castle.",
-      "answer": "Spearmen and Men-at-Arms, with a few crossbows."
-    },
-    {
-      "age": 4,
-      "label": "Royal Cannons",
-      "detail": "Royal Cannons and Ribauldequins are cheaper in gold this patch and break armies and buildings.",
-      "answer": "Kill the siege with cavalry or Men-at-Arms."
+      "label": "Castle around 12",
+      "detail": "Guild Hall in Castle around 12, a keep for 810 stone, then Imperial with the Red Palace on the big gold.",
+      "answer": "Hold your deer and gold early so they can't snowball the map."
     }
   ],
   "scout": [
-    "School of Cavalry means fast knight production",
-    "Guild Hall or trade posts means trade",
-    "Royal Knights at your base by Feudal"
+    "Mill plus stable means Pro Scouts and deer stealing",
+    "Extra scouts at your deer early means they're starving your food"
   ],
   "pairings": [
     {
-      "units": "Royal Knights + Archers",
-      "why": "Knights pin units while archers shoot."
-    },
-    {
-      "units": "Arbalétriers + Royal Knights",
-      "why": "A strong Castle Age mix."
+      "units": "Knights + Archers",
+      "why": "Knights with 11 to 12 archers is the standard army."
     }
   ],
   "winConditions": [
     {
       "kind": "army",
-      "detail": "Knight pressure from Feudal on."
+      "detail": "Map control with knights from Feudal on."
     },
     {
       "kind": "trade",
-      "detail": "Strong traders late game."
+      "detail": "Guild Hall and Red Palace in the late game."
     }
+  ],
+  "howToBeat": [
+    "Spear-rush their gold.",
+    "Use spear and horsemen against knight-archer.",
+    "Knights Templar players use the Antioch spear-horse build."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play French In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=ZzZICnaDBsQ",
+      "date": "2025-12-26",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Japanese In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=MOhYn-gXPjE",
+      "date": "2025-12-30",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Abbasid In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=zlFwOhCfX3M",
+      "date": "2026-01-01",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Knights Templar In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=IFUNfAxEhas",
+      "date": "2026-03-19",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

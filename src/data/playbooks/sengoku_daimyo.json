@@ -3,34 +3,37 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Japanese variant with three clans that boost ranged infantry, melee infantry or cavalry. The Matsuri is an early market with food-gathering Yatai.",
+  "summary": "Top of Valdy's tier list. Sengoku players open with three Yatai, take Koka Township and play yumi with yari cavalry, then knights and yumi.",
+  "openings": [
+    "3 Yatai opener with Koka Township, then the Sake Brewery and Sword Hunt Statue."
+  ],
   "spikes": [
     {
       "age": 2,
-      "label": "Clan choice",
-      "detail": "Daimyo Estates are dedicated to a clan that boosts one unit type.",
-      "answer": "Scout which clan and counter it."
+      "label": "Yumi and yari cavalry",
+      "detail": "Yumi and yari cavalry in Feudal.",
+      "answer": "Spear and archer at home, then knights."
     },
     {
       "age": 3,
-      "label": "Tanegashima Ashigaru",
-      "detail": "Gunpowder infantry and Ikko-ikki monks join in Castle.",
-      "answer": "Cavalry against the gunners."
+      "label": "Knights and yumi",
+      "detail": "Their Castle army is knights with yumi.",
+      "answer": "Spearmen and crossbows."
     }
   ],
   "scout": [
-    "Clan dedicated at Daimyo Estates",
-    "Matsuri and Yatai",
-    "Kanabo Samurai or Yari Cavalry in Feudal"
+    "A Matsuri placed forward can be tower-rushed",
+    "Koka Township as their landmark",
+    "Which clan they dedicate"
   ],
   "pairings": [
     {
-      "units": "Yumi Ashigaru + Kanabo Samurai",
-      "why": "Archers behind heavy melee."
+      "units": "Yumi + Yari Cavalry",
+      "why": "Their Feudal army."
     },
     {
-      "units": "Tanegashima Ashigaru + Yari Cavalry",
-      "why": "Gunpowder infantry with cavalry."
+      "units": "Knights + Yumi",
+      "why": "Their Castle army."
     }
   ],
   "winConditions": [
@@ -40,12 +43,28 @@
     },
     {
       "kind": "economy",
-      "detail": "Matsuri food and trade."
+      "detail": "Yatai food from the Matsuri."
     }
+  ],
+  "howToBeat": [
+    "Tower-rush a forward Matsuri.",
+    "Tughlaq players spear or tower rush them."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Sengoku Daimyo In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=s2LUxq_E7pE",
+      "date": "2026-02-02",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Tughlaq Dynasty In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=hWkeU9U6Jjk",
+      "date": "2026-03-30",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

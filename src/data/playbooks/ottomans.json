@@ -3,31 +3,28 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Military School civ. Schools produce units continuously for free, and Mehter drummers and Janissaries make a strong Castle Age army.",
+  "summary": "One of the strongest civs right now. Ottomans fast Castle against 2 TC builds via the Mehmed Imperial Armory, or play Feudal Sipahi with Military Schools.",
+  "openings": [
+    "Fast Castle against 2 TC via the Mehmed Imperial Armory, with Field Works first.",
+    "Feudal Sipahi with Military Schools."
+  ],
   "spikes": [
     {
       "age": 2,
-      "label": "Free unit trickle",
-      "detail": "Military Schools keep producing units for free from Feudal.",
-      "answer": "Pressure early before the free units pile up."
+      "label": "Sipahi and free units",
+      "detail": "Military Schools trickle free units and Sipahi raid in Feudal.",
+      "answer": "Pressure before the free units pile up."
     },
     {
       "age": 3,
       "label": "Janissaries",
       "detail": "Janissaries are strong handcannoneers that also repair siege.",
       "answer": "Mangonels and cavalry against them."
-    },
-    {
-      "age": 4,
-      "label": "Great Bombard",
-      "detail": "Great Bombards out-range defenses.",
-      "answer": "Send cavalry at the bombards."
     }
   ],
   "scout": [
     "Number of Military Schools",
-    "Sipahi (cost raised this patch)",
-    "Mehters with their army"
+    "Mehmed Imperial Armory means a fast Castle"
   ],
   "pairings": [
     {
@@ -42,16 +39,28 @@
   "winConditions": [
     {
       "kind": "army",
-      "detail": "Free military school units add up."
-    },
-    {
-      "kind": "defense",
-      "detail": "Strong late siege."
+      "detail": "Free Military School units add up."
     }
+  ],
+  "howToBeat": [
+    "Against Delhi, Ottomans must stay in Feudal and fight.",
+    "Hit them before the free units stack up."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Ottomans In 2026 | Age of Empires 4",
+      "url": "https://www.youtube.com/watch?v=HdlqFpLRkOk",
+      "date": "2026-01-30",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Delhi Sultanate In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=dRvmG-HSfz4",
+      "date": "2026-02-23",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

@@ -3,49 +3,70 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Research and religion civ. All technology is free but slow, and Scholars capture Sacred Sites early. Elephants make its Castle Age army very tanky.",
+  "summary": "Sacred Site and elephant civ. Delhi plays the same mosque opener every game, raids with Ghazi Raiders, takes Sacred Sites around 6:30 and wins Castle with elephants and archers.",
+  "openings": [
+    "Mosque from the 6th villager, Feudal around 2:30, Dome of the Faith almost every game so scholars cost 80 gold.",
+    "Fast Ghazi Raiders: stable with 5 on wood and the first Ghazi around 4:45."
+  ],
   "spikes": [
     {
       "age": 2,
-      "label": "Early Sacred Sites",
-      "detail": "Scholars are available from the Dark Age, so Delhi can claim Sacred Sites for gold very early.",
-      "answer": "Contest Sacred Sites in Feudal; kill the Scholars."
+      "label": "Sacred Sites",
+      "detail": "Scholars take Sacred Sites one at a time from around 6:30. All three are worth roughly 375 gold a minute.",
+      "answer": "Contest Sacred Sites; letting them hold sites for free is roughly a loss."
     },
     {
       "age": 3,
-      "label": "Elephants",
-      "detail": "Tower Elephants and War Elephants arrive in Castle Age and are hard to kill.",
-      "answer": "Spearmen, crossbows and springalds. Don't send archers into elephants."
+      "label": "Elephants and an early keep",
+      "detail": "House of Learning with 10 or more scholars pre-placed on relics, then elephants with archers and an early keep.",
+      "answer": "Elephants are slow. Janissaries, crossbows and spears counter them."
     }
   ],
   "scout": [
-    "Scholars moving to Sacred Sites in Feudal",
-    "Mosques and Madrasas full of Scholars, which speeds their free research",
-    "Infantry building palisades forward, which signals tower or palisade pressure"
+    "Mosque in their base from the start",
+    "Ghazi Raiders around 4:45",
+    "Scholars moving to Sacred Sites around 6:30"
   ],
   "pairings": [
     {
-      "units": "Spearmen + Archers",
-      "why": "Free blacksmith upgrades make their Feudal army trade well."
+      "units": "Ghazi Raiders + Archers",
+      "why": "The Feudal army, with spears against better cavalry like Sipahi."
     },
     {
-      "units": "War Elephants + Tower Elephants",
-      "why": "Tanky melee and ranged elephants push through defenses."
+      "units": "Elephants + Archers",
+      "why": "The Castle army, with some crossbows and men-at-arms; knights raid."
     }
   ],
   "winConditions": [
     {
       "kind": "sacred_sites",
-      "detail": "Hold Sacred Sites for gold or a religious victory."
+      "detail": "Gold from Sacred Sites, worth about 375 a minute with all three."
     },
     {
       "kind": "army",
-      "detail": "Castle Age elephant push."
+      "detail": "Elephant and archer push in Castle."
     }
+  ],
+  "howToBeat": [
+    "Spear rushes delay their scholars.",
+    "Play Feudal and contest every Sacred Site.",
+    "Mongols tower-rush the gold to stop scholars, and use Keshik against Ghazi."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Delhi Sultanate In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=dRvmG-HSfz4",
+      "date": "2026-02-23",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Mongols In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=Fgiv2WXO5gw",
+      "date": "2026-02-09",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

@@ -3,49 +3,66 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "English variant built on Manors that passively make food and wood. Strong ranged infantry and shock cavalry, with keeps that spawn Earl's Guards.",
+  "summary": "Hobelar dive civ. Lancaster takes sheep fast, puts Manors on the wood line, then dives with 15 to 20 armored Hobelars around minute 9, healing back at the Abbey.",
+  "openings": [
+    "6 on sheep and 3 on gold, Abbey of Kings, Manor on the wood line, 2 stables plus a range and barracks, and 4 Lords for +20% health.",
+    "Spear or tower rush against fast-Castle and 2 TC civs; this only delays their Feudal by about 45 seconds."
+  ],
   "spikes": [
     {
       "age": 2,
-      "label": "Manors and Yeomen",
-      "detail": "Manors give passive income from Feudal, and Yeomen and Hobelars arrive early.",
-      "answer": "Raid the Manors and villagers before the passive income stacks up."
-    },
-    {
-      "age": 3,
-      "label": "Earl's Guard keeps",
-      "detail": "Each keep gives three free Earl's Guards, and active keeps boost Earl's Guards and Demilancers.",
-      "answer": "Don't fight near their keeps; bring siege."
+      "label": "Hobelar dive",
+      "detail": "Around 9 minutes, 15 to 20 Hobelars with ranged armor and Iron Undermesh dive your villagers, then heal at the Abbey and dive again around 11.",
+      "answer": "Spearmen and archers at home, then knights. A tower on your resources helps."
     }
   ],
   "scout": [
-    "Number of Manors",
-    "Sheep spawning at new Town Centers",
-    "Lancaster Castle, which now garrisons eight units"
+    "2 stables in Feudal means a Hobelar dive",
+    "A Manor on the wood line",
+    "A barracks early against your fast Castle means a spear or tower rush"
   ],
   "pairings": [
     {
-      "units": "Yeomen + Hobelars",
-      "why": "Ranged infantry with fast cavalry to clean up."
+      "units": "Hobelars",
+      "why": "Mass armored Hobelars healed by the Abbey."
     },
     {
-      "units": "Earl's Guards + Yeomen",
-      "why": "Heavy infantry with ranged support."
+      "units": "Spearmen + towers",
+      "why": "Their rush against greedy builds."
     }
   ],
   "winConditions": [
     {
-      "kind": "economy",
-      "detail": "Passive Manor income outscales."
-    },
-    {
-      "kind": "defense",
-      "detail": "Keeps backed by Earl's Guards."
+      "kind": "army",
+      "detail": "Repeated Hobelar dives before map food runs out."
     }
+  ],
+  "howToBeat": [
+    "Defend with spear and archer, then go knights.",
+    "Malian players open with a tower.",
+    "They fall off once map food runs out, so survive the dives."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Lancaster In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=XWHfruGPIrM",
+      "date": "2026-01-19",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Sengoku Daimyo In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=s2LUxq_E7pE",
+      "date": "2026-02-02",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Malians In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=ApuGahvKpf0",
+      "date": "2025-12-23",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

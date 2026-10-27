@@ -3,56 +3,79 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Defensive farming civ. Cheap farms, Longbowmen and the Network of Castles bonus make it hard to attack near its Town Centers.",
+  "summary": "Farming civ with strong defenses. English go either a two-Town-Center White Tower boom or Council Hall longbow pressure, and their farm bonus grows every age.",
+  "openings": [
+    "2 TC White Tower: Abbey of Kings with the king out around 5:00, a second Town Center about 6 tiles from the first with farms between, then Castle via the White Tower.",
+    "Council Hall longbow pressure: 5 longbows and 2 to 3 spears, pressuring until 10 to 11 minutes and reaching Castle around 12. Ten longbows kill villagers in one volley."
+  ],
   "spikes": [
     {
-      "age": 1,
-      "label": "Vanguard Men-at-Arms",
-      "detail": "English get Vanguard Men-at-Arms in the Dark Age for very early pressure.",
-      "answer": "Wall or palisade your wood line and keep villagers near the Town Center."
-    },
-    {
       "age": 2,
-      "label": "Longbow push",
-      "detail": "Longbowmen out-range other archers. With Council Hall they train them twice as fast.",
-      "answer": "Horsemen and Men-at-Arms beat longbows; avoid fighting near their Town Center."
+      "label": "Longbow pressure",
+      "detail": "With Council Hall they push with longbows and a few spears until about 11 minutes.",
+      "answer": "Go full archers with a few spears. Don't answer longbows with cavalry."
     },
     {
       "age": 3,
-      "label": "Fortified base",
-      "detail": "Units near their Town Centers, towers and keeps attack 20% faster. A defensive English player is hard to crack in Castle.",
-      "answer": "Bring siege like Mangonels and Springalds rather than fighting under their buildings."
+      "label": "Castle around 12",
+      "detail": "The White Tower works like two stables for knights, and their farm bonus scales each age.",
+      "answer": "Fast Castle, knight raids and Sacred Sites against the 2 TC boom. A White Tower that doesn't cover the farms leaves them raidable."
     }
   ],
   "scout": [
     "Council Hall means longbow pressure",
-    "Abbey of Kings means sustain and a defensive plan",
-    "King's Palace means a strong Town Center for booming",
-    "Lots of farms early"
+    "Abbey of Kings and stone for a second Town Center mean the 2 TC White Tower boom"
   ],
   "pairings": [
     {
-      "units": "Longbowmen + Men-at-Arms",
-      "why": "Long range plus a tough front line."
+      "units": "Knights + Archers",
+      "why": "The current meta pick."
     },
     {
-      "units": "Longbowmen + Spearmen",
-      "why": "Cheap and good against cavalry raids."
+      "units": "Longbows + Spearmen",
+      "why": "The Feudal pressure army."
+    },
+    {
+      "units": "All infantry",
+      "why": "Against camel civs; cavalry against Macedonians."
     }
   ],
   "winConditions": [
     {
       "kind": "economy",
-      "detail": "Out-farm the opponent and win the late game."
+      "detail": "A farm economy that scales into Imperial."
     },
     {
-      "kind": "defense",
-      "detail": "Hold the map with towers and keeps, then push with siege."
+      "kind": "relics",
+      "detail": "Relics and a big gold income in Castle."
     }
+  ],
+  "howToBeat": [
+    "Against a longbow rush go mass archers, not cavalry.",
+    "Against the 2 TC boom: fast Castle, knight raids and Sacred Sites.",
+    "Jeanne d'Arc players raid constantly with knights and deny the White Tower spot."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play English In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=aRkeTDdkd4I",
+      "date": "2025-12-19",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Ottomans In 2026 | Age of Empires 4",
+      "url": "https://www.youtube.com/watch?v=HdlqFpLRkOk",
+      "date": "2026-01-30",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Jeanne D'arc In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=eHln0ZOY9v8",
+      "date": "2026-04-06",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

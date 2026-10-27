@@ -3,55 +3,82 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "Defensive economy civ built on Cisterns and Aqueducts. Olive Oil hires mercenaries from other civs, and Cataphracts and Greek Fire units make its Castle Age army strong.",
+  "summary": "Slow-starting mercenary civ. Byzantines chain Cisterns next to resources, hire javelin or longbow mercenaries in Feudal, and hit a Castle spike with free mercenaries from the Golden Horn Tower.",
+  "openings": [
+    "Sheep start with 2 on stone and 1 on gold, Grand Winery Feudal around 2:30 to 2:40, javelins around 5:50, then a push with about 8 javelins or 10 longbows plus spears.",
+    "Against a spear rush they hold 5 villagers on wood for a barracks and make 5 to 7 spears."
+  ],
   "spikes": [
     {
-      "age": 1,
-      "label": "Limitanei early",
-      "detail": "Limitanei spearmen are available from the Dark Age and can form a shield wall.",
-      "answer": "Don't fight them head on with melee; archers and cavalry raids on their villagers work better."
-    },
-    {
       "age": 2,
-      "label": "Mercenaries from Olive Oil",
-      "detail": "From Feudal they can hire other civs' unique units with Olive Oil, so their army mix can surprise you.",
-      "answer": "Scout the Mercenary House and adapt to what comes out of it."
+      "label": "Mercenary push",
+      "detail": "Around 6 minutes they push with javelin or longbow mercenaries and spears, sometimes with a single ram.",
+      "answer": "Archers and spears; keep map control so they are forced onto farms early."
     },
     {
       "age": 3,
-      "label": "Cataphracts and Greek Fire",
-      "detail": "Cataphracts trample through infantry and Cheirosiphons spray Greek Fire. Their Castle Age army hits very hard.",
-      "answer": "Spearmen in big numbers, crossbows and focus-firing the Cheirosiphons. Avoid clumping."
+      "label": "Golden Horn Tower",
+      "detail": "The Golden Horn Tower gives a free batch of mercenaries every 90 seconds. Their Castle army is cataphracts, javelins and spears with monks.",
+      "answer": "Mass spearmen is the only real counter to that army; they answer with springalds."
     }
   ],
   "scout": [
-    "Cisterns and Aqueduct lines, which mean they plan to stay and boom",
-    "Workers on Olive Groves, berries and fish, which fund mercenaries",
-    "Mercenary House location and which units it trains"
+    "Grand Winery as their Feudal landmark",
+    "Cisterns chained next to their resources",
+    "A barracks held back until they see yours means they expect a spear rush"
   ],
   "pairings": [
     {
-      "units": "Limitanei + Archers",
-      "why": "A tanky front line that lets archers shoot freely."
+      "units": "Cataphracts + Javelins + Spearmen",
+      "why": "Their standard Castle army, with monks for healing."
     },
     {
-      "units": "Cataphracts + Varangian Guard",
-      "why": "Shock cavalry and heavy infantry together overwhelm a mixed army."
+      "units": "Javelins or Longbows + Spearmen",
+      "why": "The Feudal mercenary push."
     }
   ],
   "winConditions": [
     {
-      "kind": "defense",
-      "detail": "Strong cistern-boosted base that is hard to break."
+      "kind": "army",
+      "detail": "Free mercenaries from the Golden Horn Tower in Castle."
     },
     {
-      "kind": "army",
-      "detail": "Castle Age timing with Cataphracts and Greek Fire."
+      "kind": "defense",
+      "detail": "Cisterns make their base strong once set up."
     }
+  ],
+  "howToBeat": [
+    "Spear or tower rushes punish the slow setup.",
+    "Take map control so they are forced onto farms early.",
+    "Chinese tax pressure, French extra scouts and a Japanese spear rush into units are all built to punish them."
   ],
   "sources": [
     {
-      "title": "AoE4 World game data (units, civ bonuses), synced for this draft",
+      "title": "Valdy: How To Play Byzantines In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=xNyOKJOb-qE",
+      "date": "2026-01-07",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Chinese In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=EKnex4_ESkU",
+      "date": "2026-01-03",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play French In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=ZzZICnaDBsQ",
+      "date": "2025-12-26",
+      "kind": "video"
+    },
+    {
+      "title": "Valdy: How To Play Japanese In 2026 | AoE4",
+      "url": "https://www.youtube.com/watch?v=MOhYn-gXPjE",
+      "date": "2025-12-30",
+      "kind": "video"
+    },
+    {
+      "title": "AoE4 World game data (units, civ bonuses)",
       "url": "https://github.com/aoe4world/data",
       "date": "2026-10-27",
       "kind": "game_data"

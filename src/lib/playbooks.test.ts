@@ -26,6 +26,15 @@ describe("playbooks", () => {
     }
   });
 
+  it("backs every civ with guide videos except Zhu Xi's Legacy, whose video was blocked", () => {
+    for (const p of playbooks) {
+      const videos = (p.sources ?? []).filter((s) => s.kind === "video");
+      if (p.civ === "zhu_xis_legacy") continue;
+      expect(videos.length, p.civ).toBeGreaterThan(0);
+      expect(p.howToBeat?.length, p.civ).toBeGreaterThan(0);
+    }
+  });
+
   it("flags a playbook written for an older build", () => {
     const p = getPlaybook("english")!;
     expect(isStale({ ...p, draftedForBuild: 11308 }, 11400)).toBe(true);

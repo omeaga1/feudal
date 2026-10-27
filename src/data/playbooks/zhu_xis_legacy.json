@@ -43,6 +43,10 @@
       "detail": "Late gunpowder army."
     }
   ],
+  "howToBeat": [
+    "Pressure before Early Grenadiers arrive in Castle.",
+    "Kill Imperial Officials to cut their tax gold."
+  ],
   "sources": [
     {
       "title": "AoE4 World game data (units, civ bonuses), synced for this draft",

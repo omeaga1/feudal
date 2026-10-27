@@ -39,12 +39,16 @@ export interface Playbook {
   status: "draft" | "reviewed";
   summary: string;
   spikes: PowerSpike[];
+  /** Builds and openings players use with this civ right now, with timings. */
+  openings?: string[];
   /** Early signs that tell you which plan this civ is on. */
   scout?: string[];
   /** Unit combinations this civ likes to field. */
   pairings?: UnitPairing[];
   /** How this civ usually wins games. */
   winConditions?: WinCondition[];
+  /** How players beat this civ, taken from guides and matchup advice. */
+  howToBeat?: string[];
   sources?: PlaybookSource[];
 }
 
