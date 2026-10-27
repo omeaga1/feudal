@@ -1,0 +1,1122 @@
+[
+  {
+    "id": "cistern-of-the-first-hill-2",
+    "name": "Cistern of the First Hill",
+    "civs": [
+      "by"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Cistern. Unlocks the Pilgrim Flask ability on non-siege military units, which can be activated to increase health regeneration by 25 per second for 6 seconds.\nFlasks refill every 30 seconds to a maximum of 20 active flasks.",
+    "icon": "https://data.aoe4world.com/images/buildings/cistern-of-the-first-hill-2.png"
+  },
+  {
+    "id": "foreign-engineering-company-3",
+    "name": "Foreign Engineering Company",
+    "civs": [
+      "by"
+    ],
+    "builtInAge": 3,
+    "description": "Allows production of Nest of Bees, Huihui Pao, and Royal Cannons with Olive Oil. Mercenaries receive various unique technologies from their original civilization.",
+    "icon": "https://data.aoe4world.com/images/buildings/foreign-engineering-company-3.png"
+  },
+  {
+    "id": "golden-horn-tower-2",
+    "name": "Golden Horn Tower",
+    "civs": [
+      "by"
+    ],
+    "builtInAge": 2,
+    "description": "Periodically produces unlocked Mercenary Units for free.",
+    "icon": "https://data.aoe4world.com/images/buildings/golden-horn-tower-2.png"
+  },
+  {
+    "id": "grand-winery-1",
+    "name": "Grand Winery",
+    "civs": [
+      "by"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Mill and Monastery. Nearby Villagers gather +60% Olive Oil from Berry Bushes and Olive Groves. Relics garrisoned generate Olive Oil instead of Gold.",
+    "icon": "https://data.aoe4world.com/images/buildings/grand-winery-1.png"
+  },
+  {
+    "id": "imperial-hippodrome-1",
+    "name": "Imperial Hippodrome",
+    "civs": [
+      "by"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Stable. Contains the Triumph ability that can be activated with Supply Points to increase cavalry melee damage, move speed, and health regeneration. \nComes with 10 Supply Points and generates one every 25 seconds. Earn more points by defeating enemy units.",
+    "icon": "https://data.aoe4world.com/images/buildings/imperial-hippodrome-1.png"
+  },
+  {
+    "id": "palatine-school-3",
+    "name": "Palatine School",
+    "civs": [
+      "by"
+    ],
+    "builtInAge": 3,
+    "description": "When training Limitanei, Varangian Guards, Cataphracts, or Cheirosiphons there is a 30% chance to also spawn one at this Landmark.",
+    "icon": "https://data.aoe4world.com/images/buildings/palatine-school-3.png"
+  },
+  {
+    "id": "astronomical-clocktower-2",
+    "name": "Astronomical Clocktower",
+    "civs": [
+      "ch"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Siege Workshop and produces siege engines with +50% health.",
+    "icon": "https://data.aoe4world.com/images/buildings/astronomical-clocktower-2.png"
+  },
+  {
+    "id": "barbican-of-the-sun-1",
+    "name": "Barbican of the Sun",
+    "civs": [
+      "ch"
+    ],
+    "builtInAge": 1,
+    "description": "Fires a long range hand cannon and adds arrowslits while garrisoned. Can be upgraded with weaponry and offers vision into Stealth Forests. \nImperial Officials can drop off taxes at this building.",
+    "icon": "https://data.aoe4world.com/images/buildings/barbican-of-the-sun-1.png"
+  },
+  {
+    "id": "imperial-academy-1",
+    "name": "Imperial Academy",
+    "civs": [
+      "ch"
+    ],
+    "builtInAge": 1,
+    "description": "Nearby buildings generate 100% more Gold from taxes. Imperial Officials produced here cost 30% less resources and can drop off taxes at this building.",
+    "icon": "https://data.aoe4world.com/images/buildings/imperial-academy-1.png"
+  },
+  {
+    "id": "imperial-palace-2",
+    "name": "Imperial Palace",
+    "civs": [
+      "ch"
+    ],
+    "builtInAge": 2,
+    "description": "A spy Landmark with 28 tile sight radius and the Imperial Spies ability. Activate to view location of enemy workers for 15 seconds.\nImperial Officials can drop off taxes at this building.",
+    "icon": "https://data.aoe4world.com/images/buildings/imperial-palace-2.png"
+  },
+  {
+    "id": "spirit-way-3",
+    "name": "Spirit Way",
+    "civs": [
+      "ch"
+    ],
+    "builtInAge": 3,
+    "description": "Dynasty technology can be researched here for -50% cost and +150% research speed. When a dynasty unit is killed, nearby units receive +20% attack speed and +20 health over 10 seconds.\nImperial Officials can drop off taxes at this building.",
+    "icon": "https://data.aoe4world.com/images/buildings/spirit-way-3.png"
+  },
+  {
+    "id": "compound-of-the-defender-2",
+    "name": "Compound of the Defender",
+    "civs": [
+      "de"
+    ],
+    "builtInAge": 2,
+    "description": "Infantry units can build Stone Walls, Gates, and Towers. Reduces Stone cost of buildings and their emplacements by 25%.\nContains defensive technologies that ignore building and Imperial Age (IV) requirements.",
+    "icon": "https://data.aoe4world.com/images/buildings/compound-of-the-defender-2.png"
+  },
+  {
+    "id": "dome-of-the-faith-1",
+    "name": "Dome of the Faith",
+    "civs": [
+      "de"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Mosque. Produce Scholars at a discount of 55 Gold.",
+    "icon": "https://data.aoe4world.com/images/buildings/dome-of-the-faith-1.png"
+  },
+  {
+    "id": "hisar-academy-3",
+    "name": "Hisar Academy",
+    "civs": [
+      "de"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as Madrasa. Generates +12 Food per minute based on the number of technologies researched. Does not apply to emplacements.",
+    "icon": "https://data.aoe4world.com/images/buildings/hisar-academy-3.png"
+  },
+  {
+    "id": "house-of-learning-2",
+    "name": "House of Learning",
+    "civs": [
+      "de"
+    ],
+    "builtInAge": 2,
+    "description": "Grants no immediate bonus other than advancing to the next Age, but contains many unique technologies.",
+    "icon": "https://data.aoe4world.com/images/buildings/house-of-learning-2.png"
+  },
+  {
+    "id": "palace-of-the-sultan-3",
+    "name": "Palace of the Sultan",
+    "civs": [
+      "de"
+    ],
+    "builtInAge": 3,
+    "description": "Automatically produces Sultan's Elite Tower Elephants. Garrison up to 4 Scholars in the Landmark to increase production speed.",
+    "icon": "https://data.aoe4world.com/images/buildings/palace-of-the-sultan-3.png"
+  },
+  {
+    "id": "tower-of-victory-1",
+    "name": "Tower of Victory",
+    "civs": [
+      "de"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Blacksmith.\nEnables Tower of Victory, Mosques, and Madrasas to increase the attack speed of infantry by +20% when produced within their influence.",
+    "icon": "https://data.aoe4world.com/images/buildings/tower-of-victory-1.png"
+  },
+  {
+    "id": "abbey-of-kings-1",
+    "name": "Abbey of Kings",
+    "civs": [
+      "en"
+    ],
+    "builtInAge": 1,
+    "description": "Heals all nearby friendly units that are out of combat by +6 every 1 seconds. May also Crown a King, a powerful cavalry leader with a healing aura. Queues production of a free King upon completion.",
+    "icon": "https://data.aoe4world.com/images/buildings/abbey-of-kings-1.png"
+  },
+  {
+    "id": "berkshire-palace-3",
+    "name": "Berkshire Palace",
+    "civs": [
+      "en"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Keep with increased health and powerful incendiary arrows. All weapons have 14.5 tiles of range.",
+    "icon": "https://data.aoe4world.com/images/buildings/berkshire-palace-3.png"
+  },
+  {
+    "id": "council-hall-1",
+    "name": "Council Hall",
+    "civs": [
+      "en"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as an Archery Range with all units and technologies. Works +100% faster.\nLongbowmen produced from this landmark are -5% cheaper.",
+    "icon": "https://data.aoe4world.com/images/buildings/council-hall-1.png"
+  },
+  {
+    "id": "kings-palace-2",
+    "name": "King's Palace",
+    "civs": [
+      "en"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Town Center. Produces Villagers +10% faster.",
+    "icon": "https://data.aoe4world.com/images/buildings/kings-palace-2.png"
+  },
+  {
+    "id": "the-white-tower-2",
+    "name": "The White Tower",
+    "civs": [
+      "en"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Keep with all the behaviors, technologies, and bonuses. Works 75% faster.",
+    "icon": "https://data.aoe4world.com/images/buildings/the-white-tower-2.png"
+  },
+  {
+    "id": "wynguard-palace-3",
+    "name": "Wynguard Palace",
+    "civs": [
+      "en"
+    ],
+    "builtInAge": 3,
+    "description": "Allows production of 4 battalions: Wynguard Army, Wynguard Rangers, Wynguard Raiders, and Wynguard Footmen.",
+    "icon": "https://data.aoe4world.com/images/buildings/wynguard-palace-3.png"
+  },
+  {
+    "id": "chamber-of-commerce-1",
+    "name": "Chamber of Commerce",
+    "civs": [
+      "fr"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Market. Trains one free Trader for each economic technology researched.",
+    "icon": "https://data.aoe4world.com/images/buildings/chamber-of-commerce-1.png"
+  },
+  {
+    "id": "college-of-artillery-3",
+    "name": "College of Artillery",
+    "civs": [
+      "fr"
+    ],
+    "builtInAge": 3,
+    "description": "Produces the Royal versions of the Cannon and Ribauldequin, which do +30% more damage and cost -25% gold.\nRoyal Cannons gain the Artillery Shot ability and Royal Ribauldequins gain the Fortify ability.\nContains Siege and Gunpowder technologies, trains units and researches technologies 50% faster.",
+    "icon": "https://data.aoe4world.com/images/buildings/college-of-artillery-3.png"
+  },
+  {
+    "id": "guild-hall-2",
+    "name": "Guild Hall",
+    "civs": [
+      "fr"
+    ],
+    "builtInAge": 2,
+    "description": "Generates and stores resources over time, the more resources stored the faster they are generated. Select between Food, Wood, Stone, or Gold. Generates stone at half the rate.",
+    "icon": "https://data.aoe4world.com/images/buildings/guild-hall-2.png"
+  },
+  {
+    "id": "red-palace-3",
+    "name": "Red Palace",
+    "civs": [
+      "fr"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Keep. Features high-damage arbalest emplacements. Each garrisoned unit adds an additional arbalest.\nActivates an Arbalest emplacement on all Keeps and Town Centers.",
+    "icon": "https://data.aoe4world.com/images/buildings/red-palace-3.png"
+  },
+  {
+    "id": "royal-institute-2",
+    "name": "Royal Institute",
+    "civs": [
+      "fr"
+    ],
+    "builtInAge": 2,
+    "description": "Houses all technologies unique to the French. Research is -30% cheaper here and ignores Age requirements.",
+    "icon": "https://data.aoe4world.com/images/buildings/royal-institute-2.png"
+  },
+  {
+    "id": "school-of-cavalry-1",
+    "name": "School of Cavalry",
+    "civs": [
+      "fr"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Stable. All of your stables produce units +20% faster.",
+    "icon": "https://data.aoe4world.com/images/buildings/school-of-cavalry-1.png"
+  },
+  {
+    "id": "aachen-chapel-1",
+    "name": "Aachen Chapel",
+    "civs": [
+      "hr"
+    ],
+    "builtInAge": 1,
+    "description": "Inspires units in a large radius so long as a Prelate is garrisoned.\nActs as a drop-off point for all resource types.",
+    "icon": "https://data.aoe4world.com/images/buildings/aachen-chapel-1.png"
+  },
+  {
+    "id": "burgrave-palace-2",
+    "name": "Burgrave Palace",
+    "civs": [
+      "hr"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Barracks that produces 400% faster.\nInfantry gains +50% charge damage.",
+    "icon": "https://data.aoe4world.com/images/buildings/burgrave-palace-2.png"
+  },
+  {
+    "id": "elzbach-palace-3",
+    "name": "Elzbach Palace",
+    "civs": [
+      "hr"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Keep with +50% health. All buildings within influence take -25% less damage.\nCan train 8 Black Riders per Keep instead of 5.",
+    "icon": "https://data.aoe4world.com/images/buildings/elzbach-palace-3.png"
+  },
+  {
+    "id": "meinwerk-palace-1",
+    "name": "Meinwerk Palace",
+    "civs": [
+      "hr"
+    ],
+    "builtInAge": 1,
+    "description": "Acts like a Blacksmith. Technology researched here costs -50% and researches 50% faster. Contains Technologies unique to this Landmark.",
+    "icon": "https://data.aoe4world.com/images/buildings/meinwerk-palace-1.png"
+  },
+  {
+    "id": "palace-of-swabia-3",
+    "name": "Palace of Swabia",
+    "civs": [
+      "hr"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Town Center. Produces Villagers +200% faster and at -66% cost.\nCost to build this Landmark is reduced by -10%.",
+    "icon": "https://data.aoe4world.com/images/buildings/palace-of-swabia-3.png"
+  },
+  {
+    "id": "regnitz-cathedral-2",
+    "name": "Regnitz Cathedral",
+    "civs": [
+      "hr"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Monastery. All Relics generate +100% gold while garrisoned.",
+    "icon": "https://data.aoe4world.com/images/buildings/regnitz-cathedral-2.png"
+  },
+  {
+    "id": "abbey-of-kings-1",
+    "name": "Abbey of Kings",
+    "civs": [
+      "hl"
+    ],
+    "builtInAge": 1,
+    "description": "Heals all nearby friendly units that are out of combat by +6 every 1 seconds.\nOrdain up to 4 Lords of Lancaster, powerful melee leaders which increase the max health of nearby military units by +5% each. Queues production of a free Lord of Lancaster upon completion.",
+    "icon": "https://data.aoe4world.com/images/buildings/abbey-of-kings-1.png"
+  },
+  {
+    "id": "berkshire-palace-3",
+    "name": "Berkshire Palace",
+    "civs": [
+      "hl"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Keep with increased health and powerful incendiary arrows. All weapons have 14.5 tiles of range.\nIncreases the maximum damage granted by a House Unified to +6. Also grants 3 Earl's Guard upon being fully constructed.",
+    "icon": "https://data.aoe4world.com/images/buildings/berkshire-palace-3.png"
+  },
+  {
+    "id": "kings-college-2",
+    "name": "King's College",
+    "civs": [
+      "hl"
+    ],
+    "builtInAge": 2,
+    "description": "Reduces research costs of all technologies by -20%.\nContains unique Military technologies for House of Lancaster.",
+    "icon": "https://data.aoe4world.com/images/buildings/kings-college-2.png"
+  },
+  {
+    "id": "lancaster-castle-1",
+    "name": "Lancaster Castle",
+    "civs": [
+      "hl"
+    ],
+    "builtInAge": 1,
+    "description": "Defensive Landmark that can do a one-time muster of units in each Age. The cost of mustering units is reduced by 50 resources per Manor.\nGrants all Manors +500 health and an arrowslit emplacement.",
+    "icon": "https://data.aoe4world.com/images/buildings/lancaster-castle-1.png"
+  },
+  {
+    "id": "the-white-tower-2",
+    "name": "The White Tower",
+    "civs": [
+      "hl"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Keep with all the behaviors, technologies, and bonuses.\nGrants 3 Earl's Guard upon being fully constructed.",
+    "icon": "https://data.aoe4world.com/images/buildings/the-white-tower-2.png"
+  },
+  {
+    "id": "wynguard-palace-3",
+    "name": "Wynguard Palace",
+    "civs": [
+      "hl"
+    ],
+    "builtInAge": 3,
+    "description": "Allows the production of 4 battalions: Wynguard Army, Earl's Retinue, Garrison Command, and Gunpowder Contingent.",
+    "icon": "https://data.aoe4world.com/images/buildings/wynguard-palace-3.png"
+  },
+  {
+    "id": "castle-of-the-crow-3",
+    "name": "Castle of the Crow",
+    "civs": [
+      "ja"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Castle. Can periodically spawn Treasure Caravans from selected neutral Trading Posts to provide a large amount of Food, Wood, Gold, and some Stone when reaching the Castle of the Crow.",
+    "icon": "https://data.aoe4world.com/images/buildings/castle-of-the-crow-3.png"
+  },
+  {
+    "id": "floating-gate-2",
+    "name": "Floating Gate",
+    "civs": [
+      "ja"
+    ],
+    "builtInAge": 2,
+    "description": "Produces a Shinto Priest carrying a Yorishiro every 2 minutes. The first priest spawns instantly. Deposit up to 4 Yorishiro in buildings to provide unique bonuses.\n \nUnlocks Shinto Shrines, which contains unique Shinto technologies and produces Shinto Priests.",
+    "icon": "https://data.aoe4world.com/images/buildings/floating-gate-2.png"
+  },
+  {
+    "id": "koka-township-1",
+    "name": "Koka Township",
+    "civs": [
+      "ja"
+    ],
+    "builtInAge": 1,
+    "description": "Can produce Shinobi espionage units which specialize in scouting, sabotage, and assassination. Queues production of a free Shinobi upon completion.",
+    "icon": "https://data.aoe4world.com/images/buildings/koka-township-1.png"
+  },
+  {
+    "id": "kura-storehouse-1",
+    "name": "Kura Storehouse",
+    "civs": [
+      "ja"
+    ],
+    "builtInAge": 1,
+    "description": "Universal drop-off location that creates a Farm around the Landmark every 50 seconds — generates Wood instead when farmland becomes full.",
+    "icon": "https://data.aoe4world.com/images/buildings/kura-storehouse-1.png"
+  },
+  {
+    "id": "tanegashima-gunsmith-3",
+    "name": "Tanegashima Gunsmith",
+    "civs": [
+      "ja"
+    ],
+    "builtInAge": 3,
+    "description": "Stockpiles weapon supplies every 30 seconds that can be used to instantly produce gunpowder units - comes with 2 stockpiles. Produces Ozutsu, a unique heavy ranged gunpowder infantry with siege damage. Allows access to Ribauldequins.",
+    "icon": "https://data.aoe4world.com/images/buildings/tanegashima-gunsmith-3.png"
+  },
+  {
+    "id": "temple-of-equality-2",
+    "name": "Temple of Equality",
+    "civs": [
+      "ja"
+    ],
+    "builtInAge": 2,
+    "description": "Produces Buddhist Monks and contains unique Buddhist technologies. Buddhist Monks and Buddhist Temples provide support in combat by decreasing enemy damage with Sohei's Sutra. Buddhist monks enhance the damage of nearby units when using Buddhist Conversion.\n \nAlso allows construction of 4 additional Buddhist Temples.",
+    "icon": "https://data.aoe4world.com/images/buildings/temple-of-equality-2.png"
+  },
+  {
+    "id": "chamber-of-commerce-1",
+    "name": "Chamber of Commerce",
+    "civs": [
+      "je"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Market. Trains one free Trader for each economic technology researched.",
+    "icon": "https://data.aoe4world.com/images/buildings/chamber-of-commerce-1.png"
+  },
+  {
+    "id": "college-of-artillery-3",
+    "name": "College of Artillery",
+    "civs": [
+      "je"
+    ],
+    "builtInAge": 3,
+    "description": "Produces the Royal versions of the Cannon and Ribauldequin, which do +30% more damage and cost -25% gold.\nRoyal Cannons gain the Artillery Shot ability and Royal Ribauldequins gain the Fortify ability.\nContains Siege and Gunpowder technologies, trains units and researches technologies 50% faster.",
+    "icon": "https://data.aoe4world.com/images/buildings/college-of-artillery-3.png"
+  },
+  {
+    "id": "guild-hall-2",
+    "name": "Guild Hall",
+    "civs": [
+      "je"
+    ],
+    "builtInAge": 2,
+    "description": "Generates and stores resources over time, the more resources stored the faster they are generated. Select between Food, Wood, Stone, or Gold. Generates stone at half the rate.",
+    "icon": "https://data.aoe4world.com/images/buildings/guild-hall-2.png"
+  },
+  {
+    "id": "red-palace-3",
+    "name": "Red Palace",
+    "civs": [
+      "je"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Keep. Features high-damage arbalest emplacements. Each garrisoned unit adds an additional arbalest.\nActivates an Arbalest emplacement on all Keeps and Town Centers.",
+    "icon": "https://data.aoe4world.com/images/buildings/red-palace-3.png"
+  },
+  {
+    "id": "royal-institute-2",
+    "name": "Royal Institute",
+    "civs": [
+      "je"
+    ],
+    "builtInAge": 2,
+    "description": "Houses unique technologies. Research is -30% cheaper here and ignores Age requirements.",
+    "icon": "https://data.aoe4world.com/images/buildings/royal-institute-2.png"
+  },
+  {
+    "id": "school-of-cavalry-1",
+    "name": "School of Cavalry",
+    "civs": [
+      "je"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Stable. All of your stables produce units +20% faster.",
+    "icon": "https://data.aoe4world.com/images/buildings/school-of-cavalry-1.png"
+  },
+  {
+    "id": "dragon-pavilion-2",
+    "name": "Dragon Pavilion",
+    "civs": [
+      "jin"
+    ],
+    "builtInAge": 2,
+    "description": "Grants a free Meng'an Mouke Emplacement to all Town Centers and comes with a Meng'an Mouke Emplacement.\nTrains Emissaries at a 33% discount and spawns 1 free Emissary upon completion.\nSpawns 3 Grassland Posts. Only one Grassland may be constructed on these Grassland Posts.",
+    "icon": "https://data.aoe4world.com/images/buildings/dragon-pavilion-2.png"
+  },
+  {
+    "id": "flower-pagoda-1",
+    "name": "Flower Pagoda",
+    "civs": [
+      "jin"
+    ],
+    "builtInAge": 1,
+    "description": "Grants the ability to plant a Flower Garden which improves the gather rate of Villagers and the attack speed of non-siege military units as long as they are in the Flower Garden.\nSpawns 3 Grassland Posts. Only one Grassland may be constructed on these Grassland Posts.",
+    "icon": "https://data.aoe4world.com/images/buildings/flower-pagoda-1.png"
+  },
+  {
+    "id": "great-pasture-1",
+    "name": "Great Pasture",
+    "civs": [
+      "jin"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a War Stable and Grassland.\nSpawns 3 Grassland Posts. Only one Grassland may be constructed on these Grassland Posts.",
+    "icon": "https://data.aoe4world.com/images/buildings/great-pasture-1.png"
+  },
+  {
+    "id": "great-wall-bastion-3",
+    "name": "Great Wall Bastion",
+    "civs": [
+      "jin"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Keep with 4 mounted Bed Crossbow weapons instead of regular emplacements.\nIncreases the damage of all Bed Crossbow projectiles by +3.\nSpawns 3 Grassland Posts. Only one Grassland may be constructed on these Grassland Posts.",
+    "icon": "https://data.aoe4world.com/images/buildings/great-wall-bastion-3.png"
+  },
+  {
+    "id": "mountain-hall-2",
+    "name": "Mountain Hall",
+    "civs": [
+      "jin"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Monastery and Monasteries are 50% cheaper.\nGenerate Karma by gathering resources near Monasteries. Losing units decreases Karma. At max Karma, receive the blessing of the Four Heavenly Kings for 60 seconds.\n- Buildings regenerate 50 health per second.\n- Villagers gather from Farms +75% faster.\n- Relics generate +300% more gold.\n- Defenses attack +50% faster.\nSpawns 3 Grassland Posts. Only one Grassland may be constructed on these Grassland Posts.",
+    "icon": "https://data.aoe4world.com/images/buildings/mountain-hall-2.png"
+  },
+  {
+    "id": "cistern-of-the-first-hill-2",
+    "name": "Cistern of the First Hill",
+    "civs": [
+      "mac"
+    ],
+    "builtInAge": 2,
+    "description": "Charges an ability used for boosting the work rate of military and research buildings. If used on a Mining Camp, Lumber Camp, or Farm, begin earning 160 Gold, Wood, or Food over 60 seconds.\nHolds 9 charges.",
+    "icon": "https://data.aoe4world.com/images/buildings/cistern-of-the-first-hill-2.png"
+  },
+  {
+    "id": "foreign-engineering-company-3",
+    "name": "Foreign Engineering Company",
+    "civs": [
+      "mac"
+    ],
+    "builtInAge": 3,
+    "description": "Allows production of Nest of Bees, Huihui Pao, and Royal Cannons for Silver.",
+    "icon": "https://data.aoe4world.com/images/buildings/foreign-engineering-company-3.png"
+  },
+  {
+    "id": "golden-horn-tower-2",
+    "name": "Golden Horn Tower",
+    "civs": [
+      "mac"
+    ],
+    "builtInAge": 2,
+    "description": "Defensive building equipped with Crossbow emplacements and large Line of Sight. Generates batches of Crossbowman for free over time. \nDetects units in stealth or disguises.",
+    "icon": "https://data.aoe4world.com/images/buildings/golden-horn-tower-2.png"
+  },
+  {
+    "id": "grand-winery-1",
+    "name": "Grand Winery",
+    "civs": [
+      "mac"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Mill and Monastery. Villagers gather Food 30% faster when affected by its aura. Relics garrisoned generate Silver instead of Gold.",
+    "icon": "https://data.aoe4world.com/images/buildings/grand-winery-1.png"
+  },
+  {
+    "id": "imperial-hippodrome-1",
+    "name": "Imperial Hippodrome",
+    "civs": [
+      "mac"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Stable. A powerful Champion Scout, Horseman, and Riddari are trained for free over time.\nChampions provide auras that increase damage of torches, enhance damage of cavalry, and inspire infantry to move faster.",
+    "icon": "https://data.aoe4world.com/images/buildings/imperial-hippodrome-1.png"
+  },
+  {
+    "id": "palatine-school-3",
+    "name": "Palatine School",
+    "civs": [
+      "mac"
+    ],
+    "builtInAge": 3,
+    "description": "Elite Cataphracts can be rapidly produced in batches at this Landmark for Silver.",
+    "icon": "https://data.aoe4world.com/images/buildings/palatine-school-3.png"
+  },
+  {
+    "id": "farimba-garrison-2",
+    "name": "Farimba Garrison",
+    "civs": [
+      "ma"
+    ],
+    "builtInAge": 2,
+    "description": "Enlist one of three units to enhance your roster for free: the Mansa Musofadi, Mansa Javelineer, or Freeborn Warrior. The other two can be enlisted for an additional cost.",
+    "icon": "https://data.aoe4world.com/images/buildings/farimba-garrison-2.png"
+  },
+  {
+    "id": "fort-of-the-huntress-3",
+    "name": "Fort of the Huntress",
+    "civs": [
+      "ma"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Keep that shoots poison arrows. Infantry units nearby the Landmark enter Stealth for 30 seconds.\nMusofadi Warriors and Musofadi Gunners gain First Strike, dealing more damage when breaking Stealth with an attack.",
+    "icon": "https://data.aoe4world.com/images/buildings/fort-of-the-huntress-3.png"
+  },
+  {
+    "id": "grand-fulani-corral-2",
+    "name": "Grand Fulani Corral",
+    "civs": [
+      "ma"
+    ],
+    "builtInAge": 2,
+    "description": "Nearby cattle provide 18 Food per minute.",
+    "icon": "https://data.aoe4world.com/images/buildings/grand-fulani-corral-2.png"
+  },
+  {
+    "id": "griot-bara-3",
+    "name": "Griot Bara",
+    "civs": [
+      "ma"
+    ],
+    "builtInAge": 3,
+    "description": "Begin a festival for 300 Gold, providing global enhancements to Food gather rates, unit production speeds, or damage of torches and siege attacks. One festival may be active at a time.",
+    "icon": "https://data.aoe4world.com/images/buildings/griot-bara-3.png"
+  },
+  {
+    "id": "mansa-quarry-1",
+    "name": "Mansa Quarry",
+    "civs": [
+      "ma"
+    ],
+    "builtInAge": 1,
+    "description": "Generates 75 Gold per minute. Can be toggled to generate Stone instead.",
+    "icon": "https://data.aoe4world.com/images/buildings/mansa-quarry-1.png"
+  },
+  {
+    "id": "saharan-trade-network-1",
+    "name": "Saharan Trade Network",
+    "civs": [
+      "ma"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Toll Outpost that comes with Defensive Javelin Emplacement researched. Unlocks Javelin Emplacement for Outposts.\nAll Traders and Trade Ships taxed will generate Food equal to the taxed Gold at this Landmark. All other Toll Outposts will generate 50% of taxed Gold as Food.",
+    "icon": "https://data.aoe4world.com/images/buildings/saharan-trade-network-1.png"
+  },
+  {
+    "id": "deer-stones-1",
+    "name": "Deer Stones",
+    "civs": [
+      "mo"
+    ],
+    "builtInAge": 1,
+    "description": "Deer Stones grant access to the Khan's Hunter at the Archery Range.\nInstantly researches the Yam Network technology.",
+    "icon": "https://data.aoe4world.com/images/buildings/deer-stones-1.png"
+  },
+  {
+    "id": "khaganate-palace-3",
+    "name": "Khaganate Palace",
+    "civs": [
+      "mo"
+    ],
+    "builtInAge": 3,
+    "description": "Automatically spawns diverse armies from across the Mongol Empire and its dominions.",
+    "icon": "https://data.aoe4world.com/images/buildings/khaganate-palace-3.png"
+  },
+  {
+    "id": "kurultai-2",
+    "name": "Kurultai",
+    "civs": [
+      "mo"
+    ],
+    "builtInAge": 1,
+    "description": "Nearby units within its aura heal +1 health every 1 second and gain an additional +20% damage.",
+    "icon": "https://data.aoe4world.com/images/buildings/kurultai-2.png"
+  },
+  {
+    "id": "steppe-redoubt-2",
+    "name": "Steppe Redoubt",
+    "civs": [
+      "mo"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Ger. Gold dropped off at this Landmark is increased by +50%.",
+    "icon": "https://data.aoe4world.com/images/buildings/steppe-redoubt-2.png"
+  },
+  {
+    "id": "the-silver-tree-1",
+    "name": "The Silver Tree",
+    "civs": [
+      "mo"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Market. Production speed of Traders increased by +40% with a -40% reduced Gold cost.",
+    "icon": "https://data.aoe4world.com/images/buildings/the-silver-tree-1.png"
+  },
+  {
+    "id": "the-white-stupa-3",
+    "name": "The White Stupa",
+    "civs": [
+      "mo"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as an Ovoo and produces 240 Stone per minute without a Stone Outcropping.\nDecreases the Stone cost of double unit production by -50%.",
+    "icon": "https://data.aoe4world.com/images/buildings/the-white-stupa-3.png"
+  },
+  {
+    "id": "aachen-chapel-1",
+    "name": "Aachen Chapel",
+    "civs": [
+      "od"
+    ],
+    "builtInAge": 1,
+    "description": "Inspires all Villagers in a large radius and increases their gather rate by +15%. \nActs as a drop-off point for all resource types.",
+    "icon": "https://data.aoe4world.com/images/buildings/aachen-chapel-1.png"
+  },
+  {
+    "id": "burgrave-palace-2",
+    "name": "Burgrave Palace",
+    "civs": [
+      "od"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Barracks that produces units 35% faster and 35% cheaper. Researches technologies 35% faster.",
+    "icon": "https://data.aoe4world.com/images/buildings/burgrave-palace-2.png"
+  },
+  {
+    "id": "elzbach-palace-3",
+    "name": "Elzbach Palace",
+    "civs": [
+      "od"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Keep with +50% health. All buildings within influence take -25% less damage.",
+    "icon": "https://data.aoe4world.com/images/buildings/elzbach-palace-3.png"
+  },
+  {
+    "id": "meinwerk-palace-1",
+    "name": "Meinwerk Palace",
+    "civs": [
+      "od"
+    ],
+    "builtInAge": 1,
+    "description": "Acts like a Blacksmith. Technology researched here costs -50% and researches 50% faster. Contains Technologies unique to this Landmark.",
+    "icon": "https://data.aoe4world.com/images/buildings/meinwerk-palace-1.png"
+  },
+  {
+    "id": "palace-of-swabia-3",
+    "name": "Palace of Swabia",
+    "civs": [
+      "od"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Town Center. Produces Villagers +200% faster and at -66% cost.\nCost to build this Landmark is reduced by -10%.",
+    "icon": "https://data.aoe4world.com/images/buildings/palace-of-swabia-3.png"
+  },
+  {
+    "id": "regnitz-cathedral-2",
+    "name": "Regnitz Cathedral",
+    "civs": [
+      "od"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Monastery. All Relics generate +100% gold while garrisoned.",
+    "icon": "https://data.aoe4world.com/images/buildings/regnitz-cathedral-2.png"
+  },
+  {
+    "id": "istanbul-imperial-palace-2",
+    "name": "Istanbul Imperial Palace",
+    "civs": [
+      "ot"
+    ],
+    "builtInAge": 2,
+    "description": "Doubles Imperial Council experience gained globally and increases the Vizier Point limit by +4.",
+    "icon": "https://data.aoe4world.com/images/buildings/istanbul-imperial-palace-2.png"
+  },
+  {
+    "id": "istanbul-observatory-3",
+    "name": "Istanbul Observatory",
+    "civs": [
+      "ot"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a University. Improves the influence provided by the University and Blacksmith and production speed of the Grand Galley to +85%.",
+    "icon": "https://data.aoe4world.com/images/buildings/istanbul-observatory-3.png"
+  },
+  {
+    "id": "mehmed-imperial-armory-2",
+    "name": "Mehmed Imperial Armory",
+    "civs": [
+      "ot"
+    ],
+    "builtInAge": 2,
+    "description": "Produces siege engines for free but with a longer train time.",
+    "icon": "https://data.aoe4world.com/images/buildings/mehmed-imperial-armory-2.png"
+  },
+  {
+    "id": "sea-gate-castle-3",
+    "name": "Sea Gate Castle",
+    "civs": [
+      "ot"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Keep with a free Great Bombard emplacement. Defensive Strucutures deal 20% more damage.\nAll Keeps gain an aura that increases Trader and Trade Ship movement speed by +30% and armor by +8.",
+    "icon": "https://data.aoe4world.com/images/buildings/sea-gate-castle-3.png"
+  },
+  {
+    "id": "sultanhani-trade-network-1",
+    "name": "Sultanhani Trade Network",
+    "civs": [
+      "ot"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Market. Comes with 3 Traders garrisoned and generates +26 Gold per minute for each one. Up to 10 Traders can be garrisoned.",
+    "icon": "https://data.aoe4world.com/images/buildings/sultanhani-trade-network-1.png"
+  },
+  {
+    "id": "twin-minaret-medrese-1",
+    "name": "Twin Minaret Medrese",
+    "civs": [
+      "ot"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Mill. Grows 4 Berry Bushes which can be harvested +50% faster. Berry Bushes are regrown after 120 seconds if depleted.",
+    "icon": "https://data.aoe4world.com/images/buildings/twin-minaret-medrese-1.png"
+  },
+  {
+    "id": "abbey-of-the-trinity-2",
+    "name": "Abbey of the Trinity",
+    "civs": [
+      "ru"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Monastery. Reduces the cost of Warrior Monks by -50% and contains unique religious technologies.",
+    "icon": "https://data.aoe4world.com/images/buildings/abbey-of-the-trinity-2.png"
+  },
+  {
+    "id": "high-armory-3",
+    "name": "High Armory",
+    "civs": [
+      "ru"
+    ],
+    "builtInAge": 3,
+    "description": "Decrease the cost of siege engines in nearby Siege Workshops by -20%. Contains unique siege engine technologies.",
+    "icon": "https://data.aoe4world.com/images/buildings/high-armory-3.png"
+  },
+  {
+    "id": "high-trade-house-2",
+    "name": "High Trade House",
+    "civs": [
+      "ru"
+    ],
+    "builtInAge": 2,
+    "description": "Generates Gold like a Hunting Cabin with the value increased by +400%, without claiming any trees. Spawns a Huntable Deer every 60 seconds.\nVillagers can drop off Food at this building.",
+    "icon": "https://data.aoe4world.com/images/buildings/high-trade-house-2.png"
+  },
+  {
+    "id": "kremlin-1",
+    "name": "Kremlin",
+    "civs": [
+      "ru"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Wooden Fortress that comes with Arrowslits, Castle Turret, and Castle Watch technologies.\nCan Levy Militia every 80 seconds to the Capital Town Center. The number of Militia levied increases upon reaching the Castle Age.",
+    "icon": "https://data.aoe4world.com/images/buildings/kremlin-1.png"
+  },
+  {
+    "id": "spasskaya-tower-3",
+    "name": "Spasskaya Tower",
+    "civs": [
+      "ru"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Keep with all weapon emplacements and increased health.\nUnlocks the building of Stone Walls, Stone Gates, and Stone Wall Towers.",
+    "icon": "https://data.aoe4world.com/images/buildings/spasskaya-tower-3.png"
+  },
+  {
+    "id": "the-golden-gate-1",
+    "name": "The Golden Gate",
+    "civs": [
+      "ru"
+    ],
+    "builtInAge": 1,
+    "description": "Allows the exchange of resources at a favorable rate. Generates an additional exchange every 50 seconds.",
+    "icon": "https://data.aoe4world.com/images/buildings/the-golden-gate-1.png"
+  },
+  {
+    "id": "castle-of-the-crow-3",
+    "name": "Castle of the Crow",
+    "civs": [
+      "sen"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Castle. Reduces the cost of constructing Castles by 33%. Siege units nearby any Castle gain +10% damage and +1 tiles range.",
+    "icon": "https://data.aoe4world.com/images/buildings/castle-of-the-crow-3.png"
+  },
+  {
+    "id": "koka-township-1",
+    "name": "Koka Township",
+    "civs": [
+      "sen"
+    ],
+    "builtInAge": 1,
+    "description": "The Koka Township has the ability to scout a target area anywhere on the map and an ability to spawn a Shinobi ambush near one of your buildings or near Stealth Forest.",
+    "icon": "https://data.aoe4world.com/images/buildings/koka-township-1.png"
+  },
+  {
+    "id": "ryokan-1",
+    "name": "Ryokan",
+    "civs": [
+      "sen"
+    ],
+    "builtInAge": 1,
+    "description": "Increases Population by +60 and nearby units get a permanent healing buff, healing 4 every 6 seconds when out of combat.",
+    "icon": "https://data.aoe4world.com/images/buildings/ryokan-1.png"
+  },
+  {
+    "id": "sake-brewery-2",
+    "name": "Sake Brewery",
+    "civs": [
+      "sen"
+    ],
+    "builtInAge": 2,
+    "description": "The Brewery will create Toko-Koji Mats around itself which can be worked by Villagers to generate Gold. Villagers can drop-off Stone and Gold at this building.",
+    "icon": "https://data.aoe4world.com/images/buildings/sake-brewery-2.png"
+  },
+  {
+    "id": "sword-hunt-statue-3",
+    "name": "Sword Hunt Statue",
+    "civs": [
+      "sen"
+    ],
+    "builtInAge": 3,
+    "description": "Daimyo cost decreased by 50% and increases Daimyo Aura attack speed bonus +15%. Level 3 Daimyo Estates will spawn levies +100% faster.",
+    "icon": "https://data.aoe4world.com/images/buildings/sword-hunt-statue-3.png"
+  },
+  {
+    "id": "temple-of-equality-2",
+    "name": "Temple of Equality",
+    "civs": [
+      "sen"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Buddhist Temple that contains unique Ikko-ikki upgrades. Reduces the cost of training Ikko-ikki monks by 25%.",
+    "icon": "https://data.aoe4world.com/images/buildings/temple-of-equality-2.png"
+  },
+  {
+    "id": "compound-of-the-defender-2",
+    "name": "Compound of the Defender",
+    "civs": [
+      "tug"
+    ],
+    "builtInAge": 2,
+    "description": "Reduces Stone cost of buildings by 25%.\nUnlocks an additional upgrade to each Tughlaqabad Fort which further enhances health and Governor benefits.",
+    "icon": "https://data.aoe4world.com/images/buildings/compound-of-the-defender-2.png"
+  },
+  {
+    "id": "dome-of-the-faith-1",
+    "name": "Dome of the Faith",
+    "civs": [
+      "tug"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Mosque and provides early access to Healer Elephants. Produces Imams and Healer Elephants at a discount of 65 Gold.",
+    "icon": "https://data.aoe4world.com/images/buildings/dome-of-the-faith-1.png"
+  },
+  {
+    "id": "hisar-academy-3",
+    "name": "Hisar Academy",
+    "civs": [
+      "tug"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as Madrasa. Generates 70 Food and 70 Gold per minute for every active Governor.",
+    "icon": "https://data.aoe4world.com/images/buildings/hisar-academy-3.png"
+  },
+  {
+    "id": "house-of-learning-2",
+    "name": "House of Learning",
+    "civs": [
+      "tug"
+    ],
+    "builtInAge": 2,
+    "description": "Grants no immediate bonus other than advancing to the next Age, but contains many unique technologies.",
+    "icon": "https://data.aoe4world.com/images/buildings/house-of-learning-2.png"
+  },
+  {
+    "id": "palace-of-the-sultan-3",
+    "name": "Palace of the Sultan",
+    "civs": [
+      "tug"
+    ],
+    "builtInAge": 3,
+    "description": "Appoint a Governor to the Palace of the Sultan and immediately gain their fourth tier benefactor bonus.",
+    "icon": "https://data.aoe4world.com/images/buildings/palace-of-the-sultan-3.png"
+  },
+  {
+    "id": "tower-of-victory-1",
+    "name": "Tower of Victory",
+    "civs": [
+      "tug"
+    ],
+    "builtInAge": 1,
+    "description": "The Tower of Victory increases the attack speed of Elephants by +20% when produced from buildings within influence.",
+    "icon": "https://data.aoe4world.com/images/buildings/tower-of-victory-1.png"
+  },
+  {
+    "id": "jiangnan-tower-1",
+    "name": "Jiangnan Tower",
+    "civs": [
+      "zx"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a tax drop-off for Imperial Officials.\nMilitary Buildings and Military Units produced within influence award progress towards free armies. Each free army requires progressively more resources to be spent than the last, until 12 armies have been produced.",
+    "icon": "https://data.aoe4world.com/images/buildings/jiangnan-tower-2.png"
+  },
+  {
+    "id": "meditation-gardens-1",
+    "name": "Meditation Gardens",
+    "civs": [
+      "zx"
+    ],
+    "builtInAge": 1,
+    "description": "Increases the resource value of nearby gold veins, stone outcroppings, and berry bushes by +5% every 30 seconds up to a maximum of +60%.\nTrees are increased at a lesser rate of +2.5% up to +30%.\nAfter 330 seconds, generates resources equal to 5% of the current resources in those nearby deposits. Additionally generates 5% of the maximum resources of each deposit when fully gathered.",
+    "icon": "https://data.aoe4world.com/images/buildings/meditation-gardens-1.png"
+  },
+  {
+    "id": "mount-lu-academy-2",
+    "name": "Mount Lu Academy",
+    "civs": [
+      "zx"
+    ],
+    "builtInAge": 2,
+    "description": "Imperial Officials collect tax twice as often and also collect 20% of taxes as Food.\nContains unique upgrades that greatly improve the Imperial Official unit.",
+    "icon": "https://data.aoe4world.com/images/buildings/mount-lu-academy-1.png"
+  },
+  {
+    "id": "shaolin-monastery-2",
+    "name": "Shaolin Monastery",
+    "civs": [
+      "zx"
+    ],
+    "builtInAge": 2,
+    "description": "Unique Monastery capable of producing Shaolin Monks. From the Yuan Dynasty onwards, Shaolin Monks can also be produced from Pagodas.",
+    "icon": "https://data.aoe4world.com/images/buildings/shaolin-monastery-2.png"
+  },
+  {
+    "id": "temple-of-the-sun-3",
+    "name": "Temple of the Sun",
+    "civs": [
+      "zx"
+    ],
+    "builtInAge": 3,
+    "description": "Activate powerful abilities that improve speed, damage, range, or regeneration of specific units.",
+    "icon": "https://data.aoe4world.com/images/buildings/temple-of-the-sun-3.png"
+  },
+  {
+    "id": "zhu-xis-library-3",
+    "name": "Zhu Xi's Library",
+    "civs": [
+      "zx"
+    ],
+    "builtInAge": 3,
+    "description": "Hosts a range of highly unique upgrades.\nCan unlock Yuan Raiders and Imperial Guards. Only 2 technologies can be researched.",
+    "icon": "https://data.aoe4world.com/images/buildings/zhu-xis-library-3.png"
+  }
+]

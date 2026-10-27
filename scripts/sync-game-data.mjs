@@ -52,6 +52,7 @@ function trimUnit(u) {
 }
 
 const units = await getJson("units/all.json");
+const buildings = await getJson("buildings/all.json");
 const index = await getJson("civilizations/civs-index.json");
 
 const civs = [];
@@ -71,11 +72,31 @@ civs.sort((a, b) => a.name.localeCompare(b.name));
 
 const military = units.data.filter((u) => u.type === "unit" && u.classes.includes("military"));
 
+// Age-up landmarks carry a class like "age2_landmark1": the landmark a civ
+// builds in that age to advance to the next one. Seeing which one an
+// opponent builds tells you their plan.
+const landmarks = [];
+for (const b of buildings.data) {
+  const tag = b.classes?.map((c) => c.match(/^age([123])_landmark\d$/)).find(Boolean);
+  if (!tag) continue;
+  landmarks.push({
+    id: b.id,
+    name: b.name,
+    civs: b.civs,
+    builtInAge: Number(tag[1]),
+    description: b.description,
+    icon: b.icon,
+  });
+}
+
 await mkdir(OUT_DIR, { recursive: true });
+await writeFile(join(OUT_DIR, "landmarks.json"), JSON.stringify(landmarks, null, 2) + "\n");
 await writeFile(join(OUT_DIR, "units.json"), JSON.stringify(military.map(trimUnit)) + "\n");
 await writeFile(join(OUT_DIR, "civs.json"), JSON.stringify(civs, null, 2) + "\n");
 await writeFile(
   join(OUT_DIR, "meta.json"),
   JSON.stringify({ source: SOURCE, dataVersion: units.__version__, syncedAt: new Date().toISOString() }, null, 2) + "\n",
 );
-console.log(`Wrote ${military.length} military units and ${civs.length} civilizations to ${OUT_DIR}`);
+console.log(
+  `Wrote ${military.length} military units, ${landmarks.length} landmarks and ${civs.length} civilizations to ${OUT_DIR}`,
+);

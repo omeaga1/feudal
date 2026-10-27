@@ -85,7 +85,14 @@ export function LiveMatch() {
             </div>
           )}
         </section>
-        {opponent && <BriefView myCivId={match.me.civ} enemyCivId={opponent.civ} opponentName={opponent.name} />}
+        {opponent && (
+          <BriefView
+            myCivId={match.me.civ}
+            enemyCivId={opponent.civ}
+            opponentName={opponent.name}
+            opponentProfileId={opponent.profileId}
+          />
+        )}
       </div>
     );
   }
