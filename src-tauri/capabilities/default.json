@@ -8,7 +8,10 @@
     "opener:default",
     {
       "identifier": "http:default",
-      "allow": [{ "url": "https://aoe4world.com/api/*" }]
+      "allow": [
+        { "url": "https://aoe4world.com/api/*" },
+        { "url": "https://raw.githubusercontent.com/omeaga1/feudal/*" }
+      ]
     }
   ]
 }

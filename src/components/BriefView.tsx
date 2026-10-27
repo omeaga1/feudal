@@ -5,6 +5,7 @@ import { AGE_NAMES, getCiv } from "../lib/gameData";
 import { appFetch } from "../lib/http";
 import { summarizePlayer, type PlayerProfile } from "../lib/opponent";
 import { fundamentals } from "../lib/fundamentals";
+import { DangerTimeline } from "./DangerTimeline";
 import { isStale, type Playbook, type PlaybookSource } from "../lib/playbooks";
 import { landmarkChoices } from "../lib/scouting";
 import { civTempo, TEMPO_LABELS } from "../lib/tempo";
@@ -218,6 +219,8 @@ export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId
         )}
         <p className="muted">{enemyPlaybook?.summary ?? enemy.description}</p>
       </section>
+
+      <DangerTimeline myCivId={me.id} enemyCivId={enemy.id} />
 
       {profile && <PlayerHabits name={opponentName ?? "Your opponent"} profile={profile} />}
 
