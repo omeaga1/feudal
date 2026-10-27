@@ -256,3 +256,67 @@ p {
 .small {
   font-size: 0.85em;
 }
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 10px;
+  margin: 8px 0;
+}
+
+.window {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.window .bar {
+  position: relative;
+  width: 100%;
+  height: 72px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.window .fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--muted);
+  opacity: 0.5;
+}
+
+.window .even-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  border-top: 1px dashed var(--line);
+}
+
+.window.danger .fill {
+  background: var(--danger);
+  opacity: 0.85;
+}
+
+.window.danger b {
+  color: var(--danger);
+}
+
+.window.yours .fill {
+  background: var(--live);
+  opacity: 0.85;
+}
+
+.window.yours b {
+  color: var(--live);
+}
+
+.window.thin .fill {
+  opacity: 0.2;
+}

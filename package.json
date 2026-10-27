@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "data:sync": "node scripts/sync-game-data.mjs",
+    "data:danger": "node scripts/sync-danger-windows.mjs",
     "tauri": "tauri"
   },
   "dependencies": {

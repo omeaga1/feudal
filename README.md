@@ -14,8 +14,8 @@ Feudal never touches the game. It doesn't read game memory, game files, network 
 | **Enemy player habits**: their most-played civs, win rate, and how often their games end before 15 minutes | Working |
 | **Tempo tag**: "expect early pressure" or "expect a long game", from how long each civ's ranked games last | Working |
 | **What to scout for**: the enemy civ's landmark options at each age-up, so one look at their landmark tells you their plan | Working |
-| **Civ playbooks**: hand-written power spikes and answers per civ | Format done, HRE draft only |
-| **Danger windows**: win rate by game length per matchup, recomputed each patch | Planned |
+| **Civ playbooks**: power spikes, openings and answers for every civ | Drafts for all civs |
+| **Danger windows**: your win rate by game length in each matchup, current patch only | Working |
 | **Keybinds**: a glanceable view of your own hotkeys | Planned |
 
 ## Development
@@ -42,6 +42,10 @@ npm run data:sync
 ### Website
 
 The landing page is plain HTML in `site/`, with no build step. Open `site/index.html` in a browser to preview it. Pushes to `main` that touch `site/` deploy it to GitHub Pages through `.github/workflows/pages.yml`. The download buttons look up the newest GitHub release and link straight to its installer.
+
+### Danger windows
+
+`src/data/generated/danger-windows.json` holds win/loss counts by game length for every civ pairing on the newest two patches. The `Danger windows` GitHub Action runs `npm run data:danger` every four hours: it reads the most recently finished ranked 1v1 games from AoE4 World (19 requests, one a second, using the `since` filter AoE4 World asks for) and commits the new counts. The app fetches the latest file from GitHub and falls back to the copy it shipped with.
 
 ### Project layout
 
