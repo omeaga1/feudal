@@ -1,0 +1,17 @@
+{
+  "$comment": "Corrections for matchups the counter math gets wrong because it ignores range, speed and micro. unit and enemy are unit-line ids (baseId) from aoe4world/data.",
+  "overrides": [
+    {
+      "unit": "archer",
+      "enemy": "spearman",
+      "factor": 1.5,
+      "reason": "Archers out-range spearmen and kite them."
+    },
+    {
+      "unit": "horseman",
+      "enemy": "archer",
+      "factor": 1.3,
+      "reason": "Horsemen close the distance fast and have high ranged armor."
+    }
+  ]
+}
