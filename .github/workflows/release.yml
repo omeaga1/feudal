@@ -1,0 +1,51 @@
+name: Release
+
+# Builds the Windows installers and publishes them as a GitHub release.
+# Bump the version in package.json, src-tauri/tauri.conf.json and
+# src-tauri/Cargo.toml, then push a matching tag:
+#   git tag v0.2.0 && git push origin v0.2.0
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+      - run: npm ci
+      - name: Check the tag matches the app version
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        run: |
+          app=$(node -p "require('./src-tauri/tauri.conf.json').version")
+          if [ "v$app" != "${GITHUB_REF_NAME}" ]; then
+            echo "Tag ${GITHUB_REF_NAME} doesn't match app version $app" >&2
+            exit 1
+          fi
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v__VERSION__
+          releaseName: Feudal v__VERSION__
+          releaseBody: |
+            Free Age of Empires IV companion. Download `Feudal_<version>_x64-setup.exe` and run it.
+
+            Windows may show a SmartScreen warning because the installer isn't code-signed yet: choose "More info", then "Run anyway".
+
+            Feudal never reads the game's memory, files, network traffic or screen. Age of Empires IV © Microsoft Corporation. Feudal was created under Microsoft's "Game Content Usage Rules" using assets from Age of Empires IV, and it is not endorsed by or affiliated with Microsoft.
+          releaseDraft: false
+          prerelease: false

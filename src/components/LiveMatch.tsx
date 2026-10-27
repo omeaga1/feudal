@@ -1,36 +1,22 @@
 import { useState } from "react";
-import { appFetch } from "../lib/http";
-import { useLiveMatch } from "../lib/liveMatch";
+import type { LiveStatus } from "../lib/liveMatch";
 import { getCiv } from "../lib/gameData";
 import { parseProfileInput } from "../lib/profile";
 import { BriefView } from "./BriefView";
 
-const STORAGE_KEY = "feudal.profileId";
-
-function loadProfileId(): number | null {
-  try {
-    const value = Number(localStorage.getItem(STORAGE_KEY));
-    return Number.isInteger(value) && value > 0 ? value : null;
-  } catch {
-    return null;
-  }
+interface Props {
+  profileId: number | null;
+  status: LiveStatus;
+  onProfileChange: (id: number | null) => void;
 }
 
-export function LiveMatch() {
-  const [profileId, setProfileId] = useState<number | null>(loadProfileId);
+export function LiveMatch({ profileId, status, onProfileChange }: Props) {
   const [draft, setDraft] = useState("");
   const [opponentIndex, setOpponentIndex] = useState(0);
-  const status = useLiveMatch(profileId, appFetch);
 
   const save = () => {
     const id = parseProfileInput(draft);
-    if (id === null) return;
-    try {
-      localStorage.setItem(STORAGE_KEY, String(id));
-    } catch {
-      // Not persisted; still works for this session.
-    }
-    setProfileId(id);
+    if (id !== null) onProfileChange(id);
   };
 
   if (profileId === null) {
@@ -56,6 +42,9 @@ export function LiveMatch() {
           />
           <button type="submit">Save</button>
         </form>
+        {draft.trim() !== "" && parseProfileInput(draft) === null && (
+          <p className="error small">That doesn't look like an AoE4 World profile link or number.</p>
+        )}
       </section>
     );
   }
@@ -113,7 +102,7 @@ export function LiveMatch() {
         The brief opens on its own once your game shows up on AoE4 World. Custom and AI games don't appear there; use
         Matchups for those.
       </p>
-      <button type="button" className="link" onClick={() => setProfileId(null)}>
+      <button type="button" className="link" onClick={() => onProfileChange(null)}>
         Change profile
       </button>
     </section>

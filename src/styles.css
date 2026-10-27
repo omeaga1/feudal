@@ -376,3 +376,9 @@ code {
   font-size: 0.9em;
   color: var(--ink);
 }
+
+.update {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--live);
+}
