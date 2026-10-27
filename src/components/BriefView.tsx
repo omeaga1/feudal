@@ -6,6 +6,7 @@ import { appFetch } from "../lib/http";
 import { summarizePlayer, type PlayerProfile } from "../lib/opponent";
 import { fundamentals } from "../lib/fundamentals";
 import { DangerTimeline } from "./DangerTimeline";
+import { MapPanel } from "./MapPanel";
 import { isStale, type Playbook, type PlaybookSource } from "../lib/playbooks";
 import { landmarkChoices } from "../lib/scouting";
 import { civTempo, TEMPO_LABELS } from "../lib/tempo";
@@ -18,6 +19,8 @@ interface Props {
   opponentProfileId?: number;
   /** The live game's build, used to flag playbooks written for an older patch. */
   gameBuild?: number;
+  /** The map being played, for map notes and per-map win rates. */
+  mapName?: string;
 }
 
 // Civ stats change slowly, so fetch them once per app session.
@@ -144,7 +147,7 @@ function formatMinutes(seconds: number): string {
   return `${Math.round(seconds / 60)} min`;
 }
 
-export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId, gameBuild }: Props) {
+export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId, gameBuild, mapName }: Props) {
   const brief = useMemo(() => buildBrief(myCivId, enemyCivId), [myCivId, enemyCivId]);
   const scouting = useMemo(() => {
     const enemy = getCiv(enemyCivId);
@@ -221,6 +224,8 @@ export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId
       </section>
 
       <DangerTimeline myCivId={me.id} enemyCivId={enemy.id} />
+
+      {mapName && <MapPanel mapName={mapName} myCivId={me.id} enemyCivId={enemy.id} />}
 
       {profile && <PlayerHabits name={opponentName ?? "Your opponent"} profile={profile} />}
 
