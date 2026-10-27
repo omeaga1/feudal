@@ -320,3 +320,59 @@ p {
 .window.thin .fill {
   opacity: 0.2;
 }
+
+.keybind-head {
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.field.grow {
+  flex: 1;
+  min-width: 200px;
+}
+
+.keybind-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.keybinds {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.keybinds td {
+  padding: 5px 4px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.keybinds .keys {
+  text-align: right;
+}
+
+.combo {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 8px;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--bg);
+  color: var(--accent);
+  font: 600 13px/1.5 ui-monospace, monospace;
+  text-align: center;
+}
+
+code {
+  font-size: 0.9em;
+  color: var(--ink);
+}
