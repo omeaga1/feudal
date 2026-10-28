@@ -6,7 +6,7 @@ import { UpdateNotice } from "./components/UpdateNotice";
 import { dataMeta, getCiv } from "./lib/gameData";
 import { appFetch } from "./lib/http";
 import { useLiveMatch } from "./lib/liveMatch";
-import { loadProfileId, saveProfileId } from "./lib/profile";
+import { loadProfileId, loadProfileName, saveProfileId } from "./lib/profile";
 
 type View = "live" | "browser" | "keybinds";
 
@@ -19,6 +19,7 @@ const VIEWS: { id: View; label: string }[] = [
 export default function App() {
   const [view, setView] = useState<View>("live");
   const [profileId, setProfileId] = useState<number | null>(loadProfileId);
+  const [profileName, setProfileName] = useState<string | null>(loadProfileName);
   // Polling lives here, not in the Live tab, so it keeps running on every tab.
   const status = useLiveMatch(profileId, appFetch);
   const liveGameId = status.kind === "in-game" ? status.match.gameId : null;
@@ -43,9 +44,10 @@ export default function App() {
     document.title = `Feudal · ${civName(me.civ)} vs ${opponents.map((o) => civName(o.civ)).join(", ")}`;
   }, [status]);
 
-  const changeProfile = (id: number | null) => {
-    saveProfileId(id);
+  const changeProfile = (id: number | null, name?: string) => {
+    saveProfileId(id, name);
     setProfileId(id);
+    setProfileName(name ?? null);
   };
 
   return (
@@ -71,7 +73,7 @@ export default function App() {
       </header>
 
       <main className="content">
-        {view === "live" && <LiveMatch profileId={profileId} status={status} onProfileChange={changeProfile} />}
+        {view === "live" && <LiveMatch profileId={profileId} profileName={profileName} status={status} onProfileChange={changeProfile} />}
         {view === "browser" && <MatchupBrowser />}
         {view === "keybinds" && <Keybinds />}
       </main>
