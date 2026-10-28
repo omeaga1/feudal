@@ -12,6 +12,11 @@ describe("parseProfileQuery", () => {
       steamId: "76561198065651818",
     });
     expect(parseProfileQuery("76561198065651818")).toEqual({ kind: "steam", steamId: "76561198065651818" });
+    expect(parseProfileQuery("https://aoe4world.com/players/76561199143659060")).toEqual({
+      kind: "steam",
+      steamId: "76561199143659060",
+    });
+    expect(parseProfileQuery("Steam ID: 76561199143659060")).toEqual({ kind: "steam", steamId: "76561199143659060" });
     expect(parseProfileQuery("Beasty")).toEqual({ kind: "name", name: "Beasty" });
     expect(parseProfileQuery("[TAG] Some Player")).toEqual({ kind: "name", name: "[TAG] Some Player" });
   });
@@ -39,6 +44,14 @@ describe("resolveProfile", () => {
       player: { profileId: 1270139, name: "Beasty", rating: null, lastGameAt: "2026-10-21" },
     });
     expect((await resolveProfile(api({}), { kind: "id", id: 5 })).kind).toBe("none");
+  });
+
+  it("explains when AoE4 World doesn't know a Steam account", async () => {
+    const result = await resolveProfile(api({ "/players/search": { players: [] } }), {
+      kind: "steam",
+      steamId: "76561199143659060",
+    });
+    expect(result.kind === "none" && result.message).toMatch(/doesn't know Steam account 76561199143659060/);
   });
 
   it("finds a profile from a Steam ID", async () => {
