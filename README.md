@@ -84,3 +84,5 @@ Feudal polls `/players/{id}/games/last` every 15 seconds while it's open, sends 
 Age of Empires IV © Microsoft Corporation. Feudal was created under Microsoft's "[Game Content Usage Rules](https://www.xbox.com/en-US/developers/rules)" using assets from Age of Empires IV, and it is not endorsed by or affiliated with Microsoft.
 
 Feudal is and will stay free. Under those rules it can't be sold or carry ads.
+
+Icons from [game-icons.net](https://game-icons.net) by Lorc, Delapouite and contributors (CC BY 3.0), and [Lucide](https://lucide.dev) (ISC).

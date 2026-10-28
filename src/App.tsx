@@ -121,7 +121,7 @@ export default function App() {
         <footer className="footer">
           Unit data from AoE4 World ({dataMeta.syncedAt.slice(0, 10)}), build orders from aoe4guides.com. Age of Empires IV ©
           Microsoft Corporation. Feudal was created under Microsoft's "Game Content Usage Rules" using assets from Age of
-          Empires IV, and it is not endorsed by or affiliated with Microsoft.
+          Empires IV, and it is not endorsed by or affiliated with Microsoft. Icons from game-icons.net (CC BY 3.0) and Lucide.
         </footer>
       </div>
       <Toaster theme="dark" position="bottom-right" toastOptions={{ className: "toast" }} />
