@@ -6,7 +6,7 @@
   --line: #2a2f3a;
   --line-2: #363c49;
   --ink: #ece6d8;
-  --muted: #968f81;
+  --muted: #aaa294;
   --accent: #d9a74a;
   --accent-2: #f2c66d;
   --live: #4cc38a;
@@ -888,7 +888,7 @@ ul.tight li {
 }
 
 .plan-card.dimmed {
-  opacity: 0.55;
+  opacity: 0.7;
 }
 
 .plan-card.opening {
@@ -1302,7 +1302,7 @@ ul.tight li {
   align-items: center;
   gap: 3px;
   width: 64px;
-  font-size: 0.64rem;
+  font-size: 0.68rem;
   text-align: center;
   line-height: 1.15;
   color: var(--muted);
@@ -1378,7 +1378,7 @@ ul.tight li {
 }
 
 .spike-age {
-  font-size: 0.64rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1486,7 +1486,7 @@ ul.tight li {
   padding: 8px 12px 8px 34px;
   border-radius: 999px;
   border: 1px solid var(--line-2);
-  background: var(--bg-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23968f81' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 12px center;
+  background: var(--bg-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23aaa294' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 12px center;
   color: var(--ink);
 }
 
@@ -1973,7 +1973,7 @@ ul.tight li {
   border-radius: 7px;
   font-size: 0.7rem;
   font-weight: 600;
-  color: #5a6170;
+  color: #939bab;
   background: #1a1e26;
   border: 1px solid #262b35;
   border-bottom-width: 3px;
@@ -1995,7 +1995,7 @@ ul.tight li {
 
 .keycap.dim,
 .mouse-btn.dim {
-  opacity: 0.25;
+  opacity: 0.4;
   box-shadow: none;
 }
 
@@ -2032,7 +2032,7 @@ ul.tight li {
   border-radius: 6px;
   font-size: 0.66rem;
   font-weight: 700;
-  color: #5a6170;
+  color: #939bab;
   background: #1a1e26;
   border: 1px solid #262b35;
   transition: all 0.15s;
@@ -2110,7 +2110,7 @@ ul.tight li {
 }
 
 .group-card.dim {
-  opacity: 0.4;
+  opacity: 0.55;
 }
 
 .group-card-name {
