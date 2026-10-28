@@ -1,3 +1,4 @@
+import { Link2, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import type { LiveStatus } from "../lib/liveMatch";
 import { getCiv } from "../lib/gameData";
@@ -43,27 +44,45 @@ function ProfileLink({ onLinked }: { onLinked: (player: FoundPlayer) => void }) 
   return (
     <section className="panel">
       <h2>Link your AoE4 World profile</h2>
-      <p className="muted">
-        Paste your aoe4world.com profile link, your Steam profile link, or type your in-game name. Feudal checks AoE4
-        World every 15 seconds and opens the matchup brief when your ranked or quick-match game starts.
-      </p>
+      <ol className="onboard-steps">
+        <li>
+          <span className="onboard-num">1</span>
+          <span>
+            <b>Link once.</b> Your aoe4world.com link, Steam link, or in-game name.
+          </span>
+        </li>
+        <li>
+          <span className="onboard-num">2</span>
+          <span>
+            <b>Queue up.</b> Feudal checks AoE4 World every 15 seconds.
+          </span>
+        </li>
+        <li>
+          <span className="onboard-num">3</span>
+          <span>
+            <b>Read the brief.</b> It opens on its own when a ranked or quick match starts.
+          </span>
+        </li>
+      </ol>
       <form
-        className="row"
+        className="row profile-form"
         onSubmit={(e) => {
           e.preventDefault();
           void submit();
         }}
       >
+        <Link2 className="input-icon" size={16} aria-hidden="true" />
         <input
           id="profile-id"
-          className="grow"
+          className="grow with-icon"
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           placeholder="https://aoe4world.com/players/1234567 or your name"
           autoFocus
         />
-        <button type="submit" disabled={busy || draft.trim() === ""}>
-          {busy ? "Looking…" : "Link"}
+        <button type="submit" className="button-primary" disabled={busy || draft.trim() === ""}>
+          {busy && <LoaderCircle className="spin" size={16} aria-hidden="true" />}
+          {busy ? "Looking" : "Link"}
         </button>
       </form>
       {message && <p className="error small">{message}</p>}

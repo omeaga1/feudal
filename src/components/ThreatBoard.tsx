@@ -20,9 +20,9 @@ export function ThreatBoard({ brief }: { brief: MatchupBrief }) {
               {threats.map(({ enemy, counters }) => (
                 <CounterRow
                   key={enemy.id}
-                  enemy={enemy}
+                  enemy={{ name: enemy.name, icon: enemy.icon, unit: enemy }}
                   unique={enemy.unique}
-                  answers={counters.slice(0, 3).map((c) => ({ name: c.unit.name, icon: c.unit.icon }))}
+                  answers={counters.slice(0, 3).map((c) => ({ name: c.unit.name, icon: c.unit.icon, unit: c.unit }))}
                 />
               ))}
             </div>

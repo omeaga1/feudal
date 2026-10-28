@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { ToggleGroup } from "radix-ui";
 import { useMemo, useState } from "react";
 import essentials from "../data/essentials.json";
 import { findUnit } from "../lib/gamePlans";
@@ -183,7 +184,8 @@ const CATEGORY_NAMES: Record<string, string> = { Barracks: "Infantry", "Archery 
 const CATEGORIES = ["All", ...new Set(essentials.counters.map((c) => c.building))];
 
 function unitOf(name: string): CounterUnit {
-  return { name, icon: name === "Buildings" ? undefined : findUnit(ALIASES[name] ?? name)?.icon };
+  const unit = name === "Buildings" ? undefined : findUnit(ALIASES[name] ?? name);
+  return { name, icon: unit?.icon, unit };
 }
 
 /** The counter cheat sheet: find their unit, build what's next to it. */
@@ -200,13 +202,14 @@ export function CounterChart() {
         <span className="muted small">Find their unit, build what's next to it.</span>
       </div>
       <div className="counter-tools">
-        <div className="segmented" role="tablist">
+        <ToggleGroup.Root className="segmented" type="single" value={category} onValueChange={(v) => v && setCategory(v)} aria-label="Unit type">
           {CATEGORIES.map((c) => (
-            <button key={c} type="button" role="tab" aria-selected={c === category} className={c === category ? "active" : undefined} onClick={() => setCategory(c)}>
-              {CATEGORY_NAMES[c] ?? c}
-            </button>
+            <ToggleGroup.Item key={c} value={c} className="segmented-item">
+              {c === category && <motion.span layoutId="counter-seg" className="segmented-thumb" transition={{ type: "spring", stiffness: 500, damping: 38 }} />}
+              <span>{CATEGORY_NAMES[c] ?? c}</span>
+            </ToggleGroup.Item>
           ))}
-        </div>
+        </ToggleGroup.Root>
         <input className="search-input" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search a unit" aria-label="Search a unit" />
       </div>
       <div className="counter-list">

@@ -1,6 +1,12 @@
+import { GiCastle } from "react-icons/gi";
+import type { Unit } from "../lib/gameData";
+import { UnitHover } from "./ui";
+
 export interface CounterUnit {
   name: string;
   icon?: string;
+  /** Full game data, for the hover card. */
+  unit?: Unit;
 }
 
 /** "Veteran Spearman" -> "Spearman": the age tier is clear from context and the short name reads faster. */
@@ -8,10 +14,16 @@ const shortName = (name: string) => name.replace(/^(Early|Hardened|Veteran|Elite
 
 function UnitTile({ unit, size }: { unit: CounterUnit; size: "lg" | "md" }) {
   return (
-    <span className={`unit-tile ${size}`} title={unit.name}>
-      {unit.icon ? <img src={unit.icon} alt="" loading="lazy" /> : <span className="unit-tile-blank">{unit.name === "Buildings" ? "🏰" : unit.name[0]}</span>}
-      <span className="unit-tile-name">{size === "md" ? shortName(unit.name) : unit.name}</span>
-    </span>
+    <UnitHover unit={unit.unit}>
+      <span className={`unit-tile ${size}`}>
+        {unit.icon ? (
+          <img src={unit.icon} alt="" loading="lazy" />
+        ) : (
+          <span className="unit-tile-blank">{unit.name === "Buildings" ? <GiCastle aria-hidden="true" /> : unit.name[0]}</span>
+        )}
+        <span className="unit-tile-name">{size === "md" ? shortName(unit.name) : unit.name}</span>
+      </span>
+    </UnitHover>
   );
 }
 

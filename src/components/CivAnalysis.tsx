@@ -1,4 +1,8 @@
+import { ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
+import { Collapsible } from "radix-ui";
+import type { IconType } from "react-icons";
+import { GiCamel, GiCastle, GiChurch, GiCrossedSwords, GiGreekTemple, GiHolySymbol, GiWheat } from "react-icons/gi";
 import { useEffect, useMemo, useState } from "react";
 import type { CivStat } from "../lib/aoe4world";
 import { civs, getCiv, rosterAt, type Age } from "../lib/gameData";
@@ -9,18 +13,19 @@ import { civTempo, TEMPO_LABELS } from "../lib/tempo";
 import { loadCivStats, WinRing } from "./BriefView";
 import { CivSearch } from "./CivPicker";
 import { Flag } from "./Flag";
+import { Tip, UnitHover } from "./ui";
 import { YourPlan } from "./YourPlan";
 
 const sortedCivs = [...civs].sort((a, b) => a.name.localeCompare(b.name));
 
-const WIN_ICONS: Record<WinConditionKind, string> = {
-  army: "⚔️",
-  relics: "✝️",
-  sacred_sites: "⛪",
-  wonder: "🏛️",
-  trade: "🐪",
-  economy: "🌾",
-  defense: "🏰",
+const WIN_ICONS: Record<WinConditionKind, IconType> = {
+  army: GiCrossedSwords,
+  relics: GiHolySymbol,
+  sacred_sites: GiChurch,
+  wonder: GiGreekTemple,
+  trade: GiCamel,
+  economy: GiWheat,
+  defense: GiCastle,
 };
 
 /** "Knights + Archers" -> unit icons; words that aren't units stay as text. */
@@ -34,7 +39,13 @@ function PairingIcons({ units, civAbbr }: { units: string; civAbbr: string }) {
         return (
           <span key={p} className="pairing-part">
             {i > 0 && <span className="plus">+</span>}
-            {unit ? <img src={unit.icon} alt={p} title={p} loading="lazy" /> : <span className="unit-chip">{p}</span>}
+            {unit ? (
+              <UnitHover unit={unit}>
+                <img src={unit.icon} alt={p} loading="lazy" />
+              </UnitHover>
+            ) : (
+              <span className="unit-chip">{p}</span>
+            )}
           </span>
         );
       })}
@@ -76,17 +87,17 @@ export function CivAnalysis({ defaultCiv }: { defaultCiv?: string }) {
         <CivSearch onPick={setCivId} />
         <div className="flag-strip" role="listbox" aria-label="Civilization">
           {sortedCivs.map((c) => (
-            <button
-              key={c.id}
-              type="button"
-              role="option"
-              aria-selected={c.id === civ.id}
-              className={c.id === civ.id ? "strip-flag active" : "strip-flag"}
-              onClick={() => setCivId(c.id)}
-              title={c.name}
-            >
-              <Flag civ={c.id} size="sm" />
-            </button>
+            <Tip key={c.id} label={c.name} side="bottom">
+              <button
+                type="button"
+                role="option"
+                aria-selected={c.id === civ.id}
+                className={c.id === civ.id ? "strip-flag active" : "strip-flag"}
+                onClick={() => setCivId(c.id)}
+              >
+                <Flag civ={c.id} size="sm" />
+              </button>
+            </Tip>
           ))}
         </div>
       </div>
@@ -105,7 +116,7 @@ export function CivAnalysis({ defaultCiv }: { defaultCiv?: string }) {
           <p className="muted">{playbook?.summary ?? civ.description}</p>
         </div>
         <div className="civ-hero-stats">
-          <WinRing value={stat?.win_rate ?? null} label="Ranked win rate" />
+          <WinRing value={stat?.win_rate ?? null} label="Ranked win rate" loading={stats === null} />
           <div className="stats">
             {stat && <div className="stat"><span className="stat-value">{stat.pick_rate.toFixed(1)}%</span><span className="stat-label">Pick rate</span></div>}
             {tempo && <div className={`stat ${tempo.tempo}`}><span className="stat-value">{TEMPO_LABELS[tempo.tempo]}</span><span className="stat-label">Tempo</span></div>}
@@ -123,7 +134,7 @@ export function CivAnalysis({ defaultCiv }: { defaultCiv?: string }) {
             </div>
             <div className="pairings">
               {playbook.pairings.map((p) => (
-                <div key={p.units} className="pairing" title={p.why}>
+                <div key={p.units} className="pairing">
                   <PairingIcons units={p.units} civAbbr={civ.abbr} />
                   <span className="pairing-name">{p.units}</span>
                   <span className="muted small">{p.why}</span>
@@ -140,8 +151,11 @@ export function CivAnalysis({ defaultCiv }: { defaultCiv?: string }) {
             <div className="win-conditions">
               {playbook.winConditions.map((w) => (
                 <div key={w.detail} className="win-condition">
-                  <span className="win-icon" aria-hidden="true">
-                    {WIN_ICONS[w.kind]}
+                  <span className={`win-icon win-${w.kind}`} aria-hidden="true">
+                    {(() => {
+                      const Icon = WIN_ICONS[w.kind];
+                      return <Icon />;
+                    })()}
                   </span>
                   <span>{w.detail}</span>
                 </div>
@@ -162,7 +176,9 @@ export function CivAnalysis({ defaultCiv }: { defaultCiv?: string }) {
               <span className="roster-age-name">{["", "Dark", "Feudal", "Castle", "Imperial"][age]}</span>
               <div className="roster-units">
                 {units.map((u) => (
-                  <img key={u.id} src={u.icon} alt={u.name} title={u.name} className={u.unique ? "unique" : undefined} loading="lazy" />
+                  <UnitHover key={u.id} unit={u}>
+                    <img src={u.icon} alt={u.name} className={u.unique ? "unique" : undefined} loading="lazy" />
+                  </UnitHover>
                 ))}
               </div>
             </div>
@@ -170,14 +186,20 @@ export function CivAnalysis({ defaultCiv }: { defaultCiv?: string }) {
         </div>
       </section>
 
-      <details className="panel bonuses">
-        <summary>Civ bonuses</summary>
-        <ul className="tight">
-          {civ.bonuses.map((b) => (
-            <li key={b}>{b}</li>
-          ))}
-        </ul>
-      </details>
+      <Collapsible.Root className="panel bonuses">
+        <Collapsible.Trigger className="bonuses-trigger">
+          <ChevronRight className="bonuses-chevron" size={16} aria-hidden="true" />
+          Civ bonuses
+          <span className="muted small">{civ.bonuses.length}</span>
+        </Collapsible.Trigger>
+        <Collapsible.Content className="bonuses-content">
+          <ul className="tight">
+            {civ.bonuses.map((b) => (
+              <li key={b}>{b}</li>
+            ))}
+          </ul>
+        </Collapsible.Content>
+      </Collapsible.Root>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import NumberFlow from "@number-flow/react";
 import { motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 import { fetchCivStats, fetchMatchupStat, fetchRecentGames, type CivStat, type MatchupStat } from "../lib/aoe4world";
@@ -39,12 +40,12 @@ function minutes(seconds: number): string {
 }
 
 /** A ring that fills to a percentage: green above 50, red below. */
-export function WinRing({ value, label }: { value: number | null; label: string }) {
+export function WinRing({ value, label, loading }: { value: number | null; label: string; loading?: boolean }) {
   const r = 26;
   const c = 2 * Math.PI * r;
   const tone = value === null ? "" : value >= 52 ? "good" : value <= 48 ? "bad" : "even";
   return (
-    <div className={`win-ring ${tone}`}>
+    <div className={`win-ring ${tone}${loading ? " loading" : ""}`}>
       <svg viewBox="0 0 64 64" aria-hidden="true">
         <circle cx="32" cy="32" r={r} className="ring-bg" />
         {value !== null && (
@@ -60,16 +61,16 @@ export function WinRing({ value, label }: { value: number | null; label: string 
           />
         )}
       </svg>
-      <span className="ring-value">{value === null ? "–" : `${Math.round(value)}%`}</span>
+      <span className="ring-value">{value === null ? (loading ? "" : "–") : <NumberFlow value={Math.round(value)} suffix="%" />}</span>
       <span className="ring-label">{label}</span>
     </div>
   );
 }
 
-function Stat({ value, label, tone }: { value: string; label: string; tone?: string }) {
+function Stat({ value, label, tone, loading }: { value: string; label: string; tone?: string; loading?: boolean }) {
   return (
     <div className={`stat ${tone ?? ""}`}>
-      <span className="stat-value">{value}</span>
+      <span className="stat-value">{loading ? <span className="skeleton" /> : value}</span>
       <span className="stat-label">{label}</span>
     </div>
   );
@@ -106,10 +107,10 @@ function StatStrip({ myCivId, enemyCivId }: { myCivId: string; enemyCivId: strin
 
   return (
     <section className="panel stat-strip">
-      <WinRing value={row?.win_rate ?? null} label="Your win rate" />
+      <WinRing value={row?.win_rate ?? null} label="Your win rate" loading={stat === null} />
       <div className="stats">
-        <Stat value={row ? row.games_count.toLocaleString() : "–"} label="Games this patch" />
-        <Stat value={row ? minutes(row.duration_median) : "–"} label="Typical length" />
+        <Stat value={row ? row.games_count.toLocaleString() : "–"} label="Games this patch" loading={stat === null} />
+        <Stat value={row ? minutes(row.duration_median) : "–"} label="Typical length" loading={stat === null} />
         {theirs && <Stat value={`${theirs.win_rate.toFixed(1)}%`} label={`${getCiv(enemyCivId)?.name ?? "Their"} overall`} />}
         {tempo && <Stat value={TEMPO_LABELS[tempo.tempo]} label="Their tempo" tone={tempo.tempo} />}
       </div>

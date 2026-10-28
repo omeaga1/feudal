@@ -1,5 +1,6 @@
 import { getVersion } from "@tauri-apps/api/app";
 import { invoke, isTauri } from "@tauri-apps/api/core";
+import { Download, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
 import pkg from "../../package.json";
 import { appFetch } from "../lib/http";
@@ -43,10 +44,17 @@ export function UpdateNotice({ safeToInstall }: { safeToInstall: boolean }) {
   }, [release, safeToInstall, phase]);
 
   if (!release) return null;
-  if (phase === "installing") return <span className="update">Updating to {release.version}…</span>;
+  if (phase === "installing")
+    return (
+      <span className="update">
+        <RefreshCw className="spin" size={16} aria-hidden="true" />
+        Updating to {release.version}
+      </span>
+    );
   return (
     <a className="update" href={release.url} target="_blank" rel="noreferrer">
-      Feudal {release.version} is out
+      <Download size={16} aria-hidden="true" />
+      {release.version} is out
     </a>
   );
 }
