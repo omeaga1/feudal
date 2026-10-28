@@ -14,9 +14,10 @@ const STEAM_ID = /^7656\d{13}$/;
 export function parseProfileQuery(input: string): ProfileQuery | null {
   const text = input.trim();
   if (text === "") return null;
-  const steamLink = text.match(/steamcommunity\.com\/profiles\/(7656\d{13})/);
-  if (steamLink) return { kind: "steam", steamId: steamLink[1] };
-  if (STEAM_ID.test(text)) return { kind: "steam", steamId: text };
+  // A Steam ID anywhere in the text (a Steam link, an aoe4world.com link
+  // built from one, or the bare number) is looked up by Steam account.
+  const steamId = text.match(/(?<!\d)(7656\d{13})(?!\d)/);
+  if (steamId) return { kind: "steam", steamId: steamId[1] };
   const aoe4World = text.match(/aoe4world\.com\/players\/(\d+)/) ?? text.match(/players\/(\d+)/);
   if (aoe4World) return { kind: "id", id: Number(aoe4World[1]) };
   if (/^\d+$/.test(text)) return { kind: "id", id: Number(text) };
@@ -81,7 +82,10 @@ export async function resolveProfile(fetchFn: FetchFn, query: ProfileQuery): Pro
   if (query.kind === "steam") {
     const players = await search(fetchFn, query.steamId, false);
     if (players.length === 0) {
-      return { kind: "none", message: "No AoE4 World profile uses that Steam account. Has it played a ranked or quick match game?" };
+      return {
+        kind: "none",
+        message: `AoE4 World doesn't know Steam account ${query.steamId}. It may not be the account you play on, or you may play through Xbox. Try typing your in-game name instead.`,
+      };
     }
     return { kind: "found", player: players[0] };
   }
