@@ -1,4 +1,6 @@
 use serde::Serialize;
+use sha2::{Digest, Sha256};
+use std::io::Read;
 use tauri::Manager;
 
 #[derive(Serialize)]
@@ -57,15 +59,58 @@ fn read_keybind_profiles(app: tauri::AppHandle) -> Result<Vec<KeybindProfile>, S
     Ok(profiles)
 }
 
+/// Where Feudal's installers are published. The updater downloads nothing else.
+const RELEASE_PREFIX: &str = "https://github.com/omeaga1/feudal/releases/download/";
+
+/// Downloads a release installer and checks it against the SHA-256 digest
+/// GitHub lists for the asset.
+fn download_installer(url: &str, sha256: &str, dest: &std::path::Path) -> Result<(), String> {
+    if !url.starts_with(RELEASE_PREFIX) || !url.ends_with("-setup.exe") {
+        return Err("not a Feudal installer".into());
+    }
+    let mut bytes = Vec::new();
+    ureq::get(url)
+        .call()
+        .map_err(|e| e.to_string())?
+        .into_reader()
+        .take(200 * 1024 * 1024)
+        .read_to_end(&mut bytes)
+        .map_err(|e| e.to_string())?;
+    let digest: String = Sha256::digest(&bytes).iter().map(|b| format!("{b:02x}")).collect();
+    if !digest.eq_ignore_ascii_case(sha256.trim_start_matches("sha256:")) {
+        return Err("the download didn't match its checksum".into());
+    }
+    std::fs::write(dest, &bytes).map_err(|e| e.to_string())
+}
+
+/// Updates Feudal in place: downloads the new installer, runs it in passive
+/// mode (a progress bar, no clicks) with relaunch, and quits so the installer
+/// can replace the running files. The front end only calls this outside games.
+#[tauri::command]
+async fn install_update(app: tauri::AppHandle, url: String, sha256: String) -> Result<(), String> {
+    let dest = std::env::temp_dir().join("Feudal-update-setup.exe");
+    let path = dest.clone();
+    tauri::async_runtime::spawn_blocking(move || download_installer(&url, &sha256, &path))
+        .await
+        .map_err(|e| e.to_string())??;
+    std::process::Command::new(&dest)
+        .args(["/P", "/R", "/UPDATE"])
+        .spawn()
+        .map_err(|e| e.to_string())?;
+    app.exit(0);
+    Ok(())
+}
+
 // Feudal never touches the game process. Everything it knows about a match
 // comes from the public AoE4 World API, fetched through the HTTP plugin. The
-// only local files it reads are the player's keybinding profiles.
+// only local files it reads are the player's keybinding profiles, and the
+// only thing it writes is its own update installer, to the temp folder.
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![read_keybind_profiles])
+        .invoke_handler(tauri::generate_handler![read_keybind_profiles, install_update])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

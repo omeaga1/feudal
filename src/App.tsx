@@ -77,7 +77,7 @@ export default function App() {
           </button>
         ))}
         <span className="spacer" />
-        <UpdateNotice />
+        <UpdateNotice safeToInstall={profileId === null || status.kind === "waiting"} />
       </nav>
 
       <div className="main">

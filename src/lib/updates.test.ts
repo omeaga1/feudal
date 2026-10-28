@@ -14,6 +14,20 @@ describe("update check", () => {
     expect(compareVersions("0.1", "0.1.1")).toBeLessThan(0);
   });
 
+  it("picks the setup installer and its digest", async () => {
+    const release = {
+      tag_name: "v0.3.0",
+      html_url: "https://github.com/omeaga1/feudal/releases/tag/v0.3.0",
+      assets: [
+        { name: "Feudal_0.3.0_x64_en-US.msi", browser_download_url: "https://example.com/a.msi", digest: "sha256:aa" },
+        { name: "Feudal_0.3.0_x64-setup.exe", browser_download_url: "https://example.com/b-setup.exe", digest: "sha256:bb" },
+      ],
+    };
+    expect((await checkForUpdate(reply(200, release), "0.2.0"))?.installer).toEqual({ url: "https://example.com/b-setup.exe", sha256: "sha256:bb" });
+    const noDigest = { ...release, assets: [{ ...release.assets[1], digest: null }] };
+    expect((await checkForUpdate(reply(200, noDigest), "0.2.0"))?.installer).toBeUndefined();
+  });
+
   it("reports only newer releases and stays quiet on errors", async () => {
     const release = { tag_name: "v0.2.0", html_url: "https://github.com/omeaga1/feudal/releases/tag/v0.2.0" };
     expect(await checkForUpdate(reply(200, release), "0.1.0")).toEqual({ version: "0.2.0", url: release.html_url });

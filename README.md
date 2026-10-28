@@ -18,6 +18,7 @@ Feudal never touches the game. It doesn't read game memory, game files, network 
 | **Danger windows**: your win rate by game length in each matchup, current patch only | Working |
 | **Game plans**: a branching timeline for every civ (opening, two Feudal paths, two Castle paths each) with villager splits over time, condensed from pro guides on aoe4guides.com | Working |
 | **Civ analysis**: one screen per civ with the full plan tree, signature armies, win conditions and new units per age | Working |
+| **Automatic updates**: new versions download and install themselves while you're not in a game, then the app relaunches | Working |
 | **Keybinds**: a lit-up keyboard of the essential hotkeys plus a counter chart, then your own profile | Working |
 
 ## Development
