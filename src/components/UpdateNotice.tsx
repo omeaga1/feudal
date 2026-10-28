@@ -7,10 +7,13 @@ import { checkForUpdate, type Release } from "../lib/updates";
 
 type Phase = "idle" | "installing" | "failed";
 
+const CHECK_EVERY_MS = 30 * 60 * 1000;
+
 /**
- * Keeps Feudal up to date. Checked once at startup; when a newer release is
- * out, the desktop app downloads and installs it on its own, but only once AoE4
- * World confirms no game is running (or no profile is linked), then relaunches. If that fails, a link to the release stays.
+ * Keeps Feudal up to date. Checked at startup and every 30 minutes; when a
+ * newer release is out, the desktop app downloads and installs it on its own,
+ * but only once AoE4 World confirms no game is running (or no profile is
+ * linked), then relaunches. If that fails, a link to the release stays.
  */
 export function UpdateNotice({ safeToInstall }: { safeToInstall: boolean }) {
   const [release, setRelease] = useState<Release | null>(null);
@@ -18,12 +21,18 @@ export function UpdateNotice({ safeToInstall }: { safeToInstall: boolean }) {
 
   useEffect(() => {
     let cancelled = false;
-    const current = isTauri() ? getVersion() : Promise.resolve(pkg.version);
-    void current
-      .then((version) => checkForUpdate(appFetch, version))
-      .then((r) => !cancelled && setRelease(r));
+    const check = () => {
+      const current = isTauri() ? getVersion() : Promise.resolve(pkg.version);
+      void current
+        .then((version) => checkForUpdate(appFetch, version))
+        .then((r) => !cancelled && r && setRelease(r));
+    };
+    check();
+    // Feudal often stays open between games, so look again now and then.
+    const timer = setInterval(check, CHECK_EVERY_MS);
     return () => {
       cancelled = true;
+      clearInterval(timer);
     };
   }, []);
 

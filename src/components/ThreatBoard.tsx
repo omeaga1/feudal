@@ -1,14 +1,16 @@
 import { AGE_NAMES } from "../lib/gameData";
 import type { MatchupBrief } from "../lib/brief";
+import { CounterRow } from "./CounterRow";
 
-/** Each age's new enemy units with the units that beat them, as icons: their unit, an arrow, your answers. */
+/** Each age's new enemy units, each with the units of yours that beat it. */
 export function ThreatBoard({ brief }: { brief: MatchupBrief }) {
   const ages = brief.ages.filter((a) => a.threats.length > 0);
   if (ages.length === 0) return null;
   return (
     <section className="panel">
       <div className="panel-head">
-        <h3>Their units → your answer</h3>
+        <h3>Their units, your answer</h3>
+        <span className="muted small">New enemy units each age, and what to build against them</span>
       </div>
       <div className="threat-ages">
         {ages.map(({ age, threats }) => (
@@ -16,22 +18,12 @@ export function ThreatBoard({ brief }: { brief: MatchupBrief }) {
             <div className="threat-age-name">{AGE_NAMES[age]}</div>
             <div className="threat-list">
               {threats.map(({ enemy, counters }) => (
-                <div key={enemy.id} className={enemy.unique ? "threat unique" : "threat"}>
-                  <span className="threat-enemy" title={enemy.name}>
-                    <img src={enemy.icon} alt={enemy.name} loading="lazy" />
-                    <span>{enemy.name}</span>
-                  </span>
-                  <span className="threat-arrow" aria-hidden="true">
-                    ➜
-                  </span>
-                  <span className="threat-counters">
-                    {counters.length === 0 ? (
-                      <span className="muted small">Mix units</span>
-                    ) : (
-                      counters.slice(0, 3).map((c) => <img key={c.unit.id} src={c.unit.icon} alt={c.unit.name} title={c.unit.name} loading="lazy" />)
-                    )}
-                  </span>
-                </div>
+                <CounterRow
+                  key={enemy.id}
+                  enemy={enemy}
+                  unique={enemy.unique}
+                  answers={counters.slice(0, 3).map((c) => ({ name: c.unit.name, icon: c.unit.icon }))}
+                />
               ))}
             </div>
           </div>
