@@ -7,6 +7,7 @@ import { usePersisted } from "../lib/persisted";
 import { getPlaybook, type WinConditionKind } from "../lib/playbooks";
 import { civTempo, TEMPO_LABELS } from "../lib/tempo";
 import { loadCivStats, WinRing } from "./BriefView";
+import { CivSearch } from "./CivPicker";
 import { Flag } from "./Flag";
 import { YourPlan } from "./YourPlan";
 
@@ -71,20 +72,23 @@ export function CivAnalysis({ defaultCiv }: { defaultCiv?: string }) {
 
   return (
     <div className="stack">
-      <div className="flag-strip" role="listbox" aria-label="Civilization">
-        {sortedCivs.map((c) => (
-          <button
-            key={c.id}
-            type="button"
-            role="option"
-            aria-selected={c.id === civ.id}
-            className={c.id === civ.id ? "strip-flag active" : "strip-flag"}
-            onClick={() => setCivId(c.id)}
-            title={c.name}
-          >
-            <Flag civ={c.id} size="sm" />
-          </button>
-        ))}
+      <div className="civ-toolbar">
+        <CivSearch onPick={setCivId} />
+        <div className="flag-strip" role="listbox" aria-label="Civilization">
+          {sortedCivs.map((c) => (
+            <button
+              key={c.id}
+              type="button"
+              role="option"
+              aria-selected={c.id === civ.id}
+              className={c.id === civ.id ? "strip-flag active" : "strip-flag"}
+              onClick={() => setCivId(c.id)}
+              title={c.name}
+            >
+              <Flag civ={c.id} size="sm" />
+            </button>
+          ))}
+        </div>
       </div>
 
       <motion.section key={civ.id} className="panel civ-hero" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>

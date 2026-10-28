@@ -4,7 +4,7 @@ import { clock, formatClock, RESOURCES, totalVillagers, villagerTimeline, type G
 import { SplitChips } from "./PlanTree";
 
 const W = 600;
-const H = 150;
+const H = 190;
 const PAD_TOP = 18;
 
 /**

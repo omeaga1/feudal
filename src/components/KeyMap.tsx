@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { useMemo, useState } from "react";
 import essentials from "../data/essentials.json";
 import { findUnit } from "../lib/gamePlans";
+import { CounterRow, type CounterUnit } from "./CounterRow";
 
 interface Bind {
   keys: string[];
@@ -178,56 +179,41 @@ function Combo({ keys }: { keys: string[] }) {
 }
 
 const ALIASES: Record<string, string> = { Trebuchet: "Counterweight Trebuchet" };
+const CATEGORY_NAMES: Record<string, string> = { Barracks: "Infantry", "Archery Range": "Ranged", Stable: "Cavalry" };
+const CATEGORIES = ["All", ...new Set(essentials.counters.map((c) => c.building))];
 
-function UnitIcon({ name }: { name: string }) {
-  if (name === "Buildings") {
-    return (
-      <span className="building-icon" title="Buildings">
-        🏰
-      </span>
-    );
-  }
-  const unit = findUnit(ALIASES[name] ?? name);
-  if (!unit) return <span className="unit-chip">{name}</span>;
-  return <img src={unit.icon} alt={name} title={name} loading="lazy" />;
+function unitOf(name: string): CounterUnit {
+  return { name, icon: name === "Buildings" ? undefined : findUnit(ALIASES[name] ?? name)?.icon };
 }
 
-/** The counter cheat sheet: each unit, what it beats, and what beats it. */
+/** The counter cheat sheet: find their unit, build what's next to it. */
 export function CounterChart() {
-  const buildings = [...new Set(essentials.counters.map((c) => c.building))];
+  const [category, setCategory] = useState("All");
+  const [query, setQuery] = useState("");
+  const q = query.trim().toLowerCase();
+  const matches = (name: string) => name.toLowerCase().includes(q);
+  const rows = essentials.counters.filter((c) => (category === "All" || c.building === category) && (!q || matches(c.unit) || c.losesTo.some(matches)));
   return (
     <section className="panel">
       <div className="panel-head">
-        <h3>Counters at a glance</h3>
-        <span className="muted small">Green: it beats these. Red: these beat it.</span>
+        <h3>Counters</h3>
+        <span className="muted small">Find their unit, build what's next to it.</span>
       </div>
-      <div className="counter-grid">
-        {buildings.map((b) => (
-          <div key={b} className="counter-col">
-            <div className="counter-building">{b}</div>
-            {essentials.counters
-              .filter((c) => c.building === b)
-              .map((c) => (
-                <div key={c.unit} className="counter-card">
-                  <span className="counter-unit">
-                    <UnitIcon name={c.unit} />
-                    <span>{c.unit}</span>
-                  </span>
-                  <span className="counter-beats">
-                    {c.beats.map((n) => (
-                      <UnitIcon key={n} name={n} />
-                    ))}
-                  </span>
-                  <span className="counter-loses">
-                    {c.losesTo.map((n) => (
-                      <UnitIcon key={n} name={n} />
-                    ))}
-                  </span>
-                  <span className="counter-weak">{c.weakness}</span>
-                </div>
-              ))}
-          </div>
+      <div className="counter-tools">
+        <div className="segmented" role="tablist">
+          {CATEGORIES.map((c) => (
+            <button key={c} type="button" role="tab" aria-selected={c === category} className={c === category ? "active" : undefined} onClick={() => setCategory(c)}>
+              {CATEGORY_NAMES[c] ?? c}
+            </button>
+          ))}
+        </div>
+        <input className="search-input" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search a unit" aria-label="Search a unit" />
+      </div>
+      <div className="counter-list">
+        {rows.map((c) => (
+          <CounterRow key={c.unit} enemy={unitOf(c.unit)} answers={c.losesTo.map(unitOf)} note={`Weak: ${c.weakness.toLowerCase()}`} />
         ))}
+        {rows.length === 0 && <p className="muted">No unit matches "{query}".</p>}
       </div>
     </section>
   );
