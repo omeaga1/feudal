@@ -97,8 +97,12 @@ async function getJson<T>(fetchFn: FetchFn, path: string): Promise<T> {
 
 /** The player's most recent game. AoE4 World caches this endpoint for polling. */
 export async function fetchLastGame(fetchFn: FetchFn, profileId: number): Promise<Match | null> {
-  const game = await getJson<RawApiGame>(fetchFn, `/players/${profileId}/games/last`);
-  return parseMatch(normalizeGame(game), profileId);
+  const path = `/players/${profileId}/games/last`;
+  const res = await fetchFn(`${API_BASE}${path}`, { headers: { "User-Agent": USER_AGENT } });
+  // 404 means the player has no ranked or quick-match games yet.
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`AoE4 World returned HTTP ${res.status} for ${path}`);
+  return parseMatch(normalizeGame((await res.json()) as RawApiGame), profileId);
 }
 
 /** A player's most recent finished and ongoing games, newest first. */

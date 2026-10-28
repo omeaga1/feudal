@@ -1,6 +1,6 @@
 [package]
 name = "feudal"
-version = "0.1.0"
+version = "0.1.1"
 description = "A free Age of Empires IV companion"
 authors = ["omeaga1"]
 edition = "2024"
