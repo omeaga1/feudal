@@ -1,7 +1,7 @@
 {
   "name": "feudal",
   "private": true,
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A free Age of Empires IV companion: automatic matchup briefs, counters and keybind reference.",
   "type": "module",
   "scripts": {
@@ -12,12 +12,16 @@
     "test": "vitest run",
     "data:sync": "node scripts/sync-game-data.mjs",
     "data:danger": "node scripts/sync-danger-windows.mjs",
+    "data:watch": "node scripts/watch-build-orders.mjs",
     "tauri": "tauri"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource/cinzel": "^5.3.0",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-http": "^2",
     "@tauri-apps/plugin-opener": "^2",
+    "motion": "^14.7.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

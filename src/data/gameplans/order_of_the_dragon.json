@@ -1,0 +1,119 @@
+{
+  "civ": "order_of_the_dragon",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:10",
+    "steps": [
+      { "t": "0:00", "v": [5, 0, 0, 0], "do": "5 on sheep; move to deer as soon as you find it" },
+      { "t": "0:23", "v": [5, 0, 1, 0], "do": "Rally 2 or 3 to gold with a camp and house" },
+      { "t": "0:46", "v": [5, 0, 2, 0], "do": "Mill on deer, Survival Techniques" },
+      { "t": "1:32", "v": [6, 0, 3, 0], "do": "Rally to food until you age up" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "aachen-fast-castle",
+      "name": "Aachen fast Castle",
+      "style": "fast-castle",
+      "landmark": "Aachen Chapel",
+      "ageUp": "4:15",
+      "pick": "Default: Castle by 7:30 with gilded units",
+      "steps": [
+        { "t": "2:40", "v": [5, 0, 3, 0], "b": 3, "do": "3 food villagers build Aachen by food and gold" },
+        { "t": "2:45", "v": [5, 1, 3, 0], "b": 3, "do": "Outpost at gold; rally wood until 3" },
+        { "t": "3:50", "v": [6, 3, 3, 0], "b": 3, "do": "Rally back to food" },
+        { "t": "4:15", "v": [8, 3, 4, 0], "do": "Lumber camp; houses as needed" },
+        { "t": "5:15", "v": [10, 3, 5, 0], "do": "Gilded horseman from a stable if harassed" }
+      ],
+      "army": ["Gilded Horseman", "Gilded Spearman"],
+      "castle": [
+        {
+          "id": "burgrave-units",
+          "name": "Burgrave Palace",
+          "style": "timing",
+          "landmark": "Burgrave Palace",
+          "ageUp": "7:30",
+          "pick": "Default, or they make units",
+          "steps": [
+            { "t": "6:20", "v": [5, 3, 5, 0], "b": 8, "do": "8 food villagers build Burgrave" },
+            { "t": "7:20", "v": [12, 4, 8, 0], "do": "Monastery, 2 prelates; veteran spears" },
+            { "t": "8:20", "v": [12, 6, 8, 0], "do": "Wheelbarrow, archery range, relics on outposts" },
+            { "t": "9:00", "v": [12, 8, 8, 0], "do": "Crossbows and spears; Inspired Warriors" }
+          ],
+          "army": ["Gilded Crossbowman", "Veteran Gilded Spearman", "Gilded Man-at-Arms", "Prelate"],
+          "goal": "Cheap fast infantry from the palace"
+        },
+        {
+          "id": "regnitz-relics",
+          "name": "Regnitz relics",
+          "style": "boom",
+          "landmark": "Regnitz Cathedral",
+          "ageUp": "7:00",
+          "pick": "They boom: double gold from relics",
+          "steps": [
+            { "t": "5:30", "v": [6, 3, 5, 0], "b": 6, "do": "6 food villagers build Regnitz" },
+            { "t": "7:00", "v": [12, 5, 5, 0], "do": "Stable, 2 or 3 gilded knights; prelates to relics" },
+            { "t": "8:30", "v": [12, 13, 5, 0], "do": "Archery range; take sacred sites, farms" }
+          ],
+          "army": ["Gilded Knight", "Gilded Archer", "Prelate"],
+          "goal": "All relics in Regnitz for double gold"
+        }
+      ]
+    },
+    {
+      "id": "aachen-2tc",
+      "name": "Aachen 2 TC",
+      "style": "boom",
+      "landmark": "Aachen Chapel",
+      "ageUp": "4:00",
+      "pick": "Safe map: 2nd TC the moment you hit Feudal",
+      "steps": [
+        { "t": "2:06", "v": [6, 0, 2, 0], "b": 2, "do": "2 villagers build Aachen" },
+        { "t": "2:12", "v": [4, 2, 0, 4], "b": 2, "do": "4 to stone, 4 on food, rally wood" },
+        { "t": "3:08", "v": [4, 4, 0, 4], "b": 1, "do": "1 builder to wood at 50%" },
+        { "t": "4:30", "v": [4, 7, 0, 4], "b": 8, "do": "Drop TC 2 with 8 or more villagers" },
+        { "t": "6:00", "v": [10, 8, 4, 0], "do": "Stable or towers if they come; else food and gold 2:1" }
+      ],
+      "army": ["Gilded Horseman", "Gilded Archer"],
+      "castle": [
+        {
+          "id": "2tc-regnitz",
+          "name": "Regnitz relics",
+          "style": "boom",
+          "landmark": "Regnitz Cathedral",
+          "ageUp": "8:00",
+          "pick": "Default off 2 TCs: relics and knights",
+          "steps": [
+            { "t": "6:55", "v": [8, 6, 8, 0], "b": 6, "do": "6 food villagers build Regnitz" },
+            { "t": "8:00", "v": [16, 8, 8, 0], "do": "Prelates to relics; archery range and stable" },
+            { "t": "9:30", "v": [18, 12, 10, 0], "do": "Gilded knights and archers; farms around Aachen" }
+          ],
+          "army": ["Gilded Knight", "Gilded Archer", "Prelate"],
+          "goal": "Heavy Castle army with relic gold"
+        },
+        {
+          "id": "2tc-burgrave",
+          "name": "Burgrave defense",
+          "style": "defense",
+          "landmark": "Burgrave Palace",
+          "ageUp": "8:15",
+          "pick": "They push your 2 TCs early",
+          "steps": [
+            { "t": "7:15", "v": [10, 6, 8, 0], "b": 8, "do": "8 food villagers build Burgrave at home" },
+            { "t": "8:15", "v": [16, 8, 8, 0], "do": "Spears and crossbows from the palace" }
+          ],
+          "army": ["Gilded Crossbowman", "Gilded Spearman", "Gilded Man-at-Arms"],
+          "goal": "Hold, then out-eco them"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Vortix: Fast Burgrave", "url": "https://aoe4guides.com/builds/PjXOpx0TZPfmxV9zY546", "video": "https://www.youtube.com/watch?v=f-BzxMnvN-Y" },
+    { "title": "JampiX: OOTD fast castle relics", "url": "https://aoe4guides.com/builds/fMmMTVlh2xW63REwPjhG", "video": "https://www.youtube.com/watch?v=m_Wt0qDjlAo" },
+    { "title": "Valdy: 2TC (2026)", "url": "https://aoe4guides.com/builds/61TWGO1PYlqrceMopatQ", "video": "https://www.youtube.com/watch?v=YPRL2C_pSoM" },
+    { "title": "Valdy: Fast Castle (2026)", "url": "https://aoe4guides.com/builds/Osr0kBDqupiejJsGQcFy", "video": "https://www.youtube.com/watch?v=YPRL2C_pSoM" }
+  ]
+}

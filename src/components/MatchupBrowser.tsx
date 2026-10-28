@@ -1,48 +1,32 @@
-import { useState } from "react";
-import { civs } from "../lib/gameData";
 import { maps } from "../lib/maps";
+import { usePersisted } from "../lib/persisted";
 import { BriefView } from "./BriefView";
+import { VersusBar } from "./CivPicker";
 
-function CivSelect({ id, label, value, onChange }: { id: string; label: string; value: string; onChange: (v: string) => void }) {
-  return (
-    <label className="field" htmlFor={id}>
-      <span>{label}</span>
-      <select id={id} value={value} onChange={(e) => onChange(e.target.value)}>
-        {civs.map((c) => (
-          <option key={c.id} value={c.id}>
-            {c.name}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-}
+const mapNames = maps.map((m) => m.name).sort((a, b) => a.localeCompare(b));
 
-export function MatchupBrowser() {
-  const [myCiv, setMyCiv] = useState("english");
-  const [enemyCiv, setEnemyCiv] = useState("holy_roman_empire");
-  const [map, setMap] = useState("");
+/** Pick any two civs (and optionally a map) to read the matchup before a game. */
+export function MatchupBrowser({ defaultCiv }: { defaultCiv?: string }) {
+  const [pair, setPair] = usePersisted("feudal.matchup", { me: defaultCiv ?? "english", them: "holy_roman_empire" });
+  const [map, setMap] = usePersisted("feudal.matchup.map", "");
 
   return (
     <div className="stack">
-      <section className="panel row">
-        <CivSelect id="my-civ" label="You" value={myCiv} onChange={setMyCiv} />
-        <CivSelect id="enemy-civ" label="Them" value={enemyCiv} onChange={setEnemyCiv} />
-        <label className="field" htmlFor="map">
+      <div className="versus-wrap">
+        <VersusBar me={pair.me} them={pair.them} editable onChange={(me, them) => setPair({ me, them })} />
+        <label className="map-chip">
           <span>Map</span>
-          <select id="map" value={map} onChange={(e) => setMap(e.target.value)}>
-            <option value="">Any map</option>
-            {[...maps]
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((m) => (
-                <option key={m.name} value={m.name}>
-                  {m.name}
-                </option>
-              ))}
+          <select value={map} onChange={(e) => setMap(e.target.value)}>
+            <option value="">Any</option>
+            {mapNames.map((m) => (
+              <option key={m} value={m}>
+                {m}
+              </option>
+            ))}
           </select>
         </label>
-      </section>
-      <BriefView myCivId={myCiv} enemyCivId={enemyCiv} mapName={map || undefined} />
+      </div>
+      <BriefView myCivId={pair.me} enemyCivId={pair.them} mapName={map || undefined} />
     </div>
   );
 }

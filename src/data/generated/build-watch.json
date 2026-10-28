@@ -1,0 +1,121 @@
+{
+  "latestBuild": 11308,
+  "checkedAt": "2026-10-28T15:15:11.932Z",
+  "civs": {
+    "abbasid_dynasty": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "ayyubids": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "byzantines": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "chinese": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "delhi_sultanate": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "english": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "french": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "golden_horde": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "holy_roman_empire": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "house_of_lancaster": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "japanese": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "jeanne_darc": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "jin_dynasty": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "knights_templar": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "macedonian_dynasty": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "malians": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "mongols": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "order_of_the_dragon": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "ottomans": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "rus": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "sengoku_daimyo": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "tughlaq_dynasty": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "zhu_xis_legacy": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    }
+  }
+}

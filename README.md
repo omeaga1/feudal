@@ -16,7 +16,9 @@ Feudal never touches the game. It doesn't read game memory, game files, network 
 | **What to scout for**: the enemy civ's landmark options at each age-up, so one look at their landmark tells you their plan | Working |
 | **Civ playbooks**: power spikes, openings and answers for every civ | Drafts for all civs |
 | **Danger windows**: your win rate by game length in each matchup, current patch only | Working |
-| **Keybinds**: a glanceable view of your own hotkeys | Planned |
+| **Game plans**: a branching timeline for every civ (opening, two Feudal paths, two Castle paths each) with villager splits over time, condensed from pro guides on aoe4guides.com | Working |
+| **Civ analysis**: one screen per civ with the full plan tree, signature armies, win conditions and new units per age | Working |
+| **Keybinds**: a lit-up keyboard of the essential hotkeys plus a counter chart, then your own profile | Working |
 
 ## Development
 
@@ -50,6 +52,10 @@ The landing page is plain HTML in `site/`, with no build step. Open `site/index.
 ### Danger windows
 
 `src/data/generated/danger-windows.json` holds win/loss counts by game length for every civ pairing on the newest two patches. The `Danger windows` GitHub Action runs `npm run data:danger` every four hours: it reads the most recently finished ranked 1v1 games from AoE4 World (19 requests, one a second, using the `since` filter AoE4 World asks for) and commits the new counts. The app fetches the latest file from GitHub and falls back to the copy it shipped with.
+
+### Build watch
+
+A daily GitHub Action (`.github/workflows/build-watch.yml`, or `npm run data:watch` locally) compares each plan's `checkedBuild` with the newest game build AoE4 World reports and lists newer, well-scored guides from aoe4guides.com that the plans don't use yet. It commits `src/data/generated/build-watch.json`, which the app reads to flag stale plans and link the new guides, and opens one issue per new patch so the plans get re-checked. YouTube isn't scraped; most aoe4guides builds link their video.
 
 ### Project layout
 

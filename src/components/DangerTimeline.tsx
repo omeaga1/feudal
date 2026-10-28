@@ -41,7 +41,10 @@ export function DangerTimeline({ myCivId, enemyCivId }: { myCivId: string; enemy
 
   return (
     <section className="panel">
-      <h3>Danger windows</h3>
+      <div className="panel-head">
+        <h3>Danger windows</h3>
+        <span className="muted small">Your win rate by when the game ends</span>
+      </div>
       <p>{summarizeWindows(result)}</p>
       <div className="timeline" role="table" aria-label="Your win rate by game length">
         {result.windows.map((w) => (
@@ -61,10 +64,7 @@ export function DangerTimeline({ myCivId, enemyCivId }: { myCivId: string; enemy
         ))}
       </div>
       <p className="muted small">
-        {result.basis === "matchup"
-          ? `Your win rate in ranked 1v1 by when the game ended, from ${result.games.toLocaleString()} recent games of this matchup.`
-          : `Not enough games of this exact matchup yet, so this shows how everyone does against ${enemyName}, from ${result.games.toLocaleString()} recent games.`}{" "}
-        Current patch only, refreshed every few hours from AoE4 World. A dash means too few games to read.
+        {result.basis === "matchup" ? "This matchup" : `Everyone vs ${enemyName}`}, {result.games.toLocaleString()} games this patch. Dash: too few games.
       </p>
     </section>
   );

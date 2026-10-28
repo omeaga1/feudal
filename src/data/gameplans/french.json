@@ -1,0 +1,115 @@
+{
+  "civ": "french",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:15",
+    "steps": [
+      { "t": "0:00", "v": [6, 0, 0, 0], "do": "6 on sheep, scout pushes sheep home" },
+      { "t": "0:20", "v": [7, 0, 0, 0], "b": 1, "do": "Next villager builds a house and gold camp" },
+      { "t": "1:30", "v": [7, 0, 4, 0], "do": "4 on gold, then rally back to sheep" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "knight-aggression",
+      "name": "Royal Knight aggression",
+      "style": "aggro",
+      "landmark": "School of Cavalry",
+      "ageUp": "3:40",
+      "pick": "Default French: hit villagers early and keep hitting",
+      "steps": [
+        { "t": "2:15", "v": [5, 0, 3, 0], "b": 5, "do": "Age up at 14 villagers; School of Cavalry forward" },
+        { "t": "3:40", "v": [10, 3, 5, 0], "do": "Royal Knights nonstop, raid exposed villagers" },
+        { "t": "4:10", "v": [12, 3, 5, 0], "do": "8 sheep villagers to deer with a mill" },
+        { "t": "6:30", "v": [12, 7, 8, 0], "do": "Stable, or a range if they mass spears" }
+      ],
+      "army": ["Royal Knight", "Archer"],
+      "castle": [
+        {
+          "id": "guild-hall-keep",
+          "name": "Guild Hall keep push",
+          "style": "timing",
+          "landmark": "Guild Hall",
+          "ageUp": "12:00",
+          "pick": "You have ~15 knights and 10 archers; press the advantage",
+          "steps": [
+            { "t": "11:00", "v": [18, 4, 20, 0], "b": 12, "do": "12 gold villagers build the Guild Hall" },
+            { "t": "12:30", "v": [26, 6, 13, 0], "do": "Upgrade knights and archers, 10 to stone" },
+            { "t": "13:30", "do": "Keep next to your production, then push" }
+          ],
+          "army": ["Royal Knight", "Arbalétrier", "Springald"],
+          "goal": "Win the Castle fight before they stabilise"
+        },
+        {
+          "id": "royal-institute",
+          "name": "Royal Institute upgrades",
+          "style": "timing",
+          "landmark": "Royal Institute",
+          "ageUp": "12:30",
+          "pick": "Long Feudal standoff; cheaper unique upgrades win it",
+          "steps": [
+            { "t": "11:30", "do": "Keep knights out, age with the Royal Institute" },
+            { "t": "12:30", "do": "Unique French techs at -30%, ignoring age" }
+          ],
+          "army": ["Royal Knight", "Arbalétrier", "Man-at-Arms"],
+          "goal": "Out-upgrade their army, then take relics"
+        }
+      ]
+    },
+    {
+      "id": "2tc-knights",
+      "name": "2 TC boom",
+      "style": "boom",
+      "landmark": "School of Cavalry",
+      "ageUp": "4:50",
+      "pick": "Against other 2 TC civs, or on food-heavy maps",
+      "steps": [
+        { "t": "2:05", "v": [9, 0, 0, 0], "b": 4, "do": "200 gold banked; gold villagers build a lumber camp" },
+        { "t": "2:30", "v": [4, 4, 0, 0], "b": 6, "do": "2 build School of Cavalry, 4 go to stone" },
+        { "t": "3:15", "v": [4, 7, 0, 5], "b": 2, "do": "Rally stone up to 7, scout their plan" },
+        { "t": "4:30", "v": [6, 6, 0, 0], "b": 10, "do": "400 wood + 300 stone: 8 build TC 2 on a gold" },
+        { "t": "5:45", "v": [11, 5, 8, 0], "do": "TC 2 done: its builders mine gold" },
+        { "t": "6:20", "v": [16, 5, 8, 0], "do": "Royal Knights; deer with a mill when sheep run out" }
+      ],
+      "army": ["Royal Knight", "Archer", "Spearman"],
+      "castle": [
+        {
+          "id": "guild-hall-boom",
+          "name": "Guild Hall map control",
+          "style": "fast-castle",
+          "landmark": "Guild Hall",
+          "ageUp": "10:00",
+          "pick": "Default: Castle at 10 with knights already out",
+          "steps": [
+            { "t": "8:00", "v": [28, 5, 8, 0], "do": "Rally gold; Specialized Pick and Wheelbarrow" },
+            { "t": "10:00", "do": "8 villagers build the Guild Hall" },
+            { "t": "11:00", "do": "Keep near production, take gold and relics" }
+          ],
+          "army": ["Royal Knight", "Arbalétrier", "Scout"],
+          "goal": "Full map control: gold, relics, and the mid"
+        },
+        {
+          "id": "royal-institute-boom",
+          "name": "Royal Institute scaling",
+          "style": "boom",
+          "landmark": "Royal Institute",
+          "ageUp": "10:30",
+          "pick": "They turtle or go 3 TC; out-scale them",
+          "steps": [
+            { "t": "9:30", "do": "Farms around both TCs, knights on watch" },
+            { "t": "10:30", "do": "Royal Institute, then a third TC" }
+          ],
+          "army": ["Royal Knight", "Arbalétrier", "Mangonel"],
+          "goal": "Win the Imperial race"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Beasty: French 2TC Boom (Masterclass III, July 2026)", "url": "https://aoe4guides.com/builds/CPwvVGI3cmJaLs1PPtTR", "video": "https://www.youtube.com/watch?v=b4BfCqoyQuE" },
+    { "title": "Swaggy Professor: French Feudal aggression", "url": "https://aoe4guides.com/builds/WTb8ufQnXZH0jJTjGJ04", "video": "https://www.youtube.com/watch?v=4DLhhb91xSg" },
+    { "title": "Valdy: WB Pro Scouts (2026)", "url": "https://aoe4guides.com/builds/EHbobnEzHzi828z5fsB0", "video": "https://www.youtube.com/watch?v=ZzZICnaDBsQ" }
+  ]
+}

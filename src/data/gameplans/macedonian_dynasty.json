@@ -1,0 +1,120 @@
+{
+  "civ": "macedonian_dynasty",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:25",
+    "steps": [
+      { "t": "0:00", "v": [5, 0, 0, 0], "b": 1, "do": "5 on sheep, 1 builds the Varangian Warcamp" },
+      { "t": "0:20", "v": [6, 0, 2, 0], "do": "Rally 2 to gold; take deer if your scout finds it" },
+      { "t": "1:20", "v": [8, 0, 2, 0], "do": "Rally back to food until you age up" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "varangian-rush",
+      "name": "Varangian Guard rush",
+      "style": "aggro",
+      "landmark": "Imperial Hippodrome",
+      "ageUp": "4:03",
+      "pick": "Default vs 2 TC: horsemen, then flood Varangians",
+      "steps": [
+        { "t": "2:22", "v": [6, 3, 0, 0], "b": 4, "do": "4 food villagers build the Hippodrome; rally wood" },
+        { "t": "4:03", "v": [10, 8, 0, 0], "do": "3 or 4 horsemen and pressure" },
+        { "t": "4:30", "v": [15, 4, 0, 0], "do": "5 wood to deer; Varangian Stronghold" },
+        { "t": "5:50", "v": [12, 6, 5, 0], "do": "2nd Stronghold; Survival Techniques" },
+        { "t": "6:20", "v": [12, 8, 5, 0], "do": "Arsenal by gold; spam Varangian Guard" },
+        { "t": "7:20", "v": [12, 6, 10, 0], "do": "3rd Stronghold; Butted Chainmail, Pattern Welding" },
+        { "t": "8:10", "v": [17, 3, 10, 0], "do": "5 wood to berries with a mill" }
+      ],
+      "army": ["Early Varangian Guard", "Hippodrome Horseman", "Horseman"],
+      "castle": [
+        {
+          "id": "cistern-push",
+          "name": "Cistern push",
+          "style": "timing",
+          "landmark": "Cistern of the First Hill",
+          "ageUp": "11:00",
+          "pick": "Default: the rush did damage, keep the pressure",
+          "steps": [
+            { "t": "9:50", "v": [17, 6, 10, 0], "do": "About 17 Varangians and 4 horsemen out; click up" },
+            { "t": "11:00", "v": [17, 8, 12, 0], "do": "Cistern on your Strongholds; Siege Engineering" },
+            { "t": "12:00", "v": [17, 10, 12, 0], "do": "Cheirosiphons to break walls and towers" }
+          ],
+          "army": ["Varangian Guard", "Cheirosiphon", "Riddari"],
+          "goal": "End it before their 2 TCs pay off"
+        },
+        {
+          "id": "golden-horn-hold",
+          "name": "Golden Horn Tower hold",
+          "style": "defense",
+          "landmark": "Golden Horn Tower",
+          "ageUp": "10:30",
+          "pick": "The rush stalled; stabilize and out-tech",
+          "steps": [
+            { "t": "9:30", "v": [14, 6, 12, 0], "do": "8 food villagers build the Tower by gold" },
+            { "t": "10:30", "v": [14, 8, 12, 0], "do": "Free crossbows; eco upgrades and relics" }
+          ],
+          "army": ["Varangian Guard", "Crossbowman", "Riddari"],
+          "goal": "Free crossbows hold while you boom"
+        }
+      ]
+    },
+    {
+      "id": "hippodrome-fast-castle",
+      "name": "Hippodrome into Castle",
+      "style": "fast-castle",
+      "landmark": "Imperial Hippodrome",
+      "ageUp": "4:15",
+      "pick": "Free Hippodrome units defend while you tech",
+      "steps": [
+        { "t": "2:45", "v": [6, 0, 4, 0], "b": 4, "do": "4 on gold; 4 food villagers build the Hippodrome" },
+        { "t": "4:15", "v": [9, 3, 6, 0], "do": "Builders to food and gold; Specialized Pick" },
+        { "t": "5:30", "v": [13, 3, 6, 0], "do": "Arsenal near gold, or an outpost and palisade" },
+        { "t": "6:30", "v": [15, 3, 10, 0], "do": "At 450 gold move 5 food to gold" }
+      ],
+      "army": ["Hippodrome Horseman", "Hippodrome Scout"],
+      "castle": [
+        {
+          "id": "fast-imperial-cataphracts",
+          "name": "Fast Imperial cataphracts",
+          "style": "fast-imperial",
+          "landmark": "Golden Horn Tower",
+          "ageUp": "8:10",
+          "pick": "Default: Palatine School by 12:10",
+          "steps": [
+            { "t": "6:50", "v": [9, 3, 6, 0], "b": 8, "do": "8 food villagers build the Tower near gold" },
+            { "t": "8:10", "v": [13, 3, 14, 0], "do": "Market, sell extra gold; warcamp to Riddari" },
+            { "t": "10:15", "v": [16, 3, 14, 0], "do": "Scale Barding, Shaft Mining" },
+            { "t": "11:15", "v": [8, 3, 14, 0], "b": 14, "do": "14 food villagers build the Palatine School" },
+            { "t": "12:10", "v": [9, 3, 14, 14], "do": "2 batches of cataphracts; keeps on gold" }
+          ],
+          "army": ["Riddari", "Crossbowman"],
+          "goal": "Palatine Cataphract batches at 12 minutes"
+        },
+        {
+          "id": "cistern-riddari",
+          "name": "Cistern riddari",
+          "style": "timing",
+          "landmark": "Cistern of the First Hill",
+          "ageUp": "8:30",
+          "pick": "Open map: riddari and monks",
+          "steps": [
+            { "t": "7:20", "v": [6, 5, 9, 0], "b": 8, "do": "8 food villagers build the Cistern" },
+            { "t": "8:30", "v": [14, 5, 12, 0], "do": "Cistern on 2 farms, gold camp and a Stronghold" },
+            { "t": "10:30", "v": [14, 11, 12, 0], "do": "10 riddari, 3 monks; add Bogmaðr" }
+          ],
+          "army": ["Riddari", "Veteran Bogmaðr", "Monk"],
+          "goal": "Riddari raids and relics"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "VortiX: Feudal Varangian Guard rush", "url": "https://aoe4guides.com/builds/RgHNHa5jDWnCw7pY67UL", "video": "https://www.youtube.com/watch?v=OezixLpYQEw" },
+    { "title": "Swaggy Professor: Fast Imperial", "url": "https://aoe4guides.com/builds/8AzlTkhXbcJXMbfZU0HU", "video": "https://www.youtube.com/watch?v=xT21uNqskuU" },
+    { "title": "Beasty: Best Macedonian Dynasty build", "url": "https://aoe4guides.com/builds/12dVnw8yBYpwfYpc15i4", "video": "https://www.youtube.com/watch?v=GIErhV3Eeys" },
+    { "title": "BAD CAT: Macedonian fast Castle", "url": "https://aoe4guides.com/builds/p6VECTGo59ypWGO3snRb" }
+  ]
+}

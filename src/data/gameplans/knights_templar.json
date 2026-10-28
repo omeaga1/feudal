@@ -1,0 +1,119 @@
+{
+  "civ": "knights_templar",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:20",
+    "steps": [
+      { "t": "0:00", "v": [6, 0, 0, 0], "do": "6 on sheep, 1 builds a house" },
+      { "t": "0:20", "v": [6, 0, 1, 0], "do": "Rally 2 to gold with a mining camp" },
+      { "t": "1:00", "v": [7, 0, 2, 0], "do": "Rally back to sheep until you age up" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "hospitaller-pilgrims",
+      "name": "1 TC pilgrim aggro",
+      "style": "aggro",
+      "landmark": "Commandery: Knights Hospitaller",
+      "ageUp": "3:20",
+      "pick": "Default: early Hospitallers and archers, fight for deer",
+      "steps": [
+        { "t": "2:20", "v": [11, 0, 2, 0], "do": "Click up to Feudal with the Hospitallers" },
+        { "t": "2:30", "v": [3, 10, 0, 0], "do": "Remacro: 3 food, 10 wood" },
+        { "t": "3:20", "v": [3, 10, 0, 0], "do": "Safe Passage, 2 villagers, then Sanctuary" },
+        { "t": "4:30", "v": [7, 10, 2, 0], "do": "Barracks and archery range; Hospitaller Knights" },
+        { "t": "6:00", "v": [10, 10, 5, 0], "do": "Blacksmith, take deer and boar, tower up" },
+        { "t": "8:00", "v": [12, 10, 7, 0], "do": "Stable if they mass spears" }
+      ],
+      "army": ["Hospitaller Knight", "Spearman", "Archer"],
+      "castle": [
+        {
+          "id": "templar-fortress",
+          "name": "Templar Brothers and fortress",
+          "style": "timing",
+          "landmark": "Commandery: Kingdom of Castile",
+          "ageUp": "13:00",
+          "pick": "Default: you held the map, hit a heavy timing",
+          "steps": [
+            { "t": "12:00", "v": [12, 12, 9, 0], "do": "Click up at 12 to 14 minutes" },
+            { "t": "13:00", "v": [12, 10, 9, 5], "do": "5 on stone for a fortress; Templar Brothers" },
+            { "t": "14:30", "v": [14, 12, 10, 5], "do": "Archer spam behind the Brothers" }
+          ],
+          "army": ["Templar Brother", "Archer", "Genitour"],
+          "goal": "A fortress on the map and a Brother push"
+        },
+        {
+          "id": "genoa-crossbows",
+          "name": "Genoese crossbow switch",
+          "style": "defense",
+          "landmark": "Commandery: Republic of Genoa",
+          "ageUp": "12:30",
+          "pick": "They went heavy knights or men-at-arms",
+          "steps": [
+            { "t": "11:30", "v": [12, 12, 9, 0], "do": "Click up behind towers" },
+            { "t": "12:30", "v": [12, 12, 12, 0], "do": "Genoese Crossbowmen and Pavise behind spears" }
+          ],
+          "army": ["Genoese Crossbowman", "Spearman", "Hospitaller Knight"],
+          "goal": "Crossbows melt their armored push"
+        }
+      ]
+    },
+    {
+      "id": "antioch-2tc",
+      "name": "2 TC serjeants",
+      "style": "boom",
+      "landmark": "Commandery: Principality of Antioch",
+      "ageUp": "4:00",
+      "pick": "Safe map or they boom: 2nd TC before 5:00",
+      "steps": [
+        { "t": "2:23", "v": [6, 5, 0, 2], "do": "2 gold villagers to stone" },
+        { "t": "2:48", "v": [1, 8, 0, 5], "do": "Age up at 15 villagers; food to stone and wood" },
+        { "t": "4:05", "v": [1, 6, 0, 8], "do": "Safe Passage; 3 wood to stone, rally food" },
+        { "t": "4:25", "v": [1, 6, 0, 0], "b": 8, "do": "8 stone villagers build TC 2 on deer, mill" },
+        { "t": "6:00", "v": [15, 6, 0, 0], "do": "Two barracks; Serjeants" },
+        { "t": "7:30", "v": [19, 6, 6, 0], "do": "Blacksmith, Bloomery; Castle if they go archers" }
+      ],
+      "army": ["Serjeant", "Spearman"],
+      "castle": [
+        {
+          "id": "castile-genitours",
+          "name": "Castile genitours",
+          "style": "timing",
+          "landmark": "Commandery: Kingdom of Castile",
+          "ageUp": "10:05",
+          "pick": "Default: Serjeant, spear and Genitour mix",
+          "steps": [
+            { "t": "9:15", "v": [24, 6, 11, 0], "do": "Click up; 2 archery ranges and a house" },
+            { "t": "10:05", "v": [18, 13, 12, 0], "do": "Veteran Serjeant and spear; Genitours" },
+            { "t": "11:00", "v": [18, 19, 12, 0], "do": "Decarbonization; deer done, go to berries" },
+            { "t": "11:30", "v": [18, 12, 12, 8], "do": "8 wood to stone for a fortress" }
+          ],
+          "army": ["Serjeant", "Spearman", "Genitour"],
+          "goal": "Fight near holy sites for Castile healing"
+        },
+        {
+          "id": "fortress-boom",
+          "name": "Fortress boom",
+          "style": "boom",
+          "landmark": "Commandery: Republic of Genoa",
+          "ageUp": "10:30",
+          "pick": "They turtle; stone your way into Imperial",
+          "steps": [
+            { "t": "9:30", "v": [20, 10, 8, 0], "do": "Click up, keep both TCs making villagers" },
+            { "t": "10:30", "v": [20, 10, 8, 10], "do": "8 to 12 on stone; fortresses on exposed gold" }
+          ],
+          "army": ["Genoese Crossbowman", "Serjeant", "Templar Brother"],
+          "goal": "Fortresses lock the map while you boom"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Valdy: (2026) 1TC Fast 2x Pilgrim Into Aggro", "url": "https://aoe4guides.com/builds/lZ5EiqDVzQmIQDLkrfSr" },
+    { "title": "Vortix: 2TC Serjeant & Genitour", "url": "https://aoe4guides.com/builds/41yOCHHtg3snki8AopmV", "video": "https://www.youtube.com/watch?v=_l1eR5f9gW4" },
+    { "title": "Beasty: New 2TC Knights Templar", "url": "https://aoe4guides.com/builds/57Ka8nOoGXLimRBp61zP", "video": "https://www.youtube.com/watch?v=pX9WLcs49SQ" },
+    { "title": "Valdy: (2026) Templar 2TC", "url": "https://aoe4guides.com/builds/ragP5grVn0xaWCinXA9L" }
+  ]
+}

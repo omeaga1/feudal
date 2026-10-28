@@ -1,0 +1,120 @@
+{
+  "civ": "tughlaq_dynasty",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:05",
+    "steps": [
+      { "t": "0:00", "v": [6, 0, 0, 0], "do": "6 on berries; worker elephants scout and haul" },
+      { "t": "0:30", "v": [7, 0, 1, 0], "b": 1, "do": "Rally 2 or 3 to gold; houses in a fort pattern" },
+      { "t": "1:00", "v": [7, 0, 2, 0], "do": "Rally berries, then sheep until you age up" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "dome-fort-boom",
+      "name": "Dome fort boom",
+      "style": "boom",
+      "landmark": "Dome of the Faith",
+      "ageUp": "3:40",
+      "pick": "Default: an unbreakable fort on your gold",
+      "steps": [
+        { "t": "2:10", "v": [10, 0, 3, 0], "b": 3, "do": "3 villagers build the Dome; berries and sheep to stone" },
+        { "t": "2:20", "v": [3, 0, 0, 7], "b": 3, "do": "7 on stone with a worker elephant; rally wood" },
+        { "t": "3:40", "v": [3, 3, 0, 7], "b": 3, "do": "Builders make a house, then the Tughluqabad Fort on gold" },
+        { "t": "5:00", "v": [10, 3, 4, 0], "b": 2, "do": "At 300 stone: back to berries; houses ring the fort" },
+        { "t": "6:30", "v": [12, 5, 5, 0], "do": "Bhakkar, fort tiers; stable for raider elephants" },
+        { "t": "8:00", "v": [12, 8, 6, 0], "do": "Elephant Economics; archery range vs spears" }
+      ],
+      "army": ["Raider Elephant", "Archer", "Healer Elephant"],
+      "castle": [
+        {
+          "id": "house-of-learning-relics",
+          "name": "House of Learning",
+          "style": "timing",
+          "landmark": "House of Learning",
+          "ageUp": "11:45",
+          "pick": "Default: unique techs, relics, crossbows",
+          "steps": [
+            { "t": "11:00", "v": [5, 0, 12, 0], "b": 11, "do": "Wood to food and gold; 11 food villagers build it" },
+            { "t": "11:45", "v": [13, 5, 12, 0], "do": "Mahouts, Elephant Caretakers; imams to relics" },
+            { "t": "13:00", "v": [13, 7, 12, 0], "do": "Mass crossbows and 1 or 2 war elephants; wall" }
+          ],
+          "army": ["Crossbowman", "War Elephant", "Veteran Raider Elephant", "Imam"],
+          "goal": "Safe Imperial with Palace of the Sultan"
+        },
+        {
+          "id": "compound-forts",
+          "name": "Compound of the Defender",
+          "style": "defense",
+          "landmark": "Compound of the Defender",
+          "ageUp": "11:00",
+          "pick": "Heavy pressure: cheaper, tougher forts",
+          "steps": [
+            { "t": "10:00", "v": [12, 6, 8, 4], "b": 8, "do": "Build it inside the fort ring" },
+            { "t": "11:00", "v": [12, 6, 8, 8], "do": "Extra fort upgrades; more forts on map gold" }
+          ],
+          "army": ["Crossbowman", "Veteran Spearman", "Ballista Elephant"],
+          "goal": "Forts hold the map while you boom"
+        }
+      ]
+    },
+    {
+      "id": "victory-raiders",
+      "name": "Tower of Victory raiders",
+      "style": "aggro",
+      "landmark": "Tower of Victory",
+      "ageUp": "4:05",
+      "pick": "Raid early, fort behind it, Castle push",
+      "steps": [
+        { "t": "2:05", "v": [7, 0, 2, 0], "b": 3, "do": "3 sheep villagers build the Tower; a stable first" },
+        { "t": "3:00", "v": [4, 5, 0, 3], "b": 3, "do": "Berries to wood with a worker elephant; rally stone to 7" },
+        { "t": "4:05", "v": [6, 5, 0, 7], "do": "Builders to berries; raider elephants harass" },
+        { "t": "5:20", "v": [7, 5, 0, 7], "b": 3, "do": "3 sheep villagers build the fort, houses around it" },
+        { "t": "6:45", "v": [13, 5, 1, 7], "b": 1, "do": "Bhakkar and fort tiers; rally gold to 9" },
+        { "t": "7:40", "v": [13, 6, 9, 0], "do": "Stone to gold; Elephant Economics" },
+        { "t": "9:00", "v": [13, 10, 10, 0], "do": "2 archery ranges" }
+      ],
+      "army": ["Raider Elephant", "Archer"],
+      "castle": [
+        {
+          "id": "learning-push",
+          "name": "House of Learning push",
+          "style": "timing",
+          "landmark": "House of Learning",
+          "ageUp": "10:45",
+          "pick": "Default: 6 raiders and 10 archers attack",
+          "steps": [
+            { "t": "9:30", "v": [7, 9, 10, 0], "b": 8, "do": "6 food and 2 wood build it; raiders and 10 archers" },
+            { "t": "10:45", "v": [13, 15, 10, 0], "do": "Veteran raiders and archers; blacksmith" },
+            { "t": "11:30", "v": [13, 17, 10, 0], "do": "Steeled Arrow, Collateral Damage, Mahouts: attack" },
+            { "t": "12:30", "v": [13, 20, 10, 0], "do": "Balanced Projectiles, Iron Undermesh, 2nd stable" }
+          ],
+          "army": ["Veteran Raider Elephant", "Veteran Archer"],
+          "goal": "Push before their Castle army is up"
+        },
+        {
+          "id": "victory-compound",
+          "name": "Compound fort spread",
+          "style": "defense",
+          "landmark": "Compound of the Defender",
+          "ageUp": "10:30",
+          "pick": "The raid failed; lock down with forts",
+          "steps": [
+            { "t": "9:30", "v": [13, 8, 8, 4], "b": 8, "do": "Build it; stone for a 2nd fort" },
+            { "t": "10:30", "v": [14, 8, 8, 8], "do": "Forts on map gold; war elephants" }
+          ],
+          "army": ["War Elephant", "Crossbowman", "Healer Elephant"],
+          "goal": "Out-scale from behind the forts"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "JampiX: Tughlaq fort boom into raider elephants", "url": "https://aoe4guides.com/builds/B3WvtWxctd2skek8SWce", "video": "https://www.youtube.com/watch?v=uEMqwoaOQv8" },
+    { "title": "Vortix: Fort boom into Castle push", "url": "https://aoe4guides.com/builds/P70yZNzqAsgixWAmZTRi", "video": "https://www.youtube.com/watch?v=ZfEoOUiAg8I" },
+    { "title": "Beasty: Tughlaq Dynasty build", "url": "https://aoe4guides.com/builds/OWFiBX39naun6p3S1PSo", "video": "https://www.youtube.com/watch?v=iorxhl7QLTc" },
+    { "title": "Vortix: Spear into fort + 2 TC", "url": "https://aoe4guides.com/builds/7Mp3imorNSrORofFxs7F", "video": "https://www.youtube.com/watch?v=XizY7ZaykRw" }
+  ]
+}

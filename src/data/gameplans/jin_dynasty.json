@@ -1,0 +1,113 @@
+{
+  "civ": "jin_dynasty",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:30",
+    "steps": [
+      { "t": "0:00", "v": [1, 0, 2, 0], "do": "Mounted villagers: kill the reindeer, 2 to gold with a camp" },
+      { "t": "2:00", "v": [3, 0, 3, 0], "do": "Rally to food; 1 builds a house" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "pasture-pagodas",
+      "name": "Great Pasture Iron Pagodas",
+      "style": "aggro",
+      "landmark": "Great Pasture",
+      "ageUp": "3:55",
+      "pick": "Default: Iron Pagodas nonstop, Mohe vs infantry",
+      "steps": [
+        { "t": "2:45", "v": [4, 0, 3, 0], "b": 3, "do": "3 food villagers build the Great Pasture" },
+        { "t": "3:55", "v": [3, 2, 4, 0], "b": 1, "do": "Iron Pagodas nonstop; Mohe if spear rushed" },
+        { "t": "5:15", "v": [6, 5, 3, 0], "do": "Stable; wood to 6 for 2 Mohe at a time" },
+        { "t": "6:50", "v": [8, 1, 5, 0], "do": "8 food villagers to deer with a mill, rally gold" },
+        { "t": "8:00", "v": [8, 5, 6, 0], "do": "Blacksmith; Iron Undermesh" }
+      ],
+      "army": ["Iron Pagoda", "Mohe Tribesman"],
+      "castle": [
+        {
+          "id": "dragon-pavilion-forward",
+          "name": "Forward Dragon Pavilion",
+          "style": "timing",
+          "landmark": "Dragon Pavilion",
+          "ageUp": "11:00",
+          "pick": "Default: take a forward gold and keep pushing",
+          "steps": [
+            { "t": "10:15", "v": [8, 1, 11, 0], "b": 6, "do": "5 to 8 gold villagers build it at a forward gold" },
+            { "t": "11:10", "v": [8, 7, 7, 0], "do": "Emissaries to trade posts, grassland, monastery" }
+          ],
+          "army": ["Iron Pagoda", "Mohe Tribesman", "Bed Crossbow"],
+          "goal": "Relics and tributaries while pagodas hold the map"
+        },
+        {
+          "id": "mountain-hall",
+          "name": "Mountain Hall karma",
+          "style": "boom",
+          "landmark": "Mountain Hall",
+          "ageUp": "11:00",
+          "pick": "Stable game; cheap monasteries and karma",
+          "steps": [
+            { "t": "10:00", "do": "Keep units alive (losses cost karma)" },
+            { "t": "11:00", "do": "Monasteries at 50% off near your resources" }
+          ],
+          "army": ["Iron Pagoda", "Crossbowman", "Monk"],
+          "goal": "Max karma for the Four Heavenly Kings"
+        }
+      ]
+    },
+    {
+      "id": "flower-2tc",
+      "name": "Flower Pagoda 2 TC",
+      "style": "boom",
+      "landmark": "Flower Pagoda",
+      "ageUp": "4:40",
+      "pick": "2 TC and Castle in 9 minutes",
+      "steps": [
+        { "t": "2:40", "v": [3, 0, 3, 0], "b": 1, "do": "1 food villager builds the Flower Pagoda" },
+        { "t": "3:11", "v": [1, 3, 1, 3], "b": 1, "do": "Gold to wood with a camp; 2 food to stone" },
+        { "t": "4:40", "v": [2, 5, 1, 3], "do": "Flower Garden on the woodline" },
+        { "t": "5:10", "v": [2, 0, 2, 0], "b": 8, "do": "320 stone: wood villagers build TC 2" },
+        { "t": "6:22", "v": [7, 6, 4, 0], "b": 2, "do": "Barracks, 5 spears" },
+        { "t": "7:10", "v": [12, 0, 7, 0], "do": "Remacro at 600 gold; keep 5+ on gold" }
+      ],
+      "army": ["Spearman", "Crossbowman"],
+      "castle": [
+        {
+          "id": "pavilion-9min",
+          "name": "9 minute Dragon Pavilion",
+          "style": "fast-castle",
+          "landmark": "Dragon Pavilion",
+          "ageUp": "9:00",
+          "pick": "Default: Castle with 2 TCs",
+          "steps": [
+            { "t": "8:18", "v": [7, 0, 5, 0], "b": 9, "do": "8 food villagers start the Pavilion" },
+            { "t": "9:30", "v": [15, 8, 5, 0], "do": "Emissary tributaries, eco upgrades, relics" }
+          ],
+          "army": ["Iron Pagoda", "Crossbowman", "Bed Crossbow"],
+          "goal": "Out-eco them with 2 TCs and tributaries"
+        },
+        {
+          "id": "mountain-hall-boom",
+          "name": "Mountain Hall relics",
+          "style": "boom",
+          "landmark": "Mountain Hall",
+          "ageUp": "9:30",
+          "pick": "Relics are open; monasteries everywhere",
+          "steps": [
+            { "t": "9:00", "do": "Farms around both TCs" },
+            { "t": "9:30", "do": "Mountain Hall, cheap monasteries, relics" }
+          ],
+          "army": ["Iron Pagoda", "Monk", "Nest of Bees"],
+          "goal": "Karma and relics into Imperial"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Swaggy Professor: The ONLY Jin Dynasty Build You Need", "url": "https://aoe4guides.com/builds/pj6ztHDSiVv9xpo1NsXy", "video": "https://www.youtube.com/watch?v=XF6du6yRz3E" },
+    { "title": "Jin Dynasty: 2TC + Castle in 9 min", "url": "https://aoe4guides.com/builds/wNVkqNbu609TXvEhS2Eb", "video": "https://www.youtube.com/watch?v=IvIwlP5wqpA" },
+    { "title": "Valdy: Fast Castle Jin Dynasty", "url": "https://aoe4guides.com/builds/4QvVeQaYlhiJks8oGPUF", "video": "https://www.youtube.com/watch?v=d_vP08tT3NY" }
+  ]
+}

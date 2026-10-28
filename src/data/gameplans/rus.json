@@ -1,0 +1,118 @@
+{
+  "civ": "rus",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:10",
+    "steps": [
+      { "t": "0:00", "v": [4, 0, 0, 0], "b": 2, "do": "4 on sheep; 2 build hunting cabins in different forests and a house" },
+      { "t": "0:45", "v": [6, 0, 0, 0], "do": "2nd scout from a cabin: steal sheep, find deer" },
+      { "t": "1:05", "v": [9, 0, 0, 0], "do": "Rally to sheep; cabins make gold for you" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "kremlin-knights",
+      "name": "Kremlin knights",
+      "style": "aggro",
+      "landmark": "Kremlin",
+      "ageUp": "4:05",
+      "pick": "Default: knights harass on the way to Castle",
+      "steps": [
+        { "t": "2:20", "v": [4, 3, 0, 0], "b": 5, "do": "5 sheep villagers build the Kremlin on deer and wood" },
+        { "t": "3:00", "v": [4, 8, 0, 0], "b": 5, "do": "Rally wood until 8 on straggler trees" },
+        { "t": "4:05", "v": [8, 8, 0, 0], "b": 5, "do": "Builders make a stable, then go to deer" },
+        { "t": "5:00", "v": [12, 1, 7, 0], "b": 1, "do": "Trees done: 7 to gold, 1 builds a lumber camp" },
+        { "t": "5:30", "v": [14, 1, 7, 0], "do": "1 to 4 knights harass; Survival Techniques" }
+      ],
+      "army": ["Early Knight", "Archer"],
+      "castle": [
+        {
+          "id": "abbey-monks",
+          "name": "Abbey warrior monks",
+          "style": "fast-castle",
+          "landmark": "Abbey of the Trinity",
+          "ageUp": "8:50",
+          "pick": "Default: relics and sacred sites",
+          "steps": [
+            { "t": "7:45", "v": [2, 1, 7, 0], "b": 10, "do": "8 to 12 food villagers build the Abbey" },
+            { "t": "8:50", "v": [6, 19, 6, 0], "do": "Warrior monks to relics; more knights" },
+            { "t": "9:30", "v": [6, 18, 6, 0], "b": 1, "do": "Blacksmith, 3 archery ranges" },
+            { "t": "11:00", "v": [14, 13, 6, 0], "do": "8 wood to deer with a wooden fortress" }
+          ],
+          "army": ["Knight", "Warrior Monk", "Horse Archer", "Crossbowman"],
+          "goal": "5 monks always out to buff and cap sites"
+        },
+        {
+          "id": "trade-house-gold",
+          "name": "High Trade House",
+          "style": "boom",
+          "landmark": "High Trade House",
+          "ageUp": "8:30",
+          "pick": "Few relics; endless gold and deer instead",
+          "steps": [
+            { "t": "7:30", "v": [10, 4, 7, 0], "b": 6, "do": "Build it in the open, away from trees" },
+            { "t": "8:30", "v": [14, 8, 4, 0], "do": "Gold villagers to food; hunt the free deer" }
+          ],
+          "army": ["Knight", "Horse Archer"],
+          "goal": "Gold without miners pays for knights"
+        }
+      ]
+    },
+    {
+      "id": "kremlin-2tc",
+      "name": "Kremlin 2 TC",
+      "style": "boom",
+      "landmark": "Kremlin",
+      "ageUp": "4:25",
+      "pick": "The Kremlin guards a fast 2nd TC",
+      "steps": [
+        { "t": "2:25", "v": [4, 6, 0, 0], "b": 3, "do": "3 food villagers build the Kremlin; 6 food to wood" },
+        { "t": "3:00", "v": [2, 6, 0, 4], "b": 3, "do": "4 food to stone" },
+        { "t": "4:25", "v": [4, 11, 0, 4], "do": "Builders to wood" },
+        { "t": "5:20", "v": [6, 4, 0, 0], "b": 8, "do": "8 wood build TC 2 on gold; rest to deer, Survival" },
+        { "t": "6:20", "v": [13, 4, 8, 0], "do": "Builders to gold; TC 2 rallies wood" },
+        { "t": "7:00", "v": [15, 5, 9, 0], "do": "Rally food and gold; Wheelbarrow" }
+      ],
+      "army": ["Spearman", "Archer"],
+      "castle": [
+        {
+          "id": "2tc-abbey-horse-archers",
+          "name": "Abbey horse archers",
+          "style": "timing",
+          "landmark": "Abbey of the Trinity",
+          "ageUp": "9:20",
+          "pick": "Default: horse archers and cheap monks",
+          "steps": [
+            { "t": "8:20", "v": [19, 5, 3, 0], "b": 10, "do": "10 gold villagers build the Abbey" },
+            { "t": "8:50", "v": [12, 9, 3, 0], "b": 10, "do": "3 archery ranges, Double Broadaxe, blacksmith" },
+            { "t": "9:20", "v": [12, 22, 6, 0], "do": "Horse archers and nonstop warrior monks" }
+          ],
+          "army": ["Horse Archer", "Warrior Monk"],
+          "goal": "Monk-buffed horse archers win fights"
+        },
+        {
+          "id": "2tc-trade-house",
+          "name": "High Trade House boom",
+          "style": "boom",
+          "landmark": "High Trade House",
+          "ageUp": "9:00",
+          "pick": "Greedy: gold income while you add TCs",
+          "steps": [
+            { "t": "8:00", "v": [18, 6, 6, 0], "b": 8, "do": "8 food villagers build it" },
+            { "t": "9:00", "v": [24, 10, 2, 0], "do": "Farms; hunt its deer; militia from the Kremlin" }
+          ],
+          "army": ["Knight", "Crossbowman", "Horse Archer"],
+          "goal": "Huge eco into Imperial"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Vortix: Kremlin 2TC", "url": "https://aoe4guides.com/builds/6OeLNF7uPNmYQXfaac9j", "video": "https://www.youtube.com/watch?v=VbGj_0kgLhE" },
+    { "title": "Ehounds: 1TC FC Kremlin", "url": "https://aoe4guides.com/builds/gDccAtaDw2l9hOfTD7Xd", "video": "https://www.youtube.com/watch?v=n74D7yb6WVg" },
+    { "title": "JampiX: Kremlin feudal aggro", "url": "https://aoe4guides.com/builds/sXbLY9JdD0tmkRgKHVO2" },
+    { "title": "Munchy: Standard Rus 2TC", "url": "https://aoe4guides.com/builds/1tfWsW7TmU88pmBMndSo", "video": "https://www.youtube.com/watch?v=D_P5_qa-Sh0" }
+  ]
+}
