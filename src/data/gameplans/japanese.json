@@ -1,0 +1,113 @@
+{
+  "civ": "japanese",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "0:10",
+    "steps": [
+      { "t": "0:00", "v": [5, 0, 0, 0], "b": 1, "do": "Pick now: Kura fast Castle, or 2 spears into Koka" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "kura-fc",
+      "name": "Kura fast Castle",
+      "style": "fast-castle",
+      "landmark": "Kura Storehouse",
+      "ageUp": "5:40",
+      "pick": "Default Japanese: Castle by 6:30 into mounted samurai",
+      "steps": [
+        { "t": "0:20", "v": [6, 0, 1, 0], "do": "Farmhouse on berries (get Towara); 3 to gold" },
+        { "t": "1:02", "v": [6, 0, 3, 0], "do": "Sheep villagers to berries when Towara finishes" },
+        { "t": "2:20", "v": [9, 0, 3, 0], "b": 1, "do": "1 sheep villager builds the Kura Storehouse" },
+        { "t": "2:34", "v": [6, 3, 4, 0], "b": 1, "do": "3 to wood for an outpost" },
+        { "t": "3:55", "v": [9, 3, 4, 0], "do": "Outpost on gold with Arrow Slits" },
+        { "t": "5:41", "v": [18, 0, 5, 0], "do": "Feudal: everything on food" }
+      ],
+      "army": ["Spearman"],
+      "castle": [
+        {
+          "id": "floating-gate",
+          "name": "Floating Gate samurai",
+          "style": "timing",
+          "landmark": "Floating Gate",
+          "ageUp": "7:30",
+          "pick": "Default: mounted samurai and relics",
+          "steps": [
+            { "t": "6:34", "v": [12, 0, 5, 0], "b": 8, "do": "8 food villagers build the Floating Gate" },
+            { "t": "6:40", "v": [7, 6, 8, 0], "b": 8, "do": "5 to 8 on wood for a stable" },
+            { "t": "7:40", "do": "Mounted samurai nonstop; priest's Yorishiro in the stable" }
+          ],
+          "army": ["Mounted Samurai", "Yumi Ashigaru"],
+          "goal": "Take relics and pick off villagers"
+        },
+        {
+          "id": "temple-equality",
+          "name": "Temple of Equality",
+          "style": "defense",
+          "landmark": "Temple of Equality",
+          "ageUp": "7:45",
+          "pick": "Big army fights coming; Buddhist monks cut enemy damage",
+          "steps": [
+            { "t": "6:40", "do": "Barracks if they're all-inning with wood units" },
+            { "t": "7:45", "do": "Buddhist monks with the army" }
+          ],
+          "army": ["Samurai", "Yumi Ashigaru", "Buddhist Monk"],
+          "goal": "Win fights with monk support"
+        }
+      ]
+    },
+    {
+      "id": "koka-pressure",
+      "name": "Koka Shinobi pressure",
+      "style": "aggro",
+      "landmark": "Koka Township",
+      "ageUp": "5:00",
+      "pick": "Delay greedy players, then a safe 8:00 Castle",
+      "steps": [
+        { "t": "1:00", "v": [3, 2, 0, 0], "b": 1, "do": "Barracks then farmhouse; 2 spears to their gold" },
+        { "t": "2:00", "v": [8, 1, 3, 0], "do": "Forge on gold, 3 there" },
+        { "t": "3:50", "v": [11, 1, 3, 0], "b": 4, "do": "4 sheep villagers build Koka Township" },
+        { "t": "4:00", "v": [5, 5, 3, 0], "b": 4, "do": "3 from berries to wood" },
+        { "t": "5:00", "v": [9, 3, 7, 0], "b": 2, "do": "Shinobi; stable, 3 horsemen to harass" }
+      ],
+      "army": ["Shinobi", "Horseman", "Spearman"],
+      "castle": [
+        {
+          "id": "gate-8min",
+          "name": "8 minute Floating Gate",
+          "style": "fast-castle",
+          "landmark": "Floating Gate",
+          "ageUp": "8:30",
+          "pick": "Default after the harass",
+          "steps": [
+            { "t": "7:45", "v": [19, 3, 7, 0], "do": "9 to 12 sheep villagers build the Floating Gate" },
+            { "t": "9:00", "v": [15, 5, 12, 0], "do": "Yorishiro in stable, range, TC, then eco" }
+          ],
+          "army": ["Mounted Samurai", "Yumi Ashigaru", "Yumi Bannerman"],
+          "goal": "Mounted samurai with bannerman support"
+        },
+        {
+          "id": "temple-push",
+          "name": "Temple of Equality push",
+          "style": "timing",
+          "landmark": "Temple of Equality",
+          "ageUp": "8:45",
+          "pick": "Infantry fight; monks make the push stick",
+          "steps": [
+            { "t": "8:00", "do": "Daimyo Manor upgrade once stone comes in" },
+            { "t": "8:45", "do": "Monks, samurai and yumi forward" }
+          ],
+          "army": ["Samurai", "Onna-Bugeisha", "Buddhist Monk"],
+          "goal": "Push before they get Castle units out"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Valdy: Japanese Fast Castle (2026)", "url": "https://aoe4guides.com/builds/yeDbJIwrrgHzUdJJb7gi", "video": "https://www.youtube.com/watch?v=MOhYn-gXPjE" },
+    { "title": "Vortix: Shinobi & horsemen pressure into FC", "url": "https://aoe4guides.com/builds/5la83Z7aSk2b01tjnNhD", "video": "https://www.youtube.com/watch?v=wHXYEzL2hCI" },
+    { "title": "MarineLorD: Japanese FC", "url": "https://aoe4guides.com/builds/0ZJ7nnSwlWjncKIdHrHx", "video": "https://www.youtube.com/watch?v=LIOCyXMpqZU" }
+  ]
+}

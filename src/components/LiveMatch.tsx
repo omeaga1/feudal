@@ -4,6 +4,7 @@ import { getCiv } from "../lib/gameData";
 import { appFetch } from "../lib/http";
 import { parseProfileQuery, resolveProfile, type FoundPlayer } from "../lib/profile";
 import { BriefView } from "./BriefView";
+import { VersusBar } from "./CivPicker";
 
 interface Props {
   profileId: number | null;
@@ -97,9 +98,11 @@ export function LiveMatch({ profileId, profileName, status, onProfileChange }: P
     const opponent = match.opponents[Math.min(opponentIndex, match.opponents.length - 1)];
     return (
       <div className="stack">
-        <section className="panel match-head">
-          <span className="pill live">In game</span>
-          <span>
+        <div className="live-head">
+          <span className="pill live">
+            <span className="pulse" /> In game
+          </span>
+          <span className="muted">
             {match.map} · {match.kind.replace(/_/g, " ")}
           </span>
           {match.opponents.length > 1 && (
@@ -116,7 +119,8 @@ export function LiveMatch({ profileId, profileName, status, onProfileChange }: P
               ))}
             </div>
           )}
-        </section>
+        </div>
+        {opponent && <VersusBar me={match.me.civ} them={opponent.civ} myName={match.me.name} theirName={opponent.name} />}
         {opponent && (
           <BriefView
             myCivId={match.me.civ}
@@ -132,7 +136,10 @@ export function LiveMatch({ profileId, profileName, status, onProfileChange }: P
   }
 
   return (
-    <section className="panel">
+    <section className="panel waiting">
+      <div className="radar" aria-hidden="true">
+        <span />
+      </div>
       <h2>Waiting for your next game</h2>
       <p className="muted">Linked to {profileName ?? `AoE4 World profile #${profileId}`}.</p>
       {status.kind === "error" && <p className="error">Couldn't reach AoE4 World: {status.message}. Retrying.</p>}

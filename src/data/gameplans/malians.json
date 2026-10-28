@@ -1,0 +1,117 @@
+{
+  "civ": "malians",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:40",
+    "steps": [
+      { "t": "0:00", "v": [0, 5, 0, 0], "b": 1, "do": "5 chop a straggler tree; 1 builds a pit mine and 7 houses" },
+      { "t": "0:20", "v": [1, 5, 0, 0], "b": 1, "do": "Rally to sheep; tree villagers join at 150 wood" },
+      { "t": "2:00", "v": [12, 0, 0, 0], "do": "12 on sheep, the pit mine pays gold" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "sofa-cow-boom",
+      "name": "Sofa harass into cow boom",
+      "style": "aggro",
+      "landmark": "Mansa Quarry",
+      "ageUp": "3:55",
+      "pick": "Default: raid with sofas while cows pile up",
+      "steps": [
+        { "t": "2:40", "v": [2, 4, 0, 0], "b": 6, "do": "6 sheep villagers build the Mansa Quarry; rally wood to 12" },
+        { "t": "4:00", "v": [6, 12, 0, 0], "do": "Mill; 12 to 18 cattle; Double Broadaxe" },
+        { "t": "4:30", "v": [7, 12, 0, 0], "do": "Stable; warrior scout upgrade and harass" },
+        { "t": "5:40", "v": [10, 10, 3, 0], "do": "Ranches and cattle; sofas nonstop; 2nd pit mine" },
+        { "t": "7:30", "v": [11, 12, 5, 0], "do": "Archery range, 10 archers to cover the sofas" },
+        { "t": "8:00", "v": [12, 12, 5, 0], "do": "Blacksmith: Steeled Arrow, Iron Undermesh" }
+      ],
+      "army": ["Sofa", "Warrior Scout", "Archer"],
+      "castle": [
+        {
+          "id": "fulani-raids",
+          "name": "Fulani Corral raids",
+          "style": "boom",
+          "landmark": "Grand Fulani Corral",
+          "ageUp": "12:15",
+          "pick": "Default: cows everywhere, raid nonstop",
+          "steps": [
+            { "t": "11:30", "v": [1, 13, 10, 0], "b": 15, "do": "15 food villagers build the Corral by your ranches" },
+            { "t": "12:15", "v": [17, 14, 10, 0], "do": "Unit upgrades; archers and sofas nonstop" },
+            { "t": "13:30", "v": [17, 18, 10, 0], "do": "Relics, mosque, heavy raids and expansion" }
+          ],
+          "army": ["Veteran Sofa", "Veteran Archer", "Imam"],
+          "goal": "Out-eco them while sofas raid"
+        },
+        {
+          "id": "farimba-vs-archers",
+          "name": "Farimba vs archers",
+          "style": "timing",
+          "landmark": "Farimba Garrison",
+          "ageUp": "11:30",
+          "pick": "They massed archers or men-at-arms",
+          "steps": [
+            { "t": "10:45", "v": [8, 12, 10, 0], "b": 8, "do": "8 sheep villagers build the Garrison" },
+            { "t": "11:30", "v": [14, 12, 10, 0], "do": "Mansa Musofadi or Freeborn, plus barracks" }
+          ],
+          "army": ["Mansa Musofadi Warrior", "Freeborn Warrior", "Sofa"],
+          "goal": "Free elite infantry to break their army"
+        }
+      ]
+    },
+    {
+      "id": "quarry-2tc",
+      "name": "2 TC Mansa Quarry",
+      "style": "boom",
+      "landmark": "Mansa Quarry",
+      "ageUp": "3:50",
+      "pick": "Safe map: quarry gold pays for TC 2",
+      "steps": [
+        { "t": "2:40", "v": [4, 6, 0, 0], "b": 3, "do": "3 sheep villagers build the Quarry; 5 to wood" },
+        { "t": "2:45", "v": [4, 6, 2, 0], "b": 3, "do": "Next 2 to gold, then rally back to wood" },
+        { "t": "3:50", "v": [7, 10, 1, 0], "do": "Builders to sheep" },
+        { "t": "4:50", "v": [7, 3, 2, 0], "b": 8, "do": "8 wood villagers build TC 2 between wood and gold" },
+        { "t": "6:00", "v": [12, 6, 6, 0], "do": "Barracks or archery range; then food and gold" }
+      ],
+      "army": ["Donso", "Javelin Thrower", "Musofadi Warrior"],
+      "castle": [
+        {
+          "id": "farimba-timing",
+          "name": "Farimba timing",
+          "style": "timing",
+          "landmark": "Farimba Garrison",
+          "ageUp": "10:30",
+          "pick": "Default: Musofadi and Freeborn off 2 TCs",
+          "steps": [
+            { "t": "9:45", "v": [14, 8, 10, 0], "b": 10, "do": "Build the Garrison; a few barracks and a stable" },
+            { "t": "10:30", "v": [18, 10, 12, 0], "do": "Mansa Musofadi and Freeborn nonstop" },
+            { "t": "12:00", "v": [20, 12, 12, 0], "do": "Add sofas; ranches, farms, 2nd pit mine" }
+          ],
+          "army": ["Mansa Musofadi Warrior", "Freeborn Warrior", "Sofa", "Donso"],
+          "goal": "Spears and crossbows can't answer both"
+        },
+        {
+          "id": "fulani-2tc-boom",
+          "name": "Fulani Corral boom",
+          "style": "boom",
+          "landmark": "Grand Fulani Corral",
+          "ageUp": "11:00",
+          "pick": "They turtle; turn 2 TCs into cows",
+          "steps": [
+            { "t": "10:15", "v": [10, 10, 10, 0], "b": 12, "do": "12 food villagers build the Corral" },
+            { "t": "11:00", "v": [20, 12, 10, 0], "do": "Ranches full of cattle around it" }
+          ],
+          "army": ["Veteran Archer", "Veteran Sofa"],
+          "goal": "Huge food income into Imperial"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Valdy: Cow Boom + Sofa/Archer", "url": "https://aoe4guides.com/builds/gWpMen9bkD336MtQWFJg", "video": "https://www.youtube.com/watch?v=60KgzjtsJjE" },
+    { "title": "Vortix: Feudal aggro with sofas into cow boom", "url": "https://aoe4guides.com/builds/NMRXBRDXxdlq5lRtI1Nl", "video": "https://www.youtube.com/watch?v=XHyCsrg4Hzk" },
+    { "title": "Jockxtar: Malian 2 TC", "url": "https://aoe4guides.com/builds/kHe7bKHEL6TYvLhQfpnu" },
+    { "title": "Valdy: 2 Stable Sofa Archer opening", "url": "https://aoe4guides.com/builds/bWdY2Fqnuv2m13F27zB6" }
+  ]
+}

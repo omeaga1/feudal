@@ -1,0 +1,310 @@
+{
+  "civ": "english",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:10",
+    "steps": [
+      {
+        "t": "0:00",
+        "v": [
+          6,
+          0,
+          0,
+          0
+        ],
+        "do": "6 on sheep, 1 builds a house"
+      },
+      {
+        "t": "0:20",
+        "v": [
+          6,
+          0,
+          2,
+          0
+        ],
+        "do": "Next 2 to gold, mining camp"
+      },
+      {
+        "t": "1:00",
+        "v": [
+          8,
+          0,
+          2,
+          0
+        ],
+        "do": "Rally to sheep"
+      }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "longbow-rush",
+      "name": "Longbow rush",
+      "style": "aggro",
+      "landmark": "Council Hall",
+      "ageUp": "4:00",
+      "pick": "Closed maps, or against greedy 2 TC and fast Castle builds",
+      "steps": [
+        {
+          "t": "2:10",
+          "v": [
+            6,
+            2,
+            0,
+            0
+          ],
+          "b": 4,
+          "do": "Pull gold to wood, 4 sheep build Council Hall"
+        },
+        {
+          "t": "3:20",
+          "v": [
+            6,
+            5,
+            0,
+            0
+          ],
+          "do": "Barracks and a house with age-up builders"
+        },
+        {
+          "t": "4:00",
+          "v": [
+            10,
+            8,
+            0,
+            0
+          ],
+          "do": "Longbows nonstop; push at 5 longbows + 3 spears"
+        },
+        {
+          "t": "5:40",
+          "v": [
+            11,
+            11,
+            5,
+            0
+          ],
+          "do": "Rally to gold until 5, farms once safe"
+        }
+      ],
+      "army": [
+        "Longbowman",
+        "Spearman"
+      ],
+      "castle": [
+        {
+          "id": "white-tower-knights",
+          "name": "White Tower knight timing",
+          "style": "timing",
+          "landmark": "The White Tower",
+          "ageUp": "11:00",
+          "pick": "Your pressure did damage; hit before they scale",
+          "steps": [
+            {
+              "t": "10:00",
+              "do": "Stop units, age up with White Tower"
+            },
+            {
+              "t": "11:00",
+              "do": "Knights from the White Tower join the longbows"
+            }
+          ],
+          "army": [
+            "Knight",
+            "Longbowman",
+            "Spearman"
+          ],
+          "goal": "Kill villagers and take the map gold before they reach Castle"
+        },
+        {
+          "id": "kings-palace-scale",
+          "name": "King's Palace scale",
+          "style": "boom",
+          "landmark": "King's Palace",
+          "ageUp": "11:30",
+          "pick": "They held the rush; take map control and out-farm them",
+          "steps": [
+            {
+              "t": "10:00",
+              "do": "Farms around the TC, keep a longbow wall"
+            },
+            {
+              "t": "11:30",
+              "do": "King's Palace acts as a second TC; add relics"
+            }
+          ],
+          "army": [
+            "Longbowman",
+            "Man-at-Arms",
+            "Mangonel"
+          ],
+          "goal": "Farm economy scaling into Imperial"
+        }
+      ]
+    },
+    {
+      "id": "2tc-white-tower",
+      "name": "2 TC boom",
+      "style": "boom",
+      "landmark": "Abbey of Kings",
+      "ageUp": "4:30",
+      "pick": "Open maps, or against slow and defensive civs",
+      "steps": [
+        {
+          "t": "1:40",
+          "v": [
+            8,
+            0,
+            2,
+            1
+          ],
+          "do": "Start stone; 1 to wood with a lumber camp"
+        },
+        {
+          "t": "2:40",
+          "v": [
+            4,
+            4,
+            0,
+            4
+          ],
+          "b": 3,
+          "do": "3 sheep villagers build Abbey of Kings"
+        },
+        {
+          "t": "4:30",
+          "v": [
+            4,
+            11,
+            0,
+            4
+          ],
+          "do": "Feudal: King harasses, bank 300 stone"
+        },
+        {
+          "t": "5:00",
+          "v": [
+            5,
+            9,
+            0,
+            0
+          ],
+          "b": 6,
+          "do": "Stone villagers build TC 2 on deer or gold"
+        },
+        {
+          "t": "6:00",
+          "v": [
+            13,
+            4,
+            7,
+            0
+          ],
+          "b": 6,
+          "do": "Both TCs make villagers; mill and farms"
+        },
+        {
+          "t": "8:00",
+          "v": [
+            12,
+            6,
+            11,
+            0
+          ],
+          "do": "Spears vs raids; gold to 11 for Castle"
+        }
+      ],
+      "army": [
+        "Spearman",
+        "Longbowman"
+      ],
+      "castle": [
+        {
+          "id": "white-tower-fc",
+          "name": "White Tower fast Castle",
+          "style": "fast-castle",
+          "landmark": "The White Tower",
+          "ageUp": "9:30",
+          "pick": "Default: Castle first, then knights and relics",
+          "steps": [
+            {
+              "t": "9:00",
+              "v": [
+                13,
+                10,
+                9,
+                0
+              ],
+              "b": 8,
+              "do": "8 food villagers build the White Tower over gold and farms"
+            },
+            {
+              "t": "10:15",
+              "v": [
+                16,
+                17,
+                11,
+                0
+              ],
+              "do": "Monastery, more production, eco upgrades"
+            },
+            {
+              "t": "12:00",
+              "do": "Take the middle gold and relics"
+            }
+          ],
+          "army": [
+            "Man-at-Arms",
+            "Crossbowman",
+            "Longbowman",
+            "Knight"
+          ],
+          "goal": "Relics plus a farm eco, then Imperial or a Castle push"
+        },
+        {
+          "id": "kings-palace-boom",
+          "name": "King's Palace eco",
+          "style": "boom",
+          "landmark": "King's Palace",
+          "ageUp": "10:30",
+          "pick": "No pressure coming; max eco toward Imperial",
+          "steps": [
+            {
+              "t": "9:30",
+              "do": "More farms, keep the King home on defense"
+            },
+            {
+              "t": "10:30",
+              "do": "King's Palace works as an extra TC making villagers"
+            }
+          ],
+          "army": [
+            "Longbowman",
+            "Man-at-Arms",
+            "Springald"
+          ],
+          "goal": "Out-eco them and win in Imperial"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Valdy: 2TC White Tower (2026)",
+      "url": "https://aoe4guides.com/builds/ZucKx4RGJveHStNgNuxG",
+      "video": "https://www.youtube.com/watch?v=aRkeTDdkd4I"
+    },
+    {
+      "title": "Valdy: Longbow Rush Into Age 3 Timing (2026)",
+      "url": "https://aoe4guides.com/builds/3j9fiuhUJIXVPvYmjHnP",
+      "video": "https://www.youtube.com/watch?v=aRkeTDdkd4I"
+    },
+    {
+      "title": "Beasty: English 2 TC, Abbey into White Tower",
+      "url": "https://aoe4guides.com/builds/j4qoTJleWDnW0P0zpFwC",
+      "video": "https://www.youtube.com/watch?v=ZPSg6WGxpQI"
+    }
+  ]
+}

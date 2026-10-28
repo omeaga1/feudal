@@ -1,0 +1,300 @@
+{
+  "civ": "delhi_sultanate",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:30",
+    "steps": [
+      {
+        "t": "0:00",
+        "v": [
+          0,
+          5,
+          0,
+          0
+        ],
+        "b": 1,
+        "do": "5 chop 50 wood for a berry mill; 1 builds a mosque"
+      },
+      {
+        "t": "0:40",
+        "v": [
+          7,
+          0,
+          0,
+          0
+        ],
+        "do": "Berries; next villager builds a house"
+      },
+      {
+        "t": "1:00",
+        "v": [
+          8,
+          0,
+          1,
+          0
+        ],
+        "do": "3 to gold with a mining camp"
+      },
+      {
+        "t": "2:00",
+        "v": [
+          8,
+          1,
+          3,
+          0
+        ],
+        "do": "Lumber camp; rally wood to 5"
+      }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "dome-ghazi",
+      "name": "Dome fast Ghazi",
+      "style": "aggro",
+      "landmark": "Dome of the Faith",
+      "ageUp": "4:15",
+      "pick": "Default: Ghazi raiders with a scholar in the stable",
+      "steps": [
+        {
+          "t": "2:30",
+          "v": [
+            4,
+            2,
+            3,
+            0
+          ],
+          "b": 4,
+          "do": "4 berry villagers build Dome of the Faith on berries"
+        },
+        {
+          "t": "3:30",
+          "v": [
+            10,
+            5,
+            3,
+            0
+          ],
+          "do": "Rally sheep to 12, then wood to 12"
+        },
+        {
+          "t": "4:15",
+          "v": [
+            11,
+            5,
+            3,
+            0
+          ],
+          "b": 2,
+          "do": "All Feudal techs; stable with a scholar inside"
+        },
+        {
+          "t": "6:25",
+          "v": [
+            12,
+            9,
+            3,
+            0
+          ],
+          "do": "Blacksmith, range, barracks; Pro Scouts for deer"
+        }
+      ],
+      "army": [
+        "Ghazi Raider",
+        "Archer",
+        "Spearman"
+      ],
+      "castle": [
+        {
+          "id": "compound-elephants",
+          "name": "Compound war elephants",
+          "style": "timing",
+          "landmark": "Compound of the Defender",
+          "ageUp": "9:30",
+          "pick": "Two deer packs secured and the map is yours",
+          "steps": [
+            {
+              "t": "9:00",
+              "do": "Age once 2 deer packs are secured"
+            },
+            {
+              "t": "9:30",
+              "do": "War elephants, 2 more ranges for archers + crossbows"
+            },
+            {
+              "t": "10:30",
+              "do": "Stone for a keep and village fortresses"
+            }
+          ],
+          "army": [
+            "War Elephant",
+            "Crossbowman",
+            "Archer"
+          ],
+          "goal": "Sacred Sites and relics with scholars"
+        },
+        {
+          "id": "house-of-learning",
+          "name": "House of Learning tech",
+          "style": "boom",
+          "landmark": "House of Learning",
+          "ageUp": "10:00",
+          "pick": "Contested map; buy unique upgrades instead",
+          "steps": [
+            {
+              "t": "9:30",
+              "do": "Scholars out of the mosque for relics"
+            },
+            {
+              "t": "10:00",
+              "do": "House of Learning's unique techs"
+            }
+          ],
+          "army": [
+            "Tower Elephant",
+            "Man-at-Arms",
+            "Crossbowman"
+          ],
+          "goal": "Scale with research and scholars"
+        }
+      ]
+    },
+    {
+      "id": "victory-timing",
+      "name": "Tower of Victory all-in",
+      "style": "timing",
+      "landmark": "Tower of Victory",
+      "ageUp": "4:10",
+      "pick": "Feudal all-in: ghazi + archers with an upgrade lead, scholars on Sacred Sites",
+      "steps": [
+        {
+          "t": "2:30",
+          "v": [
+            4,
+            2,
+            3,
+            0
+          ],
+          "b": 4,
+          "do": "4 food villagers build Tower of Victory"
+        },
+        {
+          "t": "3:40",
+          "v": [
+            4,
+            8,
+            0,
+            0
+          ],
+          "b": 4,
+          "do": "Gold villagers to wood; scholar from the mosque"
+        },
+        {
+          "t": "4:10",
+          "v": [
+            8,
+            9,
+            0,
+            0
+          ],
+          "b": 1,
+          "do": "All Feudal techs; blacksmith, stable, range"
+        },
+        {
+          "t": "5:15",
+          "v": [
+            8,
+            12,
+            0,
+            0
+          ],
+          "b": 2,
+          "do": "12 on wood, then rally food"
+        },
+        {
+          "t": "7:00",
+          "v": [
+            12,
+            12,
+            0,
+            0
+          ],
+          "do": "Both scholars to Sacred Sites; 2nd stable"
+        }
+      ],
+      "army": [
+        "Ghazi Raider",
+        "Archer"
+      ],
+      "castle": [
+        {
+          "id": "compound-walls",
+          "name": "Compound defense",
+          "style": "defense",
+          "landmark": "Compound of the Defender",
+          "ageUp": "10:30",
+          "pick": "12 ghazi + 12 archers at 10:00 did damage; hold the sites",
+          "steps": [
+            {
+              "t": "10:00",
+              "do": "Scholars on Sacred Sites"
+            },
+            {
+              "t": "10:30",
+              "do": "Infantry build stone walls and towers cheaper"
+            }
+          ],
+          "army": [
+            "Man-at-Arms",
+            "Crossbowman",
+            "Springald"
+          ],
+          "goal": "Win on Sacred Sites"
+        },
+        {
+          "id": "learning-scale",
+          "name": "House of Learning",
+          "style": "boom",
+          "landmark": "House of Learning",
+          "ageUp": "11:00",
+          "pick": "They held; go for upgrades and elephants",
+          "steps": [
+            {
+              "t": "10:00",
+              "do": "Farms, Madrasa and more scholars"
+            },
+            {
+              "t": "11:00",
+              "do": "Unique techs, Tower Elephants"
+            }
+          ],
+          "army": [
+            "Tower Elephant",
+            "War Elephant",
+            "Spearman"
+          ],
+          "goal": "Elephant army in Imperial"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Valdy: Delhi Fast Ghazi into Age 3 (2026)",
+      "url": "https://aoe4guides.com/builds/S3FUuhz7WEB8VYUL5qPb",
+      "video": "https://www.youtube.com/watch?v=dRvmG-HSfz4"
+    },
+    {
+      "title": "Beasty: Dome of Faith guide",
+      "url": "https://aoe4guides.com/builds/B9Qz6jaqhi8NeaBdwQ6x",
+      "video": "https://www.youtube.com/watch?v=FFBvDoGsmQc"
+    },
+    {
+      "title": "Valdy: Delhi Feudal Timing Attack",
+      "url": "https://aoe4guides.com/builds/sQlWCoeHkXtn2O4g3tCl",
+      "video": "https://www.youtube.com/watch?v=IRiIM0uY4qA"
+    }
+  ]
+}

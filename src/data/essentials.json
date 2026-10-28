@@ -1,0 +1,81 @@
+{
+  "source": "Vinny's keybind sheet (Age of Empires 4 Keybinds & Need to Know)",
+  "groups": [
+    {
+      "id": "main",
+      "name": "Main",
+      "binds": [
+        { "keys": ["F1"], "action": "Select all military production" },
+        { "keys": ["F2"], "action": "Select all economy buildings" },
+        { "keys": ["F3"], "action": "Select all technology buildings" },
+        { "keys": ["H"], "action": "Cycle through Town Centers" },
+        { "keys": ["Space"], "action": "Focus on last attack" }
+      ]
+    },
+    {
+      "id": "villagers",
+      "name": "Villagers & scouts",
+      "binds": [
+        { "keys": ["Mouse4"], "action": "Select idle villagers in radius" },
+        { "keys": ["Ctrl", "Mouse4"], "action": "Select all idle villagers" },
+        { "keys": ["Mouse5"], "action": "Cycle through scouts" },
+        { "keys": [".", "G"], "action": "Garrison all villagers" },
+        { "keys": ["Ctrl", "Space"], "action": "Return all to work" }
+      ]
+    },
+    {
+      "id": "military",
+      "name": "Military",
+      "binds": [
+        { "keys": ["`"], "action": "Select all military units" },
+        { "keys": ["G1"], "action": "Select all infantry" },
+        { "keys": ["G2"], "action": "Select all ranged" },
+        { "keys": ["G3"], "action": "Select all cavalry" },
+        { "keys": ["G4"], "action": "Select all siege" },
+        { "keys": ["G5"], "action": "Select all military on screen" }
+      ]
+    },
+    {
+      "id": "groups",
+      "name": "Control groups",
+      "binds": [
+        { "keys": ["Ctrl", "1-9"], "action": "Set selected units to a group" },
+        { "keys": ["Shift", "1-9"], "action": "Add selected units to a group" },
+        { "keys": ["Ctrl", "X"], "action": "Remove units from group" }
+      ]
+    },
+    {
+      "id": "camera",
+      "name": "Camera",
+      "binds": [
+        { "keys": ["G6"], "action": "Follow selected units" },
+        { "keys": ["G7"], "action": "Focus on docks (select all docks)" },
+        { "keys": ["Ctrl", "F5"], "action": "Save camera location" },
+        { "keys": ["F5"], "action": "Go to camera location" }
+      ]
+    },
+    {
+      "id": "qol",
+      "name": "Quality of life",
+      "binds": [
+        { "keys": ["M"], "action": "Change minimap size" },
+        { "keys": ["Tab"], "action": "Cycle through selection" }
+      ]
+    }
+  ],
+  "counters": [
+    { "building": "Barracks", "unit": "Spearman", "beats": ["Horseman", "Knight"], "losesTo": ["Archer"], "weakness": "Armored units" },
+    { "building": "Barracks", "unit": "Man-at-Arms", "beats": ["Archer"], "losesTo": ["Knight", "Crossbowman", "Lancer"], "weakness": "Slow" },
+    { "building": "Archery Range", "unit": "Archer", "beats": ["Spearman"], "losesTo": ["Horseman"], "weakness": "Armored units" },
+    { "building": "Archery Range", "unit": "Crossbowman", "beats": ["Man-at-Arms", "Knight"], "losesTo": ["Horseman"], "weakness": "Low health" },
+    { "building": "Archery Range", "unit": "Streltsy", "beats": ["Man-at-Arms", "Knight", "Spearman"], "losesTo": ["Horseman"], "weakness": "Slow" },
+    { "building": "Archery Range", "unit": "Horse Archer", "beats": ["Man-at-Arms", "Spearman"], "losesTo": ["Archer"], "weakness": "Ranged units" },
+    { "building": "Stable", "unit": "Horseman", "beats": ["Archer", "Crossbowman"], "losesTo": ["Spearman"], "weakness": "Melee units" },
+    { "building": "Stable", "unit": "Knight", "beats": ["Archer", "Mangonel"], "losesTo": ["Spearman", "Crossbowman"], "weakness": "Expensive" },
+    { "building": "Siege", "unit": "Springald", "beats": ["Mangonel", "Battering Ram"], "losesTo": ["Horseman"], "weakness": "Weak vs units" },
+    { "building": "Siege", "unit": "Mangonel", "beats": ["Archer", "Spearman"], "losesTo": ["Springald", "Horseman"], "weakness": "Set-up time" },
+    { "building": "Siege", "unit": "Trebuchet", "beats": ["Buildings"], "losesTo": ["Springald", "Horseman"], "weakness": "Walls in the way" },
+    { "building": "Siege", "unit": "Battering Ram", "beats": ["Buildings"], "losesTo": ["Man-at-Arms", "Spearman"], "weakness": "Walls in the way" },
+    { "building": "Siege", "unit": "Bombard", "beats": ["Buildings", "Springald"], "losesTo": ["Springald", "Horseman"], "weakness": "Set-up time" }
+  ]
+}

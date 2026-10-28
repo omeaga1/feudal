@@ -1,0 +1,114 @@
+{
+  "civ": "chinese",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:15",
+    "steps": [
+      { "t": "0:00", "v": [6, 0, 0, 0], "do": "Mill on berries toward the wood; eat sheep first" },
+      { "t": "0:20", "v": [6, 0, 2, 0], "do": "2 to gold, build a house" },
+      { "t": "1:00", "v": [7, 0, 2, 0], "do": "Rally food until you age up" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "tax-aggro",
+      "name": "Tax aggression",
+      "style": "aggro",
+      "landmark": "Imperial Academy",
+      "ageUp": "3:12",
+      "pick": "Default: officials collect tax while you pressure",
+      "steps": [
+        { "t": "2:15", "v": [5, 0, 2, 0], "b": 5, "do": "5 build the Academy facing wood and mill" },
+        { "t": "2:20", "v": [6, 2, 0, 0], "b": 5, "do": "Bank 35 gold, then gold to straggler wood" },
+        { "t": "3:12", "v": [7, 8, 0, 0], "do": "Officials up to 4, supervising mill and lumber camp" },
+        { "t": "4:20", "v": [8, 11, 0, 0], "do": "Range, barracks or stable as needed" },
+        { "t": "6:50", "v": [12, 14, 0, 0], "do": "Professional Scouts, 4 scouts for deer; blacksmith" }
+      ],
+      "army": ["Spearman", "Archer", "Scout"],
+      "castle": [
+        {
+          "id": "palace-relics",
+          "name": "Imperial Palace relics",
+          "style": "timing",
+          "landmark": "Imperial Palace",
+          "ageUp": "11:00",
+          "pick": "Default: spy their workers, take relics",
+          "steps": [
+            { "t": "10:00", "do": "Tax into the age-up" },
+            { "t": "11:00", "do": "Imperial Spies show their villagers; raid and grab relics" }
+          ],
+          "army": ["Zhuge Nu", "Lancer", "Spearman"],
+          "goal": "Relics, then Song Dynasty for villagers"
+        },
+        {
+          "id": "clocktower-siege",
+          "name": "Clocktower siege push",
+          "style": "timing",
+          "landmark": "Astronomical Clocktower",
+          "ageUp": "11:00",
+          "pick": "They turtled behind walls and towers",
+          "steps": [
+            { "t": "10:00", "do": "Keep army alive, gold for siege" },
+            { "t": "11:00", "do": "Clocktower siege has +50% health; push with it" }
+          ],
+          "army": ["Clocktower Springald", "Clocktower Battering Ram", "Zhuge Nu"],
+          "goal": "Break their defenses before Imperial"
+        }
+      ]
+    },
+    {
+      "id": "pro-scouts",
+      "name": "Pro Scouts",
+      "style": "pro-scouts",
+      "landmark": "Imperial Academy",
+      "ageUp": "3:12",
+      "pick": "Lots of hunt and no early pressure from them",
+      "steps": [
+        { "t": "2:20", "v": [6, 0, 2, 0], "b": 5, "do": "5 sheep villagers build the Academy" },
+        { "t": "3:12", "v": [7, 6, 2, 0], "do": "Official; age-up villagers take straggler wood" },
+        { "t": "3:50", "v": [7, 8, 2, 0], "do": "Village and lumber camp, 3rd official" },
+        { "t": "4:45", "v": [7, 10, 2, 0], "do": "Stable, 3 to 5 scouts" },
+        { "t": "5:30", "v": [10, 9, 2, 0], "do": "Professional Scouts; contest deer" }
+      ],
+      "army": ["Scout", "Horseman", "Archer"],
+      "castle": [
+        {
+          "id": "palace-fc",
+          "name": "Imperial Palace fast Castle",
+          "style": "fast-castle",
+          "landmark": "Imperial Palace",
+          "ageUp": "9:00",
+          "pick": "Zero pressure: deer into Castle and relics",
+          "steps": [
+            { "t": "7:30", "v": [14, 8, 8, 0], "do": "Remacro to food and gold" },
+            { "t": "9:00", "do": "Imperial Palace, monks for relics" }
+          ],
+          "army": ["Zhuge Nu", "Lancer", "Monk"],
+          "goal": "Relics, then Song Dynasty"
+        },
+        {
+          "id": "song-2tc",
+          "name": "Song 2 TC boom",
+          "style": "boom",
+          "landmark": "Astronomical Clocktower",
+          "ageUp": "10:30",
+          "pick": "Long Feudal; boom with Song villagers",
+          "steps": [
+            { "t": "6:10", "v": [8, 8, 8, 0], "do": "Stone for a second TC" },
+            { "t": "6:30", "v": [18, 8, 0, 0], "b": 8, "do": "8 stone villagers build TC 2" },
+            { "t": "10:30", "do": "Castle once two TCs are running" }
+          ],
+          "army": ["Zhuge Nu", "Spearman", "Nest of Bees"],
+          "goal": "Out-eco them and win late"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Valdy: Fast Aggro Tax Build (2026)", "url": "https://aoe4guides.com/builds/gzZ29Jf9aytL113LZOEm", "video": "https://www.youtube.com/watch?v=EKnex4_ESkU" },
+    { "title": "Valdy: Fast Pro Scouts (2026)", "url": "https://aoe4guides.com/builds/yvmeKhb6Fy8CprVxwx3D", "video": "https://www.youtube.com/watch?v=EKnex4_ESkU" },
+    { "title": "Beasty: Chinese 2TC", "url": "https://aoe4guides.com/builds/04lsbXXkIwYtGuyiAtPV", "video": "https://www.youtube.com/watch?v=REY85gAXF74" }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "civ": "holy_roman_empire",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:00",
+    "steps": [
+      { "t": "0:00", "v": [3, 0, 3, 0], "do": "3 on sheep, 3 on gold with a house and mining camp" },
+      { "t": "0:20", "v": [4, 0, 3, 0], "do": "Rally to food until you age up" },
+      { "t": "1:00", "v": [6, 0, 3, 0], "do": "Prelate inspires the gold villagers once, then food" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "meinwerk-aggro",
+      "name": "Meinwerk aggression",
+      "style": "aggro",
+      "landmark": "Meinwerk Palace",
+      "ageUp": "4:05",
+      "pick": "Against fast Castle and greedy builds",
+      "steps": [
+        { "t": "2:11", "v": [3, 7, 0, 0], "b": 3, "do": "Gold villagers build Meinwerk; 7 to wood" },
+        { "t": "2:40", "v": [4, 7, 0, 0], "b": 3, "do": "5 to deer with Survival Techniques if it's close" },
+        { "t": "4:05", "v": [8, 7, 3, 0], "do": "Barracks + range. Spear-archer vs FC, MAA-archer vs horsemen" }
+      ],
+      "army": ["Spearman", "Archer", "Man-at-Arms"],
+      "castle": [
+        {
+          "id": "burgrave-push",
+          "name": "Burgrave push",
+          "style": "timing",
+          "landmark": "Burgrave Palace",
+          "ageUp": "10:00",
+          "pick": "You did damage; turn it into an infantry flood",
+          "steps": [
+            { "t": "9:00", "do": "Age once they reach Castle or you've done damage" },
+            { "t": "10:00", "do": "Burgrave makes infantry 400% faster; push with MAA and spears" }
+          ],
+          "army": ["Man-at-Arms", "Spearman", "Crossbowman"],
+          "goal": "Contain them in their base with constant infantry"
+        },
+        {
+          "id": "regnitz-relics",
+          "name": "Regnitz relics",
+          "style": "boom",
+          "landmark": "Regnitz Cathedral",
+          "ageUp": "10:30",
+          "pick": "They held; switch to relics and gold",
+          "steps": [
+            { "t": "10:00", "do": "Farms, stable, second prelate for relics" },
+            { "t": "10:30", "do": "Regnitz doubles relic gold" }
+          ],
+          "army": ["Knight", "Crossbowman", "Spearman"],
+          "goal": "Relic gold carries you into Imperial"
+        }
+      ]
+    },
+    {
+      "id": "aachen-2tc",
+      "name": "Aachen 2 TC",
+      "style": "boom",
+      "landmark": "Aachen Chapel",
+      "ageUp": "4:30",
+      "pick": "Safe maps, or against slow civs",
+      "steps": [
+        { "t": "2:00", "v": [3, 3, 0, 4], "b": 2, "do": "Aachen 2 tiles from wood; gold villagers to stone" },
+        { "t": "3:00", "v": [3, 6, 0, 4], "do": "Prelate inspires the stone villagers" },
+        { "t": "4:30", "v": [3, 8, 0, 0], "do": "Feudal: build TC 2 with 14 to 15 villagers" },
+        { "t": "5:15", "v": [5, 12, 4, 0], "do": "Farms, one TC rallies to gold" },
+        { "t": "7:00", "v": [11, 8, 6, 2], "do": "Outpost on gold; Horticulture, Wheelbarrow, Broadaxe" },
+        { "t": "9:00", "v": [19, 11, 8, 0], "do": "12 farms, then age up; second prelate" }
+      ],
+      "army": ["Spearman", "Archer"],
+      "castle": [
+        {
+          "id": "burgrave-relics",
+          "name": "Burgrave relics",
+          "style": "fast-castle",
+          "landmark": "Burgrave Palace",
+          "ageUp": "9:30",
+          "pick": "Default: secure relics with MAA and spears",
+          "steps": [
+            { "t": "9:30", "do": "Burgrave with 6 villagers, then back to food" },
+            { "t": "10:30", "do": "Monastery, blacksmith, walls; relics with prelates" }
+          ],
+          "army": ["Man-at-Arms", "Spearman", "Prelate"],
+          "goal": "Relics and map control, Imperial with 2 TCs"
+        },
+        {
+          "id": "regnitz-greed",
+          "name": "Regnitz greed",
+          "style": "boom",
+          "landmark": "Regnitz Cathedral",
+          "ageUp": "10:00",
+          "pick": "Relics are open and nobody is pressuring",
+          "steps": [
+            { "t": "10:00", "do": "Regnitz plus monasteries near resources" },
+            { "t": "11:00", "do": "Cistercian Churches: each monastery becomes a mini Aachen" }
+          ],
+          "army": ["Knight", "Crossbowman", "Springald"],
+          "goal": "Double relic gold, then Palace of Swabia in Imperial"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Valdy: HRE Feudal Aggro Into Castle (2026)", "url": "https://aoe4guides.com/builds/PZycr2KliA5cvZCB5gWI", "video": "https://www.youtube.com/watch?v=M961c97ctU4" },
+    { "title": "Valdy: HRE 2TC Farms into Burgrave", "url": "https://aoe4guides.com/builds/MrojZj54dUXMfrK78ua5", "video": "https://www.youtube.com/watch?v=TWlaj7MsPpU" },
+    { "title": "RTS_Papercut: HRE Burgrave Aggression", "url": "https://aoe4guides.com/builds/Ko24yEoxn6IPj1hKfudX", "video": "https://www.youtube.com/watch?v=otfb5t3lcJ8" }
+  ]
+}

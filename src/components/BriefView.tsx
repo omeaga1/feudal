@@ -1,15 +1,16 @@
+import { motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 import { fetchCivStats, fetchMatchupStat, fetchRecentGames, type CivStat, type MatchupStat } from "../lib/aoe4world";
 import { buildBrief } from "../lib/brief";
-import { AGE_NAMES, getCiv } from "../lib/gameData";
+import { getCiv } from "../lib/gameData";
 import { appFetch } from "../lib/http";
 import { summarizePlayer, type PlayerProfile } from "../lib/opponent";
-import { fundamentals } from "../lib/fundamentals";
+import { civTempo, TEMPO_LABELS } from "../lib/tempo";
 import { DangerTimeline } from "./DangerTimeline";
 import { MapPanel } from "./MapPanel";
-import { isStale, type Playbook, type PlaybookSource } from "../lib/playbooks";
-import { landmarkChoices } from "../lib/scouting";
-import { civTempo, TEMPO_LABELS } from "../lib/tempo";
+import { TheirPlan } from "./TheirPlan";
+import { ThreatBoard } from "./ThreatBoard";
+import { YourPlan } from "./YourPlan";
 
 interface Props {
   myCivId: string;
@@ -17,7 +18,7 @@ interface Props {
   opponentName?: string;
   /** Set during a live match to show the enemy player's habits. */
   opponentProfileId?: number;
-  /** The live game's build, used to flag playbooks written for an older patch. */
+  /** The live game's build, used to flag plans written for an older patch. */
   gameBuild?: number;
   /** The map being played, for map notes and per-map win rates. */
   mapName?: string;
@@ -25,7 +26,7 @@ interface Props {
 
 // Civ stats change slowly, so fetch them once per app session.
 let civStatsRequest: Promise<CivStat[]> | null = null;
-function loadCivStats(): Promise<CivStat[]> {
+export function loadCivStats(): Promise<CivStat[]> {
   civStatsRequest ??= fetchCivStats(appFetch).catch((err) => {
     civStatsRequest = null;
     throw err;
@@ -33,129 +34,50 @@ function loadCivStats(): Promise<CivStat[]> {
   return civStatsRequest;
 }
 
-function percent(value: number): string {
-  return `${Math.round(value * 100)}%`;
+function minutes(seconds: number): string {
+  return `${Math.round(seconds / 60)}m`;
 }
 
-function PlayerHabits({ name, profile }: { name: string; profile: PlayerProfile }) {
-  const top = profile.civs.slice(0, 3);
+/** A ring that fills to a percentage: green above 50, red below. */
+export function WinRing({ value, label }: { value: number | null; label: string }) {
+  const r = 26;
+  const c = 2 * Math.PI * r;
+  const tone = value === null ? "" : value >= 52 ? "good" : value <= 48 ? "bad" : "even";
   return (
-    <section className="panel">
-      <h3>{name}'s habits</h3>
-      <p>
-        Won {percent(profile.winRate)} of their last {profile.games} ranked games. Most played:{" "}
-        {top.map((c) => `${getCiv(c.civ)?.name ?? c.civ} ${percent(c.share)} (wins ${percent(c.winRate)})`).join(", ")}.
-      </p>
-      <p className={profile.shortGameShare >= 0.4 ? "warn" : undefined}>
-        {percent(profile.shortGameShare)} of their games end before 15 minutes
-        {profile.shortGameWinRate !== null && <>, and they win {percent(profile.shortGameWinRate)} of those</>}.
-        {profile.medianDuration !== null && <> Their games usually last about {formatMinutes(profile.medianDuration)}.</>}
-      </p>
-    </section>
+    <div className={`win-ring ${tone}`}>
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r={r} className="ring-bg" />
+        {value !== null && (
+          <motion.circle
+            cx="32"
+            cy="32"
+            r={r}
+            className="ring-fill"
+            strokeDasharray={c}
+            initial={{ strokeDashoffset: c }}
+            animate={{ strokeDashoffset: c * (1 - value / 100) }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          />
+        )}
+      </svg>
+      <span className="ring-value">{value === null ? "–" : `${Math.round(value)}%`}</span>
+      <span className="ring-label">{label}</span>
+    </div>
   );
 }
 
-function PlaybookBadge({ playbook, gameBuild }: { playbook: Playbook; gameBuild?: number }) {
-  if (isStale(playbook, gameBuild)) return <span className="pill draft">Older patch</span>;
-  return playbook.status === "draft" ? <span className="pill draft">Draft</span> : null;
-}
-
-function Bullets({ title, items }: { title: string; items?: string[] }) {
-  if (!items || items.length === 0) return null;
+function Stat({ value, label, tone }: { value: string; label: string; tone?: string }) {
   return (
-    <>
-      <b>{title}</b>
-      <ul className="plan">
-        {items.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-    </>
+    <div className={`stat ${tone ?? ""}`}>
+      <span className="stat-value">{value}</span>
+      <span className="stat-label">{label}</span>
+    </div>
   );
 }
 
-function Sources({ sources }: { sources?: PlaybookSource[] }) {
-  const videos = (sources ?? []).filter((s) => s.kind === "video");
-  if (videos.length === 0) return null;
-  return (
-    <p className="muted small">
-      From guides:{" "}
-      {videos.map((v, i) => (
-        <span key={v.url ?? v.title}>
-          {i > 0 && ", "}
-          {v.url ? (
-            <a href={v.url} target="_blank" rel="noreferrer">
-              {v.title}
-            </a>
-          ) : (
-            v.title
-          )}{" "}
-          ({v.date})
-        </span>
-      ))}
-    </p>
-  );
-}
-
-function OpeningReads() {
-  return (
-    <section className="panel">
-      <h3>Reading their opening</h3>
-      <ul className="plan">
-        {fundamentals.openingReads.map((r) => (
-          <li key={r.sign}>
-            <b>{r.sign}:</b> {r.means}
-          </li>
-        ))}
-      </ul>
-      <Bullets title="Good habits" items={fundamentals.habits} />
-    </section>
-  );
-}
-
-function GamePlan({ civName, playbook, gameBuild }: { civName: string; playbook: Playbook; gameBuild?: number }) {
-  const pairings = playbook.pairings ?? [];
-  const wins = playbook.winConditions ?? [];
-  if (pairings.length === 0 && wins.length === 0 && !playbook.openings?.length) return null;
-  return (
-    <section className="panel">
-      <h3>
-        Your game plan as {civName}
-        <PlaybookBadge playbook={playbook} gameBuild={gameBuild} />
-      </h3>
-      <Bullets title="Openings pros use" items={playbook.openings} />
-      {pairings.length > 0 && (
-        <ul className="plan">
-          {pairings.map((p) => (
-            <li key={p.units}>
-              <b>{p.units}.</b> {p.why}
-            </li>
-          ))}
-        </ul>
-      )}
-      {wins.length > 0 && (
-        <p>
-          <b>How {civName} wins:</b> {wins.map((w) => w.detail).join(" ")}
-        </p>
-      )}
-      <Sources sources={playbook.sources} />
-    </section>
-  );
-}
-
-function formatMinutes(seconds: number): string {
-  return `${Math.round(seconds / 60)} min`;
-}
-
-export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId, gameBuild, mapName }: Props) {
-  const brief = useMemo(() => buildBrief(myCivId, enemyCivId), [myCivId, enemyCivId]);
-  const scouting = useMemo(() => {
-    const enemy = getCiv(enemyCivId);
-    return enemy ? landmarkChoices(enemy) : [];
-  }, [enemyCivId]);
+function StatStrip({ myCivId, enemyCivId }: { myCivId: string; enemyCivId: string }) {
   const [stat, setStat] = useState<MatchupStat | null | "unavailable">(null);
   const [civStats, setCivStats] = useState<CivStat[] | null>(null);
-  const [profile, setProfile] = useState<PlayerProfile | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -169,6 +91,66 @@ export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId
 
   useEffect(() => {
     let cancelled = false;
+    setStat(null);
+    fetchMatchupStat(appFetch, myCivId, enemyCivId)
+      .then((s) => !cancelled && setStat(s ?? "unavailable"))
+      .catch(() => !cancelled && setStat("unavailable"));
+    return () => {
+      cancelled = true;
+    };
+  }, [myCivId, enemyCivId]);
+
+  const tempo = civStats ? civTempo(enemyCivId, civStats) : null;
+  const theirs = civStats?.find((c) => c.civilization === enemyCivId);
+  const row = stat && stat !== "unavailable" ? stat : null;
+
+  return (
+    <section className="panel stat-strip">
+      <WinRing value={row?.win_rate ?? null} label="Your win rate" />
+      <div className="stats">
+        <Stat value={row ? row.games_count.toLocaleString() : "–"} label="Games this patch" />
+        <Stat value={row ? minutes(row.duration_median) : "–"} label="Typical length" />
+        {theirs && <Stat value={`${theirs.win_rate.toFixed(1)}%`} label={`${getCiv(enemyCivId)?.name ?? "Their"} overall`} />}
+        {tempo && <Stat value={TEMPO_LABELS[tempo.tempo]} label="Their tempo" tone={tempo.tempo} />}
+      </div>
+      {stat === "unavailable" && <span className="muted small">Matchup stats aren't available right now.</span>}
+    </section>
+  );
+}
+
+function percent(value: number): string {
+  return `${Math.round(value * 100)}%`;
+}
+
+function PlayerHabits({ name, profile }: { name: string; profile: PlayerProfile }) {
+  return (
+    <section className="panel habits">
+      <div className="panel-head">
+        <h3>{name}</h3>
+      </div>
+      <div className="stats">
+        <Stat value={percent(profile.winRate)} label={`Won, last ${profile.games}`} />
+        <Stat value={percent(profile.shortGameShare)} label="Games under 15m" tone={profile.shortGameShare >= 0.4 ? "early-pressure" : undefined} />
+        {profile.medianDuration !== null && <Stat value={minutes(profile.medianDuration)} label="Usual length" />}
+      </div>
+      <div className="habit-civs">
+        {profile.civs.slice(0, 3).map((c) => (
+          <span key={c.civ} className="habit-civ">
+            <b>{getCiv(c.civ)?.name ?? c.civ}</b> {percent(c.share)}
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/** The matchup at a glance: stats, your branching plan, their plan, and unit answers. */
+export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId, gameBuild, mapName }: Props) {
+  const brief = useMemo(() => buildBrief(myCivId, enemyCivId), [myCivId, enemyCivId]);
+  const [profile, setProfile] = useState<PlayerProfile | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
     setProfile(null);
     if (opponentProfileId === undefined) return;
     fetchRecentGames(appFetch, opponentProfileId)
@@ -179,140 +161,39 @@ export function BriefView({ myCivId, enemyCivId, opponentName, opponentProfileId
     };
   }, [opponentProfileId]);
 
-  useEffect(() => {
-    let cancelled = false;
-    setStat(null);
-    fetchMatchupStat(appFetch, myCivId, enemyCivId)
-      .then((s) => !cancelled && setStat(s ?? "unavailable"))
-      .catch(() => !cancelled && setStat("unavailable"));
-    return () => {
-      cancelled = true;
-    };
-  }, [myCivId, enemyCivId]);
-
   if (!brief) return <section className="panel error">No data for this matchup yet.</section>;
-  const { me, enemy, enemyPlaybook, myPlaybook } = brief;
-  const tempo = civStats ? civTempo(enemy.id, civStats) : null;
+  const { enemy, enemyPlaybook } = brief;
 
   return (
-    <div className="stack">
-      <section className="panel">
-        <h2>
-          {me.name} vs {enemy.name}
-          {opponentName && <span className="muted"> · {opponentName}</span>}
-        </h2>
-        {stat === "unavailable" ? (
-          <p className="muted">Matchup stats aren't available right now.</p>
-        ) : stat ? (
-          <p>
-            Ranked 1v1: you win <b>{stat.win_rate.toFixed(1)}%</b> of {stat.games_count.toLocaleString()} games. These
-            games usually last about {formatMinutes(stat.duration_median)}.
-          </p>
-        ) : (
-          <p className="muted">Loading matchup stats from AoE4 World…</p>
-        )}
-        {tempo && (
-          <p>
-            <span className={`pill tempo ${tempo.tempo}`}>{TEMPO_LABELS[tempo.tempo]}</span>{" "}
-            <span className="muted">
-              {enemy.name} games last about {formatMinutes(tempo.medianDuration)}, against{" "}
-              {formatMinutes(tempo.ladderMedian)} for a typical civ.
-            </span>
-          </p>
-        )}
-        <p className="muted">{enemyPlaybook?.summary ?? enemy.description}</p>
-      </section>
+    <div className="brief">
+      <div className="brief-top">
+        <StatStrip myCivId={myCivId} enemyCivId={enemyCivId} />
+        <DangerTimeline myCivId={myCivId} enemyCivId={enemyCivId} />
+      </div>
 
-      <DangerTimeline myCivId={me.id} enemyCivId={enemy.id} />
+      <YourPlan civ={myCivId} gameBuild={gameBuild} />
 
-      {mapName && <MapPanel mapName={mapName} myCivId={me.id} enemyCivId={enemy.id} />}
-
-      {profile && <PlayerHabits name={opponentName ?? "Your opponent"} profile={profile} />}
-
-      {scouting.length > 0 && (
-        <section className="panel">
-          <h3>What to scout for</h3>
-          <p className="muted">Each age-up, {enemy.name} builds one of these landmarks. Spot which one to read their plan.</p>
-          <div className="stack">
-            {scouting.map((choice) => (
-              <div key={choice.advancingTo}>
-                <b>Going to {AGE_NAMES[choice.advancingTo]}</b>
-                <ul className="landmarks">
-                  {choice.options.map((l) => (
-                    <li key={l.id}>
-                      <b>{l.name}:</b> {l.description.replace(/\n/g, " ")}
-                    </li>
-                  ))}
-                </ul>
+      <div className="brief-split">
+        <TheirPlan civ={enemyCivId} />
+        <div className="stack">
+          {profile && <PlayerHabits name={opponentName ?? "Your opponent"} profile={profile} />}
+          {mapName && <MapPanel mapName={mapName} myCivId={myCivId} enemyCivId={enemyCivId} />}
+          {enemyPlaybook?.howToBeat && enemyPlaybook.howToBeat.length > 0 && (
+            <section className="panel">
+              <div className="panel-head">
+                <h3>Beating {enemy.name}</h3>
               </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {enemyPlaybook && enemyPlaybook.spikes.length > 0 && (
-        <section className="panel">
-          <h3>
-            When {enemy.name} is dangerous
-            <PlaybookBadge playbook={enemyPlaybook} gameBuild={gameBuild} />
-          </h3>
-          <ul className="spikes">
-            {enemyPlaybook.spikes.map((s) => (
-              <li key={s.label}>
-                <span className="pill">{AGE_NAMES[s.age]}</span>
-                <div>
-                  <b>{s.label}.</b> {s.detail}
-                  <div className="answer">{s.answer}</div>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <Bullets title="Openings to expect" items={enemyPlaybook.openings} />
-          <Bullets title="Signs to scout for" items={enemyPlaybook.scout} />
-          <Bullets title={`How to beat ${enemy.name}`} items={enemyPlaybook.howToBeat} />
-          {enemyPlaybook.winConditions && enemyPlaybook.winConditions.length > 0 && (
-            <p>
-              <b>How {enemy.name} wins:</b> {enemyPlaybook.winConditions.map((w) => w.detail).join(" ")}
-            </p>
-          )}
-          <Sources sources={enemyPlaybook.sources} />
-        </section>
-      )}
-
-      <OpeningReads />
-
-      {myPlaybook && <GamePlan civName={me.name} playbook={myPlaybook} gameBuild={gameBuild} />}
-
-      {brief.ages.map(({ age, threats }) =>
-        threats.length === 0 ? null : (
-          <section className="panel" key={age}>
-            <h3>{AGE_NAMES[age]}: what they add, and your answer</h3>
-            <table className="counters">
-              <thead>
-                <tr>
-                  <th>Their unit</th>
-                  <th>Build</th>
-                </tr>
-              </thead>
-              <tbody>
-                {threats.map(({ enemy: unit, counters }) => (
-                  <tr key={unit.id}>
-                    <td>
-                      {unit.name}
-                      {unit.unique && <span className="pill">Unique</span>}
-                    </td>
-                    <td>
-                      {counters.length === 0
-                        ? "No clear counter by stats alone. Mix units or fight under towers."
-                        : counters.map((c) => c.unit.name).join(", ")}
-                    </td>
-                  </tr>
+              <ul className="tight">
+                {enemyPlaybook.howToBeat.slice(0, 3).map((t) => (
+                  <li key={t}>{t}</li>
                 ))}
-              </tbody>
-            </table>
-          </section>
-        ),
-      )}
+              </ul>
+            </section>
+          )}
+        </div>
+      </div>
+
+      <ThreatBoard brief={brief} />
     </div>
   );
 }

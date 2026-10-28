@@ -1,0 +1,113 @@
+{
+  "civ": "abbasid_dynasty",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "2:10",
+    "steps": [
+      { "t": "0:00", "v": [6, 0, 0, 0], "do": "Berries; 1 builds the House of Wisdom and a house" },
+      { "t": "0:20", "v": [6, 0, 1, 0], "do": "2 to gold with a mining camp" },
+      { "t": "1:00", "v": [7, 0, 2, 0], "do": "Rally to sheep until you age up" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "eco-wing-2tc",
+      "name": "Economic Wing 2 TC",
+      "style": "boom",
+      "landmark": "Economic Wing",
+      "ageUp": "4:00",
+      "pick": "Default: boom, then decide Feudal or fast Castle",
+      "steps": [
+        { "t": "2:12", "v": [5, 5, 2, 0], "do": "Economic Wing; sheep villagers to straggler trees" },
+        { "t": "2:20", "v": [5, 5, 2, 1], "do": "Rally stone until 4" },
+        { "t": "4:00", "v": [5, 7, 2, 4], "do": "Fertile Crescent and Fresh Foodstuffs" },
+        { "t": "4:50", "v": [5, 8, 0, 0], "b": 6, "do": "Second TC on the wood" },
+        { "t": "6:00", "v": [12, 8, 5, 0], "do": "Both TCs nonstop; spears and archers on call" }
+      ],
+      "army": ["Spearman", "Archer"],
+      "castle": [
+        {
+          "id": "military-wing",
+          "name": "Military Wing camels",
+          "style": "fast-castle",
+          "landmark": "Military Wing",
+          "ageUp": "9:30",
+          "pick": "Against cavalry civs, or to take the map",
+          "steps": [
+            { "t": "8:30", "v": [14, 8, 10, 0], "do": "Gold up for Castle" },
+            { "t": "9:30", "do": "Camel Riders and Crossbows, Golden Age tiers" }
+          ],
+          "army": ["Camel Rider", "Crossbowman", "Ghulam"],
+          "goal": "Camels shut down knights; take relics"
+        },
+        {
+          "id": "culture-wing",
+          "name": "Culture Wing relics",
+          "style": "boom",
+          "landmark": "Culture Wing",
+          "ageUp": "10:00",
+          "pick": "Safe game; relics and research into Imperial",
+          "steps": [
+            { "t": "9:00", "do": "Farms around both TCs" },
+            { "t": "10:00", "do": "Monastery and Imams for relics" }
+          ],
+          "army": ["Camel Archer", "Spearman", "Mangonel"],
+          "goal": "Relics and a 3rd TC, Imperial with the last wing"
+        }
+      ]
+    },
+    {
+      "id": "military-wing-stable",
+      "name": "Military Wing horsemen",
+      "style": "aggro",
+      "landmark": "Military Wing",
+      "ageUp": "4:00",
+      "pick": "Against booms; horsemen raid while you add TC 2",
+      "steps": [
+        { "t": "2:15", "v": [6, 4, 3, 0], "do": "Military Wing; berries stay, sheep to trees" },
+        { "t": "2:50", "v": [6, 5, 0, 3], "do": "Gold villagers to stone" },
+        { "t": "4:00", "v": [6, 7, 0, 3], "do": "Stable, 2 houses, Fresh Foodstuffs" },
+        { "t": "4:30", "v": [6, 11, 0, 3], "do": "Horsemen nonstop" },
+        { "t": "6:05", "v": [6, 15, 0, 3], "do": "Drop stone at 850: second TC" }
+      ],
+      "army": ["Horseman", "Spearman", "Archer"],
+      "castle": [
+        {
+          "id": "eco-wing-late",
+          "name": "Economic Wing catch-up",
+          "style": "boom",
+          "landmark": "Economic Wing",
+          "ageUp": "10:30",
+          "pick": "Raids did damage; now out-boom them",
+          "steps": [
+            { "t": "9:30", "do": "Add barracks and range for a long Feudal" },
+            { "t": "10:30", "do": "Economic Wing, farms and Golden Age" }
+          ],
+          "army": ["Horseman", "Archer", "Ghulam"],
+          "goal": "Turn the early lead into an eco lead"
+        },
+        {
+          "id": "culture-wing-late",
+          "name": "Culture Wing army",
+          "style": "timing",
+          "landmark": "Culture Wing",
+          "ageUp": "11:00",
+          "pick": "Keep fighting; better upgrades win the mid game",
+          "steps": [
+            { "t": "10:00", "do": "15 villagers on gold for the age-up" },
+            { "t": "11:00", "do": "Ghulam, Lancer and archers with a few camels" }
+          ],
+          "army": ["Ghulam", "Lancer", "Camel Archer"],
+          "goal": "Win the Castle Age fights"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Valdy: Eco Wing 2TC (2026)", "url": "https://aoe4guides.com/builds/q7ShhrWaVgMCyDjPQX9F", "video": "https://www.youtube.com/watch?v=zlFwOhCfX3M" },
+    { "title": "Valdy: Miliwing Stable 2TC (2026)", "url": "https://aoe4guides.com/builds/7NhTCEH8cuzlYchz9g7O", "video": "https://www.youtube.com/watch?v=zlFwOhCfX3M" },
+    { "title": "Beasty: 1TC Admin Wing", "url": "https://aoe4guides.com/builds/c4cXnDbTexZMjCBqhIcc", "video": "https://www.youtube.com/watch?v=P5O0GvmO20o" }
+  ]
+}

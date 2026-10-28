@@ -1,0 +1,115 @@
+{
+  "civ": "house_of_lancaster",
+  "season": "Season 13",
+  "checkedBuild": 11308,
+  "updated": "2026-10-28",
+  "opening": {
+    "decideAt": "1:55",
+    "steps": [
+      { "t": "0:00", "v": [6, 0, 0, 0], "do": "6 on sheep, scout collects sheep" },
+      { "t": "0:20", "v": [6, 0, 1, 0], "b": 2, "do": "Next 3 to gold: mining camp, then a house" },
+      { "t": "1:20", "v": [7, 0, 3, 0], "do": "Rally back to sheep" }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "lancaster-castle-2tc",
+      "name": "Manor 2 TC boom",
+      "style": "boom",
+      "landmark": "Lancaster Castle",
+      "ageUp": "4:00",
+      "pick": "Default: the strongest early economy in the game",
+      "steps": [
+        { "t": "2:00", "v": [3, 4, 0, 4], "b": 3, "do": "Gold villagers build Lancaster Castle over gold and wood" },
+        { "t": "4:00", "v": [3, 8, 0, 4], "b": 3, "do": "Castle builders place a Manor over gold and sheep" },
+        { "t": "5:00", "v": [3, 14, 0, 4], "do": "Rally wood by the Manor; mine to 800 stone" },
+        { "t": "5:50", "v": [3, 4, 8, 0], "b": 9, "do": "9 build TC 2 on gold, rally both to sheep" },
+        { "t": "7:00", "v": [14, 6, 8, 0], "do": "TC builders to sheep" }
+      ],
+      "army": ["Spearman", "Yeoman"],
+      "castle": [
+        {
+          "id": "white-tower-fc",
+          "name": "White Tower fast Castle",
+          "style": "fast-castle",
+          "landmark": "The White Tower",
+          "ageUp": "8:30",
+          "pick": "Default: Castle with 2 TCs and a Manor",
+          "steps": [
+            { "t": "7:30", "do": "White Tower on the wood, or greedy over stone and gold" },
+            { "t": "8:30", "v": [16, 6, 8, 0], "do": "Earl's Guard arrive; stable and barracks" },
+            { "t": "9:30", "do": "Knights vs knight civs, archers and MAA vs spears" }
+          ],
+          "army": ["Knight", "Earl's Guard", "Crossbowman"],
+          "goal": "Relics and Manors with 10+ villagers each"
+        },
+        {
+          "id": "kings-college",
+          "name": "King's College tech",
+          "style": "boom",
+          "landmark": "King's College",
+          "ageUp": "9:30",
+          "pick": "Long game ahead; cheaper research all game",
+          "steps": [
+            { "t": "8:00", "do": "Second Manor on new food, farms around it" },
+            { "t": "9:30", "do": "King's College: research -20% and unique military techs" }
+          ],
+          "army": ["Yeoman", "Hobelar", "Springald"],
+          "goal": "Out-scale them into Imperial"
+        }
+      ]
+    },
+    {
+      "id": "abbey-lords",
+      "name": "Abbey lords dive",
+      "style": "aggro",
+      "landmark": "Abbey of Kings",
+      "ageUp": "3:55",
+      "pick": "Against greedy builds; Lords plus hobelars dive villagers",
+      "steps": [
+        { "t": "1:55", "v": [8, 0, 0, 0], "b": 3, "do": "Gold villagers build Abbey of Kings" },
+        { "t": "2:00", "v": [4, 2, 0, 3], "b": 3, "do": "3 to stone (100 for a Manor), rally wood" },
+        { "t": "3:55", "v": [4, 8, 3, 0], "do": "Manor on wood with 2 villagers" },
+        { "t": "4:20", "v": [5, 8, 3, 0], "do": "Stable, queue Lords of Lancaster up to 4" },
+        { "t": "5:00", "v": [11, 6, 3, 0], "do": "Second stable; blacksmith before 8:00" },
+        { "t": "8:00", "v": [15, 8, 6, 0], "do": "Iron Undermesh, then dive with hobelars and Lords" }
+      ],
+      "army": ["Lord of Lancaster", "Hobelar", "Spearman"],
+      "castle": [
+        {
+          "id": "white-tower-knights",
+          "name": "White Tower knight pressure",
+          "style": "timing",
+          "landmark": "The White Tower",
+          "ageUp": "9:30",
+          "pick": "The dive did damage; heal at the Abbey and go again",
+          "steps": [
+            { "t": "8:40", "do": "Heal at the Abbey; 8 food villagers start the White Tower" },
+            { "t": "9:30", "do": "Knights nonstop from 2 stables, monastery for relics" }
+          ],
+          "army": ["Knight", "Lord of Lancaster", "Earl's Guard"],
+          "goal": "Second dive into Castle and take the map"
+        },
+        {
+          "id": "kings-college-lords",
+          "name": "King's College hold",
+          "style": "defense",
+          "landmark": "King's College",
+          "ageUp": "10:00",
+          "pick": "They held; turtle behind Manors and out-tech",
+          "steps": [
+            { "t": "9:00", "do": "Farms around Manors, range for yeomen" },
+            { "t": "10:00", "do": "King's College upgrades" }
+          ],
+          "army": ["Yeoman", "Spearman", "Mangonel"],
+          "goal": "Stabilise, then out-eco them"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Swaggy Professor: Lancaster 2 TC boom", "url": "https://aoe4guides.com/builds/rXGNCeikXFWoOQtpWThQ", "video": "https://www.youtube.com/watch?v=F7kR-pOBslo" },
+    { "title": "Valdy: 1 Manor Lords Timing (2026)", "url": "https://aoe4guides.com/builds/Eo8W4KQJxYpLph1M1Ygx", "video": "https://www.youtube.com/watch?v=XWHfruGPIrM" },
+    { "title": "Swaggy Professor: Abbey of Kings FC into White Tower", "url": "https://aoe4guides.com/builds/M8kq5gbI2a7sx3hwRMAg", "video": "https://www.youtube.com/watch?v=YUOo8KE3tRY" }
+  ]
+}

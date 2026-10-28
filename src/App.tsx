@@ -1,4 +1,6 @@
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { CivAnalysis } from "./components/CivAnalysis";
 import { Keybinds } from "./components/Keybinds";
 import { LiveMatch } from "./components/LiveMatch";
 import { MatchupBrowser } from "./components/MatchupBrowser";
@@ -8,12 +10,13 @@ import { appFetch } from "./lib/http";
 import { useLiveMatch } from "./lib/liveMatch";
 import { loadProfileId, loadProfileName, saveProfileId } from "./lib/profile";
 
-type View = "live" | "browser" | "keybinds";
+type View = "live" | "matchups" | "civs" | "keybinds";
 
-const VIEWS: { id: View; label: string }[] = [
-  { id: "live", label: "Live match" },
-  { id: "browser", label: "Matchups" },
-  { id: "keybinds", label: "Keybinds" },
+const VIEWS: { id: View; label: string; icon: string }[] = [
+  { id: "live", label: "Live", icon: "◉" },
+  { id: "matchups", label: "Matchups", icon: "⚔" },
+  { id: "civs", label: "Civs", icon: "⚑" },
+  { id: "keybinds", label: "Keys", icon: "⌨" },
 ];
 
 export default function App() {
@@ -24,6 +27,7 @@ export default function App() {
   const status = useLiveMatch(profileId, appFetch);
   const liveGameId = status.kind === "in-game" ? status.match.gameId : null;
   const shownGameId = useRef<number | null>(null);
+  const lastCiv = status.kind === "in-game" ? status.match.me.civ : status.kind === "waiting" ? status.lastMatch?.me.civ : undefined;
 
   // When a new game starts, jump to its brief. The player never has to click
   // anything once a game is under way.
@@ -52,37 +56,54 @@ export default function App() {
 
   return (
     <div className="app">
-      <header className="topbar">
-        <span className="brand">Feudal</span>
-        {status.kind === "in-game" && view !== "live" && (
-          <span className="pill live">In game</span>
-        )}
-        <nav className="tabs">
-          {VIEWS.map((v) => (
-            <button
-              key={v.id}
-              className={v.id === view ? "tab active" : "tab"}
-              onClick={() => setView(v.id)}
-              type="button"
-            >
-              {v.label}
-            </button>
-          ))}
-        </nav>
+      <nav className="rail" aria-label="Sections">
+        <div className="brand" title="Feudal">
+          <span className="brand-mark">F</span>
+        </div>
+        {VIEWS.map((v) => (
+          <button
+            key={v.id}
+            className={v.id === view ? "rail-item active" : "rail-item"}
+            onClick={() => setView(v.id)}
+            type="button"
+            aria-current={v.id === view ? "page" : undefined}
+          >
+            {v.id === view && <motion.span layoutId="rail-active" className="rail-active" transition={{ type: "spring", stiffness: 500, damping: 36 }} />}
+            <span className="rail-icon" aria-hidden="true">
+              {v.icon}
+            </span>
+            <span className="rail-label">{v.label}</span>
+            {v.id === "live" && status.kind === "in-game" && <span className="rail-dot" />}
+          </button>
+        ))}
+        <span className="spacer" />
         <UpdateNotice />
-      </header>
+      </nav>
 
-      <main className="content">
-        {view === "live" && <LiveMatch profileId={profileId} profileName={profileName} status={status} onProfileChange={changeProfile} />}
-        {view === "browser" && <MatchupBrowser />}
-        {view === "keybinds" && <Keybinds />}
-      </main>
+      <div className="main">
+        <main className="content">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={view}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18 }}
+            >
+              {view === "live" && <LiveMatch profileId={profileId} profileName={profileName} status={status} onProfileChange={changeProfile} />}
+              {view === "matchups" && <MatchupBrowser defaultCiv={lastCiv} />}
+              {view === "civs" && <CivAnalysis defaultCiv={lastCiv} />}
+              {view === "keybinds" && <Keybinds />}
+            </motion.div>
+          </AnimatePresence>
+        </main>
 
-      <footer className="footer">
-        Unit data from AoE4 World ({dataMeta.syncedAt.slice(0, 10)}). Age of Empires IV © Microsoft Corporation.
-        Feudal was created under Microsoft's "Game Content Usage Rules" using assets from Age of Empires IV, and it
-        is not endorsed by or affiliated with Microsoft.
-      </footer>
+        <footer className="footer">
+          Unit data from AoE4 World ({dataMeta.syncedAt.slice(0, 10)}), build orders from aoe4guides.com. Age of Empires IV ©
+          Microsoft Corporation. Feudal was created under Microsoft's "Game Content Usage Rules" using assets from Age of
+          Empires IV, and it is not endorsed by or affiliated with Microsoft.
+        </footer>
+      </div>
     </div>
   );
 }

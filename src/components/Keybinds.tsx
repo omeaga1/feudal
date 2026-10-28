@@ -1,6 +1,7 @@
 import { invoke, isTauri } from "@tauri-apps/api/core";
 import { useEffect, useMemo, useState } from "react";
 import { commandLabel, comboKeys, groupKeybinds, parseRkp, type KeybindProfile } from "../lib/keybinds";
+import { CounterChart, KeyMap } from "./KeyMap";
 
 const PROFILE_KEY = "feudal.keybindProfile";
 
@@ -56,16 +57,28 @@ export function Keybinds() {
   const profile = profiles?.find((p) => p.name === selected) ?? profiles?.[0];
   const groups = useMemo(() => (profile ? groupKeybinds(parseRkp(profile.contents), query) : []), [profile, query]);
 
-  if (profiles === null) return <section className="panel muted">Looking for your keybinding profiles…</section>;
-
   return (
     <div className="stack">
+      <KeyMap />
+      <CounterChart />
+      {profiles === null ? (
+        <section className="panel muted">Looking for your keybinding profiles…</section>
+      ) : (
+        profileView()
+      )}
+    </div>
+  );
+
+  function profileView() {
+    return (
+    <div className="stack">
+      <h2 className="section-title">Your full keybinding profile</h2>
       <section className="panel row keybind-head">
-        {profiles.length > 0 && (
+        {(profiles ?? []).length > 0 && (
           <label className="field">
             <span>Profile</span>
             <select value={profile?.name ?? ""} onChange={(e) => choose(e.target.value)}>
-              {profiles.map((p) => (
+              {(profiles ?? []).map((p) => (
                 <option key={p.name} value={p.name}>
                   {p.name}
                 </option>
@@ -123,5 +136,6 @@ export function Keybinds() {
         ))}
       </div>
     </div>
-  );
+    );
+  }
 }
