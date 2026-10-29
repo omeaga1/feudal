@@ -1,6 +1,6 @@
-import { AGE_NAMES } from "../lib/gameData";
 import type { MatchupBrief } from "../lib/brief";
 import { CounterRow } from "./CounterRow";
+import { AgeMark } from "./ui";
 
 /** Each age's new enemy units, each with the units of yours that beat it. */
 export function ThreatBoard({ brief }: { brief: MatchupBrief }) {
@@ -15,7 +15,9 @@ export function ThreatBoard({ brief }: { brief: MatchupBrief }) {
       <div className="threat-ages">
         {ages.map(({ age, threats }) => (
           <div key={age} className="threat-age">
-            <div className="threat-age-name">{AGE_NAMES[age]}</div>
+            <div className="threat-age-name">
+              <AgeMark age={age} />
+            </div>
             <div className="threat-list">
               {threats.map(({ enemy, counters }) => (
                 <CounterRow

@@ -79,7 +79,9 @@ export default function App() {
     <div className="app">
       <nav className="rail" aria-label="Sections">
         <div className="brand" title="Feudal">
-          <span className="brand-mark">F</span>
+          <span className="brand-mark">
+            <span>F</span>
+          </span>
         </div>
         {VIEWS.map((v) => (
           <Tip key={v.id} label={v.hint} side="right">
@@ -107,6 +109,7 @@ export default function App() {
           <AnimatePresence mode="wait">
             <motion.div
               key={view}
+              className="view"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
