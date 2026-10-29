@@ -2,12 +2,12 @@
   "civ": "golden_horde",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "2:50",
     "steps": [
       { "t": "0:00", "v": [4, 0, 0, 0], "b": 1, "do": "4 on sheep; 1 builds Ovoo, Golden Tent, a ger on gold" },
-      { "t": "0:37", "v": [6, 0, 0, 0], "do": "Villagers come in pairs: food up to 7 or 8" },
+      { "t": "0:37", "v": [7, 0, 0, 0], "do": "Villagers come in pairs: food up to 7 or 8" },
       { "t": "1:16", "v": [7, 0, 2, 0], "do": "Then 2 to 3 on gold" },
       { "t": "1:52", "v": [9, 0, 2, 0], "do": "Rally back to sheep until you age up" }
     ]
@@ -23,7 +23,7 @@
       "steps": [
         { "t": "2:51", "v": [11, 0, 2, 0], "do": "Age up with the Khan option at the Golden Tent" },
         { "t": "3:00", "v": [5, 8, 2, 0], "do": "Split to wood, rally food" },
-        { "t": "4:37", "v": [9, 7, 2, 0], "do": "2nd Ovoo and a stable; queue Khan + Torguud" },
+        { "t": "4:37", "v": [10, 7, 2, 0], "do": "2nd Ovoo and a stable; queue Khan + Torguud" },
         { "t": "5:16", "v": [11, 8, 2, 0], "do": "Keshiks; harass with 2 Keshik, 2 Torguud and the Khan" },
         { "t": "5:35", "v": [8, 8, 2, 0], "b": 5, "do": "5 take deer with a fortified outpost" }
       ],
@@ -37,7 +37,7 @@
           "ageUp": "10:00",
           "pick": "Default: 200 wood a minute and +2 armor",
           "steps": [
-            { "t": "9:00", "v": [11, 8, 6, 0], "do": "Deny their gold, Iron Undermesh, then age" },
+            { "t": "9:00", "v": [17, 8, 8, 0], "do": "Deny their gold, Iron Undermesh, then age" },
             { "t": "10:00", "do": "Lumber Shields: wood income and armor; push" }
           ],
           "army": ["Keshik", "Kharash", "Archer"],
@@ -70,7 +70,7 @@
         { "t": "3:00", "v": [8, 4, 3, 0], "do": "Building Carts age-up; sheep villagers to wood" },
         { "t": "3:30", "v": [7, 6, 3, 0], "b": 1, "do": "Fortified outpost near gold and food" },
         { "t": "4:50", "v": [7, 9, 3, 0], "do": "Carts drop a stable plus barracks (vs knights) or range" },
-        { "t": "6:15", "v": [6, 12, 5, 0], "do": "Khan, then Keshik with spears or archers" },
+        { "t": "6:15", "v": [8, 12, 5, 0], "do": "Khan, then Keshik with spears or archers" },
         { "t": "7:30", "v": [11, 9, 5, 0], "b": 4, "do": "Stockyard when sheep run out" }
       ],
       "army": ["Keshik", "Spearman", "Archer"],

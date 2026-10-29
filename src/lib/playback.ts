@@ -6,8 +6,9 @@ import { clock, pathSteps, RESOURCES, type GamePlan, type PlanStep, type Resourc
 // Plays a chosen path back as a simulated game: the clock runs, villagers
 // move between resources, buildings appear, and the ages tick over. The plan's
 // steps say where villagers go; the game's production rules say when each one
-// exists: every Town Center trains one villager per the civ's train time
-// (from AoE4 World's game data), nonstop from 0:00.
+// exists: the civ's starting villagers, then every Town Center training one
+// villager per the civ's train time (from AoE4 World's game data), nonstop
+// from 0:00 except while it researches an age-up.
 
 /** Where a villager is: on a resource, or building. */
 export type Slot = Resource | "build";
@@ -177,35 +178,44 @@ function nextVillagerId(vils: Villager[]): number {
   return vils.reduce((m, v) => Math.max(m, v.id + 1), 0);
 }
 
-/** Every civ starts with six villagers. */
-export const START_VILLAGERS = 6;
-
 export interface Producer {
   /** "Town Center", "TC 2", or a landmark that trains villagers. */
   label: string;
   /** When it starts training villagers. */
   from: number;
+  /** How much faster than a Town Center it trains: Palace of Swabia is 3x. */
+  speed: number;
+  /** When it trains no villagers: Knights Templar research age-ups at the Town Center. */
+  paused?: { from: number; until: number }[];
 }
 
 export interface Production {
+  /** Villagers at 0:00: six for most civs, five for some, three Mounted Villagers for Jin. */
+  start: number;
   /** Seconds per villager (per batch) from one Town Center. */
   trainTime: number;
   /** Villagers per batch: Golden Horde trains two at once. */
   batch: number;
+  /** A better villager trained first, up to a limit, before regular ones: Jin's Mounted Villagers. */
+  limited?: { name: string; trainTime: number; limit: number };
   /** Everything that trains villagers, in the order it comes online. */
   producers: Producer[];
-  /** When each villager after the first six walks out, in order. */
+  /** When each villager after the starting ones walks out, in order. */
   born: number[];
 }
 
 interface Economy {
   trainTime: number;
   batch: number;
+  start: number;
+  limited?: { name: string; trainTime: number; limit: number };
   townCenterBuildTime: number;
-  villagerLandmarks: string[];
+  /** Seconds the Town Center spends researching the age-up, by the age reached. */
+  townCenterAgeUp?: Record<string, number>;
+  villagerLandmarks: { name: string; speed: number }[];
 }
 const ECONOMY = economyJson as Record<string, Economy>;
-const DEFAULT_ECONOMY: Economy = { trainTime: 20, batch: 1, townCenterBuildTime: 165, villagerLandmarks: [] };
+const DEFAULT_ECONOMY: Economy = { trainTime: 20, batch: 1, start: 6, townCenterBuildTime: 165, villagerLandmarks: [] };
 
 /** Which Town Center a step is about: "TC 2", "second TC", "both TCs". */
 function tcNumber(text: string, have: number): number | undefined {
@@ -216,46 +226,85 @@ function tcNumber(text: string, have: number): number | undefined {
 }
 
 /**
- * Villager production for a plan, by the game's rules: one Town Center from
- * 0:00, each extra TC a step builds once the civ's TC build time has passed
- * (or right away when the step says it's done or running), and any landmark
- * the path builds that trains villagers (King's Palace, Palace of Swabia)
- * from its age-up. Every producer trains nonstop.
+ * How long `builders` villagers take to put up a building that takes one
+ * villager `time`: each extra builder adds less, 3t / (n + 2), so two take
+ * 75% of the time and eight take 30%.
  */
-export function production(civId: string, steps: { seconds: number; text: string }[], until: number, built: { name?: string; at: number }[] = []): Production {
+export function buildTime(time: number, builders = 1): number {
+  return (time * 3) / (Math.max(1, builders) + 2);
+}
+
+/**
+ * Villager production for a plan, by the game's rules: one Town Center from
+ * 0:00, each extra TC a step builds once its builders finish it (or right
+ * away when the step says it's done or running), and any landmark the path
+ * builds that trains villagers (King's Palace, Palace of Swabia) from its
+ * age-up. Every producer trains nonstop, except a Town Center busy with an
+ * age-up (Knights Templar click up there, so it trains nothing until the
+ * age-up lands).
+ */
+export function production(
+  civId: string,
+  steps: { seconds: number; text: string; builders?: number }[],
+  until: number,
+  built: { name?: string; at: number }[] = [],
+  ageUps: { age: 2 | 3; at: number }[] = [],
+): Production {
   const eco = ECONOMY[getCiv(civId)?.abbr ?? ""] ?? DEFAULT_ECONOMY;
-  const producers: Producer[] = [{ label: "Town Center", from: 0 }];
+  const paused = ageUps.flatMap(({ age, at }) => {
+    const time = eco.townCenterAgeUp?.[age];
+    return time ? [{ from: at - time, until: at }] : [];
+  });
+  const producers: Producer[] = [{ label: "Town Center", from: 0, speed: 1, ...(paused.length ? { paused } : {}) }];
   let tcs = 1;
-  for (const { seconds, text } of steps) {
+  for (const { seconds, text, builders } of steps) {
     const n = tcNumber(text, tcs);
     if (!n || n <= tcs) continue;
     // "Stone for a second TC" or "rams or a second TC" plans one; it isn't built yet.
     if (/\b(for|or) (a |the )?(tc ?\d|\w+ (tc|town ?center))|\b(acts|works) as\b|\bsoon\b/i.test(text)) continue;
     const running = /\b(done|finished|complete[sd]?|running|both|two|nonstop|make villagers|making villagers)\b/i.test(text);
-    while (tcs < n) producers.push({ label: `TC ${++tcs}`, from: seconds + (running ? 0 : eco.townCenterBuildTime) });
+    const done = seconds + (running ? 0 : buildTime(eco.townCenterBuildTime, builders));
+    while (tcs < n) producers.push({ label: `TC ${++tcs}`, from: done, speed: 1 });
   }
   for (const { name, at } of built) {
-    if (name && eco.villagerLandmarks.includes(name)) producers.push({ label: name, from: at });
+    const landmark = eco.villagerLandmarks.find((l) => l.name === name);
+    if (landmark) producers.push({ label: landmark.name, from: at, speed: landmark.speed });
   }
   producers.sort((a, b) => a.from - b.from);
+  // Each producer trains back to back. Jin's take the Mounted Villager while
+  // there's room under its limit, then regular villagers.
+  let limitedLeft = eco.limited ? Math.max(0, eco.limited.limit - eco.start) : 0;
   const born: number[] = [];
-  for (const { from } of producers) {
-    for (let t = from + eco.trainTime; t <= until; t += eco.trainTime) for (let k = 0; k < eco.batch; k++) born.push(t);
+  const next = producers.map((p) => p.from);
+  for (;;) {
+    let i = -1;
+    next.forEach((t, k) => {
+      if (t <= until && (i < 0 || t < next[i])) i = k;
+    });
+    if (i < 0) break;
+    const time = (limitedLeft > 0 ? eco.limited!.trainTime : eco.trainTime) / producers[i].speed;
+    let start = next[i];
+    for (const p of producers[i].paused ?? []) if (start < p.until && start + time > p.from) start = p.until;
+    const done = start + time;
+    next[i] = done;
+    if (done > until) continue;
+    if (limitedLeft > 0) limitedLeft--;
+    for (let k = 0; k < eco.batch; k++) born.push(done);
   }
   born.sort((a, b) => a - b);
-  return { trainTime: eco.trainTime, batch: eco.batch, producers, born };
+  return { start: eco.start, trainTime: eco.limited?.trainTime ?? eco.trainTime, batch: eco.batch, limited: eco.limited, producers, born };
 }
 
 /** How many villagers exist at `t`. */
 export function trainedBy(prod: Production, t: number): number {
   let n = 0;
   while (n < prod.born.length && prod.born[n] <= t) n++;
-  return START_VILLAGERS + n;
+  return prod.start + n;
 }
 
 /** When the villager that is `rank`th by age (0 = oldest) first exists. */
 export function bornAt(prod: Production, rank: number): number {
-  return rank < START_VILLAGERS ? 0 : (prod.born[rank - START_VILLAGERS] ?? Infinity);
+  return rank < prod.start ? 0 : (prod.born[rank - prod.start] ?? Infinity);
 }
 
 export interface PlaybackEvent {
@@ -312,6 +361,12 @@ export interface Playback {
   end: number;
 }
 
+/** Whether a step puts villagers on the age-up landmark. */
+function buildsLandmark(text: string, landmark: string | undefined): boolean {
+  if (/\b(landmark|age up|click up)\b/i.test(text)) return true;
+  return !!landmark && new RegExp(escape(landmark).replace(/^the /i, "(the )?"), "i").test(text);
+}
+
 export function buildPlayback(plan: GamePlan, path: SelectedPath): Playback {
   const feudalAt = clock(path.feudal.ageUp);
   const castleAt = clock(path.castle.ageUp);
@@ -328,12 +383,13 @@ export function buildPlayback(plan: GamePlan, path: SelectedPath): Playback {
     .sort((a, b) => a.seconds - b.seconds)
     .map(({ age, step, seconds }): PlaybackEvent => {
       // A step without a split keeps the last one. Landmark builders stay on
-      // the landmark until the age-up unless a step says otherwise.
+      // the landmark until the age-up unless a step says otherwise; anyone
+      // else building (a mill, a house) is back to work by the next step.
       const hints = stepHints(step.do);
       const before = villagers;
       if (step.v) {
         split = step.v;
-        if (step.b !== undefined) buildersUntil = age === 1 ? feudalAt : castleAt;
+        if (step.b !== undefined) buildersUntil = buildsLandmark(step.do, age === 1 ? path.feudal.landmark : path.castle.landmark) ? (age === 1 ? feudalAt : castleAt) : 0;
         builders = step.b ?? (seconds < buildersUntil ? builders : 0);
         villagers = assignVillagers(villagers, split, builders, nextId, { pulls: hints.pulls, rally: hints.rally ?? rally });
         nextId = Math.max(nextId, nextVillagerId(villagers));
@@ -350,11 +406,15 @@ export function buildPlayback(plan: GamePlan, path: SelectedPath): Playback {
   const end = Math.max(last, castleAt) + 30;
   const prod = production(
     plan.civ,
-    events.map((e) => ({ seconds: e.seconds, text: e.step.do })),
+    events.map((e) => ({ seconds: e.seconds, text: e.step.do, builders: e.step.b })),
     end,
     [
       { name: path.feudal.landmark, at: feudalAt },
       { name: path.castle.landmark, at: castleAt },
+    ],
+    [
+      { age: 2, at: feudalAt },
+      { age: 3, at: castleAt },
     ],
   );
   const pb: Playback = { events, production: prod, feudalAt, castleAt, end };
@@ -363,7 +423,7 @@ export function buildPlayback(plan: GamePlan, path: SelectedPath): Playback {
     const villagers = villagersAt(pb, i, e.seconds);
     const before = i > 0 ? villagersAt(pb, i - 1, e.seconds) : [];
     const next = events[i + 1]?.seconds ?? end;
-    const reached = villagersAt(pb, i, next - 0.001);
+    const reached = villagersAt(pb, i, Math.max(e.seconds, next - 0.001));
     return { villagers, moves: movesBetween(before, villagers), trained: reached.length - villagers.length, reached };
   });
   actual.forEach((a, i) => Object.assign(events[i], a));

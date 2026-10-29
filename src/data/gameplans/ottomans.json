@@ -2,12 +2,12 @@
   "civ": "ottomans",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "2:30",
     "steps": [
       { "t": "0:00", "v": [6, 0, 0, 0], "do": "6 on sheep, rally 2 to gold" },
-      { "t": "0:20", "v": [6, 0, 1, 0], "b": 1, "do": "House and mining camp on gold" },
+      { "t": "0:20", "v": [6, 0, 0, 0], "b": 1, "do": "House and mining camp on gold" },
       { "t": "0:40", "v": [6, 0, 2, 0], "do": "Rally to sheep; Military School by the TC for free spears" },
       { "t": "2:00", "v": [10, 0, 2, 0], "do": "Free spears harass or push deer home" }
     ]
@@ -21,9 +21,9 @@
       "ageUp": "4:30",
       "pick": "Default: free sipahi and mehter from schools",
       "steps": [
-        { "t": "2:50", "v": [7, 0, 2, 0], "b": 4, "do": "4 food villagers build the Medrese" },
+        { "t": "2:50", "v": [8, 0, 2, 0], "b": 4, "do": "4 food villagers build the Medrese" },
         { "t": "3:00", "v": [4, 5, 0, 2], "b": 4, "do": "Gold to stone, 5 to wood" },
-        { "t": "4:00", "v": [4, 6, 0, 3], "do": "Lumber camp, stone camp" },
+        { "t": "4:00", "v": [5, 6, 0, 3], "b": 4, "do": "Lumber camp, stone camp" },
         { "t": "4:30", "v": [8, 8, 0, 3], "do": "Builders to Medrese berries; schools to sipahi" },
         { "t": "4:45", "v": [8, 9, 0, 3], "do": "Stable, sipahi; Field Work vizier" },
         { "t": "5:20", "v": [8, 11, 0, 3], "do": "2nd Military School makes mehter" },
@@ -39,7 +39,7 @@
           "ageUp": "9:30",
           "pick": "Default: free siege and janissaries",
           "steps": [
-            { "t": "8:30", "v": [8, 6, 10, 4], "b": 10, "do": "Build the Armory; 4 wood to stone for schools" },
+            { "t": "8:30", "v": [6, 4, 10, 4], "b": 10, "do": "Build the Armory; 4 wood to stone for schools" },
             { "t": "9:30", "v": [14, 8, 10, 2], "do": "Janissary Company vizier; free rams and mangonels" },
             { "t": "10:30", "v": [16, 10, 12, 0], "do": "Push with janissaries, mehter and siege" }
           ],
@@ -54,7 +54,7 @@
           "ageUp": "10:00",
           "pick": "Long game: more vizier points, 2nd TC",
           "steps": [
-            { "t": "9:00", "v": [14, 8, 8, 0], "b": 8, "do": "Build the Palace; 2nd TC soon after" },
+            { "t": "9:00", "v": [11, 8, 8, 0], "b": 8, "do": "Build the Palace; 2nd TC soon after" },
             { "t": "10:00", "v": [16, 10, 10, 0], "do": "Relics; vizier points into economy" }
           ],
           "army": ["Veteran Sipahi", "Crossbowman", "Imam"],
@@ -76,7 +76,7 @@
         { "t": "4:46", "v": [6, 0, 5, 0], "b": 9, "do": "9 wood villagers build TC 2 on wood" },
         { "t": "6:00", "v": [6, 13, 0, 5], "b": 1, "do": "2 Military Schools, blacksmith; Field Work" },
         { "t": "7:00", "v": [13, 13, 5, 0], "do": "Stone to gold; schools to sipahi" },
-        { "t": "7:33", "v": [27, 0, 5, 0], "do": "Wood villagers to deer with a mill" }
+        { "t": "7:33", "v": [29, 0, 5, 0], "do": "Wood villagers to deer with a mill" }
       ],
       "army": ["Sipahi", "Spearman"],
       "castle": [
@@ -88,7 +88,7 @@
           "ageUp": "10:00",
           "pick": "Default: free siege, Observatory next",
           "steps": [
-            { "t": "9:28", "v": [9, 1, 17, 0], "b": 15, "do": "15 food villagers build the Armory" },
+            { "t": "9:28", "v": [12, 1, 17, 0], "b": 15, "do": "15 food villagers build the Armory" },
             { "t": "10:30", "v": [20, 15, 16, 1], "do": "Builders to food and wood; relics" },
             { "t": "11:00", "v": [20, 19, 16, 1], "do": "Military Campus; mosque, stable, 5th school" }
           ],
@@ -103,7 +103,7 @@
           "ageUp": "10:00",
           "pick": "They turtle: double council experience",
           "steps": [
-            { "t": "9:15", "v": [20, 6, 15, 0], "b": 10, "do": "Build the Palace near your TCs" },
+            { "t": "9:15", "v": [17, 6, 15, 0], "b": 10, "do": "Build the Palace near your TCs" },
             { "t": "10:00", "v": [24, 10, 16, 0], "do": "Vizier points stack up; farms and relics" }
           ],
           "army": ["Veteran Sipahi", "Crossbowman", "Janissary"],

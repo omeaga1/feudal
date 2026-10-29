@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { resourceIcon } from "../lib/assets";
 import { getCiv } from "../lib/gameData";
 import { findUnit, formatClock, landmarkIcon, RESOURCES, type GamePlan, type SelectedPath } from "../lib/gamePlans";
-import { frameAt, planOff, type BuildingKind, type Move, type Playback } from "../lib/playback";
+import { frameAt, planOff, type BuildingKind, type Move, type Playback, type Production } from "../lib/playback";
 import { Tip } from "./ui";
 import type { IconType } from "react-icons";
 
@@ -37,6 +37,13 @@ const SEGMENTS = [...RESOURCES, "build"] as const;
 function producersAt(pb: Playback, t: number) {
   const n = pb.production.producers.filter((p) => p.from <= t).length;
   return n > 1 ? `${n} producers` : "one Town Center";
+}
+
+/** How the Town Centers make villagers, in one line for the tooltip. */
+function productionNote(p: Production): string {
+  const start = `You start with ${p.start}${p.limited ? ` ${p.limited.name}s` : " villagers"}.`;
+  if (p.limited) return `${start} Each Town Center trains a ${p.limited.name} every ${p.limited.trainTime}s up to ${p.limited.limit}, then villagers, nonstop.`;
+  return `${start} Each Town Center trains ${p.batch > 1 ? `${p.batch} villagers` : "a villager"} every ${p.trainTime}s, nonstop.`;
 }
 const BAR_H = 176;
 
@@ -118,7 +125,7 @@ export function PlanTimeline({
             </span>
           )}
         </div>
-        <Tip label={`Each Town Center trains ${pb.production.batch > 1 ? `${pb.production.batch} villagers` : "a villager"} every ${pb.production.trainTime}s, nonstop.${pb.production.producers.length > 1 ? " " + pb.production.producers.map((p) => `${p.label} from ${formatClock(p.from)}`).join(", ") + "." : ""}`}>
+        <Tip label={`${productionNote(pb.production)}${pb.production.producers.length > 1 ? " " + pb.production.producers.map((p) => `${p.label} from ${formatClock(p.from)}`).join(", ") + "." : ""}`}>
           <span className="tl-prod">
             <img src={resourceIcon("villager")} alt="" />
             <b>

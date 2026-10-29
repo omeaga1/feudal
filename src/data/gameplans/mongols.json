@@ -2,13 +2,13 @@
   "civ": "mongols",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "3:00",
     "steps": [
       { "t": "0:00", "v": [0, 5, 0, 0], "b": 1, "do": "TC on the woodline; 5 chop a straggler, 1 builds the Ovoo on stone" },
-      { "t": "1:00", "v": [3, 5, 0, 0], "do": "Rally to sheep; Whistling Arrows on the Khan" },
-      { "t": "2:00", "v": [8, 3, 2, 0], "do": "At 150 wood: 3 to sheep, Ger on gold" }
+      { "t": "1:00", "v": [4, 5, 0, 0], "do": "Rally to sheep; Whistling Arrows on the Khan" },
+      { "t": "2:00", "v": [7, 3, 2, 0], "do": "At 150 wood: 3 to sheep, Ger on gold" }
     ]
   },
   "feudal": [
@@ -21,11 +21,11 @@
       "pick": "Default: deny their resources with mobile units",
       "steps": [
         { "t": "3:08", "v": [8, 2, 2, 0], "b": 4, "do": "4 sheep villagers build Deer Stones; stable at the Ovoo" },
-        { "t": "3:30", "v": [8, 6, 2, 0], "do": "Rally wood to 10" },
-        { "t": "4:40", "v": [8, 7, 2, 0], "do": "Superior Mobility; 2 keshik per 200 stone" },
-        { "t": "4:55", "v": [12, 4, 2, 0], "do": "Pasture, then add up to 5; Double Broadaxe" },
-        { "t": "5:30", "v": [10, 6, 3, 0], "do": "Archery range at the Ovoo: double mangudai, Khan's Hunter" },
-        { "t": "7:10", "v": [12, 8, 5, 0], "do": "Blacksmith; Iron Undermesh or Fitted Leatherwork" }
+        { "t": "3:30", "v": [7, 6, 2, 0], "do": "Rally wood to 10" },
+        { "t": "4:40", "v": [11, 7, 2, 0], "do": "Superior Mobility; 2 keshik per 200 stone" },
+        { "t": "4:55", "v": [14, 4, 2, 0], "do": "Pasture, then add up to 5; Double Broadaxe" },
+        { "t": "5:30", "v": [12, 7, 3, 0], "do": "Archery range at the Ovoo: double mangudai, Khan's Hunter" },
+        { "t": "7:10", "v": [13, 9, 5, 0], "do": "Blacksmith; Iron Undermesh or Fitted Leatherwork" }
       ],
       "army": ["Keshik", "Mangudai", "Khan's Hunter"],
       "castle": [
@@ -37,9 +37,9 @@
           "ageUp": "10:30",
           "pick": "Default: more gold for keshik and mangudai",
           "steps": [
-            { "t": "9:30", "v": [12, 8, 10, 0], "b": 10, "do": "10 gold villagers build it by your 2nd gold" },
-            { "t": "10:30", "v": [12, 10, 12, 0], "do": "2 outposts and Lookout Towers; rest to wood" },
-            { "t": "11:30", "v": [14, 12, 12, 0], "do": "Veteran keshik, mangonels vs their archers" }
+            { "t": "9:30", "v": [12, 9, 6, 0], "b": 10, "do": "10 gold villagers build it by your 2nd gold" },
+            { "t": "10:30", "v": [14, 11, 12, 0], "do": "2 outposts and Lookout Towers; rest to wood" },
+            { "t": "11:30", "v": [15, 13, 12, 0], "do": "Veteran keshik, mangonels vs their archers" }
           ],
           "army": ["Veteran Keshik", "Veteran Mangudai", "Mangonel"],
           "goal": "Gold-fueled mounted army keeps raiding"
@@ -52,8 +52,8 @@
           "ageUp": "10:30",
           "pick": "Big map or team game: cheap traders",
           "steps": [
-            { "t": "9:30", "v": [12, 10, 8, 0], "b": 8, "do": "8 food villagers build it toward the trade post" },
-            { "t": "10:30", "v": [14, 10, 8, 0], "do": "Traders 40% faster and cheaper; pack the TC" }
+            { "t": "9:30", "v": [11, 10, 8, 0], "b": 8, "do": "8 food villagers build it toward the trade post" },
+            { "t": "10:30", "v": [19, 10, 8, 0], "do": "Traders 40% faster and cheaper; pack the TC" }
           ],
           "army": ["Veteran Mangudai", "Veteran Horseman"],
           "goal": "Trade income while mangudai guard the route"
@@ -68,11 +68,11 @@
       "ageUp": "4:30",
       "pick": "They went gold heavy or 2 TC",
       "steps": [
-        { "t": "2:10", "v": [6, 3, 0, 0], "b": 1, "do": "Instead of the Ger: barracks at the Ovoo, 2 spearmen" },
-        { "t": "2:40", "v": [8, 3, 0, 0], "b": 1, "do": "Spears and a villager build a tower at their gold" },
-        { "t": "3:00", "v": [6, 0, 3, 0], "b": 4, "do": "Wood to gold; 4 sheep villagers build the Kurultai" },
-        { "t": "4:30", "v": [8, 3, 3, 0], "do": "Textiles; keep shooting buildings with the Khan" },
-        { "t": "5:30", "v": [6, 2, 6, 0], "do": "5 on deer with a tower; horse, spear and archer" },
+        { "t": "2:10", "v": [8, 3, 0, 0], "b": 1, "do": "Instead of the Ger: barracks at the Ovoo, 2 spearmen" },
+        { "t": "2:40", "v": [10, 3, 0, 0], "b": 1, "do": "Spears and a villager build a tower at their gold" },
+        { "t": "3:00", "v": [8, 0, 3, 0], "b": 4, "do": "Wood to gold; 4 sheep villagers build the Kurultai" },
+        { "t": "4:30", "v": [12, 4, 3, 0], "do": "Textiles; keep shooting buildings with the Khan" },
+        { "t": "5:30", "v": [12, 4, 6, 0], "do": "5 on deer with a tower; horse, spear and archer" },
         { "t": "7:30", "v": [9, 15, 8, 0], "do": "Blacksmith after 3 military; save stone for archers" }
       ],
       "army": ["Spearman", "Horseman", "Archer"],
@@ -85,8 +85,8 @@
           "ageUp": "11:00",
           "pick": "Default: the rush crippled them",
           "steps": [
-            { "t": "10:00", "v": [10, 12, 10, 0], "b": 8, "do": "Build it by their side of the map" },
-            { "t": "11:00", "v": [12, 12, 14, 0], "do": "Men-at-arms and mangonels to finish" }
+            { "t": "10:00", "v": [8, 12, 10, 0], "b": 8, "do": "Build it by their side of the map" },
+            { "t": "11:00", "v": [13, 12, 14, 0], "do": "Men-at-arms and mangonels to finish" }
           ],
           "army": ["Man-at-Arms", "Mangonel", "Veteran Horseman"],
           "goal": "Close it out before they recover"
@@ -99,8 +99,8 @@
           "ageUp": "11:30",
           "pick": "The rush failed; pack up and trade",
           "steps": [
-            { "t": "10:30", "v": [14, 12, 8, 0], "b": 8, "do": "Pack the TC toward safety" },
-            { "t": "11:30", "v": [16, 12, 8, 0], "do": "Traders and pastures; mangudai defend" }
+            { "t": "10:30", "v": [12, 12, 8, 0], "b": 8, "do": "Pack the TC toward safety" },
+            { "t": "11:30", "v": [20, 12, 8, 0], "do": "Traders and pastures; mangudai defend" }
           ],
           "army": ["Veteran Mangudai", "Veteran Spearman"],
           "goal": "Even the game out with trade"

@@ -2,7 +2,7 @@
   "civ": "sengoku_daimyo",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "3:00",
     "steps": [
@@ -25,8 +25,8 @@
         { "t": "3:18", "v": [9, 0, 3, 0], "b": 4, "do": "3 gold villagers and 1 new build Koka Township" },
         { "t": "3:25", "v": [1, 8, 3, 0], "b": 4, "do": "8 food to wood with a camp; Yatai feed you" },
         { "t": "4:00", "v": [0, 10, 3, 0], "b": 5, "do": "2nd Farmhouse; Towara" },
-        { "t": "5:00", "v": [6, 10, 3, 0], "do": "Stable and range; Double Broadaxe, Takezaiku, 4th Yatai" },
-        { "t": "6:25", "v": [9, 12, 3, 0], "do": "Takeda Daimyo estate, queue a Daimyo" },
+        { "t": "5:00", "v": [8, 10, 3, 0], "do": "Stable and range; Double Broadaxe, Takezaiku, 4th Yatai" },
+        { "t": "6:25", "v": [10, 12, 3, 0], "do": "Takeda Daimyo estate, queue a Daimyo" },
         { "t": "7:15", "v": [11, 12, 3, 0], "b": 1, "do": "Forge on stone; Steeled Arrow, Iron Undermesh" }
       ],
       "army": ["Yari Cavalry", "Yumi Ashigaru", "Daimyo"],
@@ -39,9 +39,9 @@
           "ageUp": "14:10",
           "pick": "Default: long Feudal, then upgrades",
           "steps": [
-            { "t": "12:30", "v": [22, 6, 14, 0], "do": "More Takeda estates; wood to gold" },
-            { "t": "13:30", "v": [8, 6, 15, 0], "b": 14, "do": "14 food villagers build the Brewery" },
-            { "t": "14:10", "v": [16, 8, 22, 0], "do": "Every unit upgrade; brewery mats for gold" }
+            { "t": "12:30", "v": [23, 6, 14, 0], "do": "More Takeda estates; wood to gold" },
+            { "t": "13:30", "v": [11, 6, 15, 0], "b": 14, "do": "14 food villagers build the Brewery" },
+            { "t": "14:10", "v": [17, 9, 22, 0], "do": "Every unit upgrade; brewery mats for gold" }
           ],
           "army": ["Veteran Yari Cavalry", "Veteran Yumi Ashigaru", "Mounted Samurai"],
           "goal": "Upgraded mass beats their Castle army"
@@ -54,8 +54,8 @@
           "ageUp": "12:00",
           "pick": "They hold with heavy units; add monks",
           "steps": [
-            { "t": "11:00", "v": [16, 10, 10, 0], "b": 10, "do": "10 food villagers build the Temple" },
-            { "t": "12:00", "v": [18, 10, 12, 0], "do": "Cheap Ikko-ikki monks and their upgrades" }
+            { "t": "11:00", "v": [11, 10, 10, 0], "b": 10, "do": "10 food villagers build the Temple" },
+            { "t": "12:00", "v": [20, 10, 12, 0], "do": "Cheap Ikko-ikki monks and their upgrades" }
           ],
           "army": ["Ikko-ikki Monk", "Veteran Yumi Ashigaru", "Veteran Spearman"],
           "goal": "Monks swing the big fights"
@@ -70,7 +70,7 @@
       "ageUp": "5:55",
       "pick": "Safe gold: Castle at 7:20 on Yatai food",
       "steps": [
-        { "t": "3:30", "v": [6, 2, 4, 0], "b": 2, "do": "2 food villagers build the Ryokan; outpost on gold" },
+        { "t": "3:30", "v": [8, 2, 4, 0], "b": 2, "do": "2 food villagers build the Ryokan; outpost on gold" },
         { "t": "4:30", "v": [10, 2, 5, 0], "b": 2, "do": "Towara; sheep villagers to berries" },
         { "t": "5:40", "v": [14, 2, 5, 0], "b": 2, "do": "Rally wood" },
         { "t": "5:55", "v": [14, 4, 5, 0], "do": "Sell 100 stone at the Matsuri" }
@@ -88,7 +88,7 @@
             { "t": "6:15", "v": [4, 5, 5, 0], "b": 10, "do": "10 food villagers build the Brewery" },
             { "t": "6:45", "v": [8, 3, 5, 0], "b": 10, "do": "Stable; buy wood for a 2nd" },
             { "t": "7:20", "v": [13, 5, 10, 0], "do": "Takeda estate; mounted samurai and Daimyo" },
-            { "t": "8:30", "v": [15, 8, 10, 0], "do": "Broadaxe, Takezaiku, Pick; Buddhist temple" }
+            { "t": "8:30", "v": [14, 8, 10, 0], "do": "Broadaxe, Takezaiku, Pick; Buddhist temple" }
           ],
           "army": ["Mounted Samurai", "Daimyo", "Veteran Yumi Ashigaru"],
           "goal": "Samurai out before they have answers"
@@ -102,7 +102,7 @@
           "pick": "They mass archers or ranged units",
           "steps": [
             { "t": "6:30", "v": [6, 5, 5, 0], "b": 10, "do": "10 food villagers build the Temple" },
-            { "t": "7:30", "v": [12, 6, 8, 0], "do": "Ikko-ikki monks; Kanabo samurai" }
+            { "t": "7:30", "v": [14, 6, 8, 0], "do": "Ikko-ikki monks; Kanabo samurai" }
           ],
           "army": ["Ikko-ikki Monk", "Veteran Kanabo Samurai"],
           "goal": "Fast Castle armies with monk support"

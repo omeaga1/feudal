@@ -2,7 +2,7 @@
   "civ": "abbasid_dynasty",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "2:10",
     "steps": [
@@ -23,7 +23,7 @@
         { "t": "2:12", "v": [5, 5, 2, 0], "do": "Economic Wing; sheep villagers to straggler trees" },
         { "t": "2:20", "v": [5, 5, 2, 1], "do": "Rally stone until 4" },
         { "t": "4:00", "v": [5, 7, 2, 4], "do": "Fertile Crescent and Fresh Foodstuffs" },
-        { "t": "4:50", "v": [5, 8, 0, 0], "b": 6, "do": "Second TC on the wood" },
+        { "t": "4:50", "v": [5, 9, 0, 0], "b": 6, "do": "Second TC on the wood" },
         { "t": "6:00", "v": [12, 8, 5, 0], "do": "Both TCs nonstop; spears and archers on call" }
       ],
       "army": ["Spearman", "Archer"],
@@ -36,7 +36,7 @@
           "ageUp": "9:30",
           "pick": "Against cavalry civs, or to take the map",
           "steps": [
-            { "t": "8:30", "v": [14, 8, 10, 0], "do": "Gold up for Castle" },
+            { "t": "8:30", "v": [16, 8, 14, 0], "do": "Gold up for Castle" },
             { "t": "9:30", "do": "Camel Riders and Crossbows, Golden Age tiers" }
           ],
           "army": ["Camel Rider", "Crossbowman", "Ghulam"],
@@ -68,7 +68,7 @@
       "steps": [
         { "t": "2:15", "v": [6, 4, 3, 0], "do": "Military Wing; berries stay, sheep to trees" },
         { "t": "2:50", "v": [6, 5, 0, 3], "do": "Gold villagers to stone" },
-        { "t": "4:00", "v": [6, 7, 0, 3], "do": "Stable, 2 houses, Fresh Foodstuffs" },
+        { "t": "4:00", "v": [6, 9, 0, 3], "do": "Stable, 2 houses, Fresh Foodstuffs" },
         { "t": "4:30", "v": [6, 11, 0, 3], "do": "Horsemen nonstop" },
         { "t": "6:05", "v": [6, 15, 0, 3], "do": "Drop stone at 850: second TC" }
       ],

@@ -53,6 +53,7 @@ function trimUnit(u) {
 
 const units = await getJson("units/all.json");
 const buildings = await getJson("buildings/all.json");
+const technologies = await getJson("technologies/all.json");
 const index = await getJson("civilizations/civs-index.json");
 
 const civs = [];
@@ -93,25 +94,46 @@ for (const b of buildings.data) {
 // What the build playback needs to follow the game's production rules: how
 // long each civ's Town Center takes per villager, and how long a new Town
 // Center takes to build. Golden Horde recruits in batches, which the data
-// doesn't carry, so its batch size of two is set here.
+// doesn't carry, so its batch size of two is set here. Nor does it carry the
+// starting villagers: six for most civs, five for the civs below, as every
+// pro build order for them opens (Jin's three are Mounted Villagers).
 const BATCH = { gol: 2 };
+const START = { gol: 5, od: 5, zx: 5, jin: 3 };
 const economy = {};
+function townCenterAgeUps(abbr) {
+  const ups = {};
+  for (const t of technologies.data) {
+    if (!t.civs.includes(abbr) || !t.classes?.includes("age_up_upgrade") || !t.producedBy?.includes("town-center")) continue;
+    ups[t.age + 1] = Math.max(ups[t.age + 1] ?? 0, t.costs.time);
+  }
+  return Object.keys(ups).length ? { townCenterAgeUp: ups } : {};
+}
 for (const civ of civs) {
   const villager = units.data.find((u) => u.id === "villager-1" && u.civs.includes(civ.abbr)) ?? units.data.find((u) => u.baseId === "gilded-villager" && u.civs.includes(civ.abbr));
   const tc = buildings.data.find((b) => b.baseId === "town-center" && b.civs.includes(civ.abbr));
   if (!villager || !tc) throw new Error(`No villager or Town Center for ${civ.abbr}`);
+  // Jin train Mounted Villagers up to a build limit, then regular ones.
+  const mounted = units.data.find((u) => u.id === "mounted-villager-1" && u.civs.includes(civ.abbr));
+  const limit = Number(mounted?.description.match(/build limit of (\d+)/i)?.[1]);
   economy[civ.abbr] = {
     villager: villager.baseId,
     trainTime: villager.costs.time,
     batch: BATCH[civ.abbr] ?? 1,
     food: villager.costs.food,
     speed: villager.movement?.speed ?? 1.125,
+    start: START[civ.abbr] ?? 6,
+    ...(mounted && limit ? { limited: { name: mounted.name, trainTime: mounted.costs.time, limit } } : {}),
     townCenterBuildTime: tc.costs.time,
-    // Landmarks that train villagers too, like the English King's Palace.
+    // Knights Templar research their age-ups at the Town Center, which
+    // stops villagers for that long. Seconds, by the age reached.
+    ...townCenterAgeUps(civ.abbr),
+    // Landmarks that train villagers too, like the English King's Palace,
+    // and how much faster they train them ("+200% faster" is 3x).
     villagerLandmarks: (villager.producedBy ?? [])
       .filter((id) => id !== "capital-town-center")
-      .map((id) => buildings.data.find((b) => b.baseId === id && b.civs.includes(civ.abbr) && b.classes?.includes("landmark"))?.name)
-      .filter(Boolean),
+      .map((id) => buildings.data.find((b) => b.baseId === id && b.civs.includes(civ.abbr) && b.classes?.includes("landmark")))
+      .filter(Boolean)
+      .map((b) => ({ name: b.name, speed: 1 + Number(b.description.match(/villagers \+(\d+)% faster/i)?.[1] ?? 0) / 100 })),
   };
 }
 

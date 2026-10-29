@@ -2,7 +2,7 @@
   "civ": "french",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "2:15",
     "steps": [
@@ -35,7 +35,7 @@
           "ageUp": "12:00",
           "pick": "You have ~15 knights and 10 archers; press the advantage",
           "steps": [
-            { "t": "11:00", "v": [18, 4, 20, 0], "b": 12, "do": "12 gold villagers build the Guild Hall" },
+            { "t": "11:00", "v": [16, 6, 10, 0], "b": 12, "do": "12 gold villagers build the Guild Hall" },
             { "t": "12:30", "v": [26, 6, 13, 0], "do": "Upgrade knights and archers, 10 to stone" },
             { "t": "13:30", "do": "Keep next to your production, then push" }
           ],
@@ -70,7 +70,7 @@
         { "t": "2:30", "v": [4, 4, 0, 0], "b": 6, "do": "2 build School of Cavalry, 4 go to stone" },
         { "t": "3:15", "v": [4, 7, 0, 5], "b": 2, "do": "Rally stone up to 7, scout their plan" },
         { "t": "4:30", "v": [6, 6, 0, 0], "b": 10, "do": "400 wood + 300 stone: 8 build TC 2 on a gold" },
-        { "t": "5:45", "v": [11, 5, 8, 0], "do": "TC 2 done: its builders mine gold" },
+        { "t": "5:45", "v": [12, 5, 8, 0], "do": "TC 2 done: its builders mine gold" },
         { "t": "6:20", "v": [16, 5, 8, 0], "do": "Royal Knights; deer with a mill when sheep run out" }
       ],
       "army": ["Royal Knight", "Archer", "Spearman"],
