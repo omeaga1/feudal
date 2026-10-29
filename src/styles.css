@@ -3647,6 +3647,143 @@ input.with-icon {
   stroke-width: 3px;
 }
 
+.sb-badges {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sb-badge {
+  --rc: var(--builders);
+  position: absolute;
+  translate: -50% -50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px 2px 4px;
+  border-radius: 999px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border: 1.5px solid var(--rc);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
+}
+
+.sb-badge img {
+  width: 24px;
+  height: 24px;
+}
+
+.sb-badge.food {
+  --rc: var(--food);
+}
+.sb-badge.wood {
+  --rc: var(--wood);
+}
+.sb-badge.gold {
+  --rc: var(--gold);
+}
+.sb-badge.stone {
+  --rc: var(--stone);
+}
+
+.sb-badge-hammer {
+  padding-left: 4px;
+}
+
+.sb-badge-delta {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  margin-left: 6px;
+  padding: 0 7px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--bg);
+  background: var(--rc);
+  white-space: nowrap;
+  animation: sb-delta 2.4s ease-out both;
+}
+
+.sb-badge-delta.out {
+  background: var(--line-2);
+  color: var(--ink);
+}
+
+@keyframes sb-delta {
+  0% {
+    opacity: 0;
+    transform: translate(-6px, -50%) scale(0.6);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(0, -50%) scale(1.1);
+  }
+  25% {
+    transform: translate(0, -50%) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(0, -80%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, -130%);
+  }
+}
+
+.sb-tool line {
+  stroke: #6b4a2a;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+.sb-tool rect {
+  fill: #b9bfc6;
+}
+
+.sb-dust {
+  fill: #cdb98f;
+}
+
+.sb-flash {
+  fill: var(--accent-2);
+}
+
+.sb-burst {
+  fill: none;
+  stroke: var(--accent-2);
+  stroke-width: 3;
+}
+
+.sb-tree {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: sb-sway 5s ease-in-out infinite alternate;
+}
+
+.sb-tree:nth-child(3n) {
+  animation-duration: 6.5s;
+  animation-delay: -2s;
+}
+
+@keyframes sb-sway {
+  from {
+    rotate: -1.5deg;
+  }
+  to {
+    rotate: 1.5deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb-tree,
+  .sb-badge-delta {
+    animation: none;
+  }
+}
+
 .sb-tc-base {
   fill: #5b4632;
   stroke: var(--accent);

@@ -45,7 +45,7 @@ const BUILDING_WORDS: [BuildingKind, RegExp][] = [
   ["blacksmith", /\bblacksmiths?\b|\bforge\b/i],
   ["market", /\bmarkets?\b/i],
   ["tower", /\b(outposts?|towers?)\b/i],
-  ["townCenter", /\b(town ?centers?|(2nd|second|third|3rd) tc|tcs?)\b/i],
+  ["townCenter", /\b(2nd|second|third|3rd|another|extra|new) (tc|town ?center)s?\b/i],
   ["religious", /\b(monaster(y|ies)|mosques?|prayer tents?|shrines?)\b/i],
   ["dock", /\bdocks?\b/i],
   ["siege", /\bsiege workshops?\b/i],

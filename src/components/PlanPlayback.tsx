@@ -1,3 +1,4 @@
+import NumberFlow from "@number-flow/react";
 import { Pause, Play, RotateCcw, SkipBack, SkipForward, X } from "lucide-react";
 import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import { Dialog, Slider, ToggleGroup } from "radix-ui";
@@ -24,7 +25,7 @@ import { resourceIcon } from "../lib/assets";
 import { getCiv } from "../lib/gameData";
 import { findUnit, formatClock, landmarkIcon, RESOURCES, type GamePlan, type PlanNode, type SelectedPath, type Split } from "../lib/gamePlans";
 import { usePersisted } from "../lib/persisted";
-import { buildPlayback, frameAt, landmarkStart, villagerAt, villagerMoves, type BuildingKind, type Playback, type Slot, type VillagerMove } from "../lib/playback";
+import { buildPlayback, frameAt, landmarkStart, SLOTS, villagerAt, villagerMoves, type BuildingKind, type Playback, type Slot, type VillagerMove } from "../lib/playback";
 import { Tip } from "./ui";
 
 // A top-down mini base in a 960x500 scene: the Town Center in the middle,
@@ -41,6 +42,14 @@ const SITES: Record<Slot, P> = {
   gold: { x: 790, y: 140 },
   stone: { x: 820, y: 335 },
   build: { x: 400, y: 410 },
+};
+/** Where each site's villager count sits, just clear of the site itself. */
+const BADGES: Record<Slot, P> = {
+  food: { x: 285, y: 255 },
+  wood: { x: 215, y: 138 },
+  gold: { x: 800, y: 92 },
+  stone: { x: 878, y: 290 },
+  build: { x: 400, y: 358 },
 };
 const CASTLE_LANDMARK: P = { x: 570, y: 415 };
 const RALLY: P = { x: 845, y: 452 };
@@ -116,7 +125,10 @@ function dropoff(slot: Slot, built: Map<BuildingKind, number>, t: number): P {
   if (slot === "food" && has("mill")) return PLOTS.mill;
   if (slot === "wood" && has("lumber")) return PLOTS.lumber;
   if ((slot === "gold" || slot === "stone") && has("mining")) return PLOTS.mining;
-  return TC;
+  // Drop at the Town Center's edge facing the site, not in its middle.
+  const site = SITES[slot];
+  const d = dist(site, TC) || 1;
+  return { x: TC.x + ((site.x - TC.x) / d) * 42, y: TC.y + ((site.y - TC.y) / d) * 42 };
 }
 
 interface VilState {
@@ -124,6 +136,17 @@ interface VilState {
   job: Slot;
   carrying: boolean;
   working: boolean;
+  /** Distance walked on this leg, for the stepping bounce. */
+  stride: number;
+  /** -1 when walking left. */
+  facing: 1 | -1;
+}
+
+const ease = (k: number) => k * k * (3 - 2 * k);
+
+function leg(a: P, b: P, k: number, job: Slot, carrying: boolean): VilState {
+  const e = ease(Math.min(1, Math.max(0, k)));
+  return { p: lerp(a, b, e), job, carrying, working: false, stride: dist(a, b) * e, facing: b.x < a.x ? -1 : 1 };
 }
 
 function villagerState(moves: VillagerMove[] | undefined, id: number, t: number, built: Map<BuildingKind, number>): VilState | undefined {
@@ -133,15 +156,16 @@ function villagerState(moves: VillagerMove[] | undefined, id: number, t: number,
   const to = spot(st.to, id);
   const walk = dist(from, to) / WALK;
   const e = t - st.since;
-  if (e < walk) return { p: lerp(from, to, e / walk), job: st.to, carrying: false, working: false };
-  if (st.to === "build") return { p: to, job: "build", carrying: false, working: true };
+  if (e < walk) return leg(from, to, e / walk, st.to, false);
+  const idle = (job: Slot): VilState => ({ p: to, job, carrying: false, working: true, stride: 0, facing: to.x > SITES[job].x ? -1 : 1 });
+  if (st.to === "build") return idle("build");
   const drop = dropoff(st.to, built, t);
   const trip = dist(to, drop) / WALK;
   const cycle = GATHER + 2 * trip;
   const phase = (e - walk + ((id * 7.3) % cycle)) % cycle;
-  if (phase < GATHER) return { p: to, job: st.to, carrying: false, working: true };
-  if (phase < GATHER + trip) return { p: lerp(to, drop, (phase - GATHER) / trip), job: st.to, carrying: true, working: false };
-  return { p: lerp(drop, to, (phase - GATHER - trip) / trip), job: st.to, carrying: false, working: false };
+  if (phase < GATHER) return idle(st.to);
+  if (phase < GATHER + trip) return leg(to, drop, (phase - GATHER) / trip, st.to, true);
+  return leg(drop, to, (phase - GATHER - trip) / trip, st.to, false);
 }
 
 /** Deterministic scatter for trees and rocks. */
@@ -186,17 +210,34 @@ function useGameClock(end: number) {
   return { t, setT, playing, setPlaying, toggle, speed, setSpeed };
 }
 
+/** A bump that settles: 1 at rest, overshooting just after `since`. */
+function pop(since: number) {
+  if (since < 0 || since > 4) return 1;
+  return 1 + Math.sin(since * 4) * 0.18 * Math.exp(-since * 1.4);
+}
+
 function Building({ kind, at, t, p, scale = 1 }: { kind: BuildingKind; at: number; t: number; p: P; scale?: number }) {
   if (t < at) return null;
   const { icon: Icon, label } = BUILDINGS[kind];
   const k = Math.min(1, (t - at) / BUILD_TIME);
   const s = 30 * scale;
+  const z = k < 1 ? 0.85 + 0.15 * ease(k) : pop(t - at - BUILD_TIME);
+  const now = performance.now() / 1000;
   return (
-    <g className={`sb-building${k < 1 ? " rising" : ""}`} transform={`translate(${p.x - s / 2} ${p.y - s / 2})`}>
+    <g className={`sb-building${k < 1 ? " rising" : ""}`} transform={`translate(${p.x} ${p.y}) scale(${z.toFixed(3)}) translate(${-s / 2} ${-s / 2})`}>
       <title>{label}</title>
+      <ellipse cx={s / 2} cy={s + 4} rx={s / 2 + 4} ry={4} className="sb-shadow" />
       <rect className="sb-plot" x={-3} y={-3} width={s + 6} height={s + 6} rx={6} />
       <rect className="sb-plot-fill" x={-3} y={s + 3 - (s + 6) * k} width={s + 6} height={(s + 6) * k} rx={6} />
       <Icon x={4 * scale} y={4 * scale} size={s - 8 * scale} className="sb-building-icon" style={{ opacity: 0.35 + 0.65 * k }} />
+      {k < 1 &&
+        [0, 1, 2].map((d) => {
+          const ph = (now * 0.9 + d / 3) % 1;
+          return <circle key={d} className="sb-dust" cx={s / 2 + (d - 1) * s * 0.35} cy={s + 2 - ph * 14} r={2 + ph * 5} style={{ opacity: 0.5 * (1 - ph) }} />;
+        })}
+      {k >= 1 && t - at - BUILD_TIME < 1.5 && (
+        <rect className="sb-flash" x={-3} y={-3} width={s + 6} height={s + 6} rx={6} style={{ opacity: 1 - (t - at - BUILD_TIME) / 1.5 }} />
+      )}
     </g>
   );
 }
@@ -206,8 +247,10 @@ function Landmark({ node, p, start, done, t }: { node: PlanNode; p: P; start?: n
   const from = start ?? done - 60;
   if (t < from) return null;
   const k = Math.min(1, (t - from) / Math.max(1, done - from));
+  const after = t - done;
   return (
-    <g className={`sb-landmark${k < 1 ? " rising" : " done"}`} transform={`translate(${p.x - 30} ${p.y - 30})`}>
+    <g className={`sb-landmark${k < 1 ? " rising" : " done"}`} transform={`translate(${p.x} ${p.y}) scale(${pop(after).toFixed(3)}) translate(-30 -30)`}>
+      {after >= 0 && after < 6 && <circle cx={30} cy={30} r={36 + after * 22} className="sb-burst" style={{ opacity: 1 - after / 6 }} />}
       <title>{node.landmark ?? node.name}</title>
       <rect className="sb-landmark-base" x={-4} y={-4} width={68} height={68} rx={10} />
       {icon ? (
@@ -225,14 +268,23 @@ function Landmark({ node, p, start, done, t }: { node: PlanNode; p: P; start?: n
   );
 }
 
-function Villager({ s }: { s: VilState }) {
-  const bob = s.working ? Math.sin(performance.now() / 120 + s.p.x) * 1.2 : 0;
+function Villager({ s, id }: { s: VilState; id: number }) {
+  const now = performance.now() / 1000;
+  // Walking: a little hop each stride. Working: the tool swings.
+  const hop = s.working ? 0 : -Math.abs(Math.sin(s.stride / 5)) * 2.2;
+  const swing = s.working ? Math.sin(now * (s.job === "build" ? 11 : 7) + id) * 38 : 10;
   return (
-    <g className={`sb-vil ${s.job}`} transform={`translate(${s.p.x} ${s.p.y + bob}) scale(1.35)`}>
+    <g className={`sb-vil ${s.job}${s.working ? " working" : ""}`} transform={`translate(${s.p.x.toFixed(1)} ${s.p.y.toFixed(1)}) scale(${1.35 * s.facing} 1.35)`}>
       <ellipse className="sb-shadow" cx={0} cy={6} rx={5} ry={2} />
-      <circle className="sb-vil-body" r={4.6} />
-      <circle className="sb-vil-head" cy={-5} r={2.4} />
-      {s.carrying && <circle className="sb-load" cx={4.5} cy={-1} r={2.6} />}
+      <g transform={`translate(0 ${hop.toFixed(2)})`}>
+        <g className="sb-tool" transform={`translate(3 -1) rotate(${swing.toFixed(1)})`}>
+          <line x1={0} y1={0} x2={0} y2={-8} />
+          <rect x={-2.4} y={-10} width={4.8} height={2.6} rx={0.8} />
+        </g>
+        <path className="sb-vil-body" d="M-4.5 5 Q-5 -1 0 -2 Q5 -1 4.5 5 Z" />
+        <circle className="sb-vil-head" cy={-4.8} r={2.6} />
+        {s.carrying && <circle className="sb-load" cx={-4} cy={-1.5} r={2.8} />}
+      </g>
     </g>
   );
 }
@@ -303,8 +355,8 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
               <rect key={`${r},${c}`} x={SITES.food.x + c * 34 - 15} y={SITES.food.y + r * 26 - 11} width={30} height={22} rx={3} className="sb-farm" />
             )),
           )
-        : SHEEP.map((p, i) => (
-            <g key={i} transform={`translate(${p.x} ${p.y})`} className="sb-sheep">
+        : SHEEP.slice(0, Math.max(2, SHEEP.length - Math.floor(t / 45))).map((p, i) => (
+            <g key={i} transform={`translate(${(p.x + Math.sin(t / 9 + i) * 3).toFixed(1)} ${(p.y + Math.cos(t / 11 + i * 2) * 2).toFixed(1)})`} className="sb-sheep">
               <ellipse rx={7} ry={5} />
               <circle cx={6} cy={-2} r={2.6} className="sb-sheep-head" />
             </g>
@@ -352,11 +404,12 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
         <g className="sb-army" transform={`translate(${RALLY.x} ${RALLY.y})`}>
           <path d="M44 -34 L44 22 M44 -34 L64 -27 L44 -20" className="sb-flag" />
           {uniqueUnits.map(({ n, unit, at }, i) => {
-            const k = Math.min(1, (t - at) / 6);
-            const x = -((uniqueUnits.length - 1 - i) % 4) * 32 + 4;
-            const y = -Math.floor((uniqueUnits.length - 1 - i) / 4) * 32 - 14;
+            const k = ease(Math.min(1, Math.max(0, (t - at - i * 1.5) / 10)));
+            const home = { x: -((uniqueUnits.length - 1 - i) % 4) * 32 + 4, y: -Math.floor((uniqueUnits.length - 1 - i) / 4) * 32 - 14 };
+            const start = { x: PLOTS.barracks.x - RALLY.x, y: PLOTS.barracks.y - RALLY.y };
+            const { x, y } = lerp(start, home, k);
             return (
-              <g key={n} transform={`translate(${x} ${y}) scale(${0.6 + 0.4 * k})`} style={{ opacity: k }}>
+              <g key={n} transform={`translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${(0.7 + 0.3 * k).toFixed(3)})`} style={{ opacity: Math.min(1, k * 4) }}>
                 <title>{n}</title>
                 <rect x={-15} y={-15} width={30} height={30} rx={6} className="sb-unit-frame" />
                 {unit ? <image href={unit.icon} x={-13} y={-13} width={26} height={26} /> : <GiCrossedSwords x={-11} y={-11} size={22} className="sb-building-icon" />}
@@ -368,7 +421,7 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
 
       {/* Villagers, drawn last so they walk over everything */}
       {vils.map(({ id, s }) => (
-        <Villager key={id} s={s!} />
+        <Villager key={id} id={id} s={s!} />
       ))}
     </svg>
   );
@@ -442,6 +495,26 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
       <div className="pb">
         <div className="pb-stage">
           <Scene pb={pb} path={path} plan={plan} t={t} />
+          <div className="sb-badges" aria-hidden="true">
+            {SLOTS.map((slot) => {
+              const n = count(slot);
+              const before = prev?.villagers.filter((v) => v.at === slot).length ?? 0;
+              const fresh = frame.current && t - frame.current.seconds < 8 ? n - before : 0;
+              if (!n && !fresh) return null;
+              const at = BADGES[slot];
+              return (
+                <span key={slot} className={`sb-badge ${slot}`} style={{ left: `${(at.x / 960) * 100}%`, top: `${(at.y / 500) * 100}%` }}>
+                  {slot === "build" ? <span className="sb-badge-hammer">⚒</span> : <img src={resourceIcon(slot)} alt="" />}
+                  <NumberFlow value={n} />
+                  {fresh !== 0 && (
+                    <span key={frame.index} className={`sb-badge-delta${fresh < 0 ? " out" : ""}`}>
+                      {fresh > 0 ? `+${fresh}` : fresh}
+                    </span>
+                  )}
+                </span>
+              );
+            })}
+          </div>
 
           <div className="pb-hud top">
             <div className="pb-res">
@@ -449,7 +522,7 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
                 <Tip key={r} label={`Villagers on ${r}`}>
                   <span className={`pb-res-item ${r}${count(r) ? "" : " zero"}`}>
                     <img src={resourceIcon(r)} alt={r} />
-                    {count(r)}
+                    <NumberFlow value={count(r)} />
                   </span>
                 </Tip>
               ))}
@@ -461,7 +534,7 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
               <Tip label="Villagers">
                 <span className="pb-res-item vils">
                   <img src={resourceIcon("villager")} alt="villagers" />
-                  {frame.villagers.length}
+                  <NumberFlow value={frame.villagers.length} />
                 </span>
               </Tip>
             </div>

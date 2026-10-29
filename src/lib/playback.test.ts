@@ -41,6 +41,7 @@ describe("buildingsIn", () => {
   it("doesn't mistake landmarks or verbs for buildings", () => {
     expect(buildingsIn("Stop units, age up with The White Tower")).toEqual([]);
     expect(buildingsIn("Keep making villagers")).toEqual([]);
+    expect(buildingsIn("Rally new villagers to the TC")).toEqual([]);
   });
 });
 
