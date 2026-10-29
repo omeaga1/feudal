@@ -271,6 +271,8 @@ export interface PlaybackEvent {
   planned: Villager[];
   /** Villagers the Town Centers train while this step is in effect. */
   trained: number;
+  /** The villagers there are by the time the next step starts: what this step builds up to. */
+  reached: Villager[];
   /** Buildings this step names for the first time. */
   newBuildings: BuildingKind[];
   /** Villagers this step sends somewhere new when it starts: pulled from a resource, or fresh out of the Town Center ("tc"). */
@@ -342,7 +344,7 @@ export function buildPlayback(plan: GamePlan, path: SelectedPath): Playback {
       rally = hints.rally ?? (fresh?.to as Resource | undefined) ?? rally;
       const newBuildings = buildingsIn(step.do).filter((b) => !seen.has(b));
       newBuildings.forEach((b) => seen.add(b));
-      return { seconds, age, step, split, builders, villagers, planned: villagers, trained: 0, newBuildings, moves, rally, nextId };
+      return { seconds, age, step, split, builders, villagers, planned: villagers, trained: 0, reached: villagers, newBuildings, moves, rally, nextId };
     });
   const last = events.length ? events[events.length - 1].seconds : 0;
   const end = Math.max(last, castleAt) + 30;
@@ -361,7 +363,8 @@ export function buildPlayback(plan: GamePlan, path: SelectedPath): Playback {
     const villagers = villagersAt(pb, i, e.seconds);
     const before = i > 0 ? villagersAt(pb, i - 1, e.seconds) : [];
     const next = events[i + 1]?.seconds ?? end;
-    return { villagers, moves: movesBetween(before, villagers), trained: trainedBy(prod, next - 0.001) - trainedBy(prod, e.seconds) };
+    const reached = villagersAt(pb, i, next - 0.001);
+    return { villagers, moves: movesBetween(before, villagers), trained: reached.length - villagers.length, reached };
   });
   actual.forEach((a, i) => Object.assign(events[i], a));
   return pb;
@@ -414,10 +417,19 @@ export function villagersAt(pb: Playback, index: number, t: number): Villager[] 
   return out;
 }
 
-/** Villagers the plan's step counts that the Town Centers can't have trained yet. */
-export function planAhead(pb: Playback, index: number): number {
+/**
+ * How far a step's villager count is from what the producers can make. A
+ * step's split is what it builds up to before the next step, so a count
+ * above what's trained by then is ahead (positive), and one below what's
+ * already trained when it starts is behind (negative).
+ */
+export function planOff(pb: Playback, index: number): number {
   const e = pb.events[index];
-  return e ? Math.max(0, e.planned.length - trainedBy(pb.production, e.seconds)) : 0;
+  if (!e) return 0;
+  const n = e.planned.length;
+  const hi = e.reached.length;
+  const lo = e.villagers.length;
+  return n > hi ? n - hi : n < lo ? n - lo : 0;
 }
 
 export interface VillagerMove {

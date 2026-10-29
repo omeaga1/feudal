@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { resourceIcon } from "../lib/assets";
 import { getCiv } from "../lib/gameData";
 import { findUnit, formatClock, landmarkIcon, RESOURCES, type GamePlan, type SelectedPath } from "../lib/gamePlans";
-import { frameAt, type BuildingKind, type Move, type Playback } from "../lib/playback";
+import { frameAt, planOff, type BuildingKind, type Move, type Playback } from "../lib/playback";
 import { Tip } from "./ui";
 import type { IconType } from "react-icons";
 
@@ -67,7 +67,7 @@ export function PlanTimeline({
   const strip = useRef<HTMLDivElement>(null);
   const frame = frameAt(pb, t);
   const abbr = getCiv(plan.civ)?.abbr;
-  const maxVils = Math.max(10, ...pb.events.map((e) => e.villagers.length));
+  const maxVils = Math.max(10, ...pb.events.map((e) => e.reached.length));
   const producing = pb.production.producers.filter((p) => p.from <= t).length;
 
   const columns = useMemo(() => {
@@ -95,7 +95,8 @@ export function PlanTimeline({
     }
   }, [frame.index]);
 
-  const counts = (e: Playback["events"][number]) => SEGMENTS.map((s) => e.villagers.filter((v) => v.at === s).length);
+  // Each column shows what its step builds up to by the next step.
+  const counts = (e: Playback["events"][number]) => SEGMENTS.map((s) => e.reached.filter((v) => v.at === s).length);
 
   return (
     <div className="tl">
@@ -159,17 +160,17 @@ export function PlanTimeline({
           const rallyChanged = i === 0 || pb.events[i - 1].rally !== e.rally;
           const moves = e.moves.filter((m) => m.from !== "tc" || m.to !== e.rally);
           const fresh = e.trained + e.moves.filter((m) => m.from === "tc" && m.to === e.rally).reduce((a, m) => a + m.n, 0);
-          const off = e.planned.length - e.villagers.length;
+          const off = planOff(pb, i);
           return (
             <Tip
               key={i}
-              label={`${e.step.t} · ${e.step.do}${Math.abs(off) >= 2 ? ` · The plan counts ${e.planned.length} villagers here; ${producersAt(pb, e.seconds)} training nonstop ${off > 0 ? "can only have made" : "would have made"} ${e.villagers.length} by ${e.step.t}.` : ""}`}
+              label={`${e.step.t} · ${e.step.do}${Math.abs(off) >= 2 ? ` · The plan counts ${e.planned.length} villagers here; ${producersAt(pb, e.seconds)} training nonstop ${off > 0 ? `can only make ${e.reached.length} before the next step` : `have already made ${e.villagers.length} by ${e.step.t}`}.` : ""}`}
             >
               <button type="button" className={`tlc${state}`} onClick={() => onSeek(e.seconds)}>
                 <span className="tlc-t">{e.step.t}</span>
                 <span className="tlc-bar" style={{ height: BAR_H }}>
                   <span className="tlc-total">
-                    {e.villagers.length}
+                    {e.reached.length}
                     {Math.abs(off) >= 2 && <span className="tlc-ahead">plan {e.planned.length}</span>}
                   </span>
                   {SEGMENTS.map((s, k) =>

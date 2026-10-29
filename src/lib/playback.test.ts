@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { gamePlans, getGamePlan } from "./gamePlans";
-import { assignVillagers, bornAt, buildingsIn, buildPlayback, frameAt, landmarkStart, production, stepHints, trainedBy, villagerAt, villagerMoves, type Villager } from "./playback";
+import { assignVillagers, bornAt, planOff, buildingsIn, buildPlayback, frameAt, landmarkStart, production, stepHints, trainedBy, villagerAt, villagerMoves, type Villager } from "./playback";
 
 const where = (vils: Villager[]) => vils.map((v) => v.at);
 
@@ -149,6 +149,16 @@ describe("villager production", () => {
         }
       }
     }
+  });
+
+  it("treats a step's split as what it builds up to", () => {
+    const plan = getGamePlan("english")!;
+    const run = buildPlayback(plan, { feudal: plan.feudal[0], castle: plan.feudal[0].castle[0] });
+    // "Next 2 to gold" at 0:20 counts 8: one is out at 0:20, the second by 0:40.
+    const i = run.events.findIndex((e) => e.step.t === "0:20");
+    expect(run.events[i].planned).toHaveLength(8);
+    expect(run.events[i].villagers).toHaveLength(7);
+    expect(planOff(run, i)).toBe(0);
   });
 
   it("walks each new villager out when it's trained", () => {
