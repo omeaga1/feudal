@@ -1,7 +1,10 @@
+import { Timer } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import { GiHammerNails } from "react-icons/gi";
 import { resourceIcon } from "../lib/assets";
 import { getCiv } from "../lib/gameData";
 import { findUnit, landmarkIcon, RESOURCES, STYLE_LABELS, type FeudalPath, type GamePlan, type PlanNode, type Split } from "../lib/gamePlans";
+import { Tip, UnitHover } from "./ui";
 
 export interface PlanSelection {
   feudal: string;
@@ -26,7 +29,15 @@ export function UnitIcons({ names, civ, size = "sm" }: { names?: string[]; civ: 
     <span className={`unit-icons ${size}`}>
       {names.map((n) => {
         const u = findUnit(n, abbr);
-        return u ? <img key={n} src={u.icon} alt={n} title={n} loading="lazy" /> : <span key={n} className="unit-chip">{n}</span>;
+        return u ? (
+          <UnitHover key={n} unit={u}>
+            <img src={u.icon} alt={n} loading="lazy" />
+          </UnitHover>
+        ) : (
+          <span key={n} className="unit-chip">
+            {n}
+          </span>
+        );
       })}
     </span>
   );
@@ -39,21 +50,34 @@ export function SplitChips({ split, builders }: { split?: Split; builders?: numb
     <span className="split">
       {split?.map((n, i) =>
         n > 0 ? (
-          <span key={RESOURCES[i]} className={`split-chip ${RESOURCES[i]}`}>
-            <img src={resourceIcon(RESOURCES[i])} alt={RESOURCES[i]} />
-            {n}
-          </span>
+          <Tip key={RESOURCES[i]} label={`${n} on ${RESOURCES[i]}`}>
+            <span className={`split-chip ${RESOURCES[i]}`}>
+              <img src={resourceIcon(RESOURCES[i])} alt={RESOURCES[i]} />
+              {n}
+            </span>
+          </Tip>
         ) : null,
       )}
       {builders ? (
-        <span className="split-chip builders" title="Building">
-          <span className="hammer" aria-hidden="true">
-            ⚒
+        <Tip label="Building">
+          <span className="split-chip builders">
+            <GiHammerNails className="hammer" aria-hidden="true" />
+            {builders}
           </span>
-          {builders}
-        </span>
+        </Tip>
       ) : null}
     </span>
+  );
+}
+
+export function AgeTime({ label, children }: { label: string; children: string }) {
+  return (
+    <Tip label={label}>
+      <span className="age-time">
+        <Timer size={12} strokeWidth={2.5} aria-hidden="true" />
+        {children}
+      </span>
+    </Tip>
   );
 }
 
@@ -86,9 +110,7 @@ function PlanCard({
     >
       <span className="plan-card-top">
         <span className="style-tag">{STYLE_LABELS[node.style]}</span>
-        <span className="age-time" title="Age-up time">
-          {node.ageUp}
-        </span>
+        <AgeTime label="Reach the next age by">{node.ageUp}</AgeTime>
       </span>
       <span className="plan-card-name">{node.name}</span>
       {node.landmark && (
@@ -132,9 +154,7 @@ function OpeningCard({ plan }: { plan: GamePlan }) {
     <div className="plan-card opening">
       <span className="plan-card-top">
         <span className="style-tag">Dark Age</span>
-        <span className="age-time" title="Pick your path by">
-          {plan.opening.decideAt}
-        </span>
+        <AgeTime label="Pick your path by">{plan.opening.decideAt}</AgeTime>
       </span>
       <span className="plan-card-name">Opening</span>
       <SplitChips split={last?.v} />

@@ -41,7 +41,7 @@ describe("resolveProfile", () => {
   it("checks a profile number exists", async () => {
     expect(await resolveProfile(api({ "/players/1270139": beasty }), { kind: "id", id: 1270139 })).toEqual({
       kind: "found",
-      player: { profileId: 1270139, name: "Beasty", rating: null, lastGameAt: "2026-10-21" },
+      player: { profileId: 1270139, name: "Beasty", rating: null, lastGameAt: "2026-10-21", avatar: null, country: null, rankLevel: null },
     });
     expect((await resolveProfile(api({}), { kind: "id", id: 5 })).kind).toBe("none");
   });

@@ -1,5 +1,7 @@
 import { invoke, isTauri } from "@tauri-apps/api/core";
-import { useEffect, useMemo, useState } from "react";
+import { Check, ChevronDown, FileUp } from "lucide-react";
+import { Select } from "radix-ui";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { commandLabel, comboKeys, groupKeybinds, parseRkp, type KeybindProfile } from "../lib/keybinds";
 import { CounterChart, KeyMap } from "./KeyMap";
 
@@ -28,6 +30,7 @@ export function Keybinds() {
   const [profiles, setProfiles] = useState<KeybindProfile[] | null>(null);
   const [selected, setSelected] = useState<string | null>(savedProfileName);
   const [query, setQuery] = useState("");
+  const fileInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!isTauri()) {
@@ -75,27 +78,50 @@ export function Keybinds() {
       <h2 className="section-title">Your full keybinding profile</h2>
       <section className="panel row keybind-head">
         {(profiles ?? []).length > 0 && (
-          <label className="field">
+          <div className="field">
             <span>Profile</span>
-            <select value={profile?.name ?? ""} onChange={(e) => choose(e.target.value)}>
-              {(profiles ?? []).map((p) => (
-                <option key={p.name} value={p.name}>
-                  {p.name}
-                </option>
-              ))}
-            </select>
-          </label>
+            <Select.Root value={profile?.name} onValueChange={choose}>
+              <Select.Trigger className="select-trigger" aria-label="Profile">
+                <Select.Value />
+                <ChevronDown size={14} aria-hidden="true" />
+              </Select.Trigger>
+              <Select.Portal>
+                <Select.Content className="select-menu" position="popper" sideOffset={6}>
+                  <Select.Viewport className="select-viewport">
+                    {(profiles ?? []).map((p) => (
+                      <Select.Item key={p.name} value={p.name} className="select-item">
+                        <Select.ItemText>{p.name}</Select.ItemText>
+                        <Select.ItemIndicator className="select-check">
+                          <Check size={14} />
+                        </Select.ItemIndicator>
+                      </Select.Item>
+                    ))}
+                  </Select.Viewport>
+                </Select.Content>
+              </Select.Portal>
+            </Select.Root>
+          </div>
         )}
         {profile && (
           <label className="field grow">
             <span>Search</span>
-            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="e.g. idle, town center, F1" />
+            <input className="search-input wide" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="e.g. idle, town center, F1" />
           </label>
         )}
-        <label className="field">
-          <span>Open a profile file</span>
-          <input type="file" accept=".rkp" onChange={(e) => e.target.files?.[0] && void loadFile(e.target.files[0])} />
-        </label>
+        <div className="field">
+          <span>Profile file</span>
+          <button type="button" className="button-secondary" onClick={() => fileInput.current?.click()}>
+            <FileUp size={16} aria-hidden="true" />
+            Open .rkp file
+          </button>
+          <input
+            ref={fileInput}
+            type="file"
+            accept=".rkp"
+            hidden
+            onChange={(e) => e.target.files?.[0] && void loadFile(e.target.files[0])}
+          />
+        </div>
       </section>
 
       {!profile && (

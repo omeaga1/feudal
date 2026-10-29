@@ -1,7 +1,11 @@
+import { Command } from "cmdk";
+import { ArrowLeftRight, ChevronDown, Search } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import { Popover } from "radix-ui";
 import { useEffect, useRef, useState } from "react";
 import { civs, getCiv } from "../lib/gameData";
 import { Flag } from "./Flag";
+import { Tip } from "./ui";
 
 const sortedCivs = [...civs].sort((a, b) => a.name.localeCompare(b.name));
 
@@ -57,19 +61,6 @@ function Side({
   onChange?: (civ: string) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const close = (e: MouseEvent) => ref.current && !ref.current.contains(e.target as Node) && setOpen(false);
-    const esc = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    document.addEventListener("mousedown", close);
-    document.addEventListener("keydown", esc);
-    return () => {
-      document.removeEventListener("mousedown", close);
-      document.removeEventListener("keydown", esc);
-    };
-  }, [open]);
-
   const civInfo = getCiv(civ);
   const content = (
     <>
@@ -94,27 +85,24 @@ function Side({
     </>
   );
 
-  return (
-    <div className={`versus-side ${align}`} ref={ref}>
-      {editable ? (
-        <button type="button" className="versus-button" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
-          {content}
-          <span className="versus-caret" aria-hidden="true">
-            ▾
-          </span>
-        </button>
-      ) : (
+  if (!editable) {
+    return (
+      <div className={`versus-side ${align}`}>
         <div className="versus-button static">{content}</div>
-      )}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className={`flag-popover ${align}`}
-            initial={{ opacity: 0, y: -8, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.98 }}
-            transition={{ duration: 0.16 }}
-          >
+      </div>
+    );
+  }
+  return (
+    <div className={`versus-side ${align}`}>
+      <Popover.Root open={open} onOpenChange={setOpen}>
+        <Popover.Trigger asChild>
+          <button type="button" className="versus-button">
+            {content}
+            <ChevronDown className="versus-caret" size={18} aria-hidden="true" />
+          </button>
+        </Popover.Trigger>
+        <Popover.Portal>
+          <Popover.Content className="flag-popover" align={align === "left" ? "start" : "end"} sideOffset={8} collisionPadding={12}>
             <FlagGrid
               value={civ}
               autoFocus
@@ -123,9 +111,9 @@ function Side({
                 setOpen(false);
               }}
             />
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </Popover.Content>
+        </Popover.Portal>
+      </Popover.Root>
     </div>
   );
 }
@@ -145,16 +133,20 @@ export function VersusBar({ me, them, myName, theirName, editable = false, onCha
     <section className="versus">
       <Side label="You" civ={me} player={myName} editable={editable} align="left" onChange={(c) => onChange?.(c, them)} />
       {editable ? (
-        <motion.button
-          type="button"
-          className="versus-vs"
-          title="Swap sides"
-          whileHover={{ rotate: 180 }}
-          transition={{ type: "spring", stiffness: 300, damping: 18 }}
-          onClick={() => onChange?.(them, me)}
-        >
-          VS
-        </motion.button>
+        <Tip label="Swap sides">
+          <motion.button
+            type="button"
+            className="versus-vs swap"
+            aria-label="Swap sides"
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ rotate: 180 }}
+            transition={{ type: "spring", stiffness: 300, damping: 18 }}
+            onClick={() => onChange?.(them, me)}
+          >
+            <span className="vs-text">VS</span>
+            <ArrowLeftRight className="vs-swap" size={20} aria-hidden="true" />
+          </motion.button>
+        </Tip>
       ) : (
         <span className="versus-vs">VS</span>
       )}
@@ -167,10 +159,7 @@ export function VersusBar({ me, them, myName, theirName, editable = false, onCha
 export function CivSearch({ onPick }: { onPick: (civ: string) => void }) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(0);
   const input = useRef<HTMLInputElement>(null);
-  const q = query.trim().toLowerCase();
-  const results = q ? sortedCivs.filter((c) => c.name.toLowerCase().includes(q) || c.classes.toLowerCase().includes(q)).slice(0, 8) : [];
 
   useEffect(() => {
     const focus = (e: KeyboardEvent) => {
@@ -191,63 +180,57 @@ export function CivSearch({ onPick }: { onPick: (civ: string) => void }) {
     input.current?.blur();
   };
 
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowDown") setActive((i) => Math.min(i + 1, results.length - 1));
-    else if (e.key === "ArrowUp") setActive((i) => Math.max(i - 1, 0));
-    else if (e.key === "Enter" && results[active]) pick(results[active].id);
-    else if (e.key === "Escape") {
-      setQuery("");
-      input.current?.blur();
-    }
-  };
-
   return (
-    <div className="civ-search">
-      <input
+    <Command className="civ-search" label="Search civs" loop>
+      <Search className="civ-search-icon" size={16} aria-hidden="true" />
+      <Command.Input
         ref={input}
         className="search-input"
         value={query}
-        placeholder="Search civs"
-        aria-label="Search civs"
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setActive(0);
+        placeholder="Search civs or traits"
+        onValueChange={(v) => {
+          setQuery(v);
           setOpen(true);
         }}
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
-        onKeyDown={onKeyDown}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") {
+            setQuery("");
+            input.current?.blur();
+          }
+        }}
       />
       <kbd className="civ-search-hint">/</kbd>
       <AnimatePresence>
-        {open && q && (
-          <motion.ul
+        {open && query.trim() && (
+          <motion.div
             className="civ-search-results"
-            role="listbox"
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.12 }}
           >
-            {results.map((c, i) => (
-              <li key={c.id} role="option" aria-selected={i === active}>
-                <button
-                  type="button"
-                  className={i === active ? "active" : undefined}
-                  onMouseEnter={() => setActive(i)}
+            <Command.List>
+              <Command.Empty className="civ-search-empty">No civ matches "{query}"</Command.Empty>
+              {sortedCivs.map((c) => (
+                <Command.Item
+                  key={c.id}
+                  value={c.name}
+                  keywords={c.classes.split(",").map((k) => k.trim())}
                   onMouseDown={(e) => e.preventDefault()}
-                  onClick={() => pick(c.id)}
+                  onSelect={() => pick(c.id)}
+                  className="civ-search-item"
                 >
                   <Flag civ={c.id} size="sm" />
                   <span className="civ-search-name">{c.name}</span>
                   <span className="civ-search-classes">{c.classes}</span>
-                </button>
-              </li>
-            ))}
-            {results.length === 0 && <li className="civ-search-empty">No civ matches "{query}"</li>}
-          </motion.ul>
+                </Command.Item>
+              ))}
+            </Command.List>
+          </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </Command>
   );
 }
