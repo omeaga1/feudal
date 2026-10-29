@@ -5,6 +5,8 @@ import type { IconType } from "react-icons";
 import { GiCamel, GiCastle, GiChurch, GiCrossedSwords, GiGreekTemple, GiHolySymbol, GiWheat } from "react-icons/gi";
 import { useEffect, useMemo, useState } from "react";
 import type { CivStat } from "../lib/aoe4world";
+import { flagUrl } from "../lib/assets";
+import { civColor } from "../lib/civColors";
 import { civs, getCiv, rosterAt, type Age } from "../lib/gameData";
 import { findUnit } from "../lib/gamePlans";
 import { usePersisted } from "../lib/persisted";
@@ -13,7 +15,7 @@ import { civTempo, TEMPO_LABELS } from "../lib/tempo";
 import { loadCivStats, WinRing } from "./BriefView";
 import { CivSearch } from "./CivPicker";
 import { Flag } from "./Flag";
-import { Tip, UnitHover } from "./ui";
+import { AgeMark, Tip, UnitHover } from "./ui";
 import { YourPlan } from "./YourPlan";
 
 const sortedCivs = [...civs].sort((a, b) => a.name.localeCompare(b.name));
@@ -102,7 +104,14 @@ export function CivAnalysis({ defaultCiv }: { defaultCiv?: string }) {
         </div>
       </div>
 
-      <motion.section key={civ.id} className="panel civ-hero" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+      <motion.section
+        key={civ.id}
+        className="panel civ-hero banner"
+        style={{ "--civ": civColor(civ.id) } as React.CSSProperties}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <span className="banner-backdrop" aria-hidden="true" style={{ backgroundImage: `url(${flagUrl(civ.id)})` }} />
         <Flag civ={civ.id} size="xl" />
         <div className="civ-hero-text">
           <h2>{civ.name}</h2>
@@ -173,7 +182,9 @@ export function CivAnalysis({ defaultCiv }: { defaultCiv?: string }) {
         <div className="roster">
           {roster.map(({ age, units }) => (
             <div key={age} className="roster-age">
-              <span className="roster-age-name">{["", "Dark", "Feudal", "Castle", "Imperial"][age]}</span>
+              <span className="roster-age-name">
+                <AgeMark age={age} label={false} />
+              </span>
               <div className="roster-units">
                 {units.map((u) => (
                   <UnitHover key={u.id} unit={u}>

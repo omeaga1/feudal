@@ -4,7 +4,7 @@ import { GiHammerNails } from "react-icons/gi";
 import { resourceIcon } from "../lib/assets";
 import { getCiv } from "../lib/gameData";
 import { findUnit, landmarkIcon, RESOURCES, STYLE_LABELS, type FeudalPath, type GamePlan, type PlanNode, type Split } from "../lib/gamePlans";
-import { Tip, UnitHover } from "./ui";
+import { AgeMark, Tip, UnitHover } from "./ui";
 
 export interface PlanSelection {
   feudal: string;
@@ -201,7 +201,7 @@ export function PlanTree({
     <div className={`plan-tree${full ? " full" : ""}`}>
       {AGE_HEADS.map((h, i) => (
         <div key={h} className={`plan-head col-${i * 2 + 1}`}>
-          {h}
+          <AgeMark age={i + 1} />
         </div>
       ))}
       <div className="plan-col col-1 center">

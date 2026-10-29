@@ -29,6 +29,22 @@ export function Tip({ label, children, side = "top" }: { label: ReactNode; child
 }
 
 const AGE_NAMES = ["", "Dark", "Feudal", "Castle", "Imperial"];
+const AGE_NUMERALS = ["", "I", "II", "III", "IV"];
+
+/** An age as a roman-numeral medallion in that age's color, with its name beside it. */
+export function AgeMark({ age, label = true }: { age: number; label?: boolean }) {
+  const name = `${AGE_NAMES[age]} Age`;
+  return (
+    <Tip label={label ? undefined : name}>
+      <span className={`age-mark age-${age}`} aria-label={label ? undefined : name}>
+        <span className="age-coin" aria-hidden="true">
+          {AGE_NUMERALS[age]}
+        </span>
+        {label && <span className="age-name">{name}</span>}
+      </span>
+    </Tip>
+  );
+}
 const COST_KEYS = ["food", "wood", "gold", "stone"] as const;
 
 function UnitStats({ unit }: { unit: Unit }) {

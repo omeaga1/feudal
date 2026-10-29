@@ -3,6 +3,8 @@ import { ArrowLeftRight, ChevronDown, Search } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { Popover } from "radix-ui";
 import { useEffect, useRef, useState } from "react";
+import { flagUrl } from "../lib/assets";
+import { civColor } from "../lib/civColors";
 import { civs, getCiv } from "../lib/gameData";
 import { Flag } from "./Flag";
 import { Tip } from "./ui";
@@ -64,6 +66,7 @@ function Side({
   const civInfo = getCiv(civ);
   const content = (
     <>
+      <span className="versus-backdrop" aria-hidden="true" style={{ backgroundImage: flagUrl(civ) ? `url(${flagUrl(civ)})` : undefined }} />
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
           key={civ}
@@ -87,13 +90,13 @@ function Side({
 
   if (!editable) {
     return (
-      <div className={`versus-side ${align}`}>
+      <div className={`versus-side ${align}`} style={{ "--civ": civColor(civ) } as React.CSSProperties}>
         <div className="versus-button static">{content}</div>
       </div>
     );
   }
   return (
-    <div className={`versus-side ${align}`}>
+    <div className={`versus-side ${align}`} style={{ "--civ": civColor(civ) } as React.CSSProperties}>
       <Popover.Root open={open} onOpenChange={setOpen}>
         <Popover.Trigger asChild>
           <button type="button" className="versus-button">
