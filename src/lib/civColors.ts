@@ -27,6 +27,9 @@ const CIV_COLORS: Record<string, string> = {
   sengoku_daimyo: "#ce585a",
   tughlaq_dynasty: "#ce6158",
   zhu_xis_legacy: "#57cecf",
+  // Update 17.0
+  scots: "#5b86e0",
+  vikings: "#d9503f",
 };
 
 export function civColor(civ: string): string {
