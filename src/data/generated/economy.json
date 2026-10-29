@@ -1,0 +1,233 @@
+{
+  "ab": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "ay": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "by": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "ch": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 82.5,
+    "villagerLandmarks": []
+  },
+  "de": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "en": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": [
+      "King's Palace"
+    ]
+  },
+  "fr": {
+    "villager": "villager",
+    "trainTime": 19,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "gol": {
+    "villager": "villager",
+    "trainTime": 37,
+    "batch": 2,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "hr": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": [
+      "Palace of Swabia"
+    ]
+  },
+  "hl": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "ja": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "je": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "jin": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "kt": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "mac": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "ma": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "mo": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "od": {
+    "villager": "gilded-villager",
+    "trainTime": 23,
+    "batch": 1,
+    "food": 60,
+    "speed": 1.125,
+    "townCenterBuildTime": 132,
+    "villagerLandmarks": [
+      "Palace of Swabia"
+    ]
+  },
+  "ot": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "ru": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "sco": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "sen": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "tug": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "vik": {
+    "villager": "villager",
+    "trainTime": 22,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 165,
+    "villagerLandmarks": []
+  },
+  "zx": {
+    "villager": "villager",
+    "trainTime": 20,
+    "batch": 1,
+    "food": 50,
+    "speed": 1.125,
+    "townCenterBuildTime": 82.5,
+    "villagerLandmarks": []
+  }
+}

@@ -6036,3 +6036,40 @@ select,
   font-size: 0.85em;
   line-height: 1.25;
 }
+
+/* Villager production from the game's rules */
+.tl-prod {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 6px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+
+.tl-prod img {
+  width: 26px;
+  height: 26px;
+}
+
+.tl-prod b {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.tl-prod span {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.tlc-ahead {
+  display: block;
+  margin-top: 1px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--accent-2);
+  white-space: nowrap;
+}
