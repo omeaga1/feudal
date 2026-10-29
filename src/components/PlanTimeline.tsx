@@ -2,7 +2,7 @@ import NumberFlow from "@number-flow/react";
 import { useEffect, useMemo, useRef } from "react";
 import { resourceIcon } from "../lib/assets";
 import { getCiv } from "../lib/gameData";
-import { findUnit, landmarkIcon, RESOURCES, type GamePlan, type SelectedPath } from "../lib/gamePlans";
+import { findUnit, formatClock, landmarkIcon, RESOURCES, type GamePlan, type SelectedPath } from "../lib/gamePlans";
 import { frameAt, type BuildingKind, type Move, type Playback } from "../lib/playback";
 import { Tip } from "./ui";
 import type { IconType } from "react-icons";
@@ -33,6 +33,11 @@ export function MoveChips({ moves }: { moves: Move[] }) {
 }
 
 const SEGMENTS = [...RESOURCES, "build"] as const;
+
+function producersAt(pb: Playback, t: number) {
+  const n = pb.production.producers.filter((p) => p.from <= t).length;
+  return n > 1 ? `${n} producers` : "one Town Center";
+}
 const BAR_H = 176;
 
 type Column =
@@ -63,6 +68,7 @@ export function PlanTimeline({
   const frame = frameAt(pb, t);
   const abbr = getCiv(plan.civ)?.abbr;
   const maxVils = Math.max(10, ...pb.events.map((e) => e.villagers.length));
+  const producing = pb.production.producers.filter((p) => p.from <= t).length;
 
   const columns = useMemo(() => {
     const out: Column[] = [];
@@ -111,6 +117,18 @@ export function PlanTimeline({
             </span>
           )}
         </div>
+        <Tip label={`Each Town Center trains ${pb.production.batch > 1 ? `${pb.production.batch} villagers` : "a villager"} every ${pb.production.trainTime}s, nonstop.${pb.production.producers.length > 1 ? " " + pb.production.producers.map((p) => `${p.label} from ${formatClock(p.from)}`).join(", ") + "." : ""}`}>
+          <span className="tl-prod">
+            <img src={resourceIcon("villager")} alt="" />
+            <b>
+              <NumberFlow value={frame.villagers.length} />
+            </b>
+            <span>
+              {producing} TC{producing > 1 ? "s" : ""} · {pb.production.batch > 1 ? `${pb.production.batch} per ` : ""}
+              {pb.production.trainTime}s
+            </span>
+          </span>
+        </Tip>
         <div className="tl-now-step">
           <span className="tl-now-t">{frame.current?.step.t ?? "0:00"}</span>
           <span className="tl-now-do">{frame.current?.step.do ?? "Game starts"}</span>
@@ -140,13 +158,20 @@ export function PlanTimeline({
           const state = i === frame.index ? " now" : i < frame.index ? " done" : "";
           const rallyChanged = i === 0 || pb.events[i - 1].rally !== e.rally;
           const moves = e.moves.filter((m) => m.from !== "tc" || m.to !== e.rally);
-          const fresh = e.moves.filter((m) => m.from === "tc" && m.to === e.rally).reduce((a, m) => a + m.n, 0);
+          const fresh = e.trained + e.moves.filter((m) => m.from === "tc" && m.to === e.rally).reduce((a, m) => a + m.n, 0);
+          const off = e.planned.length - e.villagers.length;
           return (
-            <Tip key={i} label={`${e.step.t} · ${e.step.do}`}>
+            <Tip
+              key={i}
+              label={`${e.step.t} · ${e.step.do}${Math.abs(off) >= 2 ? ` · The plan counts ${e.planned.length} villagers here; ${producersAt(pb, e.seconds)} training nonstop ${off > 0 ? "can only have made" : "would have made"} ${e.villagers.length} by ${e.step.t}.` : ""}`}
+            >
               <button type="button" className={`tlc${state}`} onClick={() => onSeek(e.seconds)}>
                 <span className="tlc-t">{e.step.t}</span>
                 <span className="tlc-bar" style={{ height: BAR_H }}>
-                  <span className="tlc-total">{e.villagers.length}</span>
+                  <span className="tlc-total">
+                    {e.villagers.length}
+                    {Math.abs(off) >= 2 && <span className="tlc-ahead">plan {e.planned.length}</span>}
+                  </span>
                   {SEGMENTS.map((s, k) =>
                     n[k] ? (
                       <span key={s} className={`tlc-seg ${s}`} style={{ height: (n[k] / maxVils) * (BAR_H - 18) }}>

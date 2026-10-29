@@ -463,9 +463,8 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
   // A pulse on each site that just gained villagers.
   const prev = frame.index > 0 ? pb.events[frame.index - 1] : undefined;
   const sinceStep = frame.current ? t - frame.current.seconds : Infinity;
-  // New villagers headed to the rally point ride the rally line instead of getting their own arrow.
-  const rallyFresh =
-    frame.current && sinceStep < BEAT_GAME ? (frame.current.moves.find((m) => m.from === "tc" && m.to === frame.current!.rally)?.n ?? 0) : 0;
+  // Villagers trained since this step began ride the rally line instead of getting their own arrow.
+  const rallyFresh = frame.current ? frame.villagers.length - frame.current.villagers.length : 0;
   const gained = (s: Slot) => {
     if (!frame.current || sinceStep > 8) return false;
     const now = frame.current.villagers.filter((v) => v.at === s).length;

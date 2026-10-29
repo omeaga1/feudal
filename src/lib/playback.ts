@@ -1,9 +1,13 @@
+import economyJson from "../data/generated/economy.json";
+import { getCiv } from "./gameData";
 import { landmarks } from "./scouting";
 import { clock, pathSteps, RESOURCES, type GamePlan, type PlanStep, type Resource, type SelectedPath, type Split } from "./gamePlans";
 
 // Plays a chosen path back as a simulated game: the clock runs, villagers
-// move between resources, buildings appear, and the ages tick over. Built
-// only from the plan's own steps, so it shows exactly what the plan says.
+// move between resources, buildings appear, and the ages tick over. The plan's
+// steps say where villagers go; the game's production rules say when each one
+// exists: every Town Center trains one villager per the civ's train time
+// (from AoE4 World's game data), nonstop from 0:00.
 
 /** Where a villager is: on a resource, or building. */
 export type Slot = Resource | "build";
@@ -173,6 +177,87 @@ function nextVillagerId(vils: Villager[]): number {
   return vils.reduce((m, v) => Math.max(m, v.id + 1), 0);
 }
 
+/** Every civ starts with six villagers. */
+export const START_VILLAGERS = 6;
+
+export interface Producer {
+  /** "Town Center", "TC 2", or a landmark that trains villagers. */
+  label: string;
+  /** When it starts training villagers. */
+  from: number;
+}
+
+export interface Production {
+  /** Seconds per villager (per batch) from one Town Center. */
+  trainTime: number;
+  /** Villagers per batch: Golden Horde trains two at once. */
+  batch: number;
+  /** Everything that trains villagers, in the order it comes online. */
+  producers: Producer[];
+  /** When each villager after the first six walks out, in order. */
+  born: number[];
+}
+
+interface Economy {
+  trainTime: number;
+  batch: number;
+  townCenterBuildTime: number;
+  villagerLandmarks: string[];
+}
+const ECONOMY = economyJson as Record<string, Economy>;
+const DEFAULT_ECONOMY: Economy = { trainTime: 20, batch: 1, townCenterBuildTime: 165, villagerLandmarks: [] };
+
+/** Which Town Center a step is about: "TC 2", "second TC", "both TCs". */
+function tcNumber(text: string, have: number): number | undefined {
+  if (/\b(tc ?2|(2nd|second) (tc|town ?center)|(two|both) (tcs|town ?centers))\b/i.test(text)) return 2;
+  if (/\b(tc ?3|(3rd|third) (tc|town ?center)|(three|all three) (tcs|town ?centers))\b/i.test(text)) return 3;
+  if (/\b(another|extra|new) (tc|town ?center)\b/i.test(text)) return have + 1;
+  return undefined;
+}
+
+/**
+ * Villager production for a plan, by the game's rules: one Town Center from
+ * 0:00, each extra TC a step builds once the civ's TC build time has passed
+ * (or right away when the step says it's done or running), and any landmark
+ * the path builds that trains villagers (King's Palace, Palace of Swabia)
+ * from its age-up. Every producer trains nonstop.
+ */
+export function production(civId: string, steps: { seconds: number; text: string }[], until: number, built: { name?: string; at: number }[] = []): Production {
+  const eco = ECONOMY[getCiv(civId)?.abbr ?? ""] ?? DEFAULT_ECONOMY;
+  const producers: Producer[] = [{ label: "Town Center", from: 0 }];
+  let tcs = 1;
+  for (const { seconds, text } of steps) {
+    const n = tcNumber(text, tcs);
+    if (!n || n <= tcs) continue;
+    // "Stone for a second TC" or "rams or a second TC" plans one; it isn't built yet.
+    if (/\b(for|or) (a |the )?(tc ?\d|\w+ (tc|town ?center))|\b(acts|works) as\b|\bsoon\b/i.test(text)) continue;
+    const running = /\b(done|finished|complete[sd]?|running|both|two|nonstop|make villagers|making villagers)\b/i.test(text);
+    while (tcs < n) producers.push({ label: `TC ${++tcs}`, from: seconds + (running ? 0 : eco.townCenterBuildTime) });
+  }
+  for (const { name, at } of built) {
+    if (name && eco.villagerLandmarks.includes(name)) producers.push({ label: name, from: at });
+  }
+  producers.sort((a, b) => a.from - b.from);
+  const born: number[] = [];
+  for (const { from } of producers) {
+    for (let t = from + eco.trainTime; t <= until; t += eco.trainTime) for (let k = 0; k < eco.batch; k++) born.push(t);
+  }
+  born.sort((a, b) => a - b);
+  return { trainTime: eco.trainTime, batch: eco.batch, producers, born };
+}
+
+/** How many villagers exist at `t`. */
+export function trainedBy(prod: Production, t: number): number {
+  let n = 0;
+  while (n < prod.born.length && prod.born[n] <= t) n++;
+  return START_VILLAGERS + n;
+}
+
+/** When the villager that is `rank`th by age (0 = oldest) first exists. */
+export function bornAt(prod: Production, rank: number): number {
+  return rank < START_VILLAGERS ? 0 : (prod.born[rank - START_VILLAGERS] ?? Infinity);
+}
+
 export interface PlaybackEvent {
   seconds: number;
   age: 1 | 2 | 3;
@@ -180,13 +265,20 @@ export interface PlaybackEvent {
   /** The split in effect from this step on (carried from the last step that gave one). */
   split: Split;
   builders: number;
+  /** The villagers that exist when the step starts, where the step sends them. */
   villagers: Villager[];
+  /** Every villager the plan counts at this step, trained yet or not. */
+  planned: Villager[];
+  /** Villagers the Town Centers train while this step is in effect. */
+  trained: number;
   /** Buildings this step names for the first time. */
   newBuildings: BuildingKind[];
-  /** Villagers this step sends somewhere new: pulled from a resource, or fresh out of the Town Center ("tc"). */
+  /** Villagers this step sends somewhere new when it starts: pulled from a resource, or fresh out of the Town Center ("tc"). */
   moves: Move[];
   /** Where the Town Center sends new villagers from this step on. */
   rally: Resource;
+  /** The id the next new villager gets. */
+  nextId: number;
 }
 
 export interface Move {
@@ -211,6 +303,7 @@ export function movesBetween(before: Villager[], after: Villager[]): Move[] {
 
 export interface Playback {
   events: PlaybackEvent[];
+  production: Production;
   feudalAt: number;
   castleAt: number;
   /** Where playback stops: a little after the last thing that happens. */
@@ -249,10 +342,29 @@ export function buildPlayback(plan: GamePlan, path: SelectedPath): Playback {
       rally = hints.rally ?? (fresh?.to as Resource | undefined) ?? rally;
       const newBuildings = buildingsIn(step.do).filter((b) => !seen.has(b));
       newBuildings.forEach((b) => seen.add(b));
-      return { seconds, age, step, split, builders, villagers, newBuildings, moves, rally };
+      return { seconds, age, step, split, builders, villagers, planned: villagers, trained: 0, newBuildings, moves, rally, nextId };
     });
   const last = events.length ? events[events.length - 1].seconds : 0;
-  return { events, feudalAt, castleAt, end: Math.max(last, castleAt) + 30 };
+  const end = Math.max(last, castleAt) + 30;
+  const prod = production(
+    plan.civ,
+    events.map((e) => ({ seconds: e.seconds, text: e.step.do })),
+    end,
+    [
+      { name: path.feudal.landmark, at: feudalAt },
+      { name: path.castle.landmark, at: castleAt },
+    ],
+  );
+  const pb: Playback = { events, production: prod, feudalAt, castleAt, end };
+  // What actually happens at each step under the production rules.
+  const actual = events.map((e, i) => {
+    const villagers = villagersAt(pb, i, e.seconds);
+    const before = i > 0 ? villagersAt(pb, i - 1, e.seconds) : [];
+    const next = events[i + 1]?.seconds ?? end;
+    return { villagers, moves: movesBetween(before, villagers), trained: trainedBy(prod, next - 0.001) - trainedBy(prod, e.seconds) };
+  });
+  actual.forEach((a, i) => Object.assign(events[i], a));
+  return pb;
 }
 
 export interface Frame {
@@ -283,9 +395,29 @@ export function frameAt(pb: Playback, seconds: number): Frame {
     age,
     nextAgeAt: age < 3 ? to : undefined,
     ageProgress: age < 3 ? Math.min(1, Math.max(0, (seconds - from) / Math.max(1, to - from))) : 1,
-    villagers: pb.events[index]?.villagers ?? [],
+    villagers: villagersAt(pb, index, seconds),
     buildings,
   };
+}
+
+/**
+ * The villagers that exist at `t` during step `index`: the plan's villagers
+ * oldest first, up to what the Town Centers have trained by then. When the
+ * TCs have made more than the plan counts, the extras stand at the rally point.
+ */
+export function villagersAt(pb: Playback, index: number, t: number): Villager[] {
+  const e = pb.events[index];
+  if (!e) return [];
+  const n = trainedBy(pb.production, t);
+  const out = [...e.planned].sort((a, b) => a.id - b.id).slice(0, n);
+  for (let id = e.nextId; out.length < n; id++) out.push({ id, at: e.rally });
+  return out;
+}
+
+/** Villagers the plan's step counts that the Town Centers can't have trained yet. */
+export function planAhead(pb: Playback, index: number): number {
+  const e = pb.events[index];
+  return e ? Math.max(0, e.planned.length - trainedBy(pb.production, e.seconds)) : 0;
 }
 
 export interface VillagerMove {
@@ -294,16 +426,30 @@ export interface VillagerMove {
   at: Slot;
 }
 
-/** Each villager's moves over the whole playback: where it was sent, and when. The first move is its arrival. */
+/**
+ * Each villager's moves over the whole playback: where it was sent, and when.
+ * The first move is its arrival, at the time its Town Center trained it.
+ */
 export function villagerMoves(pb: Playback): Map<number, VillagerMove[]> {
   const moves = new Map<number, VillagerMove[]>();
-  for (const e of pb.events) {
-    for (const v of e.villagers) {
-      const list = moves.get(v.id) ?? [];
-      if (list[list.length - 1]?.at !== v.at) list.push({ t: e.seconds, at: v.at });
-      moves.set(v.id, list);
+  const send = (id: number, t: number, at: Slot) => {
+    const list = moves.get(id) ?? [];
+    if (list[list.length - 1]?.at !== at) list.push({ t, at });
+    moves.set(id, list);
+  };
+  pb.events.forEach((e, i) => {
+    const until = pb.events[i + 1]?.seconds ?? pb.end;
+    const planned = [...e.planned].sort((a, b) => a.id - b.id);
+    planned.forEach((v, rank) => {
+      const t = Math.max(e.seconds, bornAt(pb.production, rank));
+      if (t < until) send(v.id, t, v.at);
+    });
+    for (let k = 0; ; k++) {
+      const t = Math.max(e.seconds, bornAt(pb.production, planned.length + k));
+      if (t >= until) break;
+      send(e.nextId + k, t, e.rally);
     }
-  }
+  });
   return moves;
 }
 

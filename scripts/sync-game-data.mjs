@@ -85,8 +85,34 @@ for (const b of buildings.data) {
     civs: b.civs,
     builtInAge: Number(tag[1]),
     description: b.description,
+    buildTime: b.costs?.time ?? 0,
     icon: b.icon,
   });
+}
+
+// What the build playback needs to follow the game's production rules: how
+// long each civ's Town Center takes per villager, and how long a new Town
+// Center takes to build. Golden Horde recruits in batches, which the data
+// doesn't carry, so its batch size of two is set here.
+const BATCH = { gol: 2 };
+const economy = {};
+for (const civ of civs) {
+  const villager = units.data.find((u) => u.id === "villager-1" && u.civs.includes(civ.abbr)) ?? units.data.find((u) => u.baseId === "gilded-villager" && u.civs.includes(civ.abbr));
+  const tc = buildings.data.find((b) => b.baseId === "town-center" && b.civs.includes(civ.abbr));
+  if (!villager || !tc) throw new Error(`No villager or Town Center for ${civ.abbr}`);
+  economy[civ.abbr] = {
+    villager: villager.baseId,
+    trainTime: villager.costs.time,
+    batch: BATCH[civ.abbr] ?? 1,
+    food: villager.costs.food,
+    speed: villager.movement?.speed ?? 1.125,
+    townCenterBuildTime: tc.costs.time,
+    // Landmarks that train villagers too, like the English King's Palace.
+    villagerLandmarks: (villager.producedBy ?? [])
+      .filter((id) => id !== "capital-town-center")
+      .map((id) => buildings.data.find((b) => b.baseId === id && b.civs.includes(civ.abbr) && b.classes?.includes("landmark"))?.name)
+      .filter(Boolean),
+  };
 }
 
 // A few units are listed from the Dark Age but only come from a later
@@ -108,6 +134,7 @@ for (const u of military) {
 await mkdir(OUT_DIR, { recursive: true });
 await writeFile(join(OUT_DIR, "landmarks.json"), JSON.stringify(landmarks, null, 2) + "\n");
 await writeFile(join(OUT_DIR, "units.json"), JSON.stringify(military.map(trimUnit)) + "\n");
+await writeFile(join(OUT_DIR, "economy.json"), JSON.stringify(economy, null, 2) + "\n");
 await writeFile(join(OUT_DIR, "civs.json"), JSON.stringify(civs, null, 2) + "\n");
 await writeFile(
   join(OUT_DIR, "meta.json"),
