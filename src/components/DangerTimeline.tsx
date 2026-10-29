@@ -10,10 +10,9 @@ function percent(value: number): string {
   return `${Math.round(value * 100)}%`;
 }
 
-/** Win rate by game length for this matchup, as a strip of bars: red where you tend to lose, green where you win. */
-export function DangerTimeline({ myCivId, enemyCivId }: { myCivId: string; enemyCivId: string }) {
+/** The freshest danger-window numbers, undefined until loaded. */
+export function useDangerData(): DangerData | undefined {
   const [data, setData] = useState<DangerData | undefined>(undefined);
-
   useEffect(() => {
     let cancelled = false;
     dataRequest ??= loadDangerData(appFetch);
@@ -22,7 +21,12 @@ export function DangerTimeline({ myCivId, enemyCivId }: { myCivId: string; enemy
       cancelled = true;
     };
   }, []);
+  return data;
+}
 
+/** Win rate by game length for this matchup, as a strip of bars: red where you tend to lose, green where you win. */
+export function DangerTimeline({ myCivId, enemyCivId }: { myCivId: string; enemyCivId: string }) {
+  const data = useDangerData();
   const result = useMemo(() => dangerWindows(myCivId, enemyCivId, data), [myCivId, enemyCivId, data]);
   if (!result) return null;
   const enemyName = getCiv(enemyCivId)?.name ?? enemyCivId;
