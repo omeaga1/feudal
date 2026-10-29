@@ -3,96 +3,103 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "New in Update 17.0. Infantry and defense civ with a Highland Cattle food economy, Fishponds for gold and a Mustering Hall that spawns armies on demand. The standard opening is Stone of Destiny around 4:55; Abbey of the Isles leads into Men-at-Arms aggression or a fast Castle.",
+  "summary": "New in Update 17.0. A cow-boom infantry civ: Highland Cattle on berries feed the TC so almost no villagers farm, and Beasty calls it made for 2 TC. Stone of Destiny is the Feudal landmark pros prefer; Men-at-Arms and Pikemen are the strong units. Beasty rates them behind Vikings and harder to play.",
   "openings": [
-    "Stone of Destiny eco (Swaggy): Tower House on gold first, 6 Highland Cattle on berries, Feudal around 4:55, Kirkmen build Fishponds for gold.",
-    "Abbey of the Isles Men-at-Arms (Swaggy): Feudal around 4:50, 10 Men-at-Arms with the Saint's Relic in the barracks, forward Blacksmith to heal.",
-    "Abbey of the Isles into Tower of Skye fast Castle around 7:35, then a Mustering Hall raid (Swaggy's Border Reiver build)."
+    "Stone of Destiny eco (Swaggy, Beasty): Tower House covering gold and berries, 5 to 6 cows on berries, everyone to wood once you click up, Feudal around 4:55, Kirkman Fishponds for gold.",
+    "Cows make 2 TC possible with almost no villagers on food (Beasty).",
+    "Abbey of the Isles Men-at-Arms all-in: Beasty lost with it and calls it weak in 1v1, maybe fine in team games."
   ],
   "spikes": [
     {
       "age": 2,
-      "label": "Men-at-Arms with the Saint's Relic",
-      "detail": "Abbey of the Isles' relic speeds production by 135% and heals; Swaggy's cheese hits with 10 Men-at-Arms right after Feudal.",
-      "answer": "Wall and get archers or a tower up before 5:30; don't fight Men-at-Arms with spearmen."
+      "label": "Armored Men-at-Arms and Pikemen",
+      "detail": "Beasty calls Feudal Men-at-Arms armor broken, and Scots Pikemen have extra armor and attack in 2 to 3 ranks; they beat his knights.",
+      "answer": "Don't send knights or archers into them head-on; use your own heavy infantry or crossbows."
     },
     {
       "age": 2,
-      "label": "Mustering Hall",
-      "detail": "From Feudal the Mustering Hall turns food into instant reinforcements, so their army can appear out of nowhere.",
-      "answer": "Count their food bank and military buildings, not just the units you see."
+      "label": "Cow boom",
+      "detail": "Each Highland Cattle is close to a villager of food, and Fishponds add about 40 gold a minute.",
+      "answer": "Tower rush, or tower plus barracks, before the boom pays off (Beasty), and kill cows on the berries."
     },
     {
       "age": 3,
-      "label": "Gallowglass and Stealth Forests",
-      "detail": "Gallowglass brace against cavalry and deal area damage; Tower of Skye makes Stealth Forests where their infantry hit harder.",
-      "answer": "Ranged units and siege, kept away from the forest edges. Don't send cavalry into Gallowglass."
+      "label": "Mustering Hall and Gallowglass",
+      "detail": "Musters drop whole squads at once and get cheaper with more military buildings nearby. Gallowglass deal area damage and brace against cavalry.",
+      "answer": "Count their food bank and military buildings, not just the army you see; ranged units and siege against Gallowglass."
     },
     {
       "age": 4,
-      "label": "Gunpowder and Border Reivers",
-      "detail": "Dhùn Èideann's cannons and gunpowder range, Tacksmen and Border Reivers that shred cavalry and archers.",
-      "answer": "Heavy infantry and siege of your own; avoid ranged cavalry fights."
+      "label": "Men-at-Arms + handcannons",
+      "detail": "Beasty's main Scots style ends in Men-at-Arms with Tacksmen; Imperial Men-at-Arms have 4 ranged armor and shred archers.",
+      "answer": "Armored infantry, siege and cavalry that dodge the handcannons."
     }
   ],
   "scout": [
     "Tower House on gold and cows on berries is the normal start",
-    "Stone of Destiny means eco; Abbey of the Isles means Men-at-Arms or a fast Castle",
-    "A barracks plus a forward blacksmith means the Men-at-Arms cheese",
-    "Mustering Hall and its Highland or Lowland techs"
+    "Stone of Destiny means eco; Abbey of the Isles means a Men-at-Arms all-in",
+    "Stone villagers or a 2nd TC: the cow-boom 2 TC",
+    "A Mustering Hall and how many military buildings sit near it"
   ],
   "pairings": [
     {
-      "units": "Highland Archers + Pikemen",
-      "why": "Ranged damage that's extra strong against light infantry, with spears against cavalry."
+      "units": "Men-at-Arms + Highland Archers",
+      "why": "Beasty's main comp: armored front line with archers that hit frontlines harder (shorter range, more damage)."
     },
     {
-      "units": "Gallowglass + Highland Archers",
-      "why": "Tanky area-damage front line with archers behind."
+      "units": "Pikemen + Men-at-Arms",
+      "why": "Heavily armored infantry wall that beats cavalry."
     },
     {
-      "units": "Caterans + Men-at-Arms",
-      "why": "Fast raiders on villagers while armored infantry hold the front."
+      "units": "Caterans + Highland Archers",
+      "why": "Swaggy's raiding: fast Caterans hit villagers while archers hold home."
     }
   ],
   "winConditions": [
     {
-      "kind": "defense",
-      "detail": "Tower Houses and Keeps that can be repaired after falling make them hard to raid."
+      "kind": "economy",
+      "detail": "Cow and Fishpond boom, often into 2 TC."
     },
     {
       "kind": "army",
-      "detail": "Mustered infantry floods in Castle Age."
+      "detail": "Armored infantry plus mustered reinforcements."
     },
     {
-      "kind": "economy",
-      "detail": "Highland Cattle and Fishponds keep food and gold flowing with fewer villagers."
+      "kind": "defense",
+      "detail": "Tower Houses and repairable Keeps make them hard to raid."
     }
   ],
   "howToBeat": [
-    "Kill the Highland Cattle on the berries: they're their early food.",
-    "Fight in the open, away from Stealth Forests and Tower Houses.",
-    "Against the Men-at-Arms cheese, archers and a quick wall; don't waste spearmen on them.",
-    "Siege and ranged units beat their slow infantry; cavalry struggles into Gallowglass."
+    "Tower rush, or at least a tower plus barracks, to stop the cow boom (Beasty).",
+    "An early spear opening punishes their scouts and cows; cows on the berries are their food.",
+    "Out-range Highland Archers: they have 4.5 range and lose archer duels.",
+    "Mass armored infantry beats their melee and archer army (Beasty's Vikings won this way).",
+    "Don't trade knights into their Pikemen and Men-at-Arms."
   ],
   "sources": [
     {
-      "title": "Swaggy Professor: The Only Scots Build You'll Need (aoe4guides)",
-      "url": "https://aoe4guides.com/builds/rGWRAbE6ptSPUMsueN8M",
+      "title": "Beasty: My First 1v1 Games With Scots... OP?",
+      "url": "https://www.youtube.com/watch?v=cPjX-wFhvDA",
       "date": "2026-10-24",
       "kind": "video"
     },
     {
-      "title": "Swaggy Professor: Men-at-Arms cheese (aoe4guides)",
-      "url": "https://aoe4guides.com/builds/SzaEevcvCSNcNNYxVVvX",
-      "date": "2026-10-26",
+      "title": "Beasty: Scots vs Vikings vs Top Conqueror Player",
+      "url": "https://www.youtube.com/watch?v=x4faSlyfUck",
+      "date": "2026-10-24",
       "kind": "video"
     },
     {
-      "title": "Official Scots civilization page",
-      "url": "https://www.ageofempires.com/games/age-of-empires-iv/civilizations/scots/",
-      "date": "2026-10-29",
-      "kind": "written_guide"
+      "title": "FitzBro: Beasty's Sacred Grove Strategy (Vikings vs Scots)",
+      "url": "https://www.youtube.com/watch?v=XbywlGr6aG8",
+      "date": "2026-10-24",
+      "kind": "video"
+    },
+    {
+      "title": "Swaggy Professor: The Only Scots Build You'll Need",
+      "url": "https://www.youtube.com/watch?v=H37JNp7pVBU",
+      "date": "2026-10-24",
+      "kind": "video"
     },
     {
       "title": "Age of Empires IV Update 17.0 (Raiders of the North)",

@@ -57,7 +57,7 @@
       "style": "boom",
       "landmark": "Stone of Destiny",
       "ageUp": "4:55",
-      "pick": "Default; open maps and against slower civs",
+      "pick": "Default (Beasty, Swaggy): cows feed the TC, Fishponds add gold",
       "steps": [
         {
           "t": "3:20",
@@ -124,6 +124,7 @@
         }
       ],
       "army": [
+        "Man-at-Arms",
         "Highland Archer",
         "Pikeman",
         "Cateran"
@@ -219,7 +220,7 @@
       "style": "aggro",
       "landmark": "Abbey of the Isles",
       "ageUp": "4:52",
-      "pick": "Against greedy openings and archer civs",
+      "pick": "All-in; Beasty calls it weak in 1v1, better in team games",
       "steps": [
         {
           "t": "2:55",
@@ -365,6 +366,11 @@
     }
   ],
   "sources": [
+    {
+      "title": "Beasty: My First 1v1 Games With Scots",
+      "url": "https://www.youtube.com/watch?v=cPjX-wFhvDA",
+      "video": "https://www.youtube.com/watch?v=cPjX-wFhvDA"
+    },
     {
       "title": "Swaggy Professor: The Only Scots Build You'll Need (Stone of Destiny)",
       "url": "https://aoe4guides.com/builds/rGWRAbE6ptSPUMsueN8M",

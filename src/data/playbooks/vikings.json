@@ -3,96 +3,103 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "New in Update 17.0. Raiding infantry civ whose Town Centers make villagers for free up to a cap that Longhouses raise. Most players open Konungr Hall into a 2nd TC; the aggressive line is Baugr Fort with Hardened Berserkers and Bondi.",
+  "summary": "New in Update 17.0 and, per Beasty and Valdy, overtuned at launch. Town Centers make villagers for free, so 2 or even 3 TCs are hard to punish. Beasty learns the civ with Baugr Fort 1 TC infantry and Sacred Groves; Swaggy and Valdy boom off Konungr Hall into a 2nd TC before 5:00.",
   "openings": [
-    "Konungr Hall 2 TC (Swaggy, Valdy): 3 on gold, everyone to wood at 200 gold, Hall at about 2:00, Feudal around 4:15, 2nd TC by 5:00, then Longhouses with Bee Skeps.",
-    "Baugr Fort aggression: Feudal around 4:00 with Hardened Berserkers and Bondi raiding gold and wood lines.",
-    "Castle around 10:30 with Valdemar Castle for Jylland Knights, or Gullinn Temple for Sacred Groves."
+    "Beasty's 1 TC: Longhouse by the TC, 2 Bondi to snipe mining camps (not vs English or Lancaster), 6 on deer for the food Saga, Baugr Fort, then Hirdmen, Berserkers and 3 Völur for Sacred Groves on relics.",
+    "Konungr Hall 2 TC (Swaggy, Valdy): 3 on gold, stragglers, 5 on stone, 2nd TC placed around 4:18 and done by 5:00, then nonstop Longhouses with Bee Skeps.",
+    "Castle around 8:45 off 2 TC with Valdemar Castle for knights and archers, or Gullinn Temple for faster grove Berserkers on the 1 TC plan."
   ],
   "spikes": [
     {
       "age": 1,
-      "label": "Early Berserkers and Bondi",
-      "detail": "Berserkers and Bondi exist from the Dark Age and heal by eating from any food source, including your berries and deer.",
-      "answer": "Archers behind a palisade, or a tower on your gold. Pull villagers into the TC rather than trading."
+      "label": "Early Bondi and Sagas",
+      "detail": "Two Bondi from the Longhouse hunt mining camps: killing two eco buildings completes a Saga that makes their techs cheaper and faster. Infantry heal by eating any food.",
+      "answer": "Delete your own mining camp before their spears reach it, and keep villagers off isolated gold."
     },
     {
       "age": 2,
-      "label": "Free villagers and Shield Maidens",
-      "detail": "Two TCs pump villagers with no food cost, and Konungr Hall adds Shield Maidens that protect villagers.",
-      "answer": "Hit the Longhouses: every one you kill lowers their villager cap and population."
+      "label": "Sacred Groves and free villagers",
+      "detail": "Up to 3 groves on relics or sacred sites spawn free Berserkers (around a minute and a half each) and give +1 armor nearby. On 2 TC, villagers never stop coming.",
+      "answer": "Kill groves (650 HP) before they pay off, and raid Longhouses: they hold the villager cap."
     },
     {
       "age": 3,
-      "label": "Jylland Knights and Sacred Groves",
-      "detail": "Valdemar Castle brings cheaper Jylland Knights and Danevirke walls; Gullinn Temple lets Völur turn relics into Sacred Groves that spawn free Berserkers.",
-      "answer": "Spearmen and crossbows against the knights. Contest relics early or burn the Groves."
+      "label": "Valdemar Castle and archer volleys",
+      "detail": "Valdy calls Valdemar Castle the strongest landmark in the game: palisades become Danevirke walls sturdier than stone, and Jylland Knights refund gold. Viking archers fire splash volleys Beasty calls overpowered.",
+      "answer": "Spread your army against archer volleys; spearmen and crossbows against the knights; siege for the walls."
     },
     {
       "age": 4,
       "label": "220 population",
-      "detail": "Population goes to 210, or 220 with Folkekirken, and Leikr Training buffs melee infantry.",
-      "answer": "Don't trade late into a maxed Viking army; win earlier or out-range them with handcannons and siege."
+      "detail": "Population goes to 210, or 220 with Folkekirken, and melee infantry get stronger.",
+      "answer": "Win before they max out, or out-range the infantry with handcannons and siege."
     }
   ],
   "scout": [
-    "Konungr Hall plus stone villagers means a 2nd TC boom",
-    "Baugr Fort means Berserker and Bondi aggression soon",
-    "Number of Longhouses: their villager cap and how hard they're booming",
-    "Völur heading to relics means Sacred Groves"
+    "Bondi at your gold before 2:00 means the 1 TC Baugr Fort plan",
+    "Konungr Hall plus stone villagers means a 2nd TC before 5:00",
+    "Völur walking to relics means Sacred Groves",
+    "Number of Longhouses: their villager cap and how hard they're booming"
   ],
   "pairings": [
     {
-      "units": "Berserkers + Bondi",
-      "why": "Fast damage plus anti-cavalry spears that grow tougher in a group (shield wall)."
+      "units": "Hirdmen + Berserkers",
+      "why": "Beasty's Feudal infantry: armored front line plus fast self-healing damage, topped up by grove Berserkers."
     },
     {
-      "units": "Hirdmen + Archers",
-      "why": "Armored front line in front of cheap ranged damage."
+      "units": "Bondi + Shield Maidens",
+      "why": "Valdy and Swaggy's 2 TC defense: spears against cavalry, javelins against archers."
     },
     {
-      "units": "Jylland Knights + Hirdmen",
-      "why": "Cheaper knights that refund gold when they die, backed by heavy infantry."
+      "units": "Jylland Knights + Archers",
+      "why": "The Valdemar Castle style: cheap knights in front of splash-volley archers."
     }
   ],
   "winConditions": [
     {
-      "kind": "army",
-      "detail": "Melee infantry pressure that heals off the map's food."
+      "kind": "economy",
+      "detail": "Free villagers from 2 to 3 TCs out-produce anyone who doesn't punish them."
     },
     {
-      "kind": "economy",
-      "detail": "Free villager production from two TCs plus Longhouse upgrades."
+      "kind": "army",
+      "detail": "Mass melee infantry with high torch damage that heals on enemy food."
     },
     {
       "kind": "relics",
-      "detail": "Sacred Groves on relics make free Berserkers."
+      "detail": "Sacred Groves on relics or sacred sites make free Berserkers."
     }
   ],
   "howToBeat": [
-    "Kill Longhouses: they hold the villager cap, population and free upgrades.",
-    "Archers and towers handle the early Berserker and Bondi pressure; they have no ranged answer until Feudal archers.",
-    "Spearmen and crossbows against Jylland Knights in Castle.",
-    "They have no stone walls. Danevirke palisades resist torches, but rams and siege still break them."
+    "Punish early: once a 2nd or 3rd TC is up, the free villagers snowball.",
+    "Kill Longhouses: every one lowers their villager cap and population.",
+    "Delete your own mining camp before Bondi reach it so they don't finish the cheaper-tech Saga.",
+    "Burn Sacred Groves; Beasty says groves on sacred sites die easily.",
+    "Don't clump against their archers' splash volleys; spearmen and crossbows answer Jylland Knights."
   ],
   "sources": [
     {
-      "title": "Valdy: 2 TC into Valdemar Castle (aoe4guides)",
-      "url": "https://aoe4guides.com/builds/Gvwy3XlSQlpzLgXtDUjM",
-      "date": "2026-10-25",
+      "title": "Beasty: Simple Build Order Guide With Vikings",
+      "url": "https://www.youtube.com/watch?v=Oz9z-US4vzk",
+      "date": "2026-10-29",
       "kind": "video"
     },
     {
-      "title": "Swaggy Professor: The Only Vikings Build You'll Need (aoe4guides)",
-      "url": "https://aoe4guides.com/builds/WYm5TLrVWEJsEsi1LImJ",
+      "title": "FitzBro: Beasty's Sacred Grove Strategy (Vikings vs Scots)",
+      "url": "https://www.youtube.com/watch?v=XbywlGr6aG8",
       "date": "2026-10-24",
       "kind": "video"
     },
     {
-      "title": "Official Vikings civilization page",
-      "url": "https://www.ageofempires.com/games/age-of-empires-iv/civilizations/vikings/",
-      "date": "2026-10-29",
-      "kind": "written_guide"
+      "title": "Valdy: How To Play Vikings In AoE4 - Full Civ Walkthrough",
+      "url": "https://www.youtube.com/watch?v=DGW0mPhA4do",
+      "date": "2026-10-22",
+      "kind": "video"
+    },
+    {
+      "title": "Swaggy Professor: The Only Vikings Build You'll Need",
+      "url": "https://www.youtube.com/watch?v=3AqIiuRbd_w",
+      "date": "2026-10-23",
+      "kind": "video"
     },
     {
       "title": "Age of Empires IV Update 17.0 (Raiders of the North)",

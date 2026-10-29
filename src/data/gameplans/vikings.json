@@ -4,38 +4,28 @@
   "checkedBuild": 11308,
   "updated": "2026-10-29",
   "opening": {
-    "decideAt": "1:55",
+    "decideAt": "0:40",
     "steps": [
       {
         "t": "0:00",
         "v": [
           6,
           0,
-          3,
-          0
-        ],
-        "b": 1,
-        "do": "6 on sheep, 3 to gold, 1 builds a Longhouse by the TC"
-      },
-      {
-        "t": "1:00",
-        "v": [
-          6,
-          1,
-          3,
-          0
-        ],
-        "do": "TC makes villagers on its own; rally to straggler trees"
-      },
-      {
-        "t": "1:50",
-        "v": [
-          6,
-          5,
           0,
           0
         ],
-        "do": "At 200 gold, gold villagers go to wood"
+        "b": 1,
+        "do": "6 on sheep, 1 builds a Longhouse by the TC; the TC makes villagers on its own"
+      },
+      {
+        "t": "0:25",
+        "v": [
+          6,
+          1,
+          0,
+          0
+        ],
+        "do": "Next villager to wood: Longhouses need wood all game"
       }
     ]
   },
@@ -46,8 +36,18 @@
       "style": "boom",
       "landmark": "Konungr Hall",
       "ageUp": "4:15",
-      "pick": "Default, and against slow or defensive civs",
+      "pick": "Default (Swaggy, Valdy); free villagers make the 2nd TC hard to punish",
       "steps": [
+        {
+          "t": "0:45",
+          "v": [
+            6,
+            1,
+            3,
+            0
+          ],
+          "do": "Next 3 to gold, then rally to straggler trees"
+        },
         {
           "t": "1:55",
           "v": [
@@ -57,7 +57,7 @@
             0
           ],
           "b": 2,
-          "do": "Drop food; 2 build Konungr Hall, the rest to wood"
+          "do": "2 build Konungr Hall, the rest chop stragglers"
         },
         {
           "t": "2:20",
@@ -65,10 +65,10 @@
             0,
             6,
             0,
-            4
+            5
           ],
           "b": 2,
-          "do": "Rally to stone until 5; 3 wood to stone"
+          "do": "5 to stone, no lumber camp"
         },
         {
           "t": "3:55",
@@ -79,10 +79,10 @@
             5
           ],
           "b": 4,
-          "do": "2 more help finish the Hall"
+          "do": "Rally new villagers into the Hall"
         },
         {
-          "t": "4:15",
+          "t": "4:18",
           "v": [
             0,
             9,
@@ -90,43 +90,43 @@
             0
           ],
           "b": 8,
-          "do": "Feudal: 8 build a 2nd TC by the wood"
+          "do": "Feudal: 2nd TC on the wood line with 8"
         },
         {
           "t": "5:00",
           "v": [
             0,
-            11,
+            13,
             0,
             0
           ],
-          "b": 9,
-          "do": "2nd TC up; builders make Longhouses with Bee Skeps"
+          "b": 4,
+          "do": "TC done: a Longhouse right away or you're villager-capped"
         },
         {
-          "t": "6:15",
+          "t": "6:00",
           "v": [
-            6,
-            18,
+            4,
+            16,
             4,
             0
           ],
-          "do": "Longhouse with Smithy; Shield Maidens if they attack"
+          "do": "Longhouses with Bee Skeps; Bondi + Shield Maidens if attacked"
         },
         {
-          "t": "8:00",
+          "t": "7:00",
           "v": [
+            10,
             14,
-            10,
-            10,
+            8,
             0
           ],
-          "do": "Farms; gold up for Castle"
+          "do": "3rd Longhouse, farms, gold up for Castle"
         }
       ],
       "army": [
-        "Shield Maiden",
         "Bondi",
+        "Shield Maiden",
         "Archer"
       ],
       "castle": [
@@ -135,252 +135,247 @@
           "name": "Valdemar Castle knights",
           "style": "timing",
           "landmark": "Valdemar Castle",
-          "ageUp": "10:30",
-          "pick": "Default: Jylland Knights and Hirdmen hit before they scale",
+          "ageUp": "8:45",
+          "pick": "Default for 2 TC: knights and archers behind Danevirke walls",
           "steps": [
             {
-              "t": "9:20",
+              "t": "8:00",
               "v": [
-                10,
-                10,
                 12,
+                14,
+                10,
                 0
               ],
-              "b": 8,
-              "do": "8 food villagers build Valdemar Castle; Double Broadaxe"
+              "b": 6,
+              "do": "Build Valdemar Castle"
             },
             {
-              "t": "10:30",
-              "v": [
-                8,
-                26,
-                13,
-                0
-              ],
-              "do": "Stable: Jylland Knights; Danevirke upgrades your palisades"
+              "t": "8:45",
+              "do": "Palisades become Danevirke, sturdier than stone; Jylland Knights refund gold on death"
             },
             {
-              "t": "11:30",
-              "do": "Knights + Hirdmen push; Shield Maidens guard home"
+              "t": "10:00",
+              "do": "Knights + archers; archer volleys splash like a mangonel"
             }
           ],
           "army": [
             "Jylland Knight",
-            "Hirdman",
-            "Archer"
+            "Archer",
+            "Horseman"
           ],
-          "goal": "Trade knights well (they refund gold on death) and take map gold"
+          "goal": "Trade knights cheaply and win the long game on 2-3 TCs"
         },
         {
           "id": "gullinn-groves",
           "name": "Gullinn Temple groves",
-          "style": "boom",
+          "style": "aggro",
           "landmark": "Gullinn Temple",
-          "ageUp": "10:45",
-          "pick": "Relics are close and safe; play a longer game",
+          "ageUp": "9:30",
+          "pick": "You're ahead and want to keep up infantry pressure",
           "steps": [
             {
-              "t": "9:20",
+              "t": "8:00",
               "v": [
                 12,
                 10,
                 10,
                 0
               ],
-              "b": 8,
-              "do": "Build Gullinn Temple; Völur from the Temple"
+              "b": 6,
+              "do": "Build Gullinn Temple"
             },
             {
-              "t": "10:45",
-              "v": [
-                14,
-                18,
-                12,
-                0
-              ],
-              "do": "Völur turn relics into Sacred Groves; Dreki Saga"
+              "t": "9:30",
+              "do": "Grove Berserkers come 50% faster; groves on sacred sites capture them fast"
             },
             {
-              "t": "12:00",
-              "do": "Groves spawn Berserkers for free; armor aura near them"
+              "t": "11:00",
+              "do": "Hirdmen + Berserkers push; eat their farms to heal"
             }
           ],
           "army": [
             "Berserker",
             "Hirdman",
-            "Archer"
+            "Bondi"
           ],
-          "goal": "Free Berserkers from Sacred Groves while the Longhouse eco grows"
+          "goal": "Free Berserkers from up to 3 groves while the Hirdmen trade"
         }
       ]
     },
     {
-      "id": "baugr-raid",
-      "name": "Baugr Fort raids",
+      "id": "baugr-1tc",
+      "name": "Baugr Fort 1 TC aggression",
       "style": "aggro",
       "landmark": "Baugr Fort",
       "ageUp": "4:00",
-      "pick": "Closed maps, or against greedy 2 TC and fast Castle",
+      "pick": "Beasty's way to learn the civ; skip the Bondi vs English and Lancaster",
       "steps": [
         {
-          "t": "1:55",
+          "t": "0:45",
           "v": [
-            4,
-            5,
-            3,
+            6,
+            2,
+            0,
             0
           ],
-          "b": 2,
-          "do": "2 sheep build Baugr Fort; keep 3 on gold"
+          "do": "Longhouse trains 2 Bondi; they snipe mining camps (Saga)"
+        },
+        {
+          "t": "1:30",
+          "v": [
+            8,
+            2,
+            0,
+            0
+          ],
+          "do": "6 to deer with a mill for the map-food Saga"
+        },
+        {
+          "t": "2:30",
+          "v": [
+            8,
+            2,
+            5,
+            0
+          ],
+          "do": "Mining camp, 5 on gold"
         },
         {
           "t": "3:00",
           "v": [
             6,
-            6,
-            4,
+            2,
+            5,
             0
           ],
           "b": 2,
-          "do": "Barracks; rally to gold for Berserkers"
+          "do": "2 build Baugr Fort"
         },
         {
           "t": "4:00",
           "v": [
-            8,
+            2,
             6,
-            6,
+            5,
             0
           ],
-          "do": "Feudal: Fort makes Hardened Berserkers and Bondi"
+          "do": "Feudal: Hardened Bondi and Berserkers; add Hirdmen; 3 Völur"
         },
         {
-          "t": "5:30",
+          "t": "5:00",
           "v": [
-            10,
-            8,
-            8,
+            4,
+            6,
+            6,
             0
           ],
-          "do": "Raid gold and wood lines; heal on their berries and deer"
+          "do": "Völur plant Sacred Groves on 3 relics for free Berserkers"
         },
         {
           "t": "7:00",
           "v": [
-            14,
             8,
-            10,
+            6,
+            7,
             0
           ],
-          "do": "Longhouse per ~10 villagers so the TC keeps making them"
+          "do": "Armor Longhouse attachment, then damage; heal on their food"
         }
       ],
       "army": [
+        "Hirdman",
         "Berserker",
-        "Bondi",
-        "Archer"
+        "Bondi"
       ],
       "castle": [
+        {
+          "id": "gullinn-groves",
+          "name": "Gullinn Temple groves",
+          "style": "aggro",
+          "landmark": "Gullinn Temple",
+          "ageUp": "10:00",
+          "pick": "Default for 1 TC: keep the infantry pressure going",
+          "steps": [
+            {
+              "t": "9:00",
+              "v": [
+                12,
+                10,
+                10,
+                0
+              ],
+              "b": 6,
+              "do": "Build Gullinn Temple"
+            },
+            {
+              "t": "10:00",
+              "do": "Grove Berserkers come 50% faster; groves on sacred sites capture them fast"
+            },
+            {
+              "t": "11:00",
+              "do": "Hirdmen + Berserkers push; eat their farms to heal"
+            }
+          ],
+          "army": [
+            "Berserker",
+            "Hirdman",
+            "Bondi"
+          ],
+          "goal": "Free Berserkers from up to 3 groves while the Hirdmen trade"
+        },
         {
           "id": "valdemar-knights",
           "name": "Valdemar Castle knights",
           "style": "timing",
           "landmark": "Valdemar Castle",
           "ageUp": "10:30",
-          "pick": "Default: Jylland Knights and Hirdmen hit before they scale",
+          "pick": "Switch to knights and archers",
           "steps": [
             {
               "t": "9:00",
               "v": [
-                10,
-                10,
                 12,
+                14,
+                10,
                 0
               ],
-              "b": 8,
-              "do": "8 food villagers build Valdemar Castle; Double Broadaxe"
+              "b": 6,
+              "do": "Build Valdemar Castle"
             },
             {
               "t": "10:30",
-              "v": [
-                8,
-                26,
-                13,
-                0
-              ],
-              "do": "Stable: Jylland Knights; Danevirke upgrades your palisades"
+              "do": "Palisades become Danevirke, sturdier than stone; Jylland Knights refund gold on death"
             },
             {
               "t": "11:30",
-              "do": "Knights + Hirdmen push; Shield Maidens guard home"
+              "do": "Knights + archers; archer volleys splash like a mangonel"
             }
           ],
           "army": [
             "Jylland Knight",
-            "Hirdman",
-            "Archer"
+            "Archer",
+            "Horseman"
           ],
-          "goal": "Trade knights well (they refund gold on death) and take map gold"
-        },
-        {
-          "id": "gullinn-groves",
-          "name": "Gullinn Temple groves",
-          "style": "boom",
-          "landmark": "Gullinn Temple",
-          "ageUp": "10:45",
-          "pick": "Relics are close and safe; play a longer game",
-          "steps": [
-            {
-              "t": "9:00",
-              "v": [
-                12,
-                10,
-                10,
-                0
-              ],
-              "b": 8,
-              "do": "Build Gullinn Temple; Völur from the Temple"
-            },
-            {
-              "t": "10:45",
-              "v": [
-                14,
-                18,
-                12,
-                0
-              ],
-              "do": "Völur turn relics into Sacred Groves; Dreki Saga"
-            },
-            {
-              "t": "12:00",
-              "do": "Groves spawn Berserkers for free; armor aura near them"
-            }
-          ],
-          "army": [
-            "Berserker",
-            "Hirdman",
-            "Archer"
-          ],
-          "goal": "Free Berserkers from Sacred Groves while the Longhouse eco grows"
+          "goal": "Trade knights cheaply and win the long game on 2-3 TCs"
         }
       ]
     }
   ],
   "sources": [
     {
+      "title": "Beasty: Simple Build Order Guide With Vikings",
+      "url": "https://www.youtube.com/watch?v=Oz9z-US4vzk",
+      "video": "https://www.youtube.com/watch?v=Oz9z-US4vzk"
+    },
+    {
       "title": "Swaggy Professor: The Only Vikings Build You'll Need (Konungr 2 TC)",
       "url": "https://aoe4guides.com/builds/WYm5TLrVWEJsEsi1LImJ",
       "video": "https://www.youtube.com/watch?v=3AqIiuRbd_w"
     },
     {
-      "title": "Swaggy Professor: 2 TC Viking starter (simplified)",
-      "url": "https://aoe4guides.com/builds/eDD62wG5UJ5InP5OygNR",
-      "video": "https://www.youtube.com/watch?v=3AqIiuRbd_w"
-    },
-    {
-      "title": "Valdy: 2 TC into Valdemar Castle",
+      "title": "Valdy: How To Play Vikings (2 TC macro)",
       "url": "https://aoe4guides.com/builds/Gvwy3XlSQlpzLgXtDUjM",
-      "video": "https://www.youtube.com/watch?v=TtDmif9HJe0"
+      "video": "https://www.youtube.com/watch?v=DGW0mPhA4do"
     }
   ]
 }
