@@ -3,9 +3,34 @@ import { useMemo, useRef } from "react";
 import { resourceIcon } from "../lib/assets";
 import { getCiv } from "../lib/gameData";
 import { findUnit, formatClock, landmarkIcon, RESOURCES, type GamePlan, type SelectedPath } from "../lib/gamePlans";
-import { frameAt, type BuildingKind, type Playback } from "../lib/playback";
+import { frameAt, type BuildingKind, type Move, type Playback } from "../lib/playback";
 import { Tip } from "./ui";
 import type { IconType } from "react-icons";
+
+const SLOT_NAMES = { tc: "New", food: "Food", wood: "Wood", gold: "Gold", stone: "Stone", build: "Build" } as const;
+
+function SlotIcon({ slot }: { slot: Move["from"] }) {
+  if (slot === "build") return <span className="move-hammer" aria-label="builders">⚒</span>;
+  return <img src={resourceIcon(slot === "tc" ? "villager" : slot)} alt={SLOT_NAMES[slot]} />;
+}
+
+/** A step's villager moves as chips: "4 [sheep] → [hammer]". New villagers come from the Town Center. */
+export function MoveChips({ moves }: { moves: Move[] }) {
+  return (
+    <span className="move-chips">
+      {moves.map((m, i) => (
+        <Tip key={i} label={`${m.n} ${m.from === "tc" ? "new villager" + (m.n > 1 ? "s" : "") : `from ${SLOT_NAMES[m.from].toLowerCase()}`} to ${SLOT_NAMES[m.to].toLowerCase()}`}>
+          <span className={`move-chip from-${m.from} to-${m.to}`}>
+            <b>{m.n}</b>
+            <SlotIcon slot={m.from} />
+            <span className="move-arrow" aria-hidden="true">→</span>
+            <SlotIcon slot={m.to} />
+          </span>
+        </Tip>
+      ))}
+    </span>
+  );
+}
 
 const W = 1000;
 const VIL_H = 120;
@@ -111,6 +136,7 @@ export function PlanTimeline({
         <div className="tl-now-step">
           <span className="tl-now-t">{frame.current?.step.t ?? "0:00"}</span>
           <span className="tl-now-do">{frame.current?.step.do ?? "Game starts"}</span>
+          {frame.current && frame.current.moves.length > 0 && <MoveChips moves={frame.current.moves} />}
         </div>
       </div>
 
@@ -140,6 +166,21 @@ export function PlanTimeline({
             return (
               <span key={p.seconds} className="tl-total" style={{ left: pct(p.seconds), bottom: `${((p.villagers.length / maxVils) * (VIL_H - 6) * 100) / VIL_H}%` }}>
                 {wide || i === points.length - 1 ? p.villagers.length : ""}
+              </span>
+            );
+          })}
+        </div>
+
+        <div className="tl-lane rally">
+          <span className="tl-lane-label">Rally</span>
+          {pb.events.map((e, i) => {
+            const nx = pb.events[i + 1]?.seconds ?? pb.end;
+            if (i > 0 && pb.events[i - 1].rally === e.rally) return null;
+            let to = nx;
+            for (let k = i + 1; k < pb.events.length && pb.events[k].rally === e.rally; k++) to = pb.events[k + 1]?.seconds ?? pb.end;
+            return (
+              <span key={i} className={`tl-rally ${e.rally}`} style={{ left: pct(e.seconds), width: pct(to - e.seconds) }}>
+                <img src={resourceIcon(e.rally)} alt={e.rally} />
               </span>
             );
           })}

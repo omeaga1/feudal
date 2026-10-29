@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { gamePlans, getGamePlan } from "./gamePlans";
-import { assignVillagers, buildingsIn, buildPlayback, frameAt, landmarkStart, villagerAt, villagerMoves, type Villager } from "./playback";
+import { assignVillagers, buildingsIn, buildPlayback, frameAt, landmarkStart, stepHints, villagerAt, villagerMoves, type Villager } from "./playback";
 
 const where = (vils: Villager[]) => vils.map((v) => v.at);
 
@@ -113,5 +113,41 @@ describe("villager moves", () => {
 
   it("finds when the landmark goes up", () => {
     expect(landmarkStart(pb, 2)).toBe(130);
+  });
+});
+
+describe("step hints", () => {
+  it("reads pulls, builders and rally points", () => {
+    expect(stepHints("Pull gold to wood, 4 sheep build Council Hall")).toEqual({
+      pulls: [
+        { from: "food", to: "build" },
+        { from: "gold", to: "wood" },
+      ],
+      rally: undefined,
+    });
+    expect(stepHints("Builders to food and gold; Specialized Pick").pulls).toEqual([
+      { from: "build", to: "food" },
+      { from: "build", to: "gold" },
+    ]);
+    expect(stepHints("Rally back to sheep until you age up").rally).toBe("food");
+    expect(stepHints("Rally 2 or 3 to gold with a camp").rally).toBe("gold");
+    expect(stepHints("Next 2 to gold, mining camp").rally).toBe("gold");
+    expect(stepHints("Builders to gold; TC 2 rallies wood").rally).toBe("wood");
+    expect(stepHints("Barracks and a house").pulls).toEqual([]);
+  });
+
+  it("pulls builders off sheep and sends gold to wood, as the English plan says", () => {
+    const plan = getGamePlan("english")!;
+    const pb = buildPlayback(plan, { feudal: plan.feudal[0], castle: plan.feudal[0].castle[0] });
+    const step = pb.events.find((e) => e.step.t === "2:10")!;
+    expect(step.moves).toEqual(
+      expect.arrayContaining([
+        { from: "food", to: "build", n: 2 },
+        { from: "gold", to: "wood", n: 2 },
+        { from: "tc", to: "build", n: 2 },
+      ]),
+    );
+    expect(pb.events[0].rally).toBe("food");
+    expect(pb.events.find((e) => e.step.t === "0:20")!.rally).toBe("gold");
   });
 });

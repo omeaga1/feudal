@@ -4581,3 +4581,176 @@ input.with-icon {
   background: var(--accent-2);
   color: var(--bg);
 }
+
+/* Villager moves and the rally point */
+.sb-move-line {
+  fill: none;
+  stroke-width: 3.5;
+  stroke-dasharray: 10 7;
+  stroke-linecap: round;
+}
+
+.sb-move-glow {
+  fill: none;
+  stroke-width: 9;
+  stroke-linecap: round;
+  opacity: 0.25;
+}
+
+.sb-move.tc .sb-move-line,
+.sb-move.tc .sb-move-glow {
+  stroke: var(--accent-2);
+}
+.sb-move.food .sb-move-line,
+.sb-move.food .sb-move-glow {
+  stroke: var(--food);
+}
+.sb-move.wood .sb-move-line,
+.sb-move.wood .sb-move-glow {
+  stroke: var(--wood);
+}
+.sb-move.gold .sb-move-line,
+.sb-move.gold .sb-move-glow {
+  stroke: var(--gold);
+}
+.sb-move.stone .sb-move-line,
+.sb-move.stone .sb-move-glow {
+  stroke: var(--stone);
+}
+.sb-move.build .sb-move-line,
+.sb-move.build .sb-move-glow {
+  stroke: var(--ink);
+}
+
+.sb-arrowhead.tc {
+  fill: var(--accent-2);
+}
+.sb-arrowhead.food {
+  fill: var(--food);
+}
+.sb-arrowhead.wood {
+  fill: var(--wood);
+}
+.sb-arrowhead.gold {
+  fill: var(--gold);
+}
+.sb-arrowhead.stone {
+  fill: var(--stone);
+}
+.sb-arrowhead.build {
+  fill: var(--ink);
+}
+
+.sb-move-tag {
+  fill: rgba(13, 15, 19, 0.92);
+  stroke: var(--line-2);
+  stroke-width: 1;
+}
+
+.sb-move-n {
+  fill: var(--ink);
+  font: 800 15px "Inter Variable", sans-serif;
+  text-anchor: middle;
+}
+
+.sb-move-hammer {
+  fill: var(--ink);
+  font-size: 14px;
+}
+
+.sb-rally-line {
+  stroke: var(--accent-2);
+  stroke-width: 2;
+  stroke-dasharray: 3 6;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+
+.sb-rally-flag {
+  stroke: var(--ink);
+  stroke-width: 2;
+  fill: var(--accent);
+}
+
+.sb-rally-label {
+  fill: var(--accent-2);
+  font: 800 11px "Inter Variable", sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  paint-order: stroke;
+  stroke: rgba(0, 0, 0, 0.7);
+  stroke-width: 3px;
+}
+
+.move-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.move-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  background: var(--panel-2);
+  border: 1px solid var(--line-2);
+}
+
+.move-chip img {
+  width: 18px;
+  height: 18px;
+}
+
+.move-chip .move-arrow {
+  color: var(--muted);
+}
+
+.pb-obj-moves,
+.pb-objective .move-chips {
+  grid-column: 2;
+}
+
+.tl-now-step .move-chips {
+  margin-left: auto;
+}
+
+.tl-lane.rally {
+  height: 30px;
+}
+
+.tl-rally {
+  --rc: var(--food);
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--rc) 30%, transparent);
+  border-left: 2px solid var(--rc);
+}
+
+.tl-rally img {
+  width: 18px;
+  height: 18px;
+}
+
+.tl-rally.wood {
+  --rc: var(--wood);
+}
+.tl-rally.gold {
+  --rc: var(--gold);
+}
+.tl-rally.stone {
+  --rc: var(--stone);
+}
+
+.pb-views {
+  gap: 10px;
+  flex-wrap: wrap;
+}

@@ -67,29 +67,105 @@ export function buildingsIn(text: string): BuildingKind[] {
   return BUILDING_WORDS.filter(([, re]) => re.test(plain)).map(([kind]) => kind);
 }
 
+/** What a step's text says about moving villagers: who gets pulled where, and where the Town Center rallies. */
+export interface Hints {
+  pulls: { from: Slot; to: Slot }[];
+  rally?: Resource;
+}
+
+const RESOURCE_WORDS: [RegExp, Resource][] = [
+  [/^(food|sheep|berry|berries|deer|hunt|farms?|boar|cattle|shore|fish)$/, "food"],
+  [/^(wood|woodline|lumber|trees?|chop)$/, "wood"],
+  [/^gold$/, "gold"],
+  [/^stone$/, "stone"],
+];
+
+function resourceWord(word: string | undefined): Resource | undefined {
+  return word ? RESOURCE_WORDS.find(([re]) => re.test(word))?.[1] : undefined;
+}
+
+/**
+ * Reads villager moves out of a step like "Pull gold to wood, 4 sheep build
+ * Council Hall" or "Builders to sheep; rally gold". Anything it can't read
+ * is left to the split itself.
+ */
+export function stepHints(text: string): Hints {
+  const t = text.toLowerCase();
+  const pulls: Hints["pulls"] = [];
+  for (const m of t.matchAll(/\b([a-z]+)\s+(?:villagers?\s+)?builds?\b/g)) {
+    const from = resourceWord(m[1]);
+    if (from) pulls.push({ from, to: "build" });
+  }
+  for (const m of t.matchAll(/\bbuilders?\s+(?:back\s+)?to\s+([a-z]+)(?:\s+and\s+([a-z]+))?/g)) {
+    for (const w of [m[1], m[2]]) {
+      const to = resourceWord(w);
+      if (to) pulls.push({ from: "build", to });
+    }
+  }
+  for (const m of t.matchAll(/\b([a-z]+)\s+(?:villagers?\s+)?to\s+([a-z]+)/g)) {
+    const from = resourceWord(m[1]);
+    const to = resourceWord(m[2]);
+    if (from && to && from !== to) pulls.push({ from, to });
+  }
+  const rally =
+    t.match(/\brall(?:y|ies|ying)\s+(?:back\s+)?(?:to\s+)?(?:\d+(?:\s+(?:or|to)\s+\d+)?\s+)?(?:villagers\s+)?(?:to\s+|on\s+)?([a-z]+)/)?.[1] ??
+    t.match(/\bnext\s+(?:\d+|ones?|few|villagers?)\s+(?:villagers\s+)?(?:to|on)\s+([a-z]+)/)?.[1];
+  return { pulls, rally: resourceWord(rally) };
+}
+
+/** Where builders come from when a step doesn't say: sheep first, as most guides do. */
+const BUILDER_SOURCES: Slot[] = ["food", "wood", "gold", "stone"];
+/** Where anyone else comes from: finished builders first. */
+const ANY_SOURCE: Slot[] = ["build", "food", "wood", "gold", "stone"];
+
 /**
  * Moves the fewest villagers to match a new split. Villagers already on a
- * resource that still needs them stay put; the rest move to the shortfalls,
- * and new villagers (from the Town Center) fill whatever is left.
+ * resource that still needs them stay put. The step's own words decide who
+ * gets pulled where, new villagers go to the rally point, and the rest
+ * fill whatever shortfall is left.
  */
-export function assignVillagers(prev: Villager[], split: Split, builders: number, nextId = nextVillagerId(prev)): Villager[] {
+export function assignVillagers(prev: Villager[], split: Split, builders: number, nextId = nextVillagerId(prev), hints: Hints = { pulls: [] }): Villager[] {
   const target: Record<Slot, number> = { food: split[0], wood: split[1], gold: split[2], stone: split[3], build: builders };
   const count: Record<Slot, number> = { food: 0, wood: 0, gold: 0, stone: 0, build: 0 };
-  const kept = prev.map((v) => {
-    if (count[v.at] < target[v.at]) {
-      count[v.at]++;
-      return v;
-    }
-    return null;
+  const freed: Record<Slot, number[]> = { food: [], wood: [], gold: [], stone: [], build: [] };
+  prev.forEach((v, i) => {
+    if (count[v.at] < target[v.at]) count[v.at]++;
+    else freed[v.at].push(i);
   });
-  const needs: Slot[] = SLOTS.flatMap((s) => Array.from({ length: Math.max(0, target[s] - count[s]) }, () => s));
+  const need = Object.fromEntries(SLOTS.map((s) => [s, target[s] - count[s]])) as Record<Slot, number>;
+  const moved = new Map<number, Slot>();
+  const take = (from: Slot, to: Slot) => {
+    while (freed[from].length && need[to] > 0) {
+      moved.set(freed[from].shift()!, to);
+      need[to]--;
+    }
+  };
+
+  for (const p of hints.pulls) take(p.from, p.to);
+  // New villagers walk out of the Town Center to the rally point.
+  const total = SLOTS.reduce((a, s) => a + target[s], 0);
+  let fresh = Math.max(0, total - prev.length);
+  const toRally = hints.rally ? Math.min(fresh, Math.max(0, need[hints.rally])) : 0;
+  if (hints.rally) need[hints.rally] -= toRally;
+  fresh -= toRally;
+  for (const from of BUILDER_SOURCES) take(from, "build");
+  for (const to of SLOTS) for (const from of ANY_SOURCE) take(from, to);
+
   const out: Villager[] = [];
-  kept.forEach((v, i) => {
-    if (v) out.push(v);
-    else if (needs.length) out.push({ id: prev[i].id, at: needs.shift()! });
+  prev.forEach((v, i) => {
+    const at = moved.get(i);
+    if (at) out.push({ id: v.id, at });
+    else if (!SLOTS.some((s) => freed[s].includes(i))) out.push(v);
   });
   let id = nextId;
-  for (const at of needs) out.push({ id: id++, at });
+  for (let k = 0; k < toRally; k++) out.push({ id: id++, at: hints.rally! });
+  for (const to of SLOTS) {
+    while (need[to] > 0 && fresh > 0) {
+      out.push({ id: id++, at: to });
+      need[to]--;
+      fresh--;
+    }
+  }
   return out;
 }
 
@@ -107,6 +183,30 @@ export interface PlaybackEvent {
   villagers: Villager[];
   /** Buildings this step names for the first time. */
   newBuildings: BuildingKind[];
+  /** Villagers this step sends somewhere new: pulled from a resource, or fresh out of the Town Center ("tc"). */
+  moves: Move[];
+  /** Where the Town Center sends new villagers from this step on. */
+  rally: Resource;
+}
+
+export interface Move {
+  from: Slot | "tc";
+  to: Slot;
+  n: number;
+}
+
+/** Counts villagers that changed place between two steps, grouped by from and to. */
+export function movesBetween(before: Villager[], after: Villager[]): Move[] {
+  const was = new Map(before.map((v) => [v.id, v.at]));
+  const moves: Move[] = [];
+  for (const v of after) {
+    const from = was.get(v.id) ?? "tc";
+    if (from === v.at) continue;
+    const m = moves.find((x) => x.from === from && x.to === v.at);
+    if (m) m.n++;
+    else moves.push({ from, to: v.at, n: 1 });
+  }
+  return moves;
 }
 
 export interface Playback {
@@ -125,6 +225,7 @@ export function buildPlayback(plan: GamePlan, path: SelectedPath): Playback {
   let buildersUntil = 0;
   let villagers: Villager[] = [];
   let nextId = 0;
+  let rally: Resource = "food";
   const seen = new Set<BuildingKind>();
   const events = pathSteps(plan, path)
     .map(({ age, step }) => ({ age, step, seconds: clock(step.t) }))
@@ -133,16 +234,22 @@ export function buildPlayback(plan: GamePlan, path: SelectedPath): Playback {
     .map(({ age, step, seconds }): PlaybackEvent => {
       // A step without a split keeps the last one. Landmark builders stay on
       // the landmark until the age-up unless a step says otherwise.
+      const hints = stepHints(step.do);
+      const before = villagers;
       if (step.v) {
         split = step.v;
         if (step.b !== undefined) buildersUntil = age === 1 ? feudalAt : castleAt;
         builders = step.b ?? (seconds < buildersUntil ? builders : 0);
-        villagers = assignVillagers(villagers, split, builders, nextId);
+        villagers = assignVillagers(villagers, split, builders, nextId, { pulls: hints.pulls, rally: hints.rally ?? rally });
         nextId = Math.max(nextId, nextVillagerId(villagers));
       }
+      const moves = movesBetween(before, villagers);
+      // Without a rally in the text, the rally point is wherever this step's new villagers went.
+      const fresh = moves.filter((m) => m.from === "tc" && m.to !== "build").sort((a, b) => b.n - a.n)[0];
+      rally = hints.rally ?? (fresh?.to as Resource | undefined) ?? rally;
       const newBuildings = buildingsIn(step.do).filter((b) => !seen.has(b));
       newBuildings.forEach((b) => seen.add(b));
-      return { seconds, age, step, split, builders, villagers, newBuildings };
+      return { seconds, age, step, split, builders, villagers, newBuildings, moves, rally };
     });
   const last = events.length ? events[events.length - 1].seconds : 0;
   return { events, feudalAt, castleAt, end: Math.max(last, castleAt) + 30 };

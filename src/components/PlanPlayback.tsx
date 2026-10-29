@@ -23,10 +23,10 @@ import {
 } from "react-icons/gi";
 import { resourceIcon } from "../lib/assets";
 import { getCiv } from "../lib/gameData";
-import { findUnit, formatClock, landmarkIcon, RESOURCES, type GamePlan, type PlanNode, type SelectedPath, type Split } from "../lib/gamePlans";
+import { findUnit, formatClock, landmarkIcon, type GamePlan, type PlanNode, type SelectedPath } from "../lib/gamePlans";
 import { usePersisted } from "../lib/persisted";
-import { buildPlayback, frameAt, landmarkStart, SLOTS, villagerAt, villagerMoves, type BuildingKind, type Playback, type Slot, type VillagerMove } from "../lib/playback";
-import { PlanTimeline } from "./PlanTimeline";
+import { buildPlayback, frameAt, landmarkStart, SLOTS, type Move, villagerAt, villagerMoves, type BuildingKind, type Playback, type Slot, type VillagerMove } from "../lib/playback";
+import { MoveChips, PlanTimeline } from "./PlanTimeline";
 import { Tip } from "./ui";
 
 // A top-down mini base in a 960x500 scene: the Town Center in the middle,
@@ -103,6 +103,11 @@ const BUILDINGS: Record<BuildingKind, { icon: IconType; label: string }> = {
 
 const AGE_LABELS = { 1: "Dark Age", 2: "Feudal Age", 3: "Castle Age" } as const;
 const SPEEDS = [1, 2, 4, 8, 16];
+const PACES: [number, string][] = [
+  [0.5, "Slow"],
+  [1, "Normal"],
+  [2, "Fast"],
+];
 /** Scene pixels a villager walks per game second. */
 const WALK = 42;
 /** Game seconds a villager gathers before carrying a load back. */
@@ -114,8 +119,8 @@ const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.y - b.y);
 const lerp = (a: P, b: P, k: number): P => ({ x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k });
 
 /** A villager's own spot at a site, spread on a sunflower spiral so a crowd doesn't stack. */
-function spot(slot: Slot, id: number): P {
-  const c = SITES[slot];
+function spot(slot: Slot, id: number, castle = false): P {
+  const c = slot === "build" && castle ? CASTLE_LANDMARK : SITES[slot];
   const a = id * 2.39996;
   const r = 10 + Math.sqrt(id % 24) * 9;
   return { x: c.x + Math.cos(a) * r, y: c.y + Math.sin(a) * r * 0.7 };
@@ -150,11 +155,13 @@ function leg(a: P, b: P, k: number, job: Slot, carrying: boolean): VilState {
   return { p: lerp(a, b, e), job, carrying, working: false, stride: dist(a, b) * e, facing: b.x < a.x ? -1 : 1 };
 }
 
-function villagerState(moves: VillagerMove[] | undefined, id: number, t: number, built: Map<BuildingKind, number>): VilState | undefined {
+function villagerState(moves: VillagerMove[] | undefined, id: number, t: number, built: Map<BuildingKind, number>, feudalAt: number): VilState | undefined {
   const st = villagerAt(moves, t);
   if (!st) return undefined;
-  const from = st.from === "tc" ? TC : spot(st.from, id);
-  const to = spot(st.to, id);
+  // Builders sent after Feudal work on the Castle landmark.
+  const castle = st.since >= feudalAt;
+  const from = st.from === "tc" ? TC : spot(st.from, id, castle);
+  const to = spot(st.to, id, castle);
   const walk = dist(from, to) / WALK;
   const e = t - st.since;
   if (e < walk) return leg(from, to, e / walk, st.to, false);
@@ -181,11 +188,24 @@ const GOLD_ROCKS = scatter(7, 3, { x: 815, y: 112, w: 60, h: 40 });
 const STONE_ROCKS = scatter(7, 11, { x: 845, y: 310, w: 60, h: 40 });
 const SHEEP = scatter(8, 5, { x: 250, y: 280, w: 70, h: 40 });
 
-/** Plays the clock forward while `playing`, `speed` game seconds per real second, stopping at `end`. */
-function useGameClock(end: number) {
+export type ClockMode = "steps" | "real";
+
+/** Game seconds of each step shown in Key steps mode: long enough for villagers to walk to their new jobs. */
+const BEAT_GAME = 22;
+/** Real seconds each step takes in Key steps mode, at normal speed. */
+const BEAT_REAL = 3.2;
+
+/**
+ * Runs the game clock. "real" plays game time at `speed` game seconds per
+ * real second. "steps" gives every step the same short beat, playing just
+ * the moments after it and skipping the quiet time between steps.
+ */
+function useGameClock(end: number, steps: number[]) {
   const [t, setT] = useState(0);
   const [playing, setPlaying] = useState(true);
+  const [mode, setMode] = usePersisted<ClockMode>("feudal.playback.mode", "steps");
   const [speed, setSpeed] = usePersisted<number>("feudal.playback.speed", 8);
+  const [pace, setPace] = usePersisted<number>("feudal.playback.pace", 1);
   const tRef = useRef(0);
   tRef.current = t;
 
@@ -194,21 +214,36 @@ function useGameClock(end: number) {
     let raf = 0;
     let last = performance.now();
     const tick = (now: number) => {
-      const next = Math.min(end, tRef.current + ((now - last) / 1000) * speed);
-      last = now;
+      // rAF's timestamp can be a little older than the performance.now() we started from.
+      const dt = Math.max(0, (now - last) / 1000);
+      last = Math.max(last, now);
+      const cur = tRef.current;
+      let next: number;
+      if (mode === "real") next = cur + dt * speed;
+      else {
+        let k = -1;
+        while (k + 1 < steps.length && steps[k + 1] <= cur + 0.001) k++;
+        const from = k < 0 ? 0 : steps[k];
+        const upcoming = steps[k + 1] ?? end;
+        const window = Math.min(BEAT_GAME, upcoming - from);
+        next = cur + dt * (window / BEAT_REAL) * pace;
+        if (next >= from + window) next = upcoming;
+      }
+      next = Math.max(0, Math.min(end, next));
+      tRef.current = next;
       setT(next);
       if (next >= end) setPlaying(false);
       else raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [playing, speed, end]);
+  }, [playing, speed, pace, mode, end, steps]);
 
   const toggle = () => {
     if (!playing && tRef.current >= end) setT(0);
     setPlaying(!playing);
   };
-  return { t, setT, playing, setPlaying, toggle, speed, setSpeed };
+  return { t, setT, playing, setPlaying, toggle, mode, setMode, speed, setSpeed, pace, setPace };
 }
 
 /** A bump that settles: 1 at rest, overshooting just after `since`. */
@@ -290,6 +325,65 @@ function Villager({ s, id }: { s: VilState; id: number }) {
   );
 }
 
+function siteOf(slot: Slot | "tc", castle: boolean): P {
+  if (slot === "tc") return TC;
+  return slot === "build" && castle ? CASTLE_LANDMARK : SITES[slot];
+}
+
+/** A curved arrow from where villagers leave to where they go, with how many. */
+function MoveArrow({ move, castle, k, index }: { move: Move; castle: boolean; k: number; index: number }) {
+  const a = siteOf(move.from, castle);
+  const b = siteOf(move.to, castle);
+  const d = dist(a, b) || 1;
+  // Start and end clear of the site itself, bowed to one side so opposite moves don't overlap.
+  const a2 = lerp(a, b, Math.min(0.4, 34 / d));
+  const b2 = lerp(b, a, Math.min(0.4, 38 / d));
+  const bow = (index % 2 ? -1 : 1) * Math.min(70, d * 0.22);
+  const c = { x: (a2.x + b2.x) / 2 + (-(b.y - a.y) / d) * bow, y: (a2.y + b2.y) / 2 + ((b.x - a.x) / d) * bow };
+  const mid = { x: 0.25 * a2.x + 0.5 * c.x + 0.25 * b2.x, y: 0.25 * a2.y + 0.5 * c.y + 0.25 * b2.y };
+  const kind = move.from === "tc" ? "tc" : move.from;
+  const flow = -(performance.now() / 1000) * 30;
+  const icon = move.from === "tc" ? resourceIcon("villager") : move.from === "build" ? undefined : resourceIcon(move.from);
+  return (
+    <g className={`sb-move ${kind}`}>
+      <path d={`M${a2.x} ${a2.y} Q${c.x} ${c.y} ${b2.x} ${b2.y}`} className="sb-move-glow" pathLength={1} strokeDasharray={`${k} 1`} />
+      <path
+        d={`M${a2.x} ${a2.y} Q${c.x} ${c.y} ${b2.x} ${b2.y}`}
+        className="sb-move-line"
+        strokeDashoffset={flow}
+        markerEnd={`url(#sb-arrow-${kind})`}
+        style={{ opacity: k }}
+      />
+      <g transform={`translate(${mid.x} ${mid.y}) scale(${0.6 + 0.4 * ease(k)})`}>
+        <rect x={-24} y={-13} width={48} height={26} rx={13} className="sb-move-tag" />
+        {icon ? <image href={icon} x={-20} y={-9} width={18} height={18} /> : <text x={-11} y={5} className="sb-move-hammer">⚒</text>}
+        <text x={10} y={6} className="sb-move-n">
+          {move.n}
+        </text>
+      </g>
+    </g>
+  );
+}
+
+/** A dashed line from the Town Center to where new villagers are rallied, with a flag. */
+function RallyLine({ to }: { to: Slot }) {
+  const end = SITES[to];
+  const d = dist(TC, end) || 1;
+  const a = lerp(TC, end, 40 / d);
+  const flag = lerp(end, TC, Math.min(0.3, 36 / d));
+  return (
+    <g className={`sb-rally ${to}`}>
+      <line x1={a.x} y1={a.y} x2={flag.x} y2={flag.y} className="sb-rally-line" strokeDashoffset={-(performance.now() / 1000) * 14} />
+      <g transform={`translate(${flag.x} ${flag.y})`}>
+        <path d="M0 0 L0 -26 M0 -26 L15 -21 L0 -16" className="sb-rally-flag" />
+        <text x={18} y={-18} className="sb-rally-label">
+          Rally
+        </text>
+      </g>
+    </g>
+  );
+}
+
 function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: GamePlan; t: number }) {
   const moves = useMemo(() => villagerMoves(pb), [pb]);
   const built = useMemo(() => {
@@ -298,7 +392,7 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
     return m;
   }, [pb]);
   const frame = frameAt(pb, t);
-  const vils = frame.villagers.map((v) => ({ id: v.id, s: villagerState(moves.get(v.id), v.id, t, built) })).filter((v) => v.s);
+  const vils = frame.villagers.map((v) => ({ id: v.id, s: villagerState(moves.get(v.id), v.id, t, built, pb.feudalAt) })).filter((v) => v.s);
   const houseAt = built.get("house");
   // Population needs a house per 10 villagers past the Town Center's own room.
   const houses = Math.min(HOUSE_PLOTS.length, Math.max(houseAt !== undefined && t >= houseAt ? 1 : 0, Math.ceil((frame.villagers.length - 9) / 10)));
@@ -330,6 +424,11 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
           <stop offset="0%" className="sb-ground-in" />
           <stop offset="100%" className="sb-ground-out" />
         </radialGradient>
+        {(["tc", "food", "wood", "gold", "stone", "build"] as const).map((k) => (
+          <marker key={k} id={`sb-arrow-${k}`} viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 Z" className={`sb-arrowhead ${k}`} />
+          </marker>
+        ))}
         <pattern id="sb-grass" width="22" height="22" patternUnits="userSpaceOnUse">
           <path d="M3 18 l2 -5 M12 8 l1.5 -4 M17 20 l2 -4" className="sb-grass-blade" />
         </pattern>
@@ -381,6 +480,9 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
         </text>
       )}
 
+      {/* The Town Center's rally point */}
+      <RallyLine to={frame.current?.rally ?? "food"} />
+
       {/* Town Center */}
       <g className="sb-tc" transform={`translate(${TC.x - 34} ${TC.y - 34})`}>
         <title>Town Center</title>
@@ -420,6 +522,15 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
         </g>
       )}
 
+      {/* This step's villager moves, as arrows */}
+      {frame.current && sinceStep < BEAT_GAME && (
+        <g key={`moves-${frame.index}`} style={{ opacity: Math.min(1, sinceStep / 1.5, (BEAT_GAME - sinceStep) / 3) }}>
+          {frame.current.moves.map((m, i) => (
+            <MoveArrow key={i} move={m} castle={frame.current!.seconds >= pb.feudalAt} k={Math.min(1, sinceStep / 4)} index={i} />
+          ))}
+        </g>
+      )}
+
       {/* Villagers, drawn last so they walk over everything */}
       {vils.map(({ id, s }) => (
         <Villager key={id} id={id} s={s!} />
@@ -428,16 +539,6 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
   );
 }
 
-function deltas(now?: Split, before?: Split, nowB = 0, beforeB = 0) {
-  if (!now) return [];
-  const out: { key: string; n: number }[] = [];
-  RESOURCES.forEach((r, i) => {
-    const d = now[i] - (before?.[i] ?? 0);
-    if (d) out.push({ key: r, n: d });
-  });
-  if (nowB - beforeB) out.push({ key: "build", n: nowB - beforeB });
-  return out;
-}
 
 /** The track under the slider: age bands and a tick per step. */
 function Timeline({ end, feudalAt, castleAt, steps, onSeek }: { end: number; feudalAt: number; castleAt: number; steps: number[]; onSeek: (s: number) => void }) {
@@ -457,15 +558,14 @@ function Timeline({ end, feudalAt, castleAt, steps, onSeek }: { end: number; feu
 /** The sandbox: your base, playing the chosen path on a running game clock. */
 export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPath }) {
   const pb = useMemo(() => buildPlayback(plan, path), [plan, path]);
-  const [view, setView] = usePersisted<"timeline" | "base">("feudal.playback.view", "timeline");
-  const { t, setT, playing, setPlaying, toggle, speed, setSpeed } = useGameClock(pb.end);
+  const [view, setView] = usePersisted<"timeline" | "base">("feudal.playback.view2", "base");
+  const steps = useMemo(() => pb.events.map((e) => e.seconds), [pb]);
+  const { t, setT, playing, setPlaying, toggle, mode, setMode, speed, setSpeed, pace, setPace } = useGameClock(pb.end, steps);
   const frame = frameAt(pb, t);
   const ageNode = frame.age === 1 ? path.feudal : frame.age === 2 ? path.castle : undefined;
   const reachedNode = frame.age === 2 ? path.feudal : frame.age === 3 ? path.castle : undefined;
   const count = (s: Slot) => frame.villagers.filter((v) => v.at === s).length;
-  const steps = pb.events.map((e) => e.seconds);
   const prev = frame.index > 0 ? pb.events[frame.index - 1] : undefined;
-  const changes = deltas(frame.current?.split, prev?.split, frame.current?.builders, prev?.builders);
 
   const seekStep = (dir: -1 | 1) => {
     const target = dir > 0 ? steps.find((s) => s > t + 0.01) : [...steps].reverse().find((s) => s < t - 0.5);
@@ -497,10 +597,18 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
       <div className="pb">
         <div className="pb-views">
           <ToggleGroup.Root className="segmented" type="single" value={view} onValueChange={(v) => v && setView(v as "timeline" | "base")} aria-label="View">
-            {(["timeline", "base"] as const).map((v) => (
+            {(["base", "timeline"] as const).map((v) => (
               <ToggleGroup.Item key={v} value={v} className="segmented-item">
                 {v === view && <motion.span layoutId="pb-view" className="segmented-thumb" transition={{ type: "spring", stiffness: 500, damping: 38 }} />}
-                <span>{v === "timeline" ? "Timeline" : "Watch it"}</span>
+                <span>{v === "timeline" ? "Timeline" : "Base"}</span>
+              </ToggleGroup.Item>
+            ))}
+          </ToggleGroup.Root>
+          <ToggleGroup.Root className="segmented" type="single" value={mode} onValueChange={(v) => v && setMode(v as ClockMode)} aria-label="Time">
+            {(["steps", "real"] as const).map((m) => (
+              <ToggleGroup.Item key={m} value={m} className="segmented-item">
+                {m === mode && <motion.span layoutId="pb-mode" className="segmented-thumb" transition={{ type: "spring", stiffness: 500, damping: 38 }} />}
+                <span>{m === "steps" ? "Key steps" : "Real time"}</span>
               </ToggleGroup.Item>
             ))}
           </ToggleGroup.Root>
@@ -516,7 +624,7 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
               const before = prev?.villagers.filter((v) => v.at === slot).length ?? 0;
               const fresh = frame.current && t - frame.current.seconds < 8 ? n - before : 0;
               if (!n && !fresh) return null;
-              const at = BADGES[slot];
+              const at = slot === "build" && t >= pb.feudalAt ? { x: CASTLE_LANDMARK.x, y: CASTLE_LANDMARK.y - 52 } : BADGES[slot];
               return (
                 <span key={slot} className={`sb-badge ${slot}`} style={{ left: `${(at.x / 960) * 100}%`, top: `${(at.y / 500) * 100}%` }}>
                   {slot === "build" ? <span className="sb-badge-hammer">⚒</span> : <img src={resourceIcon(slot)} alt="" />}
@@ -582,16 +690,7 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
               >
                 <span className="pb-obj-t">{frame.current?.step.t ?? "0:00"}</span>
                 <span className="pb-obj-do">{frame.current?.step.do ?? "Game starts"}</span>
-                {changes.length > 0 && (
-                  <span className="pb-obj-moves">
-                    {changes.map((c) => (
-                      <span key={c.key} className={`pb-move ${c.key}${c.n < 0 ? " out" : ""}`}>
-                        {c.key === "build" ? "⚒" : <img src={resourceIcon(c.key as (typeof RESOURCES)[number])} alt={c.key} />}
-                        {c.n > 0 ? `+${c.n}` : c.n}
-                      </span>
-                    ))}
-                  </span>
-                )}
+                {frame.current && frame.current.moves.length > 0 && <MoveChips moves={frame.current.moves} />}
               </motion.div>
             </AnimatePresence>
             {frame.next && (
@@ -657,14 +756,25 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
               <Slider.Thumb className="pb-slider-thumb" aria-label="Game time" />
             </Slider.Root>
           </div>
-          <ToggleGroup.Root className="segmented pb-speed" type="single" value={String(speed)} onValueChange={(v) => v && setSpeed(Number(v))} aria-label="Speed">
-            {SPEEDS.map((s) => (
-              <ToggleGroup.Item key={s} value={String(s)} className="segmented-item">
-                {s === speed && <motion.span layoutId="pb-speed" className="segmented-thumb" transition={{ type: "spring", stiffness: 500, damping: 38 }} />}
-                <span>{s}×</span>
-              </ToggleGroup.Item>
-            ))}
-          </ToggleGroup.Root>
+          {mode === "real" ? (
+            <ToggleGroup.Root className="segmented pb-speed" type="single" value={String(speed)} onValueChange={(v) => v && setSpeed(Number(v))} aria-label="Speed">
+              {SPEEDS.map((s) => (
+                <ToggleGroup.Item key={s} value={String(s)} className="segmented-item">
+                  {s === speed && <motion.span layoutId="pb-speed" className="segmented-thumb" transition={{ type: "spring", stiffness: 500, damping: 38 }} />}
+                  <span>{s}×</span>
+                </ToggleGroup.Item>
+              ))}
+            </ToggleGroup.Root>
+          ) : (
+            <ToggleGroup.Root className="segmented pb-speed" type="single" value={String(pace)} onValueChange={(v) => v && setPace(Number(v))} aria-label="Pace">
+              {PACES.map(([p, label]) => (
+                <ToggleGroup.Item key={p} value={String(p)} className="segmented-item">
+                  {p === pace && <motion.span layoutId="pb-speed" className="segmented-thumb" transition={{ type: "spring", stiffness: 500, damping: 38 }} />}
+                  <span>{label}</span>
+                </ToggleGroup.Item>
+              ))}
+            </ToggleGroup.Root>
+          )}
         </div>
       </div>
     </MotionConfig>
