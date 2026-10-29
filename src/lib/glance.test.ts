@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { buildBrief } from "./brief";
 import { dangerWindows } from "./dangerWindows";
-import { elapsedSeconds, firstSentence, glanceThreats, windowAt } from "./glance";
+import { elapsedSeconds, firstSentence, glanceThreats, stepWindow, windowAt } from "./glance";
 
 describe("glanceThreats", () => {
   it("keeps at most three threats per age with two answers each", () => {
@@ -43,5 +43,24 @@ describe("windowAt", () => {
     expect(windowAt(windows, 10 * 3600)).toBe(windows.length - 1);
     const second = windows[1];
     expect(windowAt(windows, second.from)).toBe(1);
+  });
+});
+
+describe("stepWindow", () => {
+  const steps = ["0:00", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00"].map((t) => ({ step: { t } }));
+  it("starts at the first step before the clock is known", () => {
+    const w = stepWindow(steps, null);
+    expect(w.current).toBe(0);
+    expect(w.items.map((s) => s.step.t)).toEqual(["0:00", "1:00", "2:00", "3:00", "4:00"]);
+  });
+  it("keeps one step behind and three ahead of the current one", () => {
+    const w = stepWindow(steps, 190);
+    expect(w.current).toBe(3);
+    expect(w.items.map((s) => s.step.t)).toEqual(["2:00", "3:00", "4:00", "5:00", "6:00"]);
+  });
+  it("stops at the end of the plan", () => {
+    const w = stepWindow(steps, 3600);
+    expect(w.current).toBe(7);
+    expect(w.items.map((s) => s.step.t)).toEqual(["3:00", "4:00", "5:00", "6:00", "7:00"]);
   });
 });

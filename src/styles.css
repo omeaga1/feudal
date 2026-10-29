@@ -5483,9 +5483,10 @@ select,
 .glance {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
   grid-template-areas:
     "head head"
+    "mine mine"
     "plan counters"
     "danger danger";
   gap: 10px;
@@ -5499,8 +5500,8 @@ select,
 @media (max-aspect-ratio: 1/1) {
   .glance {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1.1fr) minmax(0, 1fr) auto;
-    grid-template-areas: "head" "plan" "counters" "danger";
+    grid-template-rows: auto auto minmax(0, 1.1fr) minmax(0, 1fr) auto;
+    grid-template-areas: "head" "mine" "plan" "counters" "danger";
   }
 }
 
@@ -5905,4 +5906,133 @@ select,
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.g-mine {
+  grid-area: mine;
+  border-left: 3px solid var(--c);
+}
+
+.g-mine-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  margin-bottom: 0.5em;
+  white-space: nowrap;
+}
+
+.g-mine-head h3 {
+  margin: 0;
+}
+
+.g-mine-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--display);
+  color: var(--c);
+}
+
+.g-mine-name span {
+  color: var(--c);
+}
+
+.g-target {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.15em 0.5em 0.15em 0.2em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  opacity: 0.7;
+}
+
+.g-target.next {
+  border-color: var(--accent-2);
+  opacity: 1;
+}
+
+.g-target .g-landmark {
+  width: 1.6em;
+  height: 1.6em;
+}
+
+.g-mine-head .unit-icons img {
+  width: 1.8em;
+  height: 1.8em;
+}
+
+.g-steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.45em;
+}
+
+.g-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  min-width: 0;
+  padding: 0.45em 0.6em;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--a, var(--age-1));
+  border-radius: 8px;
+  background: var(--bg-2);
+}
+
+.g-step.age-2 {
+  --a: var(--age-2);
+}
+
+.g-step.age-3 {
+  --a: var(--age-3);
+}
+
+.g-step.done {
+  opacity: 0.45;
+}
+
+.g-step.now {
+  border-color: var(--accent-2);
+  border-top-color: var(--accent-2);
+  box-shadow: 0 0 0 1px var(--accent-2);
+}
+
+.g-step-top {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+}
+
+.g-step-top b {
+  font-size: 1.1em;
+}
+
+.g-step-age {
+  font-size: 0.68em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--a, var(--age-1));
+}
+
+.g-now.inline {
+  position: static;
+  margin-left: auto;
+}
+
+.g-step .split-chip {
+  font-size: 0.78em;
+}
+
+.g-step .split-chip img {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.g-step-do {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.85em;
+  line-height: 1.25;
 }

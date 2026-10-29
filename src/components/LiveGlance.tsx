@@ -4,14 +4,15 @@ import { buildBrief } from "../lib/brief";
 import { civColor } from "../lib/civColors";
 import { dangerWindows } from "../lib/dangerWindows";
 import { getCiv, type Unit } from "../lib/gameData";
-import { formatClock, getGamePlan, landmarkIcon, STYLE_LABELS } from "../lib/gamePlans";
-import { elapsedSeconds, firstSentence, glanceThreats, windowAt } from "../lib/glance";
+import { clock, formatClock, getGamePlan, landmarkIcon, pathSteps, STYLE_LABELS } from "../lib/gamePlans";
+import { elapsedSeconds, firstSentence, glanceThreats, stepWindow, windowAt } from "../lib/glance";
 import { appFetch } from "../lib/http";
 import { summarizePlayer, type PlayerProfile } from "../lib/opponent";
+import { usePersisted } from "../lib/persisted";
 import { getPlaybook } from "../lib/playbooks";
 import { useDangerData } from "./DangerTimeline";
 import { Flag } from "./Flag";
-import { UnitIcons } from "./PlanTree";
+import { resolveSelection, SplitChips, UnitIcons, type PlanSelection } from "./PlanTree";
 import { AgeMark, UnitHover } from "./ui";
 
 const shortName = (name: string) => name.replace(/^(Early|Hardened|Veteran|Elite) /, "");
@@ -99,6 +100,64 @@ function LandmarkIcon({ name }: { name?: string }) {
   return icon ? <img className="g-landmark" src={icon} alt={name} title={name} /> : <span className="g-landmark blank">{name[0]}</span>;
 }
 
+const AGE_SHORT = { 1: "Dark", 2: "Feudal", 3: "Castle" } as const;
+
+/**
+ * Your own build for this civ: the path you picked in Matchups or Civs (or
+ * the first one), your age-up targets, and the step you should be on now with
+ * the next few. It follows the game clock on its own.
+ */
+function YourBuild({ civ, elapsed }: { civ: string; elapsed: number | null }) {
+  const plan = getGamePlan(civ);
+  const [selection] = usePersisted<PlanSelection | null>(`feudal.plan.${civ}`, null);
+  if (!plan) return null;
+  const path = resolveSelection(plan, selection);
+  const steps = pathSteps(plan, path);
+  const { items, current, offset } = stepWindow(steps, elapsed);
+  const targets = [
+    { age: 2, node: path.feudal },
+    { age: 3, node: path.castle },
+  ];
+  const next = targets.find((t) => elapsed === null || clock(t.node.ageUp) > elapsed);
+
+  return (
+    <section className={`g-card g-mine style-${path.feudal.style}`}>
+      <div className="g-mine-head">
+        <h3>Your build</h3>
+        <b className="g-mine-name">
+          {path.feudal.name} › <span className={`style-${path.castle.style}`}>{path.castle.name}</span>
+        </b>
+        <span className="spacer" />
+        {targets.map(({ age, node }) => (
+          <span key={age} className={next?.age === age ? "g-target next" : "g-target"}>
+            <AgeMark age={age} label={false} />
+            <LandmarkIcon name={node.landmark} />
+            <b>{node.ageUp}</b>
+          </span>
+        ))}
+        <UnitIcons names={path.castle.army?.slice(0, 4)} civ={civ} />
+      </div>
+      <div className="g-steps">
+        {items.map(({ age, step }, i) => {
+          const index = offset + i;
+          const state = index < current ? " done" : index === current ? " now" : "";
+          return (
+            <div key={index} className={`g-step age-${age}${state}`}>
+              <div className="g-step-top">
+                <b>{step.t}</b>
+                <span className="g-step-age">{AGE_SHORT[age]}</span>
+                {index === current && elapsed !== null && <span className="g-now inline">Now</span>}
+              </div>
+              <SplitChips split={step.v} builders={step.b} />
+              <span className="g-step-do">{step.do}</span>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 /**
  * The in-game Live view: one screen, no scrolling, nothing to click. What
  * they'll open with, what to build against their units, and when the game
@@ -169,6 +228,8 @@ export function LiveGlance({ match, opponent }: { match: Match; opponent: MatchP
           </div>
         )}
       </header>
+
+      <YourBuild civ={me} elapsed={elapsed} />
 
       <section className="g-card g-plan">
         <h3>Their opening</h3>
