@@ -13,7 +13,8 @@
     "data:sync": "node scripts/sync-game-data.mjs",
     "data:danger": "node scripts/sync-danger-windows.mjs",
     "data:watch": "node scripts/watch-build-orders.mjs",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "data:icons": "node scripts/sync-icons.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

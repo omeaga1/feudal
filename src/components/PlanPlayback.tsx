@@ -36,51 +36,57 @@ import { Tip } from "./ui";
 
 type P = { x: number; y: number };
 
-const TC: P = { x: 480, y: 250 };
+// The base is laid out like a compass: wood north, food west, gold east,
+// stone south, the Town Center in the middle, landmarks in the lower corners,
+// economy buildings top left and military top right.
+const TC: P = { x: 480, y: 280 };
 const SITES: Record<Slot, P> = {
-  food: { x: 300, y: 300 },
-  wood: { x: 300, y: 104 },
-  gold: { x: 790, y: 140 },
-  stone: { x: 820, y: 335 },
-  build: { x: 400, y: 410 },
+  food: { x: 230, y: 280 },
+  wood: { x: 480, y: 130 },
+  gold: { x: 730, y: 280 },
+  stone: { x: 480, y: 430 },
+  build: { x: 255, y: 425 },
 };
-/** Where each site's villager count sits, just clear of the site itself. */
+/** Each resource's round plate, and the ring its villagers stand on. */
+const PLATE_R = 46;
+const RING_R = 60;
+/** Where each site's villager count sits, just above its plate. */
 const BADGES: Record<Slot, P> = {
-  food: { x: 285, y: 255 },
-  wood: { x: 215, y: 138 },
-  gold: { x: 800, y: 92 },
-  stone: { x: 878, y: 290 },
-  build: { x: 400, y: 358 },
+  food: { x: 230, y: 214 },
+  wood: { x: 480, y: 64 },
+  gold: { x: 730, y: 214 },
+  stone: { x: 395, y: 430 },
+  build: { x: 178, y: 425 },
 };
-const CASTLE_LANDMARK: P = { x: 570, y: 415 };
-const RALLY: P = { x: 845, y: 452 };
+const CASTLE_LANDMARK: P = { x: 705, y: 425 };
+const RALLY: P = { x: 868, y: 440 };
+const STONE_CAMP: P = { x: 570, y: 430 };
 
 const PLOTS: Record<Exclude<BuildingKind, "house">, P> = {
-  mill: { x: 345, y: 360 },
-  lumber: { x: 335, y: 165 },
-  mining: { x: 715, y: 240 },
-  farm: { x: 300, y: 300 },
-  barracks: { x: 595, y: 62 },
-  range: { x: 668, y: 56 },
-  stable: { x: 741, y: 52 },
-  siege: { x: 880, y: 58 },
-  blacksmith: { x: 650, y: 345 },
-  market: { x: 705, y: 450 },
-  tower: { x: 905, y: 185 },
-  townCenter: { x: 130, y: 250 },
-  religious: { x: 232, y: 430 },
-  dock: { x: 90, y: 440 },
+  mill: { x: 335, y: 280 },
+  lumber: { x: 385, y: 130 },
+  mining: { x: 625, y: 280 },
+  farm: { x: 230, y: 280 },
+  blacksmith: { x: 80, y: 80 },
+  market: { x: 150, y: 80 },
+  religious: { x: 80, y: 150 },
+  tower: { x: 150, y: 150 },
+  barracks: { x: 810, y: 80 },
+  range: { x: 880, y: 80 },
+  stable: { x: 810, y: 150 },
+  siege: { x: 880, y: 150 },
+  townCenter: { x: 100, y: 425 },
+  dock: { x: 880, y: 330 },
 };
 const HOUSE_PLOTS: P[] = [
-  { x: 412, y: 178 },
-  { x: 548, y: 178 },
-  { x: 415, y: 325 },
-  { x: 545, y: 325 },
-  { x: 232, y: 196 },
-  { x: 200, y: 345 },
-  { x: 130, y: 370 },
-  { x: 130, y: 140 },
-  { x: 610, y: 450 },
+  { x: 385, y: 205 },
+  { x: 575, y: 205 },
+  { x: 385, y: 355 },
+  { x: 575, y: 355 },
+  { x: 290, y: 175 },
+  { x: 670, y: 175 },
+  { x: 290, y: 385 },
+  { x: 670, y: 385 },
 ];
 
 const BUILDINGS: Record<BuildingKind, { icon: IconType; label: string }> = {
@@ -121,16 +127,18 @@ const lerp = (a: P, b: P, k: number): P => ({ x: a.x + (b.x - a.x) * k, y: a.y +
 /** A villager's own spot at a site, spread on a sunflower spiral so a crowd doesn't stack. */
 function spot(slot: Slot, id: number, castle = false): P {
   const c = slot === "build" && castle ? CASTLE_LANDMARK : SITES[slot];
+  // Even spacing round the ring, a second ring further out once it fills.
   const a = id * 2.39996;
-  const r = 10 + Math.sqrt(id % 24) * 9;
-  return { x: c.x + Math.cos(a) * r, y: c.y + Math.sin(a) * r * 0.7 };
+  const r = (slot === "build" ? 42 : RING_R) + (id % 3) * 7;
+  return { x: c.x + Math.cos(a) * r, y: c.y + Math.sin(a) * r * 0.82 };
 }
 
 function dropoff(slot: Slot, built: Map<BuildingKind, number>, t: number): P {
   const has = (k: BuildingKind) => (built.get(k) ?? Infinity) + BUILD_TIME <= t;
   if (slot === "food" && has("mill")) return PLOTS.mill;
   if (slot === "wood" && has("lumber")) return PLOTS.lumber;
-  if ((slot === "gold" || slot === "stone") && has("mining")) return PLOTS.mining;
+  if (slot === "gold" && has("mining")) return PLOTS.mining;
+  if (slot === "stone" && has("mining")) return STONE_CAMP;
   // Drop at the Town Center's edge facing the site, not in its middle.
   const site = SITES[slot];
   const d = dist(site, TC) || 1;
@@ -176,17 +184,49 @@ function villagerState(moves: VillagerMove[] | undefined, id: number, t: number,
   return leg(drop, to, (phase - GATHER - trip) / trip, st.to, false);
 }
 
-/** Deterministic scatter for trees and rocks. */
-function scatter(n: number, seed: number, box: { x: number; y: number; w: number; h: number }): P[] {
-  let s = seed;
-  const rnd = () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646;
-  return Array.from({ length: n }, () => ({ x: box.x + rnd() * box.w, y: box.y + rnd() * box.h }));
+/** Points evenly round a circle, starting at the top. */
+function around(c: P, r: number, n: number, offset = 0): P[] {
+  return Array.from({ length: n }, (_, i) => {
+    const a = -Math.PI / 2 + offset + (i / n) * Math.PI * 2;
+    return { x: c.x + Math.cos(a) * r, y: c.y + Math.sin(a) * r * 0.82 };
+  });
 }
 
-const TREES = scatter(46, 7, { x: 40, y: 18, w: 500, h: 74 }).sort((a, b) => a.y - b.y);
-const GOLD_ROCKS = scatter(7, 3, { x: 815, y: 112, w: 60, h: 40 });
-const STONE_ROCKS = scatter(7, 11, { x: 845, y: 310, w: 60, h: 40 });
-const SHEEP = scatter(8, 5, { x: 250, y: 280, w: 70, h: 40 });
+function Tree({ p }: { p: P }) {
+  return (
+    <g transform={`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`} className="sb-tree">
+      <ellipse cx={0} cy={11} rx={8} ry={2.6} className="sb-shadow" />
+      <rect x={-1.5} y={6} width={3} height={5} className="sb-trunk" />
+      <path d="M0 -13 L9 3 L-9 3 Z" />
+      <path d="M0 -6 L11 9 L-11 9 Z" />
+    </g>
+  );
+}
+
+/** A resource: a round plate with the game's icon in the middle and its props round the edge. */
+function ResourcePlate({ slot, t, farms, active }: { slot: Exclude<Slot, "build">; t: number; farms: boolean; active: boolean }) {
+  const c = SITES[slot];
+  const props = around(c, PLATE_R - 12, slot === "wood" ? 10 : 8, slot === "wood" ? 0 : Math.PI / 8);
+  return (
+    <g className={`sb-plate ${slot}${active ? " active" : ""}`}>
+      <ellipse cx={c.x} cy={c.y} rx={PLATE_R} ry={PLATE_R * 0.82} className="sb-plate-bg" />
+      {slot === "wood" && props.sort((a, b) => a.y - b.y).map((p, i) => <Tree key={i} p={p} />)}
+      {slot === "food" &&
+        (farms
+          ? props.map((p, i) => <rect key={i} x={p.x - 9} y={p.y - 7} width={18} height={14} rx={3} className="sb-farm" />)
+          : props.slice(0, Math.max(3, props.length - Math.floor(t / 50))).map((p, i) => (
+              <g key={i} transform={`translate(${(p.x + Math.sin(t / 9 + i) * 1.5).toFixed(1)} ${p.y.toFixed(1)})`} className="sb-sheep">
+                <ellipse rx={6.5} ry={4.6} />
+                <circle cx={5.5} cy={-2} r={2.4} className="sb-sheep-head" />
+              </g>
+            )))}
+      {(slot === "gold" || slot === "stone") &&
+        props.map((p, i) => <path key={i} d={`M${p.x - 7} ${p.y + 5} L${p.x - 3} ${p.y - 6} L${p.x + 5} ${p.y - 4} L${p.x + 8} ${p.y + 5} Z`} className={`sb-${slot}`} />)}
+      <circle cx={c.x} cy={c.y} r={19} className="sb-plate-core" />
+      <image href={resourceIcon(slot)} x={c.x - 15} y={c.y - 15} width={30} height={30} />
+    </g>
+  );
+}
 
 export type ClockMode = "steps" | "real";
 
@@ -346,7 +386,6 @@ function MoveArrow({ move, castle, k, index }: { move: Move; castle: boolean; k:
   const icon = move.from === "tc" ? resourceIcon("villager") : move.from === "build" ? undefined : resourceIcon(move.from);
   return (
     <g className={`sb-move ${kind}`}>
-      <path d={`M${a2.x} ${a2.y} Q${c.x} ${c.y} ${b2.x} ${b2.y}`} className="sb-move-glow" pathLength={1} strokeDasharray={`${k} 1`} />
       <path
         d={`M${a2.x} ${a2.y} Q${c.x} ${c.y} ${b2.x} ${b2.y}`}
         className="sb-move-line"
@@ -365,15 +404,31 @@ function MoveArrow({ move, castle, k, index }: { move: Move; castle: boolean; k:
   );
 }
 
-/** A dashed line from the Town Center to where new villagers are rallied, with a flag. */
-function RallyLine({ to }: { to: Slot }) {
+/** A dashed line from the Town Center to where new villagers are rallied, with a flag, and "+N" while a step sends new villagers there. */
+function RallyLine({ to, fresh = 0, k = 0 }: { to: Slot; fresh?: number; k?: number }) {
   const end = SITES[to];
   const d = dist(TC, end) || 1;
   const a = lerp(TC, end, 40 / d);
   const flag = lerp(end, TC, Math.min(0.3, 36 / d));
   return (
     <g className={`sb-rally ${to}`}>
-      <line x1={a.x} y1={a.y} x2={flag.x} y2={flag.y} className="sb-rally-line" strokeDashoffset={-(performance.now() / 1000) * 14} />
+      <line
+        x1={a.x}
+        y1={a.y}
+        x2={flag.x}
+        y2={flag.y}
+        className={`sb-rally-line${fresh ? " busy" : ""}`}
+        strokeDashoffset={-(performance.now() / 1000) * (fresh ? 30 : 14)}
+      />
+      {fresh > 0 && (
+        <g transform={`translate(${(a.x + flag.x) / 2} ${(a.y + flag.y) / 2}) scale(${0.6 + 0.4 * ease(k)})`} style={{ opacity: Math.min(1, k * 3) }}>
+          <rect x={-24} y={-13} width={48} height={26} rx={13} className="sb-move-tag rally" />
+          <image href={resourceIcon("villager")} x={-20} y={-9} width={18} height={18} />
+          <text x={10} y={6} className="sb-move-n">
+            +{fresh}
+          </text>
+        </g>
+      )}
       <g transform={`translate(${flag.x} ${flag.y})`}>
         <path d="M0 0 L0 -26 M0 -26 L15 -21 L0 -16" className="sb-rally-flag" />
         <text x={18} y={-18} className="sb-rally-label">
@@ -408,6 +463,9 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
   // A pulse on each site that just gained villagers.
   const prev = frame.index > 0 ? pb.events[frame.index - 1] : undefined;
   const sinceStep = frame.current ? t - frame.current.seconds : Infinity;
+  // New villagers headed to the rally point ride the rally line instead of getting their own arrow.
+  const rallyFresh =
+    frame.current && sinceStep < BEAT_GAME ? (frame.current.moves.find((m) => m.from === "tc" && m.to === frame.current!.rally)?.n ?? 0) : 0;
   const gained = (s: Slot) => {
     if (!frame.current || sinceStep > 8) return false;
     const now = frame.current.villagers.filter((v) => v.at === s).length;
@@ -442,30 +500,8 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
       ))}
 
       {/* Resources */}
-      {TREES.map((p, i) => (
-        <g key={i} transform={`translate(${p.x} ${p.y})`} className="sb-tree">
-          <ellipse cx={0} cy={13} rx={9} ry={3} className="sb-shadow" />
-          <path d="M0 -14 L10 6 L-10 6 Z" />
-          <path d="M0 -6 L12 12 L-12 12 Z" />
-        </g>
-      ))}
-      {farms
-        ? [-1, 0, 1].flatMap((r) =>
-            [-1, 0, 1].map((c) => (
-              <rect key={`${r},${c}`} x={SITES.food.x + c * 34 - 15} y={SITES.food.y + r * 26 - 11} width={30} height={22} rx={3} className="sb-farm" />
-            )),
-          )
-        : SHEEP.slice(0, Math.max(2, SHEEP.length - Math.floor(t / 45))).map((p, i) => (
-            <g key={i} transform={`translate(${(p.x + Math.sin(t / 9 + i) * 3).toFixed(1)} ${(p.y + Math.cos(t / 11 + i * 2) * 2).toFixed(1)})`} className="sb-sheep">
-              <ellipse rx={7} ry={5} />
-              <circle cx={6} cy={-2} r={2.6} className="sb-sheep-head" />
-            </g>
-          ))}
-      {GOLD_ROCKS.map((p, i) => (
-        <path key={i} d={`M${p.x - 9} ${p.y + 6} L${p.x - 4} ${p.y - 7} L${p.x + 6} ${p.y - 5} L${p.x + 10} ${p.y + 6} Z`} className="sb-gold" />
-      ))}
-      {STONE_ROCKS.map((p, i) => (
-        <path key={i} d={`M${p.x - 10} ${p.y + 6} L${p.x - 6} ${p.y - 6} L${p.x + 5} ${p.y - 8} L${p.x + 11} ${p.y + 5} Z`} className="sb-stone" />
+      {(["food", "wood", "gold", "stone"] as const).map((r) => (
+        <ResourcePlate key={r} slot={r} t={t} farms={farms} active={frame.villagers.some((v) => v.at === r)} />
       ))}
       {(["food", "wood", "gold", "stone"] as const).map((s) =>
         gained(s) ? (
@@ -481,7 +517,7 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
       )}
 
       {/* The Town Center's rally point */}
-      <RallyLine to={frame.current?.rally ?? "food"} />
+      <RallyLine to={frame.current?.rally ?? "food"} fresh={rallyFresh} k={Math.min(1, sinceStep / 4)} />
 
       {/* Town Center */}
       <g className="sb-tc" transform={`translate(${TC.x - 34} ${TC.y - 34})`}>
@@ -499,6 +535,9 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
         .map(([k, at]) => (
           <Building key={k} kind={k} at={at} t={t} p={PLOTS[k as Exclude<BuildingKind, "house">]} scale={k === "townCenter" ? 1.6 : 1} />
         ))}
+      {(built.get("mining") ?? Infinity) <= t && frame.villagers.some((v) => v.at === "stone") && (
+        <Building kind="mining" at={built.get("mining")!} t={t} p={STONE_CAMP} />
+      )}
       <Landmark node={path.feudal} p={SITES.build} start={landmarkStart(pb, 2)} done={pb.feudalAt} t={t} />
       <Landmark node={path.castle} p={CASTLE_LANDMARK} start={landmarkStart(pb, 3)} done={pb.castleAt} t={t} />
 
@@ -525,7 +564,7 @@ function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: 
       {/* This step's villager moves, as arrows */}
       {frame.current && sinceStep < BEAT_GAME && (
         <g key={`moves-${frame.index}`} style={{ opacity: Math.min(1, sinceStep / 1.5, (BEAT_GAME - sinceStep) / 3) }}>
-          {frame.current.moves.map((m, i) => (
+          {frame.current.moves.filter((m) => !(m.from === "tc" && m.to === frame.current!.rally)).map((m, i) => (
             <MoveArrow key={i} move={m} castle={frame.current!.seconds >= pb.feudalAt} k={Math.min(1, sinceStep / 4)} index={i} />
           ))}
         </g>
@@ -624,7 +663,7 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
               const before = prev?.villagers.filter((v) => v.at === slot).length ?? 0;
               const fresh = frame.current && t - frame.current.seconds < 8 ? n - before : 0;
               if (!n && !fresh) return null;
-              const at = slot === "build" && t >= pb.feudalAt ? { x: CASTLE_LANDMARK.x, y: CASTLE_LANDMARK.y - 52 } : BADGES[slot];
+              const at = slot === "build" && t >= pb.feudalAt ? { x: CASTLE_LANDMARK.x + 77, y: CASTLE_LANDMARK.y } : BADGES[slot];
               return (
                 <span key={slot} className={`sb-badge ${slot}`} style={{ left: `${(at.x / 960) * 100}%`, top: `${(at.y / 500) * 100}%` }}>
                   {slot === "build" ? <span className="sb-badge-hammer">⚒</span> : <img src={resourceIcon(slot)} alt="" />}
