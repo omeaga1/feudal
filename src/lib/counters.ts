@@ -29,11 +29,16 @@ export function damagePerHit(weapon: Weapon, defender: Unit): number {
   return Math.max(1, damage - armor);
 }
 
-/** Highest damage per second the attacker can deal to the defender, ignoring torches. */
+// One-off charge hits that AoE4 World lists as weapons with a short cooldown
+// (a knight's lance, an elephant's charge). Counting them as sustained damage
+// makes charging cavalry look several times stronger than it is.
+const CHARGE_WEAPONS = new Set(["Lance", "Charge"]);
+
+/** Highest damage per second the attacker can deal to the defender, ignoring torches and charges. */
 export function bestDps(attacker: Unit, defender: Unit): number {
   let best = 0;
   for (const weapon of attacker.weapons) {
-    if (weapon.type === "fire" || weapon.speed <= 0) continue;
+    if (weapon.type === "fire" || weapon.speed <= 0 || CHARGE_WEAPONS.has(weapon.name)) continue;
     best = Math.max(best, damagePerHit(weapon, defender) / weapon.speed);
   }
   return best;

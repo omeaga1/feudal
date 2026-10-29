@@ -1,0 +1,110 @@
+{
+  "civ": "vikings",
+  "patch": null,
+  "draftedForBuild": 11308,
+  "status": "draft",
+  "summary": "New in Update 17.0. Raiding infantry civ whose Town Centers make villagers for free up to a cap that Longhouses raise. Most players open Konungr Hall into a 2nd TC; the aggressive line is Baugr Fort with Hardened Berserkers and Bondi.",
+  "openings": [
+    "Konungr Hall 2 TC (Swaggy, Valdy): 3 on gold, everyone to wood at 200 gold, Hall at about 2:00, Feudal around 4:15, 2nd TC by 5:00, then Longhouses with Bee Skeps.",
+    "Baugr Fort aggression: Feudal around 4:00 with Hardened Berserkers and Bondi raiding gold and wood lines.",
+    "Castle around 10:30 with Valdemar Castle for Jylland Knights, or Gullinn Temple for Sacred Groves."
+  ],
+  "spikes": [
+    {
+      "age": 1,
+      "label": "Early Berserkers and Bondi",
+      "detail": "Berserkers and Bondi exist from the Dark Age and heal by eating from any food source, including your berries and deer.",
+      "answer": "Archers behind a palisade, or a tower on your gold. Pull villagers into the TC rather than trading."
+    },
+    {
+      "age": 2,
+      "label": "Free villagers and Shield Maidens",
+      "detail": "Two TCs pump villagers with no food cost, and Konungr Hall adds Shield Maidens that protect villagers.",
+      "answer": "Hit the Longhouses: every one you kill lowers their villager cap and population."
+    },
+    {
+      "age": 3,
+      "label": "Jylland Knights and Sacred Groves",
+      "detail": "Valdemar Castle brings cheaper Jylland Knights and Danevirke walls; Gullinn Temple lets Völur turn relics into Sacred Groves that spawn free Berserkers.",
+      "answer": "Spearmen and crossbows against the knights. Contest relics early or burn the Groves."
+    },
+    {
+      "age": 4,
+      "label": "220 population",
+      "detail": "Population goes to 210, or 220 with Folkekirken, and Leikr Training buffs melee infantry.",
+      "answer": "Don't trade late into a maxed Viking army; win earlier or out-range them with handcannons and siege."
+    }
+  ],
+  "scout": [
+    "Konungr Hall plus stone villagers means a 2nd TC boom",
+    "Baugr Fort means Berserker and Bondi aggression soon",
+    "Number of Longhouses: their villager cap and how hard they're booming",
+    "Völur heading to relics means Sacred Groves"
+  ],
+  "pairings": [
+    {
+      "units": "Berserkers + Bondi",
+      "why": "Fast damage plus anti-cavalry spears that grow tougher in a group (shield wall)."
+    },
+    {
+      "units": "Hirdmen + Archers",
+      "why": "Armored front line in front of cheap ranged damage."
+    },
+    {
+      "units": "Jylland Knights + Hirdmen",
+      "why": "Cheaper knights that refund gold when they die, backed by heavy infantry."
+    }
+  ],
+  "winConditions": [
+    {
+      "kind": "army",
+      "detail": "Melee infantry pressure that heals off the map's food."
+    },
+    {
+      "kind": "economy",
+      "detail": "Free villager production from two TCs plus Longhouse upgrades."
+    },
+    {
+      "kind": "relics",
+      "detail": "Sacred Groves on relics make free Berserkers."
+    }
+  ],
+  "howToBeat": [
+    "Kill Longhouses: they hold the villager cap, population and free upgrades.",
+    "Archers and towers handle the early Berserker and Bondi pressure; they have no ranged answer until Feudal archers.",
+    "Spearmen and crossbows against Jylland Knights in Castle.",
+    "They have no stone walls. Danevirke palisades resist torches, but rams and siege still break them."
+  ],
+  "sources": [
+    {
+      "title": "Valdy: 2 TC into Valdemar Castle (aoe4guides)",
+      "url": "https://aoe4guides.com/builds/Gvwy3XlSQlpzLgXtDUjM",
+      "date": "2026-10-25",
+      "kind": "video"
+    },
+    {
+      "title": "Swaggy Professor: The Only Vikings Build You'll Need (aoe4guides)",
+      "url": "https://aoe4guides.com/builds/WYm5TLrVWEJsEsi1LImJ",
+      "date": "2026-10-24",
+      "kind": "video"
+    },
+    {
+      "title": "Official Vikings civilization page",
+      "url": "https://www.ageofempires.com/games/age-of-empires-iv/civilizations/vikings/",
+      "date": "2026-10-29",
+      "kind": "written_guide"
+    },
+    {
+      "title": "Age of Empires IV Update 17.0 (Raiders of the North)",
+      "url": "https://www.ageofempires.com/news/age-of-empires-iv-update-17-0/",
+      "date": "2026-10-22",
+      "kind": "patch_notes"
+    },
+    {
+      "title": "AoE4 World game data (units, landmarks, civ bonuses)",
+      "url": "https://github.com/aoe4world/data",
+      "date": "2026-10-29",
+      "kind": "game_data"
+    }
+  ]
+}
