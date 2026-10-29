@@ -23,8 +23,10 @@ export const GUIDE_CIV_CODES = {
   order_of_the_dragon: "DRA",
   ottomans: "OTT",
   rus: "RUS",
+  scots: "SCO",
   sengoku_daimyo: "SEN",
   tughlaq_dynasty: "TUG",
+  vikings: "VIK",
   zhu_xis_legacy: "ZXL",
 };
 

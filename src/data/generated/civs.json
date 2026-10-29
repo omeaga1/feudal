@@ -180,7 +180,7 @@
       "Infantry move 5% faster in the Dark Age (I) and 10% faster from the Feudal Age (II).",
       "Emplacements are -20% cheaper. Outpost sight range increased by +20%.",
       "Villagers carry +40% more resources.",
-      "Prelates can heal and use Holy Inspiration in the Dark Age (I) — inspired Villagers gather +35% faster for 30 seconds.",
+      "Prelates can heal and use Holy Inspiration in the Dark Age (I) — inspired Villagers gather +40% faster for 30 seconds.",
       "Buildings within influence of a Town Center gain the Emergency Repairs ability which can be activated to repair the building.",
       "Universities provide population space and their technologies are cheaper."
     ]
@@ -411,6 +411,30 @@
     ]
   },
   {
+    "id": "scots",
+    "abbr": "sco",
+    "name": "Scots",
+    "expansion": [
+      "raiders-of-the-north"
+    ],
+    "classes": "Infantry, Defense, Mustering",
+    "description": "The Scots field resilient infantry that excel at ambushing enemies from stealth. Tower Houses and Keeps protect their communities and precious cattle from raiders across the countryside. Muster reinforcements quickly at the Mustering Hall and research powerful Highland or Lowland technologies and secure the Kingdom of Scotland.",
+    "bonuses": [
+      "Ghillies can stealth in the open.",
+      "Infantry have vision and movement speed bonuses while in Stealth Forests.",
+      "Tower Houses replace Outposts, produce Highland Cattle, and increase population.",
+      "Highland Cattle graze at Berry Bushes to gather Food over time.",
+      "Highland Landmarks increase Highland Cattle capacity.",
+      "Muster units quickly at the Mustering Hall from Feudal Age (II).",
+      "Research powerful technologies from the Lowlands and Highlands at the Mustering Hall.",
+      "Kirkmen can create Fishponds to gather Gold and increase the gather rates of nearby workers.",
+      "Lowland Landmarks increase the Fishpond build limit.",
+      "Destroyed Keeps can be repaired for a limited time before being completely destroyed.",
+      "Destroyed Keeps create a scorched-earth effect that reduces the combat effectiveness of nearby enemies.",
+      "Naval arrowslits are 50% cheaper."
+    ]
+  },
+  {
     "id": "sengoku_daimyo",
     "abbr": "sen",
     "name": "Sengoku Daimyo",
@@ -454,6 +478,24 @@
       "Gather from Berry Bushes +30% faster but cannot gather from Boar.",
       "Berry carry capacity increased +3.",
       "Fishing Ships can defend themselves with a ranged attack."
+    ]
+  },
+  {
+    "id": "vikings",
+    "abbr": "vik",
+    "name": "Vikings",
+    "expansion": [
+      "raiders-of-the-north"
+    ],
+    "classes": "Longhouses, Infantry, Sagas",
+    "description": "The Vikings are raiders from the north that overwhelmed their enemies with powerful melee infantry that could live off enemy lands. Their flexible Longhouses allow them to build up their population and economy with ease. Sagas and the Norse religion inspire their warriors to fight without fear for the honor of the gods.",
+    "bonuses": [
+      "Sagas can grant bonuses by accomplishing various quests.",
+      "Villagers are automatically recruited from Town Centers up to the Villager Capacity which can be increased by building Longhouses.",
+      "Longhouses can be upgraded with various attachments and recruit Bondi.",
+      "The Völur unit can increase the production speed of Longhouses or set up Sacred Groves on Relics.",
+      "Military infantry can heal by consuming Food from Food deposits.",
+      "The Vikings lack Stone walls, but palisades can be upgraded to Danevirke walls that take less fire damage."
     ]
   },
   {

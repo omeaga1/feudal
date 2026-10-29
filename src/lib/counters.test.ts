@@ -42,6 +42,13 @@ describe("counter math", () => {
     expect(picks).toContain("spearman");
   });
 
+  it("suggests spearmen against lance cavalry, ignoring the one-off charge", () => {
+    const english = getCiv("english")!;
+    const jylland = unit("jylland-knight-3", "vik");
+    const picks = rankCounters(jylland, rosterAt(english, 3)).map((p) => p.unit.baseId);
+    expect(picks).toContain("spearman");
+  });
+
   it("answers siege with melee cavalry", () => {
     const english = getCiv("english")!;
     const mangonel = unit("mangonel-3", "hr");

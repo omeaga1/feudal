@@ -13,6 +13,11 @@ describe("buildBrief", () => {
     expect(brief.enemyPlaybook?.civ).toBe("holy_roman_empire");
   });
 
+  it("shows Dark Age unique units like Berserkers in the Feudal section", () => {
+    const feudal = buildBrief("english", "vikings")!.ages.find((a) => a.age === 2)!;
+    expect(feudal.threats.map((t) => t.enemy.baseId)).toContain("berserker");
+  });
+
   it("only recommends counters that win on equal resources", () => {
     const brief = buildBrief("french", "english")!;
     for (const age of brief.ages) {
