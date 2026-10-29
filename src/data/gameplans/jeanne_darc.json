@@ -2,12 +2,12 @@
   "civ": "jeanne_darc",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "1:20",
     "steps": [
-      { "t": "0:00", "v": [5, 0, 0, 0], "b": 1, "do": "5 on sheep; Jeanne builds a house" },
-      { "t": "0:35", "v": [6, 0, 0, 0], "do": "Scout finds the first deer pack" }
+      { "t": "0:00", "v": [6, 0, 0, 0], "do": "6 on sheep; Jeanne builds a house" },
+      { "t": "0:35", "v": [7, 0, 0, 0], "do": "Scout finds the first deer pack" }
     ]
   },
   "feudal": [
@@ -22,8 +22,8 @@
         { "t": "0:50", "v": [3, 0, 0, 0], "b": 5, "do": "5 build a mill on deer; Survival Techniques, Wheelbarrow" },
         { "t": "1:20", "v": [6, 0, 4, 0], "do": "4 from sheep to gold, rally food" },
         { "t": "3:13", "v": [5, 2, 4, 0], "b": 4, "do": "Jeanne + 3 sheep villagers build School of Cavalry" },
-        { "t": "4:37", "v": [5, 6, 4, 0], "do": "Royal Knight + Specialized Pick; wood to 8" },
-        { "t": "5:36", "v": [8, 8, 5, 0], "do": "Second stable" },
+        { "t": "4:37", "v": [7, 8, 4, 0], "do": "Royal Knight + Specialized Pick; wood to 8" },
+        { "t": "5:36", "v": [9, 8, 5, 0], "do": "Second stable" },
         { "t": "6:30", "v": [9, 8, 8, 0], "do": "Range and outposts on gold and deer if needed" }
       ],
       "army": ["Royal Knight", "Jeanne d'Arc - Woman-at-Arms", "Archer"],
@@ -36,7 +36,7 @@
           "ageUp": "11:00",
           "pick": "Jeanne hit level 3 and they're bleeding",
           "steps": [
-            { "t": "9:00", "v": [13, 6, 12, 0], "do": "More stables; Chivalry heals the knights" },
+            { "t": "9:00", "v": [14, 7, 12, 0], "do": "More stables; Chivalry heals the knights" },
             { "t": "11:00", "do": "Level 3: Jeanne as Knight, Champions join the push" }
           ],
           "army": ["Jeanne d'Arc - Knight", "Jeanne's Champion", "Royal Knight"],
@@ -66,12 +66,12 @@
       "ageUp": "4:10",
       "pick": "Open maps with lots of hunt",
       "steps": [
-        { "t": "0:50", "v": [6, 0, 1, 0], "do": "1 builds a gold camp; rally food to 8" },
+        { "t": "0:50", "v": [7, 0, 1, 0], "do": "1 builds a gold camp; rally food to 8" },
         { "t": "2:15", "v": [7, 0, 3, 0], "b": 2, "do": "Jeanne + 1 build School of Cavalry" },
         { "t": "2:30", "v": [4, 4, 4, 0], "b": 2, "do": "Lumber camp and mill" },
         { "t": "4:12", "v": [9, 4, 5, 0], "do": "Royal Knight + Professional Scouts" },
-        { "t": "5:15", "v": [10, 4, 5, 0], "do": "Woman-at-Arms, second stable" },
-        { "t": "6:45", "v": [12, 4, 8, 0], "do": "Range: 11 to 12 archers over 3 minutes" }
+        { "t": "5:15", "v": [12, 4, 5, 0], "do": "Woman-at-Arms, second stable" },
+        { "t": "6:45", "v": [14, 4, 8, 0], "do": "Range: 11 to 12 archers over 3 minutes" }
       ],
       "army": ["Royal Knight", "Scout", "Archer"],
       "castle": [
@@ -83,7 +83,7 @@
           "ageUp": "10:00",
           "pick": "Your knights have the map",
           "steps": [
-            { "t": "9:00", "v": [13, 6, 12, 0], "do": "Grind experience, then age with the Guild Hall" },
+            { "t": "9:00", "v": [14, 7, 12, 0], "do": "Grind experience, then age with the Guild Hall" },
             { "t": "10:00", "do": "Jeanne's Rider vs horse archers, Champions otherwise" }
           ],
           "army": ["Royal Knight", "Jeanne's Rider", "Arbalétrier"],

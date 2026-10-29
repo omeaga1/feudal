@@ -2,7 +2,7 @@
   "civ": "knights_templar",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "2:20",
     "steps": [
@@ -37,9 +37,9 @@
           "ageUp": "13:00",
           "pick": "Default: you held the map, hit a heavy timing",
           "steps": [
-            { "t": "12:00", "v": [12, 12, 9, 0], "do": "Click up at 12 to 14 minutes" },
-            { "t": "13:00", "v": [12, 10, 9, 5], "do": "5 on stone for a fortress; Templar Brothers" },
-            { "t": "14:30", "v": [14, 12, 10, 5], "do": "Archer spam behind the Brothers" }
+            { "t": "12:00", "v": [16, 12, 11, 0], "do": "Click up at 12 to 14 minutes" },
+            { "t": "13:00", "v": [16, 10, 11, 5], "do": "5 on stone for a fortress; Templar Brothers" },
+            { "t": "14:30", "v": [16, 12, 11, 5], "do": "Archer spam behind the Brothers" }
           ],
           "army": ["Templar Brother", "Archer", "Genitour"],
           "goal": "A fortress on the map and a Brother push"
@@ -52,8 +52,8 @@
           "ageUp": "12:30",
           "pick": "They went heavy knights or men-at-arms",
           "steps": [
-            { "t": "11:30", "v": [12, 12, 9, 0], "do": "Click up behind towers" },
-            { "t": "12:30", "v": [12, 12, 12, 0], "do": "Genoese Crossbowmen and Pavise behind spears" }
+            { "t": "11:30", "v": [15, 12, 10, 0], "do": "Click up behind towers" },
+            { "t": "12:30", "v": [15, 12, 12, 0], "do": "Genoese Crossbowmen and Pavise behind spears" }
           ],
           "army": ["Genoese Crossbowman", "Spearman", "Hospitaller Knight"],
           "goal": "Crossbows melt their armored push"
@@ -71,8 +71,8 @@
         { "t": "2:23", "v": [6, 5, 0, 2], "do": "2 gold villagers to stone" },
         { "t": "2:48", "v": [1, 8, 0, 5], "do": "Age up at 15 villagers; food to stone and wood" },
         { "t": "4:05", "v": [1, 6, 0, 8], "do": "Safe Passage; 3 wood to stone, rally food" },
-        { "t": "4:25", "v": [1, 6, 0, 0], "b": 8, "do": "8 stone villagers build TC 2 on deer, mill" },
-        { "t": "6:00", "v": [15, 6, 0, 0], "do": "Two barracks; Serjeants" },
+        { "t": "4:25", "v": [2, 6, 0, 0], "b": 8, "do": "8 stone villagers build TC 2 on deer, mill" },
+        { "t": "6:00", "v": [17, 6, 0, 0], "do": "Two barracks; Serjeants" },
         { "t": "7:30", "v": [19, 6, 6, 0], "do": "Blacksmith, Bloomery; Castle if they go archers" }
       ],
       "army": ["Serjeant", "Spearman"],
@@ -85,10 +85,10 @@
           "ageUp": "10:05",
           "pick": "Default: Serjeant, spear and Genitour mix",
           "steps": [
-            { "t": "9:15", "v": [24, 6, 11, 0], "do": "Click up; 2 archery ranges and a house" },
-            { "t": "10:05", "v": [18, 13, 12, 0], "do": "Veteran Serjeant and spear; Genitours" },
-            { "t": "11:00", "v": [18, 19, 12, 0], "do": "Decarbonization; deer done, go to berries" },
-            { "t": "11:30", "v": [18, 12, 12, 8], "do": "8 wood to stone for a fortress" }
+            { "t": "9:15", "v": [24, 6, 12, 0], "do": "Click up; 2 archery ranges and a house" },
+            { "t": "10:05", "v": [18, 13, 14, 0], "do": "Veteran Serjeant and spear; Genitours" },
+            { "t": "11:00", "v": [18, 19, 14, 0], "do": "Decarbonization; deer done, go to berries" },
+            { "t": "11:30", "v": [18, 13, 14, 8], "do": "8 wood to stone for a fortress" }
           ],
           "army": ["Serjeant", "Spearman", "Genitour"],
           "goal": "Fight near holy sites for Castile healing"
@@ -101,7 +101,7 @@
           "ageUp": "10:30",
           "pick": "They turtle; stone your way into Imperial",
           "steps": [
-            { "t": "9:30", "v": [20, 10, 8, 0], "do": "Click up, keep both TCs making villagers" },
+            { "t": "9:30", "v": [23, 10, 10, 0], "do": "Click up, keep both TCs making villagers" },
             { "t": "10:30", "v": [20, 10, 8, 10], "do": "8 to 12 on stone; fortresses on exposed gold" }
           ],
           "army": ["Genoese Crossbowman", "Serjeant", "Templar Brother"],

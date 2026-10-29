@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { gamePlans, getGamePlan } from "./gamePlans";
-import { assignVillagers, bornAt, planOff, buildingsIn, buildPlayback, frameAt, landmarkStart, production, stepHints, trainedBy, villagerAt, villagerMoves, type Villager } from "./playback";
+import { assignVillagers, bornAt, planOff, buildingsIn, buildPlayback, buildTime, frameAt, landmarkStart, production, stepHints, trainedBy, villagerAt, villagerMoves, type Villager } from "./playback";
 
 const where = (vils: Villager[]) => vils.map((v) => v.at);
 
@@ -105,10 +105,37 @@ describe("villager production", () => {
     expect(production("vikings", [], 300).trainTime).toBe(22);
   });
 
-  it("trains Golden Horde villagers two at a time", () => {
+  it("trains Golden Horde villagers two at a time, from five", () => {
     const gh = production("golden_horde", [], 300);
-    expect(trainedBy(gh, 36)).toBe(6);
-    expect(trainedBy(gh, 37)).toBe(8);
+    expect(trainedBy(gh, 36)).toBe(5);
+    expect(trainedBy(gh, 37)).toBe(7);
+  });
+
+  it("starts Dragon and Zhu Xi with five villagers", () => {
+    expect(trainedBy(production("order_of_the_dragon", [], 300), 0)).toBe(5);
+    expect(trainedBy(production("order_of_the_dragon", [], 300), 23)).toBe(6);
+    expect(trainedBy(production("zhu_xis_legacy", [], 300), 0)).toBe(5);
+  });
+
+  it("trains Jin Mounted Villagers up to their limit, then villagers", () => {
+    const jin = production("jin_dynasty", [], 1200);
+    expect(jin.limited).toMatchObject({ name: "Mounted Villager", trainTime: 35, limit: 20 });
+    expect(trainedBy(jin, 0)).toBe(3);
+    expect(trainedBy(jin, 34)).toBe(3);
+    expect(trainedBy(jin, 35)).toBe(4);
+    // 17 more Mounted Villagers reach the limit of 20 at 9:55, then one every 20s.
+    expect(trainedBy(jin, 595)).toBe(20);
+    expect(trainedBy(jin, 614)).toBe(20);
+    expect(trainedBy(jin, 615)).toBe(21);
+  });
+
+  it("stops the Town Center while Knights Templar click up", () => {
+    const kt = production("knights_templar", [], 600, [], [{ age: 2, at: 200 }]);
+    expect(kt.producers[0].paused).toEqual([{ from: 140, until: 200 }]);
+    expect(trainedBy(kt, 140)).toBe(13);
+    expect(trainedBy(kt, 219)).toBe(13);
+    expect(trainedBy(kt, 220)).toBe(14);
+    expect(production("english", [], 600, [], [{ age: 2, at: 200 }]).producers[0].paused).toBeUndefined();
   });
 
   it("adds a second Town Center once it's built", () => {
@@ -131,9 +158,33 @@ describe("villager production", () => {
   it("counts a landmark that trains villagers", () => {
     const palace = production("english", [], 900, [{ name: "King's Palace", at: 300 }, { name: "Council Hall", at: 200 }]);
     expect(palace.producers).toEqual([
-      { label: "Town Center", from: 0 },
-      { label: "King's Palace", from: 300 },
+      { label: "Town Center", from: 0, speed: 1 },
+      { label: "King's Palace", from: 300, speed: 1.1 },
     ]);
+    // Palace of Swabia trains villagers 3x as fast.
+    const swabia = production("holy_roman_empire", [], 900, [{ name: "Palace of Swabia", at: 600 }]);
+    expect(swabia.producers[1]).toEqual({ label: "Palace of Swabia", from: 600, speed: 3 });
+    expect(trainedBy(swabia, 620) - trainedBy(production("holy_roman_empire", [], 900), 620)).toBe(3);
+  });
+
+  it("builds a Town Center faster with more builders", () => {
+    expect(buildTime(165)).toBe(165);
+    expect(buildTime(165, 2)).toBeCloseTo(123.75);
+    expect(buildTime(165, 8)).toBeCloseTo(49.5);
+    expect(production("english", [{ seconds: 300, text: "8 build TC 2", builders: 8 }], 900).producers.map((p) => p.from)).toEqual([0, 349.5]);
+  });
+
+  it("matches every plan step's villager count to production", () => {
+    for (const p of gamePlans) {
+      for (const f of p.feudal) {
+        for (const c of f.castle) {
+          const run = buildPlayback(p, { feudal: f, castle: c });
+          run.events.forEach((e, i) => {
+            if (e.step.v) expect(planOff(run, i), `${p.civ} ${f.id}/${c.id} at ${e.step.t}: ${e.step.do}`).toBe(0);
+          });
+        }
+      }
+    }
   });
 
   it("only shows villagers the Town Centers have trained", () => {

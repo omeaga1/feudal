@@ -2,7 +2,7 @@
   "civ": "holy_roman_empire",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "2:00",
     "steps": [
@@ -65,11 +65,11 @@
       "pick": "Safe maps, or against slow civs",
       "steps": [
         { "t": "2:00", "v": [3, 3, 0, 4], "b": 2, "do": "Aachen 2 tiles from wood; gold villagers to stone" },
-        { "t": "3:00", "v": [3, 6, 0, 4], "do": "Prelate inspires the stone villagers" },
-        { "t": "4:30", "v": [3, 8, 0, 0], "do": "Feudal: build TC 2 with 14 to 15 villagers" },
+        { "t": "3:00", "v": [3, 6, 0, 4], "b": 2, "do": "Prelate inspires the stone villagers" },
+        { "t": "4:30", "v": [3, 8, 0, 0], "b": 8, "do": "Feudal: stone and Aachen villagers (8) build TC 2" },
         { "t": "5:15", "v": [5, 12, 4, 0], "do": "Farms, one TC rallies to gold" },
-        { "t": "7:00", "v": [11, 8, 6, 2], "do": "Outpost on gold; Horticulture, Wheelbarrow, Broadaxe" },
-        { "t": "9:00", "v": [19, 11, 8, 0], "do": "12 farms, then age up; second prelate" }
+        { "t": "7:00", "v": [13, 10, 7, 2], "do": "Outpost on gold; Horticulture, Wheelbarrow, Broadaxe" },
+        { "t": "9:00", "v": [23, 12, 9, 0], "do": "12 farms, then age up; second prelate" }
       ],
       "army": ["Spearman", "Archer"],
       "castle": [

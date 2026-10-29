@@ -2,7 +2,7 @@
   "civ": "zhu_xis_legacy",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "2:30",
     "steps": [
@@ -20,11 +20,11 @@
       "ageUp": "4:00",
       "pick": "Default: Zhuge Nu and horsemen from 3 ranges",
       "steps": [
-        { "t": "2:30", "v": [8, 0, 2, 0], "b": 1, "do": "1 gold villager builds the Jiangnan Tower" },
-        { "t": "2:50", "v": [4, 5, 2, 0], "b": 1, "do": "Keep 4 on food; rest to wood with an official" },
+        { "t": "2:30", "v": [9, 0, 2, 0], "b": 1, "do": "1 gold villager builds the Jiangnan Tower" },
+        { "t": "2:50", "v": [4, 6, 2, 0], "b": 1, "do": "Keep 4 on food; rest to wood with an official" },
         { "t": "3:35", "v": [4, 7, 3, 0], "b": 1, "do": "Wheelbarrow; rally wood until 10" },
-        { "t": "4:10", "v": [4, 10, 2, 0], "do": "2 or 3 archery ranges and a barracks by the Tower" },
-        { "t": "5:35", "v": [8, 9, 3, 0], "do": "Blacksmith, Zhuge Nu nonstop; Double Broadaxe" },
+        { "t": "4:10", "v": [5, 10, 2, 0], "do": "2 or 3 archery ranges and a barracks by the Tower" },
+        { "t": "5:35", "v": [9, 9, 3, 0], "do": "Blacksmith, Zhuge Nu nonstop; Double Broadaxe" },
         { "t": "6:45", "v": [8, 12, 6, 0], "do": "3rd official; 7 to 10 Zhuge Nu raid their gold" },
         { "t": "8:35", "v": [12, 13, 6, 0], "do": "Siege Engineering if you can end it" }
       ],
@@ -39,8 +39,8 @@
           "pick": "Default: taxes pay for a big army",
           "steps": [
             { "t": "10:30", "v": [23, 0, 15, 0], "do": "Stop units; 10 to 15 food to gold, wood to food" },
-            { "t": "11:50", "v": [9, 9, 10, 0], "b": 10, "do": "10 food villagers build the Academy" },
-            { "t": "12:30", "v": [15, 11, 10, 0], "do": "Monastery and relics; Lancers and Zhuge Nu" }
+            { "t": "11:50", "v": [11, 9, 10, 0], "b": 10, "do": "10 food villagers build the Academy" },
+            { "t": "12:30", "v": [21, 11, 10, 0], "do": "Monastery and relics; Lancers and Zhuge Nu" }
           ],
           "army": ["Lancer", "Veteran Zhuge Nu", "Monk"],
           "goal": "Out-mass them with tax income"
@@ -53,7 +53,7 @@
           "ageUp": "11:00",
           "pick": "Keep fighting: Shaolin monks join the push",
           "steps": [
-            { "t": "10:00", "v": [16, 10, 8, 0], "b": 6, "do": "6 food villagers build it near the front" },
+            { "t": "10:00", "v": [13, 10, 8, 0], "b": 6, "do": "6 food villagers build it near the front" },
             { "t": "11:00", "v": [18, 10, 10, 0], "do": "Shaolin monks, relics, Palace Guard" }
           ],
           "army": ["Shaolin Monk", "Veteran Zhuge Nu", "Palace Guard"],
@@ -71,7 +71,7 @@
       "steps": [
         { "t": "2:30", "v": [7, 0, 4, 0], "b": 1, "do": "1 food villager builds the Gardens on a resource cluster" },
         { "t": "2:40", "v": [8, 0, 4, 0], "b": 1, "do": "Rally food until Castle" },
-        { "t": "4:25", "v": [12, 0, 4, 0], "do": "Builder back to food" }
+        { "t": "4:25", "v": [14, 0, 4, 0], "do": "Builder back to food" }
       ],
       "army": ["Spearman"],
       "castle": [
@@ -83,7 +83,7 @@
           "ageUp": "6:15",
           "pick": "Default: relics and sacred sites early",
           "steps": [
-            { "t": "5:15", "v": [17, 0, 0, 0], "b": 4, "do": "4 gold villagers build the Monastery" },
+            { "t": "5:15", "v": [16, 0, 0, 0], "b": 4, "do": "4 gold villagers build the Monastery" },
             { "t": "5:20", "v": [12, 5, 0, 0], "b": 4, "do": "5 food villagers to wood" },
             { "t": "6:15", "v": [14, 5, 4, 0], "do": "1 to 3 Shaolin monks; stable for Lancers" },
             { "t": "8:00", "v": [16, 8, 6, 0], "do": "Take every relic and sacred site" }
@@ -99,7 +99,7 @@
           "ageUp": "7:00",
           "pick": "They go 2 TC: officials collect food too",
           "steps": [
-            { "t": "6:00", "v": [12, 4, 0, 0], "b": 6, "do": "6 food villagers build the Academy" },
+            { "t": "6:00", "v": [13, 4, 0, 0], "b": 6, "do": "6 food villagers build the Academy" },
             { "t": "7:00", "v": [14, 8, 4, 0], "do": "More officials; 2nd TC and farms" }
           ],
           "army": ["Lancer", "Crossbowman", "Palace Guard"],

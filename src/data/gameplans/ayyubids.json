@@ -2,11 +2,11 @@
   "civ": "ayyubids",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "2:10",
     "steps": [
-      { "t": "0:00", "v": [6, 0, 0, 0], "b": 2, "do": "Berries, 2 build the mill" },
+      { "t": "0:00", "v": [4, 0, 0, 0], "b": 2, "do": "Berries, 2 build the mill" },
       { "t": "0:20", "v": [7, 0, 0, 0], "do": "Next builds a house, then sheep" },
       { "t": "0:40", "v": [7, 0, 1, 0], "do": "Next ones to gold; House of Wisdom near the gold" }
     ]
@@ -22,7 +22,7 @@
       "steps": [
         { "t": "2:00", "v": [8, 0, 4, 0], "do": "4 on gold, rally sheep" },
         { "t": "2:20", "v": [4, 5, 4, 0], "do": "Logistics wing; 5 to straggler trees for 150 wood" },
-        { "t": "3:20", "v": [6, 0, 4, 5], "do": "Then 50 stone for an outpost on gold" },
+        { "t": "3:20", "v": [7, 0, 4, 5], "do": "Then 50 stone for an outpost on gold" },
         { "t": "4:15", "v": [13, 0, 5, 0], "do": "Feudal: everything to food until Castle" }
       ],
       "army": ["Desert Raider", "Archer"],
@@ -37,8 +37,8 @@
           "steps": [
             { "t": "6:12", "do": "Drop off everything and age up" },
             { "t": "6:25", "v": [8, 8, 10, 0], "do": "Rally gold to 12; Wheelbarrow" },
-            { "t": "8:25", "v": [12, 8, 10, 0], "do": "2 to 3 stables, archers, a mosque" },
-            { "t": "10:00", "v": [15, 8, 10, 0], "do": "Blacksmith upgrades for the push" }
+            { "t": "8:25", "v": [12, 8, 12, 0], "do": "2 to 3 stables, archers, a mosque" },
+            { "t": "10:00", "v": [16, 8, 12, 0], "do": "Blacksmith upgrades for the push" }
           ],
           "army": ["Camel Lancer", "Archer", "Desert Raider"],
           "goal": "Win before 15 minutes"
@@ -70,7 +70,7 @@
         { "t": "2:15", "v": [6, 3, 3, 0], "do": "Reinforcement wing; sheep to straggler wood" },
         { "t": "3:50", "v": [6, 7, 3, 0], "b": 1, "do": "Lumber camp and a house" },
         { "t": "4:30", "v": [6, 8, 1, 0], "b": 4, "do": "4 build a stable; 8 Desert Raiders harass" },
-        { "t": "5:20", "v": [8, 5, 5, 0], "b": 3, "do": "3 houses for Golden Age tier 1" },
+        { "t": "5:20", "v": [8, 6, 5, 0], "b": 3, "do": "3 houses for Golden Age tier 1" },
         { "t": "7:00", "v": [13, 9, 7, 0], "do": "Blacksmith, third stable" }
       ],
       "army": ["Desert Raider", "Horseman"],
@@ -84,8 +84,8 @@
           "pick": "Harass did damage; switch to camels and relics",
           "steps": [
             { "t": "8:45", "v": [13, 10, 9, 0], "do": "Keep raiding or start the age-up" },
-            { "t": "11:20", "v": [18, 11, 10, 0], "do": "Logistics wing, rally wood" },
-            { "t": "13:30", "v": [18, 15, 10, 0], "do": "2 mosques for relics and Sacred Sites" }
+            { "t": "11:20", "v": [18, 12, 10, 0], "do": "Logistics wing, rally wood" },
+            { "t": "13:30", "v": [18, 18, 10, 0], "do": "2 mosques for relics and Sacred Sites" }
           ],
           "army": ["Camel Lancer", "Desert Raider", "Archer"],
           "goal": "Relics and Sacred Sites"

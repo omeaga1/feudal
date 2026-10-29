@@ -2,7 +2,7 @@
   "civ": "chinese",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "2:15",
     "steps": [
@@ -69,8 +69,8 @@
         { "t": "2:20", "v": [6, 0, 2, 0], "b": 5, "do": "5 sheep villagers build the Academy" },
         { "t": "3:12", "v": [7, 6, 2, 0], "do": "Official; age-up villagers take straggler wood" },
         { "t": "3:50", "v": [7, 8, 2, 0], "do": "Village and lumber camp, 3rd official" },
-        { "t": "4:45", "v": [7, 10, 2, 0], "do": "Stable, 3 to 5 scouts" },
-        { "t": "5:30", "v": [10, 9, 2, 0], "do": "Professional Scouts; contest deer" }
+        { "t": "4:45", "v": [7, 11, 2, 0], "do": "Stable, 3 to 5 scouts" },
+        { "t": "5:30", "v": [10, 10, 2, 0], "do": "Professional Scouts; contest deer" }
       ],
       "army": ["Scout", "Horseman", "Archer"],
       "castle": [

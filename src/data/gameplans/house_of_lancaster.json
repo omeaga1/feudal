@@ -2,7 +2,7 @@
   "civ": "house_of_lancaster",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "1:55",
     "steps": [
@@ -24,7 +24,7 @@
         { "t": "4:00", "v": [3, 8, 0, 4], "b": 3, "do": "Castle builders place a Manor over gold and sheep" },
         { "t": "5:00", "v": [3, 14, 0, 4], "do": "Rally wood by the Manor; mine to 800 stone" },
         { "t": "5:50", "v": [3, 4, 8, 0], "b": 9, "do": "9 build TC 2 on gold, rally both to sheep" },
-        { "t": "7:00", "v": [14, 6, 8, 0], "do": "TC builders to sheep" }
+        { "t": "7:00", "v": [16, 6, 8, 0], "do": "TC builders to sheep" }
       ],
       "army": ["Spearman", "Yeoman"],
       "castle": [
@@ -37,7 +37,7 @@
           "pick": "Default: Castle with 2 TCs and a Manor",
           "steps": [
             { "t": "7:30", "do": "White Tower on the wood, or greedy over stone and gold" },
-            { "t": "8:30", "v": [16, 6, 8, 0], "do": "Earl's Guard arrive; stable and barracks" },
+            { "t": "8:30", "v": [22, 8, 10, 0], "do": "Earl's Guard arrive; stable and barracks" },
             { "t": "9:30", "do": "Knights vs knight civs, archers and MAA vs spears" }
           ],
           "army": ["Knight", "Earl's Guard", "Crossbowman"],
@@ -69,10 +69,10 @@
       "steps": [
         { "t": "1:55", "v": [8, 0, 0, 0], "b": 3, "do": "Gold villagers build Abbey of Kings" },
         { "t": "2:00", "v": [4, 2, 0, 3], "b": 3, "do": "3 to stone (100 for a Manor), rally wood" },
-        { "t": "3:55", "v": [4, 8, 3, 0], "do": "Manor on wood with 2 villagers" },
-        { "t": "4:20", "v": [5, 8, 3, 0], "do": "Stable, queue Lords of Lancaster up to 4" },
-        { "t": "5:00", "v": [11, 6, 3, 0], "do": "Second stable; blacksmith before 8:00" },
-        { "t": "8:00", "v": [15, 8, 6, 0], "do": "Iron Undermesh, then dive with hobelars and Lords" }
+        { "t": "3:55", "v": [4, 10, 3, 0], "do": "Manor on wood with 2 villagers" },
+        { "t": "4:20", "v": [5, 11, 3, 0], "do": "Stable, queue Lords of Lancaster up to 4" },
+        { "t": "5:00", "v": [12, 6, 3, 0], "do": "Second stable; blacksmith before 8:00" },
+        { "t": "8:00", "v": [16, 8, 6, 0], "do": "Iron Undermesh, then dive with hobelars and Lords" }
       ],
       "army": ["Lord of Lancaster", "Hobelar", "Spearman"],
       "castle": [

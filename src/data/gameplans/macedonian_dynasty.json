@@ -2,7 +2,7 @@
   "civ": "macedonian_dynasty",
   "season": "Season 13",
   "checkedBuild": 11308,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "opening": {
     "decideAt": "2:25",
     "steps": [
@@ -38,9 +38,9 @@
           "ageUp": "11:00",
           "pick": "Default: the rush did damage, keep the pressure",
           "steps": [
-            { "t": "9:50", "v": [17, 6, 10, 0], "do": "About 17 Varangians and 4 horsemen out; click up" },
-            { "t": "11:00", "v": [17, 8, 12, 0], "do": "Cistern on your Strongholds; Siege Engineering" },
-            { "t": "12:00", "v": [17, 10, 12, 0], "do": "Cheirosiphons to break walls and towers" }
+            { "t": "9:50", "v": [18, 7, 10, 0], "do": "About 17 Varangians and 4 horsemen out; click up" },
+            { "t": "11:00", "v": [18, 9, 12, 0], "do": "Cistern on your Strongholds; Siege Engineering" },
+            { "t": "12:00", "v": [19, 11, 12, 0], "do": "Cheirosiphons to break walls and towers" }
           ],
           "army": ["Varangian Guard", "Cheirosiphon", "Riddari"],
           "goal": "End it before their 2 TCs pay off"
@@ -53,8 +53,8 @@
           "ageUp": "10:30",
           "pick": "The rush stalled; stabilize and out-tech",
           "steps": [
-            { "t": "9:30", "v": [14, 6, 12, 0], "do": "8 food villagers build the Tower by gold" },
-            { "t": "10:30", "v": [14, 8, 12, 0], "do": "Free crossbows; eco upgrades and relics" }
+            { "t": "9:30", "v": [8, 6, 12, 0], "b": 8, "do": "8 food villagers build the Tower by gold" },
+            { "t": "10:30", "v": [16, 9, 12, 0], "do": "Free crossbows; eco upgrades and relics" }
           ],
           "army": ["Varangian Guard", "Crossbowman", "Riddari"],
           "goal": "Free crossbows hold while you boom"
@@ -72,7 +72,7 @@
         { "t": "2:45", "v": [6, 0, 4, 0], "b": 4, "do": "4 on gold; 4 food villagers build the Hippodrome" },
         { "t": "4:15", "v": [9, 3, 6, 0], "do": "Builders to food and gold; Specialized Pick" },
         { "t": "5:30", "v": [13, 3, 6, 0], "do": "Arsenal near gold, or an outpost and palisade" },
-        { "t": "6:30", "v": [15, 3, 10, 0], "do": "At 450 gold move 5 food to gold" }
+        { "t": "6:30", "v": [11, 3, 11, 0], "do": "At 450 gold move 5 food to gold" }
       ],
       "army": ["Hippodrome Horseman", "Hippodrome Scout"],
       "castle": [
@@ -86,9 +86,9 @@
           "steps": [
             { "t": "6:50", "v": [9, 3, 6, 0], "b": 8, "do": "8 food villagers build the Tower near gold" },
             { "t": "8:10", "v": [13, 3, 14, 0], "do": "Market, sell extra gold; warcamp to Riddari" },
-            { "t": "10:15", "v": [16, 3, 14, 0], "do": "Scale Barding, Shaft Mining" },
+            { "t": "10:15", "v": [19, 3, 14, 0], "do": "Scale Barding, Shaft Mining" },
             { "t": "11:15", "v": [8, 3, 14, 0], "b": 14, "do": "14 food villagers build the Palatine School" },
-            { "t": "12:10", "v": [9, 3, 14, 14], "do": "2 batches of cataphracts; keeps on gold" }
+            { "t": "12:10", "v": [11, 3, 14, 14], "do": "2 batches of cataphracts; keeps on gold" }
           ],
           "army": ["Riddari", "Crossbowman"],
           "goal": "Palatine Cataphract batches at 12 minutes"
