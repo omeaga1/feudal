@@ -23,3 +23,12 @@ export function usePersisted<T>(key: string, initial: T): [T, (v: T) => void] {
   };
   return [value, set];
 }
+
+/** Writes a value for a usePersisted key that isn't mounted right now. */
+export function savePersisted<T>(key: string, value: T) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // Not remembered; fine.
+  }
+}

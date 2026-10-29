@@ -14,6 +14,8 @@ import { UpdateNotice } from "./components/UpdateNotice";
 import { dataMeta, getCiv } from "./lib/gameData";
 import { appFetch } from "./lib/http";
 import { useLiveMatch } from "./lib/liveMatch";
+import { getMapInfo } from "./lib/maps";
+import { savePersisted } from "./lib/persisted";
 import { loadProfileId, loadProfileName, saveProfileId } from "./lib/profile";
 
 type View = "live" | "stats" | "matchups" | "civs" | "keybinds";
@@ -44,6 +46,11 @@ export default function App() {
       setView("live");
       if (status.kind === "in-game") {
         const { me, opponents, map } = status.match;
+        // The full brief for this game waits in Matchups, for between games.
+        if (opponents[0]) {
+          savePersisted("feudal.matchup", { me: me.civ, them: opponents[0].civ });
+          savePersisted("feudal.matchup.map", getMapInfo(map)?.name ?? "");
+        }
         toast(
           <span className="toast-match">
             <Flag civ={me.civ} size="sm" />
@@ -76,7 +83,7 @@ export default function App() {
 
   return (
     <TipProvider>
-    <div className="app">
+    <div className={view === "live" && status.kind === "in-game" ? "app glance-mode" : "app"}>
       <nav className="rail" aria-label="Sections">
         <div className="brand" title="Feudal">
           <span className="brand-mark">
