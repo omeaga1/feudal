@@ -20,3 +20,14 @@ export function flagUrl(civId: string): string | undefined {
 export function resourceIcon(resource: Resource | "villager"): string | undefined {
   return resources.get(resource);
 }
+
+// Unit and landmark icons, bundled by `npm run data:icons` and keyed by their
+// path under data.aoe4world.com/images.
+const gameIcons = import.meta.glob<string>("../assets/game/**/*.png", { eager: true, query: "?url", import: "default" });
+const GAME_PREFIX = "https://data.aoe4world.com/images/";
+const gameIconByPath = new Map(Object.entries(gameIcons).map(([path, url]) => [path.replace(/^.*\/assets\/game\//, ""), url]));
+
+/** The bundled copy of an AoE4 World icon, or the remote URL when it isn't bundled yet. */
+export function gameIcon(url: string): string {
+  return url.startsWith(GAME_PREFIX) ? (gameIconByPath.get(url.slice(GAME_PREFIX.length)) ?? url) : url;
+}

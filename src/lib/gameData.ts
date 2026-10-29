@@ -1,3 +1,4 @@
+import { gameIcon } from "./assets";
 import civsJson from "../data/generated/civs.json";
 import unitsJson from "../data/generated/units.json";
 import metaJson from "../data/generated/meta.json";
@@ -57,7 +58,7 @@ export interface Unit {
 }
 
 export const civs = civsJson as Civ[];
-export const units = unitsJson as Unit[];
+export const units = (unitsJson as Unit[]).map((u) => ({ ...u, icon: gameIcon(u.icon) }));
 export const dataMeta = metaJson as { source: string; dataVersion: string; syncedAt: string };
 
 const civsById = new Map(civs.map((c) => [c.id, c]));

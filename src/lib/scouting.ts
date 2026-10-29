@@ -1,3 +1,4 @@
+import { gameIcon } from "./assets";
 import landmarksJson from "../data/generated/landmarks.json";
 import type { Age, Civ } from "./gameData";
 
@@ -11,7 +12,7 @@ export interface Landmark {
   icon: string;
 }
 
-export const landmarks = landmarksJson as Landmark[];
+export const landmarks = (landmarksJson as Landmark[]).map((l) => ({ ...l, icon: gameIcon(l.icon) }));
 
 export interface LandmarkChoice {
   /** The age the civ advances into by building one of these. */

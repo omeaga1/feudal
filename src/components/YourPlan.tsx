@@ -4,6 +4,7 @@ import { getCiv } from "../lib/gameData";
 import { getGamePlan } from "../lib/gamePlans";
 import { appFetch } from "../lib/http";
 import { usePersisted } from "../lib/persisted";
+import { PlaybackButton } from "./PlanPlayback";
 import { PlanTree, resolveSelection, type PlanSelection } from "./PlanTree";
 import { StepTrack } from "./StepTrack";
 import { VillagerChart } from "./VillagerChart";
@@ -54,6 +55,7 @@ export function YourPlan({ civ, gameBuild, full = false, title }: { civ: string;
           </span>
         )}
         <span className="pill subtle">{plan.season} guides</span>
+        <PlaybackButton plan={plan} path={path} />
       </div>
       <PlanTree plan={plan} selection={sel} onSelect={setSelection} full={full} />
       <div className="plan-detail">
