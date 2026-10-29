@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { gamePlans, getGamePlan } from "./gamePlans";
-import { assignVillagers, buildingsIn, buildPlayback, frameAt, type Villager } from "./playback";
+import { assignVillagers, buildingsIn, buildPlayback, frameAt, landmarkStart, villagerAt, villagerMoves, type Villager } from "./playback";
 
 const where = (vils: Villager[]) => vils.map((v) => v.at);
 
@@ -89,5 +89,28 @@ describe("playback", () => {
         }
       }
     }
+  });
+});
+
+describe("villager moves", () => {
+  const plan = getGamePlan("english")!;
+  const pb = buildPlayback(plan, { feudal: plan.feudal[0], castle: plan.feudal[0].castle[0] });
+  const moves = villagerMoves(pb);
+
+  it("starts every villager at the Town Center", () => {
+    const first = villagerAt(moves.get(0), 0);
+    expect(first).toEqual({ from: "tc", to: "food", since: 0 });
+  });
+
+  it("tracks a villager pulled to another resource", () => {
+    const moved = [...moves.values()].find((m) => m.length > 1)!;
+    const later = villagerAt(moved, moved[1].t);
+    expect(later?.from).toBe(moved[0].at);
+    expect(later?.to).toBe(moved[1].at);
+    expect(villagerAt(moved, -1)).toBeUndefined();
+  });
+
+  it("finds when the landmark goes up", () => {
+    expect(landmarkStart(pb, 2)).toBe(130);
   });
 });

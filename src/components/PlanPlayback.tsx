@@ -1,8 +1,7 @@
-import NumberFlow from "@number-flow/react";
 import { Pause, Play, RotateCcw, SkipBack, SkipForward, X } from "lucide-react";
-import { AnimatePresence, LayoutGroup, motion, MotionConfig } from "motion/react";
+import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import { Dialog, Slider, ToggleGroup } from "radix-ui";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { IconType } from "react-icons";
 import {
   GiAnchor,
@@ -11,7 +10,6 @@ import {
   GiCastle,
   GiChurch,
   GiCrossedSwords,
-  GiHammerNails,
   GiHorseHead,
   GiHouse,
   GiMining,
@@ -24,11 +22,56 @@ import {
 } from "react-icons/gi";
 import { resourceIcon } from "../lib/assets";
 import { getCiv } from "../lib/gameData";
-import { formatClock, landmarkIcon, type GamePlan, type SelectedPath } from "../lib/gamePlans";
+import { findUnit, formatClock, landmarkIcon, RESOURCES, type GamePlan, type PlanNode, type SelectedPath, type Split } from "../lib/gamePlans";
 import { usePersisted } from "../lib/persisted";
-import { buildPlayback, frameAt, SLOTS, type BuildingKind, type Slot } from "../lib/playback";
-import { UnitIcons } from "./PlanTree";
+import { buildPlayback, frameAt, landmarkStart, villagerAt, villagerMoves, type BuildingKind, type Playback, type Slot, type VillagerMove } from "../lib/playback";
 import { Tip } from "./ui";
+
+// A top-down mini base in a 960x500 scene: the Town Center in the middle,
+// sheep, trees, gold and stone around it, buildings on fixed plots. Every
+// position is worked out from the game clock, so scrubbing and speed
+// changes stay exact.
+
+type P = { x: number; y: number };
+
+const TC: P = { x: 480, y: 250 };
+const SITES: Record<Slot, P> = {
+  food: { x: 300, y: 300 },
+  wood: { x: 300, y: 104 },
+  gold: { x: 790, y: 140 },
+  stone: { x: 820, y: 335 },
+  build: { x: 400, y: 410 },
+};
+const CASTLE_LANDMARK: P = { x: 570, y: 415 };
+const RALLY: P = { x: 845, y: 452 };
+
+const PLOTS: Record<Exclude<BuildingKind, "house">, P> = {
+  mill: { x: 345, y: 360 },
+  lumber: { x: 335, y: 165 },
+  mining: { x: 715, y: 240 },
+  farm: { x: 300, y: 300 },
+  barracks: { x: 595, y: 62 },
+  range: { x: 668, y: 56 },
+  stable: { x: 741, y: 52 },
+  siege: { x: 880, y: 58 },
+  blacksmith: { x: 650, y: 345 },
+  market: { x: 705, y: 450 },
+  tower: { x: 905, y: 185 },
+  townCenter: { x: 130, y: 250 },
+  religious: { x: 232, y: 430 },
+  dock: { x: 90, y: 440 },
+};
+const HOUSE_PLOTS: P[] = [
+  { x: 412, y: 178 },
+  { x: 548, y: 178 },
+  { x: 415, y: 325 },
+  { x: 545, y: 325 },
+  { x: 232, y: 196 },
+  { x: 200, y: 345 },
+  { x: 130, y: 370 },
+  { x: 130, y: 140 },
+  { x: 610, y: 450 },
+];
 
 const BUILDINGS: Record<BuildingKind, { icon: IconType; label: string }> = {
   house: { icon: GiHouse, label: "House" },
@@ -41,16 +84,77 @@ const BUILDINGS: Record<BuildingKind, { icon: IconType; label: string }> = {
   stable: { icon: GiHorseHead, label: "Stable" },
   blacksmith: { icon: GiAnvil, label: "Blacksmith" },
   market: { icon: GiShop, label: "Market" },
-  tower: { icon: GiWatchtower, label: "Tower or outpost" },
+  tower: { icon: GiWatchtower, label: "Tower" },
   townCenter: { icon: GiCastle, label: "Town Center" },
   religious: { icon: GiChurch, label: "Monastery" },
   dock: { icon: GiAnchor, label: "Dock" },
   siege: { icon: GiTrebuchet, label: "Siege workshop" },
 };
 
-const SLOT_LABELS: Record<Slot, string> = { food: "Food", wood: "Wood", gold: "Gold", stone: "Stone", build: "Building" };
 const AGE_LABELS = { 1: "Dark Age", 2: "Feudal Age", 3: "Castle Age" } as const;
 const SPEEDS = [1, 2, 4, 8, 16];
+/** Scene pixels a villager walks per game second. */
+const WALK = 42;
+/** Game seconds a villager gathers before carrying a load back. */
+const GATHER = 12;
+/** Game seconds a building takes to go up. */
+const BUILD_TIME = 25;
+
+const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.y - b.y);
+const lerp = (a: P, b: P, k: number): P => ({ x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k });
+
+/** A villager's own spot at a site, spread on a sunflower spiral so a crowd doesn't stack. */
+function spot(slot: Slot, id: number): P {
+  const c = SITES[slot];
+  const a = id * 2.39996;
+  const r = 10 + Math.sqrt(id % 24) * 9;
+  return { x: c.x + Math.cos(a) * r, y: c.y + Math.sin(a) * r * 0.7 };
+}
+
+function dropoff(slot: Slot, built: Map<BuildingKind, number>, t: number): P {
+  const has = (k: BuildingKind) => (built.get(k) ?? Infinity) + BUILD_TIME <= t;
+  if (slot === "food" && has("mill")) return PLOTS.mill;
+  if (slot === "wood" && has("lumber")) return PLOTS.lumber;
+  if ((slot === "gold" || slot === "stone") && has("mining")) return PLOTS.mining;
+  return TC;
+}
+
+interface VilState {
+  p: P;
+  job: Slot;
+  carrying: boolean;
+  working: boolean;
+}
+
+function villagerState(moves: VillagerMove[] | undefined, id: number, t: number, built: Map<BuildingKind, number>): VilState | undefined {
+  const st = villagerAt(moves, t);
+  if (!st) return undefined;
+  const from = st.from === "tc" ? TC : spot(st.from, id);
+  const to = spot(st.to, id);
+  const walk = dist(from, to) / WALK;
+  const e = t - st.since;
+  if (e < walk) return { p: lerp(from, to, e / walk), job: st.to, carrying: false, working: false };
+  if (st.to === "build") return { p: to, job: "build", carrying: false, working: true };
+  const drop = dropoff(st.to, built, t);
+  const trip = dist(to, drop) / WALK;
+  const cycle = GATHER + 2 * trip;
+  const phase = (e - walk + ((id * 7.3) % cycle)) % cycle;
+  if (phase < GATHER) return { p: to, job: st.to, carrying: false, working: true };
+  if (phase < GATHER + trip) return { p: lerp(to, drop, (phase - GATHER) / trip), job: st.to, carrying: true, working: false };
+  return { p: lerp(drop, to, (phase - GATHER - trip) / trip), job: st.to, carrying: false, working: false };
+}
+
+/** Deterministic scatter for trees and rocks. */
+function scatter(n: number, seed: number, box: { x: number; y: number; w: number; h: number }): P[] {
+  let s = seed;
+  const rnd = () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646;
+  return Array.from({ length: n }, () => ({ x: box.x + rnd() * box.w, y: box.y + rnd() * box.h }));
+}
+
+const TREES = scatter(46, 7, { x: 40, y: 18, w: 500, h: 74 }).sort((a, b) => a.y - b.y);
+const GOLD_ROCKS = scatter(7, 3, { x: 815, y: 112, w: 60, h: 40 });
+const STONE_ROCKS = scatter(7, 11, { x: 845, y: 310, w: 60, h: 40 });
+const SHEEP = scatter(8, 5, { x: 250, y: 280, w: 70, h: 40 });
 
 /** Plays the clock forward while `playing`, `speed` game seconds per real second, stopping at `end`. */
 function useGameClock(end: number) {
@@ -82,33 +186,203 @@ function useGameClock(end: number) {
   return { t, setT, playing, setPlaying, toggle, speed, setSpeed };
 }
 
-/** One resource (or the build site) with its villagers as dots that slide between zones. */
-function Zone({ slot, ids, children }: { slot: Slot; ids: number[]; children?: ReactNode }) {
-  const icon = slot === "build" ? null : resourceIcon(slot);
+function Building({ kind, at, t, p, scale = 1 }: { kind: BuildingKind; at: number; t: number; p: P; scale?: number }) {
+  if (t < at) return null;
+  const { icon: Icon, label } = BUILDINGS[kind];
+  const k = Math.min(1, (t - at) / BUILD_TIME);
+  const s = 30 * scale;
   return (
-    <div className={`pb-zone ${slot}${ids.length ? "" : " empty"}`}>
-      <div className="pb-zone-head">
-        {icon ? <img src={icon} alt="" /> : <GiHammerNails className="pb-hammer" aria-hidden="true" />}
-        <span className="pb-zone-count">
-          <NumberFlow value={ids.length} />
-        </span>
-        <span className="pb-zone-label">{SLOT_LABELS[slot]}</span>
-      </div>
-      <div className="pb-dots">
-        {ids.map((id) => (
-          <motion.span
-            key={id}
-            layoutId={`vil-${id}`}
-            className="pb-dot"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 260, damping: 26 }}
-          />
-        ))}
-      </div>
-      {children}
-    </div>
+    <g className={`sb-building${k < 1 ? " rising" : ""}`} transform={`translate(${p.x - s / 2} ${p.y - s / 2})`}>
+      <title>{label}</title>
+      <rect className="sb-plot" x={-3} y={-3} width={s + 6} height={s + 6} rx={6} />
+      <rect className="sb-plot-fill" x={-3} y={s + 3 - (s + 6) * k} width={s + 6} height={(s + 6) * k} rx={6} />
+      <Icon x={4 * scale} y={4 * scale} size={s - 8 * scale} className="sb-building-icon" style={{ opacity: 0.35 + 0.65 * k }} />
+    </g>
   );
+}
+
+function Landmark({ node, p, start, done, t }: { node: PlanNode; p: P; start?: number; done: number; t: number }) {
+  const icon = landmarkIcon(node.landmark);
+  const from = start ?? done - 60;
+  if (t < from) return null;
+  const k = Math.min(1, (t - from) / Math.max(1, done - from));
+  return (
+    <g className={`sb-landmark${k < 1 ? " rising" : " done"}`} transform={`translate(${p.x - 30} ${p.y - 30})`}>
+      <title>{node.landmark ?? node.name}</title>
+      <rect className="sb-landmark-base" x={-4} y={-4} width={68} height={68} rx={10} />
+      {icon ? (
+        <image href={icon} x={2} y={2} width={56} height={56} style={{ opacity: k < 1 ? 0.25 + 0.4 * k : 1 }} preserveAspectRatio="xMidYMid slice" />
+      ) : (
+        <GiCastle x={8} y={8} size={44} className="sb-building-icon" />
+      )}
+      {k < 1 && (
+        <>
+          <rect className="sb-progress-bg" x={0} y={68} width={60} height={5} rx={2.5} />
+          <rect className="sb-progress" x={0} y={68} width={60 * k} height={5} rx={2.5} />
+        </>
+      )}
+    </g>
+  );
+}
+
+function Villager({ s }: { s: VilState }) {
+  const bob = s.working ? Math.sin(performance.now() / 120 + s.p.x) * 1.2 : 0;
+  return (
+    <g className={`sb-vil ${s.job}`} transform={`translate(${s.p.x} ${s.p.y + bob}) scale(1.35)`}>
+      <ellipse className="sb-shadow" cx={0} cy={6} rx={5} ry={2} />
+      <circle className="sb-vil-body" r={4.6} />
+      <circle className="sb-vil-head" cy={-5} r={2.4} />
+      {s.carrying && <circle className="sb-load" cx={4.5} cy={-1} r={2.6} />}
+    </g>
+  );
+}
+
+function Scene({ pb, path, plan, t }: { pb: Playback; path: SelectedPath; plan: GamePlan; t: number }) {
+  const moves = useMemo(() => villagerMoves(pb), [pb]);
+  const built = useMemo(() => {
+    const m = new Map<BuildingKind, number>();
+    for (const e of pb.events) for (const b of e.newBuildings) if (!m.has(b)) m.set(b, e.seconds);
+    return m;
+  }, [pb]);
+  const frame = frameAt(pb, t);
+  const vils = frame.villagers.map((v) => ({ id: v.id, s: villagerState(moves.get(v.id), v.id, t, built) })).filter((v) => v.s);
+  const houseAt = built.get("house");
+  // Population needs a house per 10 villagers past the Town Center's own room.
+  const houses = Math.min(HOUSE_PLOTS.length, Math.max(houseAt !== undefined && t >= houseAt ? 1 : 0, Math.ceil((frame.villagers.length - 9) / 10)));
+  const farms = (built.get("farm") ?? Infinity) <= t;
+  const abbr = getCiv(plan.civ)?.abbr;
+  const armies = [
+    { node: path.feudal, at: pb.feudalAt },
+    { node: path.castle, at: pb.castleAt },
+  ].filter((a) => t >= a.at && a.node.army?.length);
+  const armyUnits = armies.flatMap((a) => (a.node.army ?? []).map((n) => ({ n, at: a.at, unit: findUnit(n, abbr) })));
+  const uniqueUnits = armyUnits.filter((u, i) => armyUnits.findIndex((o) => o.n === u.n) === i);
+
+  // A pulse on each site that just gained villagers.
+  const prev = frame.index > 0 ? pb.events[frame.index - 1] : undefined;
+  const sinceStep = frame.current ? t - frame.current.seconds : Infinity;
+  const gained = (s: Slot) => {
+    if (!frame.current || sinceStep > 8) return false;
+    const now = frame.current.villagers.filter((v) => v.at === s).length;
+    const before = prev?.villagers.filter((v) => v.at === s).length ?? 0;
+    return now > before;
+  };
+
+  const trained = frame.current ? frame.current.villagers.length - (prev?.villagers.length ?? 0) : 0;
+
+  return (
+    <svg className={`sb-scene age-${frame.age}`} viewBox="0 0 960 500" role="img" aria-label="Your base, playing the build">
+      <defs>
+        <radialGradient id="sb-ground" cx="50%" cy="50%" r="70%">
+          <stop offset="0%" className="sb-ground-in" />
+          <stop offset="100%" className="sb-ground-out" />
+        </radialGradient>
+        <pattern id="sb-grass" width="22" height="22" patternUnits="userSpaceOnUse">
+          <path d="M3 18 l2 -5 M12 8 l1.5 -4 M17 20 l2 -4" className="sb-grass-blade" />
+        </pattern>
+      </defs>
+      <rect width="960" height="500" fill="url(#sb-ground)" />
+      <rect width="960" height="500" fill="url(#sb-grass)" />
+
+      {/* Paths worn between the Town Center and each site */}
+      {(["food", "wood", "gold", "stone"] as const).map((s) => (
+        <line key={s} x1={TC.x} y1={TC.y} x2={SITES[s].x} y2={SITES[s].y} className="sb-path" />
+      ))}
+
+      {/* Resources */}
+      {TREES.map((p, i) => (
+        <g key={i} transform={`translate(${p.x} ${p.y})`} className="sb-tree">
+          <ellipse cx={0} cy={13} rx={9} ry={3} className="sb-shadow" />
+          <path d="M0 -14 L10 6 L-10 6 Z" />
+          <path d="M0 -6 L12 12 L-12 12 Z" />
+        </g>
+      ))}
+      {farms
+        ? [-1, 0, 1].flatMap((r) =>
+            [-1, 0, 1].map((c) => (
+              <rect key={`${r},${c}`} x={SITES.food.x + c * 34 - 15} y={SITES.food.y + r * 26 - 11} width={30} height={22} rx={3} className="sb-farm" />
+            )),
+          )
+        : SHEEP.map((p, i) => (
+            <g key={i} transform={`translate(${p.x} ${p.y})`} className="sb-sheep">
+              <ellipse rx={7} ry={5} />
+              <circle cx={6} cy={-2} r={2.6} className="sb-sheep-head" />
+            </g>
+          ))}
+      {GOLD_ROCKS.map((p, i) => (
+        <path key={i} d={`M${p.x - 9} ${p.y + 6} L${p.x - 4} ${p.y - 7} L${p.x + 6} ${p.y - 5} L${p.x + 10} ${p.y + 6} Z`} className="sb-gold" />
+      ))}
+      {STONE_ROCKS.map((p, i) => (
+        <path key={i} d={`M${p.x - 10} ${p.y + 6} L${p.x - 6} ${p.y - 6} L${p.x + 5} ${p.y - 8} L${p.x + 11} ${p.y + 5} Z`} className="sb-stone" />
+      ))}
+      {(["food", "wood", "gold", "stone"] as const).map((s) =>
+        gained(s) ? (
+          <circle key={`pulse-${s}-${frame.index}`} cx={SITES[s].x} cy={SITES[s].y} r={20 + sinceStep * 6} className={`sb-pulse ${s}`} style={{ opacity: Math.max(0, 1 - sinceStep / 8) }} />
+        ) : null,
+      )}
+
+      {/* New villagers from the Town Center */}
+      {trained > 0 && sinceStep < 8 && (
+        <text key={`trained-${frame.index}`} x={TC.x} y={TC.y - 48 - sinceStep * 3} className="sb-float" style={{ opacity: Math.max(0, 1 - sinceStep / 8) }}>
+          +{trained} villager{trained > 1 ? "s" : ""}
+        </text>
+      )}
+
+      {/* Town Center */}
+      <g className="sb-tc" transform={`translate(${TC.x - 34} ${TC.y - 34})`}>
+        <title>Town Center</title>
+        <rect x={-4} y={-4} width={76} height={76} rx={12} className="sb-tc-base" />
+        <GiCastle x={8} y={6} size={52} className="sb-tc-icon" />
+      </g>
+
+      {/* Buildings */}
+      {HOUSE_PLOTS.slice(0, houses).map((p, i) => (
+        <Building key={i} kind="house" at={i === 0 ? (houseAt ?? 0) : 0} t={t} p={p} scale={0.8} />
+      ))}
+      {[...built.entries()]
+        .filter(([k]) => k !== "house" && k !== "farm")
+        .map(([k, at]) => (
+          <Building key={k} kind={k} at={at} t={t} p={PLOTS[k as Exclude<BuildingKind, "house">]} scale={k === "townCenter" ? 1.6 : 1} />
+        ))}
+      <Landmark node={path.feudal} p={SITES.build} start={landmarkStart(pb, 2)} done={pb.feudalAt} t={t} />
+      <Landmark node={path.castle} p={CASTLE_LANDMARK} start={landmarkStart(pb, 3)} done={pb.castleAt} t={t} />
+
+      {/* Army at the rally point */}
+      {uniqueUnits.length > 0 && (
+        <g className="sb-army" transform={`translate(${RALLY.x} ${RALLY.y})`}>
+          <path d="M44 -34 L44 22 M44 -34 L64 -27 L44 -20" className="sb-flag" />
+          {uniqueUnits.map(({ n, unit, at }, i) => {
+            const k = Math.min(1, (t - at) / 6);
+            const x = -((uniqueUnits.length - 1 - i) % 4) * 32 + 4;
+            const y = -Math.floor((uniqueUnits.length - 1 - i) / 4) * 32 - 14;
+            return (
+              <g key={n} transform={`translate(${x} ${y}) scale(${0.6 + 0.4 * k})`} style={{ opacity: k }}>
+                <title>{n}</title>
+                <rect x={-15} y={-15} width={30} height={30} rx={6} className="sb-unit-frame" />
+                {unit ? <image href={unit.icon} x={-13} y={-13} width={26} height={26} /> : <GiCrossedSwords x={-11} y={-11} size={22} className="sb-building-icon" />}
+              </g>
+            );
+          })}
+        </g>
+      )}
+
+      {/* Villagers, drawn last so they walk over everything */}
+      {vils.map(({ id, s }) => (
+        <Villager key={id} s={s!} />
+      ))}
+    </svg>
+  );
+}
+
+function deltas(now?: Split, before?: Split, nowB = 0, beforeB = 0) {
+  if (!now) return [];
+  const out: { key: string; n: number }[] = [];
+  RESOURCES.forEach((r, i) => {
+    const d = now[i] - (before?.[i] ?? 0);
+    if (d) out.push({ key: r, n: d });
+  });
+  if (nowB - beforeB) out.push({ key: "build", n: nowB - beforeB });
+  return out;
 }
 
 /** The track under the slider: age bands and a tick per step. */
@@ -126,17 +400,17 @@ function Timeline({ end, feudalAt, castleAt, steps, onSeek }: { end: number; feu
   );
 }
 
-/** The sandbox: a running game clock that plays the chosen path step by step. */
+/** The sandbox: your base, playing the chosen path on a running game clock. */
 export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPath }) {
   const pb = useMemo(() => buildPlayback(plan, path), [plan, path]);
   const { t, setT, playing, setPlaying, toggle, speed, setSpeed } = useGameClock(pb.end);
   const frame = frameAt(pb, t);
   const ageNode = frame.age === 1 ? path.feudal : frame.age === 2 ? path.castle : undefined;
   const reachedNode = frame.age === 2 ? path.feudal : frame.age === 3 ? path.castle : undefined;
-  const nextLandmark = ageNode?.landmark;
-  const byZone = (s: Slot) => frame.villagers.filter((v) => v.at === s).map((v) => v.id);
-  const total = frame.villagers.length;
+  const count = (s: Slot) => frame.villagers.filter((v) => v.at === s).length;
   const steps = pb.events.map((e) => e.seconds);
+  const prev = frame.index > 0 ? pb.events[frame.index - 1] : undefined;
+  const changes = deltas(frame.current?.split, prev?.split, frame.current?.builders, prev?.builders);
 
   const seekStep = (dir: -1 | 1) => {
     const target = dir > 0 ? steps.find((s) => s > t + 0.01) : [...steps].reverse().find((s) => s < t - 0.5);
@@ -160,66 +434,95 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
     return () => window.removeEventListener("keydown", onKey);
   });
 
-  // The age-up banner shows for a moment after each age-up the clock passes.
-  const justAged = frame.age > 1 && t - (frame.age === 2 ? pb.feudalAt : pb.castleAt) < 25;
+  const justAged = frame.age > 1 && t - (frame.age === 2 ? pb.feudalAt : pb.castleAt) < 20;
+  const nextIcon = landmarkIcon(ageNode?.landmark);
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className={`pb age-${frame.age}`}>
-        <div className="pb-top">
-          <div className="pb-clock" aria-label="Game time">
-            {formatClock(t)}
-          </div>
-          <div className="pb-age">
-            <div className="pb-age-row">
+      <div className="pb">
+        <div className="pb-stage">
+          <Scene pb={pb} path={path} plan={plan} t={t} />
+
+          <div className="pb-hud top">
+            <div className="pb-res">
+              {(["food", "wood", "gold", "stone"] as const).map((r) => (
+                <Tip key={r} label={`Villagers on ${r}`}>
+                  <span className={`pb-res-item ${r}${count(r) ? "" : " zero"}`}>
+                    <img src={resourceIcon(r)} alt={r} />
+                    {count(r)}
+                  </span>
+                </Tip>
+              ))}
+              {count("build") > 0 && (
+                <Tip label="Villagers building">
+                  <span className="pb-res-item build">⚒ {count("build")}</span>
+                </Tip>
+              )}
+              <Tip label="Villagers">
+                <span className="pb-res-item vils">
+                  <img src={resourceIcon("villager")} alt="villagers" />
+                  {frame.villagers.length}
+                </span>
+              </Tip>
+            </div>
+            <div className="pb-clock" aria-label="Game time">
+              {formatClock(t)}
+            </div>
+            <div className="pb-age">
               <span className="pb-age-name">{AGE_LABELS[frame.age]}</span>
               {frame.nextAgeAt !== undefined && (
                 <span className="pb-age-next">
-                  {AGE_LABELS[(frame.age + 1) as 2 | 3]} at {formatClock(frame.nextAgeAt)}
-                  {nextLandmark && (
-                    <>
-                      {" · "}
-                      {landmarkIcon(nextLandmark) && <img src={landmarkIcon(nextLandmark)} alt="" />}
-                      {nextLandmark}
-                    </>
-                  )}
+                  {nextIcon && <img src={nextIcon} alt="" />}
+                  {AGE_LABELS[(frame.age + 1) as 2 | 3].split(" ")[0]} in {formatClock(frame.nextAgeAt - t)}
                 </span>
               )}
-            </div>
-            <div className="pb-age-bar">
-              <motion.span className="pb-age-fill" animate={{ width: `${frame.ageProgress * 100}%` }} transition={{ duration: 0.15, ease: "linear" }} />
+              <span className="pb-age-bar">
+                <span className="pb-age-fill" style={{ width: `${frame.ageProgress * 100}%` }} />
+              </span>
             </div>
           </div>
-          <div className="pb-vils">
-            <img src={resourceIcon("villager")} alt="" />
-            <NumberFlow value={total} />
-          </div>
-        </div>
 
-        <div className="pb-stage">
-          <LayoutGroup id={`pb-${path.feudal.id}-${path.castle.id}`}>
-            <div className="pb-zones">
-              {SLOTS.map((s) => (
-                <Zone key={s} slot={s} ids={byZone(s)}>
-                  {s === "build" && byZone("build").length > 0 && nextLandmark && (
-                    <span className="pb-building-now">
-                      {landmarkIcon(nextLandmark) && <img src={landmarkIcon(nextLandmark)} alt="" />}
-                      {nextLandmark}
-                    </span>
-                  )}
-                </Zone>
-              ))}
-            </div>
-          </LayoutGroup>
+          <div className="pb-hud bottom">
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.div
+                key={frame.index}
+                className="pb-objective"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22 }}
+              >
+                <span className="pb-obj-t">{frame.current?.step.t ?? "0:00"}</span>
+                <span className="pb-obj-do">{frame.current?.step.do ?? "Game starts"}</span>
+                {changes.length > 0 && (
+                  <span className="pb-obj-moves">
+                    {changes.map((c) => (
+                      <span key={c.key} className={`pb-move ${c.key}${c.n < 0 ? " out" : ""}`}>
+                        {c.key === "build" ? "⚒" : <img src={resourceIcon(c.key as (typeof RESOURCES)[number])} alt={c.key} />}
+                        {c.n > 0 ? `+${c.n}` : c.n}
+                      </span>
+                    ))}
+                  </span>
+                )}
+              </motion.div>
+            </AnimatePresence>
+            {frame.next && (
+              <div className="pb-next">
+                <span className="pb-next-in">Next in {formatClock(frame.next.seconds - t)}</span>
+                <span className="pb-next-do">{frame.next.step.do}</span>
+              </div>
+            )}
+          </div>
+
           <AnimatePresence>
             {justAged && reachedNode && (
               <motion.div
                 key={frame.age}
                 className="pb-banner"
-                initial={{ opacity: 0, scale: 0.85, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.08 }}
+                transition={{ type: "spring", stiffness: 280, damping: 22 }}
               >
                 {landmarkIcon(reachedNode.landmark) && <img src={landmarkIcon(reachedNode.landmark)} alt="" />}
                 <span>
@@ -229,58 +532,6 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
-
-        <div className="pb-now">
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.div
-              key={frame.index}
-              className="pb-now-card"
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -14 }}
-              transition={{ duration: 0.25 }}
-            >
-              <span className="pb-now-t">{frame.current?.step.t ?? "0:00"}</span>
-              <span className="pb-now-do">{frame.current?.step.do ?? "Game starts"}</span>
-            </motion.div>
-          </AnimatePresence>
-          {frame.next && (
-            <div className="pb-next">
-              <span className="pb-next-in">in {formatClock(frame.next.seconds - t)}</span>
-              <span className="pb-next-do">{frame.next.step.do}</span>
-            </div>
-          )}
-        </div>
-
-        <div className="pb-bottom">
-          <div className="pb-built">
-            <span className="section-kicker">Built</span>
-            <span className="pb-built-icons">
-              <AnimatePresence initial={false}>
-                {frame.buildings.map(({ kind }) => {
-                  const { icon: Icon, label } = BUILDINGS[kind];
-                  return (
-                    <Tip key={kind} label={label}>
-                      <motion.span className="pb-building" initial={{ scale: 0, rotate: -20 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0 }}>
-                        <Icon aria-label={label} />
-                      </motion.span>
-                    </Tip>
-                  );
-                })}
-              </AnimatePresence>
-              {frame.buildings.length === 0 && <span className="muted small">Nothing yet</span>}
-            </span>
-          </div>
-          <div className="pb-army">
-            <span className="section-kicker">Army</span>
-            {[path.feudal, path.castle].map((node, i) => (
-              <span key={node.id} className={`pb-army-group${frame.age >= i + 2 ? " on" : ""}`}>
-                <UnitIcons names={node.army} civ={plan.civ} />
-                {frame.age < i + 2 && <span className="pb-army-at">{node.ageUp}</span>}
-              </span>
-            ))}
-          </div>
         </div>
 
         <div className="pb-transport">

@@ -180,3 +180,37 @@ export function frameAt(pb: Playback, seconds: number): Frame {
     buildings,
   };
 }
+
+export interface VillagerMove {
+  /** Game time the villager was sent here. */
+  t: number;
+  at: Slot;
+}
+
+/** Each villager's moves over the whole playback: where it was sent, and when. The first move is its arrival. */
+export function villagerMoves(pb: Playback): Map<number, VillagerMove[]> {
+  const moves = new Map<number, VillagerMove[]>();
+  for (const e of pb.events) {
+    for (const v of e.villagers) {
+      const list = moves.get(v.id) ?? [];
+      if (list[list.length - 1]?.at !== v.at) list.push({ t: e.seconds, at: v.at });
+      moves.set(v.id, list);
+    }
+  }
+  return moves;
+}
+
+/** Where a villager is headed at `t`, where it came from ("tc" when it was just trained), and since when. */
+export function villagerAt(moves: VillagerMove[] | undefined, t: number): { from: Slot | "tc"; to: Slot; since: number } | undefined {
+  if (!moves) return undefined;
+  let i = -1;
+  while (i + 1 < moves.length && moves[i + 1].t <= t) i++;
+  if (i < 0) return undefined;
+  return { from: i === 0 ? "tc" : moves[i - 1].at, to: moves[i].at, since: moves[i].t };
+}
+
+/** When villagers start building the landmark for an age-up, if the plan puts builders on it. */
+export function landmarkStart(pb: Playback, to: 2 | 3): number | undefined {
+  const [from, until] = to === 2 ? [0, pb.feudalAt] : [pb.feudalAt, pb.castleAt];
+  return pb.events.find((e) => e.seconds >= from && e.seconds < until && e.builders > 0)?.seconds;
+}
