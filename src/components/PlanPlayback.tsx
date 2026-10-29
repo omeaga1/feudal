@@ -597,7 +597,7 @@ function Timeline({ end, feudalAt, castleAt, steps, onSeek }: { end: number; feu
 /** The sandbox: your base, playing the chosen path on a running game clock. */
 export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPath }) {
   const pb = useMemo(() => buildPlayback(plan, path), [plan, path]);
-  const [view, setView] = usePersisted<"timeline" | "base">("feudal.playback.view2", "base");
+  const [view, setView] = usePersisted<"timeline" | "base">("feudal.playback.view3", "timeline");
   const steps = useMemo(() => pb.events.map((e) => e.seconds), [pb]);
   const { t, setT, playing, setPlaying, toggle, mode, setMode, speed, setSpeed, pace, setPace } = useGameClock(pb.end, steps);
   const frame = frameAt(pb, t);
@@ -636,7 +636,7 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
       <div className="pb">
         <div className="pb-views">
           <ToggleGroup.Root className="segmented" type="single" value={view} onValueChange={(v) => v && setView(v as "timeline" | "base")} aria-label="View">
-            {(["base", "timeline"] as const).map((v) => (
+            {(["timeline", "base"] as const).map((v) => (
               <ToggleGroup.Item key={v} value={v} className="segmented-item">
                 {v === view && <motion.span layoutId="pb-view" className="segmented-thumb" transition={{ type: "spring", stiffness: 500, damping: 38 }} />}
                 <span>{v === "timeline" ? "Timeline" : "Base"}</span>

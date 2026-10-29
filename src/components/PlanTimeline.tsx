@@ -1,8 +1,8 @@
 import NumberFlow from "@number-flow/react";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { resourceIcon } from "../lib/assets";
 import { getCiv } from "../lib/gameData";
-import { findUnit, formatClock, landmarkIcon, RESOURCES, type GamePlan, type SelectedPath } from "../lib/gamePlans";
+import { findUnit, landmarkIcon, RESOURCES, type GamePlan, type SelectedPath } from "../lib/gamePlans";
 import { frameAt, type BuildingKind, type Move, type Playback } from "../lib/playback";
 import { Tip } from "./ui";
 import type { IconType } from "react-icons";
@@ -32,26 +32,17 @@ export function MoveChips({ moves }: { moves: Move[] }) {
   );
 }
 
-const W = 1000;
-const VIL_H = 120;
-/** Room left of the lanes for their labels; matches .tl-lanes padding. */
-const LABEL_W = 74;
+const SEGMENTS = [...RESOURCES, "build"] as const;
+const BAR_H = 176;
 
-/** Greedy rows so labels placed by time don't overlap: each row holds items at least `gap` seconds apart. */
-function rows<T extends { seconds: number }>(items: T[], gap: number, max: number): (T & { row: number })[] {
-  const lastAt: number[] = [];
-  return items.map((it) => {
-    let row = lastAt.findIndex((x) => it.seconds - x >= gap);
-    if (row < 0) row = lastAt.length < max ? lastAt.length : lastAt.indexOf(Math.min(...lastAt));
-    lastAt[row] = it.seconds;
-    return { ...it, row };
-  });
-}
+type Column =
+  | { kind: "step"; i: number; e: Playback["events"][number] }
+  | { kind: "age"; age: 2 | 3; at: number; node: SelectedPath["castle"] };
 
 /**
- * The whole plan on one time axis: age bands, the villager split as stacked
- * bands with counts, every step, buildings and the army, with a playhead.
- * Click anywhere to jump there.
+ * The plan as one column per step: the villager split as a stacked bar with
+ * counts, who moves where, the rally point and new buildings. Age-ups sit
+ * between the columns. Click a column to jump there.
  */
 export function PlanTimeline({
   pb,
@@ -68,50 +59,37 @@ export function PlanTimeline({
   onSeek: (s: number) => void;
   buildings: Record<BuildingKind, { icon: IconType; label: string }>;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const strip = useRef<HTMLDivElement>(null);
   const frame = frameAt(pb, t);
-  const pct = (s: number) => `${(s / pb.end) * 100}%`;
   const abbr = getCiv(plan.civ)?.abbr;
+  const maxVils = Math.max(10, ...pb.events.map((e) => e.villagers.length));
 
-  const points = useMemo(() => pb.events.filter((e, i) => i === 0 || e.villagers !== pb.events[i - 1].villagers), [pb]);
-  const maxVils = Math.max(10, ...points.map((p) => p.villagers.length));
-  const x = (s: number) => (s / pb.end) * W;
-  const y = (n: number) => VIL_H - (n / maxVils) * (VIL_H - 6);
-  const counts = (e: (typeof points)[number]) => [...RESOURCES.map((r) => e.villagers.filter((v) => v.at === r).length), e.villagers.filter((v) => v.at === "build").length];
-  const layers = [0, 1, 2, 3, 4].map((layer) => {
-    const top: string[] = [];
-    const bottom: string[] = [];
-    points.forEach((p, i) => {
-      const c = counts(p);
-      const lo = c.slice(0, layer).reduce((a, b) => a + b, 0);
-      const hi = lo + c[layer];
-      const nx = x(i + 1 < points.length ? points[i + 1].seconds : pb.end);
-      top.push(`${x(p.seconds)},${y(hi)}`, `${nx},${y(hi)}`);
-      bottom.unshift(`${nx},${y(lo)}`, `${x(p.seconds)},${y(lo)}`);
+  const columns = useMemo(() => {
+    const out: Column[] = [];
+    const ages = [
+      { age: 2 as const, at: pb.feudalAt, node: path.feudal },
+      { age: 3 as const, at: pb.castleAt, node: path.castle },
+    ];
+    pb.events.forEach((e, i) => {
+      while (ages.length && ages[0].at <= e.seconds) out.push({ kind: "age", ...ages.shift()! });
+      out.push({ kind: "step", i, e });
     });
-    return `M${top.join(" L")} L${bottom.join(" L")} Z`;
-  });
+    ages.forEach((a) => out.push({ kind: "age", ...a }));
+    return out;
+  }, [pb, path]);
 
-  const steps = rows(
-    pb.events.map((e, i) => ({ seconds: e.seconds, i, e })),
-    pb.end * 0.17,
-    3,
-  );
-  const builds = rows(
-    pb.events.flatMap((e) => e.newBuildings.map((kind) => ({ seconds: e.seconds, kind }))),
-    pb.end * 0.025,
-    2,
-  );
-  const ages = [
-    { node: path.feudal, at: pb.feudalAt, age: "Feudal" },
-    { node: path.castle, at: pb.castleAt, age: "Castle" },
-  ];
+  // Keep the current step in view as playback moves on.
+  useEffect(() => {
+    const el = strip.current?.querySelector<HTMLElement>(".tlc.now");
+    if (!el || !strip.current) return;
+    const box = strip.current;
+    const left = el.offsetLeft - box.offsetLeft;
+    if (left < box.scrollLeft + 40 || left + el.offsetWidth > box.scrollLeft + box.clientWidth - 40) {
+      box.scrollTo({ left: left - box.clientWidth / 3, behavior: "smooth" });
+    }
+  }, [frame.index]);
 
-  const seek = (e: React.MouseEvent) => {
-    const box = ref.current?.getBoundingClientRect();
-    if (!box) return;
-    onSeek(Math.max(0, Math.min(pb.end, ((e.clientX - box.left - LABEL_W) / (box.width - LABEL_W)) * pb.end)));
-  };
+  const counts = (e: Playback["events"][number]) => SEGMENTS.map((s) => e.villagers.filter((v) => v.at === s).length);
 
   return (
     <div className="tl">
@@ -136,118 +114,72 @@ export function PlanTimeline({
         <div className="tl-now-step">
           <span className="tl-now-t">{frame.current?.step.t ?? "0:00"}</span>
           <span className="tl-now-do">{frame.current?.step.do ?? "Game starts"}</span>
-          {frame.current && frame.current.moves.length > 0 && <MoveChips moves={frame.current.moves} />}
         </div>
       </div>
 
-      <div className="tl-lanes" ref={ref} onClick={seek}>
-        <div className="tl-ages">
-          <span className="tl-age a1" style={{ left: 0, width: pct(pb.feudalAt) }}>
-            Dark
-          </span>
-          <span className="tl-age a2" style={{ left: pct(pb.feudalAt), width: pct(pb.castleAt - pb.feudalAt) }}>
-            Feudal
-          </span>
-          <span className="tl-age a3" style={{ left: pct(pb.castleAt), right: 0 }}>
-            Castle
-          </span>
-        </div>
-
-        <div className="tl-lane vils">
-          <span className="tl-lane-label">Villagers</span>
-          <svg viewBox={`0 0 ${W} ${VIL_H}`} preserveAspectRatio="none" className="tl-vil-svg" aria-hidden="true">
-            {layers.map((d, i) => (
-              <path key={i} d={d} className={`vil-layer ${i < 4 ? RESOURCES[i] : "builders"}`} />
-            ))}
-          </svg>
-          {points.map((p, i) => {
-            const nx = i + 1 < points.length ? points[i + 1].seconds : pb.end;
-            const wide = (nx - p.seconds) / pb.end > 0.045;
+      <div className="tlc-strip" ref={strip}>
+        {columns.map((c) => {
+          if (c.kind === "age") {
+            const icon = landmarkIcon(c.node.landmark);
             return (
-              <span key={p.seconds} className="tl-total" style={{ left: pct(p.seconds), bottom: `${((p.villagers.length / maxVils) * (VIL_H - 6) * 100) / VIL_H}%` }}>
-                {wide || i === points.length - 1 ? p.villagers.length : ""}
-              </span>
-            );
-          })}
-        </div>
-
-        <div className="tl-lane rally">
-          <span className="tl-lane-label">Rally</span>
-          {pb.events.map((e, i) => {
-            const nx = pb.events[i + 1]?.seconds ?? pb.end;
-            if (i > 0 && pb.events[i - 1].rally === e.rally) return null;
-            let to = nx;
-            for (let k = i + 1; k < pb.events.length && pb.events[k].rally === e.rally; k++) to = pb.events[k + 1]?.seconds ?? pb.end;
-            return (
-              <span key={i} className={`tl-rally ${e.rally}`} style={{ left: pct(e.seconds), width: pct(to - e.seconds) }}>
-                <img src={resourceIcon(e.rally)} alt={e.rally} />
-              </span>
-            );
-          })}
-        </div>
-
-        <div className="tl-lane steps" style={{ height: `${Math.max(...steps.map((s) => s.row), 0) * 30 + 34}px` }}>
-          <span className="tl-lane-label">Steps</span>
-          {steps.map(({ i, e, row }) => {
-            const state = i === frame.index ? " now" : i < frame.index ? " done" : "";
-            return (
-              <Tip key={i} label={`${e.step.t} · ${e.step.do}`}>
-                <button
-                  type="button"
-                  className={`tl-step${state}${e.seconds / pb.end > 0.84 ? " end" : ""}`}
-                  style={e.seconds / pb.end > 0.84 ? { right: `${(1 - e.seconds / pb.end) * 100}%`, top: `${row * 30 + 4}px` } : { left: pct(e.seconds), top: `${row * 30 + 4}px` }}
-                  onClick={(ev) => {
-                    ev.stopPropagation();
-                    onSeek(e.seconds);
-                  }}
-                >
-                  <span className="tl-step-t">{e.step.t}</span>
-                  <span className="tl-step-do">{e.step.do}</span>
-                </button>
-              </Tip>
-            );
-          })}
-        </div>
-
-        <div className="tl-lane builds">
-          <span className="tl-lane-label">Build</span>
-          {builds.map(({ seconds, kind, row }) => {
-            const { icon: Icon, label } = buildings[kind];
-            return (
-              <Tip key={kind} label={`${label} at ${formatClock(seconds)}`}>
-                <span className={`tl-building${seconds <= t ? " on" : ""}`} style={{ left: pct(seconds), top: `${row * 30 + 4}px` }}>
-                  <Icon aria-label={label} />
+              <button type="button" key={`age${c.age}`} className={`tlc-age a${c.age}${c.at <= t ? " on" : ""}`} onClick={() => onSeek(c.at)}>
+                <span className="tlc-t">{c.node.ageUp}</span>
+                <span className="tlc-age-name">{c.age === 2 ? "Feudal" : "Castle"}</span>
+                {icon && <img className="tlc-landmark" src={icon} alt={c.node.landmark ?? ""} title={c.node.landmark} />}
+                <span className="tlc-army">
+                  {(c.node.army ?? []).slice(0, 3).map((n) => {
+                    const u = findUnit(n, abbr);
+                    return u ? <img key={n} src={u.icon} alt={n} title={n} /> : null;
+                  })}
                 </span>
-              </Tip>
+              </button>
             );
-          })}
-          {ages.map(({ node, at }) => {
-            const icon = landmarkIcon(node.landmark);
-            return (
-              <Tip key={node.id} label={`${node.landmark ?? node.name} at ${node.ageUp}`}>
-                <span className={`tl-landmark${at <= t ? " on" : ""}`} style={{ left: pct(at) }}>
-                  {icon ? <img src={icon} alt="" /> : <span>{node.ageUp}</span>}
+          }
+          const { i, e } = c;
+          const n = counts(e);
+          const state = i === frame.index ? " now" : i < frame.index ? " done" : "";
+          const rallyChanged = i === 0 || pb.events[i - 1].rally !== e.rally;
+          const moves = e.moves.filter((m) => m.from !== "tc" || m.to !== e.rally);
+          const fresh = e.moves.filter((m) => m.from === "tc" && m.to === e.rally).reduce((a, m) => a + m.n, 0);
+          return (
+            <Tip key={i} label={`${e.step.t} · ${e.step.do}`}>
+              <button type="button" className={`tlc${state}`} onClick={() => onSeek(e.seconds)}>
+                <span className="tlc-t">{e.step.t}</span>
+                <span className="tlc-bar" style={{ height: BAR_H }}>
+                  <span className="tlc-total">{e.villagers.length}</span>
+                  {SEGMENTS.map((s, k) =>
+                    n[k] ? (
+                      <span key={s} className={`tlc-seg ${s}`} style={{ height: (n[k] / maxVils) * (BAR_H - 18) }}>
+                        {(n[k] / maxVils) * (BAR_H - 18) >= 13 && n[k]}
+                      </span>
+                    ) : null,
+                  )}
                 </span>
-              </Tip>
-            );
-          })}
-        </div>
-
-        <div className="tl-lane army">
-          <span className="tl-lane-label">Army</span>
-          {ages.map(({ node, at }, i) => (
-            <span key={node.id} className={`tl-army${at <= t ? " on" : ""}`} style={{ left: pct(at), right: i === 0 ? `calc(100% - ${pct(pb.castleAt)})` : 0 }}>
-              {(node.army ?? []).map((n) => {
-                const u = findUnit(n, abbr);
-                return u ? <img key={n} src={u.icon} alt={n} title={n} /> : <span key={n} className="unit-chip">{n}</span>;
-              })}
-            </span>
-          ))}
-        </div>
-
-        <div className="tl-playhead" style={{ left: `calc(${LABEL_W}px + (100% - ${LABEL_W}px) * ${t / pb.end})` }}>
-          <span className="tl-playhead-t">{formatClock(t)}</span>
-        </div>
+                <span className={`tlc-rally ${e.rally}${rallyChanged ? " changed" : ""}`}>
+                  <span aria-hidden="true">⚑</span>
+                  <img src={resourceIcon(e.rally)} alt={`rally to ${e.rally}`} />
+                  {fresh > 0 && <b>+{fresh}</b>}
+                </span>
+                <span className="tlc-moves">
+                  {moves.slice(0, 3).map((m, k) => (
+                    <span key={k} className="tlc-move">
+                      <b>{m.n}</b>
+                      <SlotIcon slot={m.from} />
+                      <span className="move-arrow" aria-hidden="true">›</span>
+                      <SlotIcon slot={m.to} />
+                    </span>
+                  ))}
+                </span>
+                <span className="tlc-builds">
+                  {e.newBuildings.slice(0, 4).map((b) => {
+                    const { icon: Icon, label } = buildings[b];
+                    return <Icon key={b} aria-label={label} title={label} />;
+                  })}
+                </span>
+              </button>
+            </Tip>
+          );
+        })}
       </div>
     </div>
   );
