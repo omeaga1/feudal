@@ -25,7 +25,11 @@ async function linkLatestRelease() {
   }
   const mb = (installer.size / 1024 / 1024).toFixed(1);
   const note = document.querySelector("[data-release-note]");
-  if (note) note.textContent = `v${version}, ${mb} MB installer. Windows 10 and 11. Free forever, no ads, no account.`;
+  if (note) note.textContent = `v${version}, ${mb} MB installer. Windows 10 and 11. Free forever. No ads, no account.`;
 }
 
 linkLatestRelease().catch(() => {});
+
+// The flag strip scrolls by half its width, so it needs a second copy of the flags to loop.
+const track = document.querySelector(".flag-track");
+if (track) track.innerHTML += track.innerHTML;
