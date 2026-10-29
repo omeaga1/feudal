@@ -1,6 +1,6 @@
 {
   "latestBuild": 11308,
-  "checkedAt": "2026-10-28T15:15:11.932Z",
+  "checkedAt": "2026-10-29T14:40:39.771Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -102,12 +102,22 @@
       "stale": false,
       "fresh": []
     },
+    "scots": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
     "sengoku_daimyo": {
       "checkedBuild": 11308,
       "stale": false,
       "fresh": []
     },
     "tughlaq_dynasty": {
+      "checkedBuild": 11308,
+      "stale": false,
+      "fresh": []
+    },
+    "vikings": {
       "checkedBuild": 11308,
       "stale": false,
       "fresh": []
