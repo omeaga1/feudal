@@ -57,7 +57,7 @@
       "style": "boom",
       "landmark": "Stone of Destiny",
       "ageUp": "4:55",
-      "pick": "Default; open maps and against slower civs",
+      "pick": "Default (Beasty, Swaggy): cows feed the TC, Fishponds add gold",
       "steps": [
         {
           "t": "3:20",
@@ -124,6 +124,7 @@
         }
       ],
       "army": [
+        "Man-at-Arms",
         "Highland Archer",
         "Pikeman",
         "Cateran"
@@ -140,9 +141,9 @@
             {
               "t": "9:30",
               "v": [
-                16,
-                12,
+                14,
                 10,
+                6,
                 0
               ],
               "b": 6,
@@ -151,9 +152,9 @@
             {
               "t": "10:30",
               "v": [
-                18,
-                14,
+                16,
                 12,
+                10,
                 0
               ],
               "do": "Gate trickles free infantry; Mustering Hall techs"
@@ -181,9 +182,9 @@
             {
               "t": "9:30",
               "v": [
-                16,
-                12,
+                14,
                 10,
+                6,
                 0
               ],
               "b": 6,
@@ -192,9 +193,9 @@
             {
               "t": "10:00",
               "v": [
-                18,
-                14,
+                16,
                 12,
+                9,
                 0
               ],
               "do": "Tower Houses plant Stealth Forests on their raid paths"
@@ -219,7 +220,7 @@
       "style": "aggro",
       "landmark": "Abbey of the Isles",
       "ageUp": "4:52",
-      "pick": "Against greedy openings and archer civs",
+      "pick": "All-in; Beasty calls it weak in 1v1, better in team games",
       "steps": [
         {
           "t": "2:55",
@@ -235,7 +236,7 @@
         {
           "t": "4:10",
           "v": [
-            7,
+            10,
             5,
             3,
             0
@@ -290,9 +291,9 @@
             {
               "t": "9:00",
               "v": [
-                16,
-                12,
-                10,
+                14,
+                8,
+                6,
                 0
               ],
               "b": 6,
@@ -301,9 +302,9 @@
             {
               "t": "10:30",
               "v": [
-                18,
-                14,
+                16,
                 12,
+                10,
                 0
               ],
               "do": "Gate trickles free infantry; Mustering Hall techs"
@@ -331,9 +332,9 @@
             {
               "t": "9:00",
               "v": [
-                16,
-                12,
-                10,
+                14,
+                8,
+                6,
                 0
               ],
               "b": 6,
@@ -342,9 +343,9 @@
             {
               "t": "10:00",
               "v": [
-                18,
-                14,
+                16,
                 12,
+                9,
                 0
               ],
               "do": "Tower Houses plant Stealth Forests on their raid paths"
@@ -365,6 +366,11 @@
     }
   ],
   "sources": [
+    {
+      "title": "Beasty: My First 1v1 Games With Scots",
+      "url": "https://www.youtube.com/watch?v=cPjX-wFhvDA",
+      "video": "https://www.youtube.com/watch?v=cPjX-wFhvDA"
+    },
     {
       "title": "Swaggy Professor: The Only Scots Build You'll Need (Stone of Destiny)",
       "url": "https://aoe4guides.com/builds/rGWRAbE6ptSPUMsueN8M",
