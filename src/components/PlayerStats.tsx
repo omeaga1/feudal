@@ -277,7 +277,8 @@ function StatsBody({ player, onPlayer }: { player: PlayerDetails; onPlayer: (id:
   const streak = s?.streak ?? 0;
   return (
     <div className="stack">
-      <section className="panel player-hero">
+      <section className="panel player-hero banner">
+        {player.avatars?.full && <span className="banner-backdrop" aria-hidden="true" style={{ backgroundImage: `url(${player.avatars.full})` }} />}
         <Avatar src={player.avatars?.full ?? player.avatars?.medium} name={player.name} size={84} />
         <div className="player-hero-text">
           <h2>{player.name}</h2>

@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { GiCrossedSwords } from "react-icons/gi";
 import type { LiveStatus } from "../lib/liveMatch";
+import { civColor } from "../lib/civColors";
 import { getCiv } from "../lib/gameData";
+import { appFetch } from "../lib/http";
+import { fetchPlayer, timeAgo, type PlayerDetails } from "../lib/playerStats";
 import { BriefView } from "./BriefView";
 import { VersusBar } from "./CivPicker";
+import { Flag } from "./Flag";
+import { Avatar, LeagueBadge } from "./PlayerBits";
 import { ProfileLink } from "./ProfileLink";
 
 interface Props {
@@ -61,30 +67,82 @@ export function LiveMatch({ profileId, profileName, status, onProfileChange }: P
     );
   }
 
+  return <Waiting profileId={profileId} profileName={profileName} status={status} onProfileChange={onProfileChange} />;
+}
+
+/** Between games: who's linked, the last battle, and a quiet sign that Feudal is watching. */
+function Waiting({ profileId, profileName, status, onProfileChange }: Props & { profileId: number }) {
+  const [player, setPlayer] = useState<PlayerDetails | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetchPlayer(appFetch, profileId)
+      .then((p) => !cancelled && setPlayer(p))
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [profileId]);
+
+  const solo = player?.modes.rm_solo;
+  const last = status.kind === "waiting" ? status.lastMatch : null;
+  const name = player?.name ?? profileName ?? `Profile #${profileId}`;
+
   return (
-    <section className="panel waiting">
-      <div className="radar" aria-hidden="true">
-        <span />
+    <section className="panel waiting banner" style={last ? ({ "--civ": civColor(last.me.civ) } as React.CSSProperties) : undefined}>
+      <div className="waiting-hero">
+        <div className="radar" aria-hidden="true">
+          <span />
+          <GiCrossedSwords className="radar-icon" />
+        </div>
+        <div className="waiting-text">
+          <span className="eyebrow">Watching AoE4 World</span>
+          <h2>Awaiting your next battle</h2>
+          <p className="muted">Your matchup brief opens by itself when a ranked or quick match starts. No clicks needed.</p>
+          {status.kind === "error" && <p className="error small">Couldn't reach AoE4 World: {status.message}. Retrying.</p>}
+        </div>
       </div>
-      <h2>Waiting for your next game</h2>
-      <p className="muted">Linked to {profileName ?? `AoE4 World profile #${profileId}`}.</p>
-      {status.kind === "error" && <p className="error">Couldn't reach AoE4 World: {status.message}. Retrying.</p>}
-      {status.kind === "waiting" && status.lastMatch && (
-        <p className="muted">
-          Last game: {getCiv(status.lastMatch.me.civ)?.name ?? status.lastMatch.me.civ} vs{" "}
-          {status.lastMatch.opponents.map((o) => getCiv(o.civ)?.name ?? o.civ).join(", ")} on {status.lastMatch.map}.
-        </p>
-      )}
-      {status.kind === "waiting" && !status.lastMatch && (
-        <p className="muted">AoE4 World doesn't show a ranked or quick-match game for this profile yet.</p>
-      )}
-      <p className="muted">
-        The brief opens on its own once your game shows up on AoE4 World. Custom and AI games don't appear there; use
-        Matchups for those.
-      </p>
-      <button type="button" className="link" onClick={() => onProfileChange(null)}>
-        Change profile
-      </button>
+
+      <div className="waiting-cards">
+        <div className="waiting-card">
+          <span className="eyebrow">Linked profile</span>
+          <div className="waiting-player">
+            <Avatar src={player?.avatars?.medium} name={name} size={48} />
+            <div className="waiting-player-text">
+              <b>{name}</b>
+              <span className="muted small">{solo?.rating ? `${solo.rating} rating${solo.rank ? ` · #${solo.rank}` : ""}` : "Ranked 1v1"}</span>
+            </div>
+            {solo?.rank_level && <LeagueBadge rankLevel={solo.rank_level} />}
+          </div>
+          <button type="button" className="link small" onClick={() => onProfileChange(null)}>
+            Change profile
+          </button>
+        </div>
+
+        <div className="waiting-card">
+          <span className="eyebrow">Last battle</span>
+          {last ? (
+            <div className="waiting-last">
+              <Flag civ={last.me.civ} size="md" />
+              <span className="vs-mini">VS</span>
+              {last.opponents.map((o) => (
+                <Flag key={o.profileId} civ={o.civ} size="md" />
+              ))}
+              <div className="waiting-last-text">
+                <b>
+                  {getCiv(last.me.civ)?.name ?? last.me.civ} vs {last.opponents.map((o) => getCiv(o.civ)?.name ?? o.civ).join(", ")}
+                </b>
+                <span className="muted small">
+                  {last.map} · {timeAgo(last.startedAt)}
+                </span>
+              </div>
+            </div>
+          ) : (
+            <p className="muted small">No ranked or quick-match game on AoE4 World for this profile yet.</p>
+          )}
+        </div>
+      </div>
+
+      <p className="muted small">Custom and AI games don't show up on AoE4 World. Use Matchups for those.</p>
     </section>
   );
 }
