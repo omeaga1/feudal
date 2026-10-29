@@ -5,9 +5,8 @@ import { civColor } from "../lib/civColors";
 import { getCiv } from "../lib/gameData";
 import { appFetch } from "../lib/http";
 import { fetchPlayer, timeAgo, type PlayerDetails } from "../lib/playerStats";
-import { BriefView } from "./BriefView";
-import { VersusBar } from "./CivPicker";
 import { Flag } from "./Flag";
+import { LiveGlance } from "./LiveGlance";
 import { Avatar, LeagueBadge } from "./PlayerBits";
 import { ProfileLink } from "./ProfileLink";
 
@@ -29,40 +28,17 @@ export function LiveMatch({ profileId, profileName, status, onProfileChange }: P
     const { match } = status;
     const opponent = match.opponents[Math.min(opponentIndex, match.opponents.length - 1)];
     return (
-      <div className="stack">
-        <div className="live-head">
-          <span className="pill live">
-            <span className="pulse" /> In game
-          </span>
-          <span className="muted">
-            {match.map} · {match.kind.replace(/_/g, " ")}
-          </span>
-          {match.opponents.length > 1 && (
-            <div className="row">
-              {match.opponents.map((o, i) => (
-                <button
-                  key={o.profileId}
-                  type="button"
-                  className={i === opponentIndex ? "tab active" : "tab"}
-                  onClick={() => setOpponentIndex(i)}
-                >
-                  {o.name} ({getCiv(o.civ)?.name ?? o.civ})
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-        {opponent && <VersusBar me={match.me.civ} them={opponent.civ} myName={match.me.name} theirName={opponent.name} />}
-        {opponent && (
-          <BriefView
-            myCivId={match.me.civ}
-            enemyCivId={opponent.civ}
-            opponentName={opponent.name}
-            opponentProfileId={opponent.profileId}
-            gameBuild={match.patch}
-            mapName={match.map}
-          />
+      <div className="glance-wrap">
+        {match.opponents.length > 1 && (
+          <div className="glance-opponents">
+            {match.opponents.map((o, i) => (
+              <button key={o.profileId} type="button" className={i === opponentIndex ? "tab active" : "tab"} onClick={() => setOpponentIndex(i)}>
+                <Flag civ={o.civ} size="sm" /> {o.name}
+              </button>
+            ))}
+          </div>
         )}
+        {opponent && <LiveGlance match={match} opponent={opponent} />}
       </div>
     );
   }
