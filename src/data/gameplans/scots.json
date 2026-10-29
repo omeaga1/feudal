@@ -1,0 +1,389 @@
+{
+  "civ": "scots",
+  "season": "Season 14",
+  "checkedBuild": 11308,
+  "updated": "2026-10-29",
+  "opening": {
+    "decideAt": "2:55",
+    "steps": [
+      {
+        "t": "0:00",
+        "v": [
+          2,
+          3,
+          0,
+          0
+        ],
+        "b": 1,
+        "do": "Cow to berries; 1 builds a Tower House + mining camp on gold; 3 chop one trip"
+      },
+      {
+        "t": "0:30",
+        "v": [
+          5,
+          0,
+          0,
+          0
+        ],
+        "b": 2,
+        "do": "Wood villagers back to sheep; 2 more help on gold"
+      },
+      {
+        "t": "1:05",
+        "v": [
+          6,
+          0,
+          3,
+          0
+        ],
+        "do": "Tower House up: 5 more Highland Cattle onto berries; rally to sheep"
+      },
+      {
+        "t": "2:20",
+        "v": [
+          10,
+          0,
+          3,
+          0
+        ],
+        "do": "Scout their base: barracks means an early attack"
+      }
+    ]
+  },
+  "feudal": [
+    {
+      "id": "stone-of-destiny",
+      "name": "Stone of Destiny eco",
+      "style": "boom",
+      "landmark": "Stone of Destiny",
+      "ageUp": "4:55",
+      "pick": "Default; open maps and against slower civs",
+      "steps": [
+        {
+          "t": "3:20",
+          "v": [
+            0,
+            8,
+            3,
+            0
+          ],
+          "b": 5,
+          "do": "5 sheep build Stone of Destiny; other sheep to wood"
+        },
+        {
+          "t": "4:30",
+          "v": [
+            0,
+            11,
+            3,
+            0
+          ],
+          "b": 5,
+          "do": "Barracks next to the Stone for the gold rebate"
+        },
+        {
+          "t": "4:55",
+          "v": [
+            5,
+            12,
+            3,
+            0
+          ],
+          "do": "Feudal: 2 Kirkmen, archery range, rally to food"
+        },
+        {
+          "t": "5:45",
+          "v": [
+            7,
+            13,
+            3,
+            0
+          ],
+          "do": "Kirkman builds a Fishpond by the wood for gold"
+        },
+        {
+          "t": "6:00",
+          "v": [
+            7,
+            14,
+            0,
+            0
+          ],
+          "b": 3,
+          "do": "Gold villagers build a 2nd Tower House with a 2nd pond"
+        },
+        {
+          "t": "7:30",
+          "v": [
+            12,
+            14,
+            4,
+            0
+          ],
+          "do": "Meeting House; more barracks and ranges"
+        }
+      ],
+      "army": [
+        "Highland Archer",
+        "Pikeman",
+        "Cateran"
+      ],
+      "castle": [
+        {
+          "id": "snowdoun-gate",
+          "name": "Snowdoun Gate infantry",
+          "style": "timing",
+          "landmark": "Snowdoun Gate",
+          "ageUp": "10:30",
+          "pick": "Default: free infantry flood into a Castle push",
+          "steps": [
+            {
+              "t": "9:30",
+              "v": [
+                16,
+                12,
+                10,
+                0
+              ],
+              "b": 6,
+              "do": "Build Snowdoun Gate near your army's path"
+            },
+            {
+              "t": "10:30",
+              "v": [
+                18,
+                14,
+                12,
+                0
+              ],
+              "do": "Gate trickles free infantry; Mustering Hall techs"
+            },
+            {
+              "t": "11:30",
+              "do": "Gallowglass + Highland Archers push with musters"
+            }
+          ],
+          "army": [
+            "Gallowglass",
+            "Highland Archer",
+            "Pikeman"
+          ],
+          "goal": "Overwhelm them with free and mustered infantry"
+        },
+        {
+          "id": "tower-of-skye",
+          "name": "Tower of Skye ambush",
+          "style": "defense",
+          "landmark": "Tower of Skye",
+          "ageUp": "10:00",
+          "pick": "Wooded maps or a cavalry-heavy enemy",
+          "steps": [
+            {
+              "t": "9:30",
+              "v": [
+                16,
+                12,
+                10,
+                0
+              ],
+              "b": 6,
+              "do": "Build Tower of Skye; it is a Tower House with a springald"
+            },
+            {
+              "t": "10:00",
+              "v": [
+                18,
+                14,
+                12,
+                0
+              ],
+              "do": "Tower Houses plant Stealth Forests on their raid paths"
+            },
+            {
+              "t": "11:00",
+              "do": "Ambush from forests (+15% infantry damage), then counter-raid"
+            }
+          ],
+          "army": [
+            "Cateran",
+            "Gallowglass",
+            "Highland Archer"
+          ],
+          "goal": "Win fights on your terms in Stealth Forests, then raid"
+        }
+      ]
+    },
+    {
+      "id": "abbey-maa",
+      "name": "Abbey of the Isles Men-at-Arms",
+      "style": "aggro",
+      "landmark": "Abbey of the Isles",
+      "ageUp": "4:52",
+      "pick": "Against greedy openings and archer civs",
+      "steps": [
+        {
+          "t": "2:55",
+          "v": [
+            3,
+            5,
+            3,
+            0
+          ],
+          "b": 3,
+          "do": "3 sheep build Abbey of the Isles; 5 to wood"
+        },
+        {
+          "t": "4:10",
+          "v": [
+            7,
+            5,
+            3,
+            0
+          ],
+          "do": "Barracks and a house"
+        },
+        {
+          "t": "4:52",
+          "v": [
+            12,
+            5,
+            3,
+            0
+          ],
+          "do": "Feudal: Saint's Relic into the Barracks; 10 Men-at-Arms"
+        },
+        {
+          "t": "5:35",
+          "v": [
+            17,
+            5,
+            0,
+            0
+          ],
+          "do": "Gold to food once the vein is at 3500"
+        },
+        {
+          "t": "6:30",
+          "v": [
+            20,
+            5,
+            0,
+            0
+          ],
+          "do": "Forward Blacksmith: Iron Undermesh, relic there to heal; add Caterans"
+        }
+      ],
+      "army": [
+        "Man-at-Arms",
+        "Cateran",
+        "Highland Archer"
+      ],
+      "castle": [
+        {
+          "id": "snowdoun-gate",
+          "name": "Snowdoun Gate infantry",
+          "style": "timing",
+          "landmark": "Snowdoun Gate",
+          "ageUp": "10:30",
+          "pick": "Default: free infantry flood into a Castle push",
+          "steps": [
+            {
+              "t": "9:00",
+              "v": [
+                16,
+                12,
+                10,
+                0
+              ],
+              "b": 6,
+              "do": "Build Snowdoun Gate near your army's path"
+            },
+            {
+              "t": "10:30",
+              "v": [
+                18,
+                14,
+                12,
+                0
+              ],
+              "do": "Gate trickles free infantry; Mustering Hall techs"
+            },
+            {
+              "t": "11:30",
+              "do": "Gallowglass + Highland Archers push with musters"
+            }
+          ],
+          "army": [
+            "Gallowglass",
+            "Highland Archer",
+            "Pikeman"
+          ],
+          "goal": "Overwhelm them with free and mustered infantry"
+        },
+        {
+          "id": "tower-of-skye",
+          "name": "Tower of Skye ambush",
+          "style": "defense",
+          "landmark": "Tower of Skye",
+          "ageUp": "10:00",
+          "pick": "Wooded maps or a cavalry-heavy enemy",
+          "steps": [
+            {
+              "t": "9:00",
+              "v": [
+                16,
+                12,
+                10,
+                0
+              ],
+              "b": 6,
+              "do": "Build Tower of Skye; it is a Tower House with a springald"
+            },
+            {
+              "t": "10:00",
+              "v": [
+                18,
+                14,
+                12,
+                0
+              ],
+              "do": "Tower Houses plant Stealth Forests on their raid paths"
+            },
+            {
+              "t": "11:00",
+              "do": "Ambush from forests (+15% infantry damage), then counter-raid"
+            }
+          ],
+          "army": [
+            "Cateran",
+            "Gallowglass",
+            "Highland Archer"
+          ],
+          "goal": "Win fights on your terms in Stealth Forests, then raid"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Swaggy Professor: The Only Scots Build You'll Need (Stone of Destiny)",
+      "url": "https://aoe4guides.com/builds/rGWRAbE6ptSPUMsueN8M",
+      "video": "https://www.youtube.com/watch?v=H37JNp7pVBU"
+    },
+    {
+      "title": "Swaggy Professor: Scots starter (simplified)",
+      "url": "https://aoe4guides.com/builds/csMtOxSj34hz7RldJzBs",
+      "video": "https://www.youtube.com/watch?v=H37JNp7pVBU"
+    },
+    {
+      "title": "Swaggy Professor: Men-at-Arms cheese",
+      "url": "https://aoe4guides.com/builds/SzaEevcvCSNcNNYxVVvX",
+      "video": "https://www.youtube.com/watch?v=nvnIUSAm1ck"
+    },
+    {
+      "title": "Swaggy Professor: Border Reiver fast Castle",
+      "url": "https://aoe4guides.com/builds/ZDOq0hgMof9iDHZItWg5",
+      "video": "https://www.youtube.com/watch?v=vRM5B-84laA"
+    }
+  ]
+}

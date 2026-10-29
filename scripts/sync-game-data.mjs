@@ -89,6 +89,22 @@ for (const b of buildings.data) {
   });
 }
 
+// A few units are listed from the Dark Age but only come from a later
+// landmark (Vikings' Skåne Crossbowmen from the Imperial Rikets Nyckel
+// Castle). Move them to the age the landmark is first available in.
+const landmarkAge = new Map(
+  buildings.data.flatMap((b) => {
+    const l = landmarks.find((x) => x.id === b.id);
+    return l ? [[b.baseId, l.builtInAge + 1]] : [];
+  }),
+);
+for (const u of military) {
+  const producers = u.producedBy ?? [];
+  if (producers.length === 0) continue;
+  const earliest = Math.min(...producers.map((p) => landmarkAge.get(p) ?? 1));
+  if (earliest > u.age) u.age = earliest;
+}
+
 await mkdir(OUT_DIR, { recursive: true });
 await writeFile(join(OUT_DIR, "landmarks.json"), JSON.stringify(landmarks, null, 2) + "\n");
 await writeFile(join(OUT_DIR, "units.json"), JSON.stringify(military.map(trimUnit)) + "\n");

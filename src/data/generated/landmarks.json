@@ -316,7 +316,7 @@
       "hr"
     ],
     "builtInAge": 3,
-    "description": "Acts as a Keep with +50% health. All buildings within influence take -25% less damage.\nCan train 8 Black Riders per Keep instead of 5.",
+    "description": "Acts as a Keep with +50% health. All buildings within influence take -25% less damage.\nCan train 8 Black Riders per Keep instead of 6.",
     "icon": "https://data.aoe4world.com/images/buildings/elzbach-palace-3.png"
   },
   {
@@ -586,7 +586,7 @@
       "mac"
     ],
     "builtInAge": 2,
-    "description": "Charges an ability used for boosting the work rate of military and research buildings. If used on a Mining Camp, Lumber Camp, or Farm, begin earning 160 Gold, Wood, or Food over 60 seconds.\nHolds 9 charges.",
+    "description": "Comes with 4 charges for an ability to boost the work rate of military and research buildings. If used on a Mining Camp, Lumber Camp, Mill, or Farm, begin earning 160 Gold, Wood, or Food over 60 seconds.\nRecharges every 60 seconds.",
     "icon": "https://data.aoe4world.com/images/buildings/cistern-of-the-first-hill-2.png"
   },
   {
@@ -616,7 +616,7 @@
       "mac"
     ],
     "builtInAge": 1,
-    "description": "Acts as a Mill and Monastery. Villagers gather Food 30% faster when affected by its aura. Relics garrisoned generate Silver instead of Gold.",
+    "description": "Acts as a Mill and Monastery. Villagers gather Food 35% faster when affected by its aura. Relics garrisoned generate 100 Silver instead of Gold.",
     "icon": "https://data.aoe4world.com/images/buildings/grand-winery-1.png"
   },
   {
@@ -666,7 +666,7 @@
       "ma"
     ],
     "builtInAge": 2,
-    "description": "Nearby cattle provide 18 Food per minute.",
+    "description": "Nearby cattle provide 16 Food per minute.",
     "icon": "https://data.aoe4world.com/images/buildings/grand-fulani-corral-2.png"
   },
   {
@@ -866,7 +866,7 @@
       "ot"
     ],
     "builtInAge": 1,
-    "description": "Acts as a Market. Comes with 3 Traders garrisoned and generates +26 Gold per minute for each one. Up to 10 Traders can be garrisoned.",
+    "description": "Acts as a Market. Comes with 3 Traders garrisoned and generates +28 Gold per minute for each one. Up to 10 Traders can be garrisoned.",
     "icon": "https://data.aoe4world.com/images/buildings/sultanhani-trade-network-1.png"
   },
   {
@@ -940,13 +940,73 @@
     "icon": "https://data.aoe4world.com/images/buildings/the-golden-gate-1.png"
   },
   {
+    "id": "abbey-of-the-isles-1",
+    "name": "Abbey of the Isles",
+    "civs": [
+      "sco"
+    ],
+    "builtInAge": 1,
+    "description": "Contains a Saint's Relic to provide area healing that increases in effectiveness for each Age. The relic can be moved to military and technology buildings to provide 135% increased research and production speed in addition to area healing. Cannot be moved to other Landmarks or buildings with defenses.",
+    "icon": "https://data.aoe4world.com/images/buildings/abbey-of-the-isles-1.png"
+  },
+  {
+    "id": "dhun-eideann-3",
+    "name": "Dhùn Èideann",
+    "civs": [
+      "sco"
+    ],
+    "builtInAge": 3,
+    "description": "Equipped with the \"Seven Sisters\" cannons to defend the area. Produces gunpowder siege engines for 100 less Gold. Gunpowder siege weapons gain 1 tile range.",
+    "icon": "https://data.aoe4world.com/images/buildings/dhun-eideann-3.png"
+  },
+  {
+    "id": "snowdoun-gate-2",
+    "name": "Snowdoun Gate",
+    "civs": [
+      "sco"
+    ],
+    "builtInAge": 2,
+    "description": "Produces toggled infantry for free with a value of 190 resources per minute. \nTechnologies researched at the Mustering Hall increase infantry production speed at this Landmark by 15%. When enemies are nearby, infantry hasten their deployment and gain an additional 15% production speed.",
+    "icon": "https://data.aoe4world.com/images/buildings/snowdoun-gate-2.png"
+  },
+  {
+    "id": "stone-of-destiny-1",
+    "name": "Stone of Destiny",
+    "civs": [
+      "sco"
+    ],
+    "builtInAge": 1,
+    "description": "Buildings constructed around the Stone of Destiny have 30% of their construction cost rebated as Gold. Does not apply to Landmarks. Grants early access to Kirkman that can create Fishponds.",
+    "icon": "https://data.aoe4world.com/images/buildings/stone-of-destiny-1.png"
+  },
+  {
+    "id": "three-loch-lookout-3",
+    "name": "Three Loch Lookout",
+    "civs": [
+      "sco"
+    ],
+    "builtInAge": 3,
+    "description": "Has a large line of sight and adds 3 muster charges for the Mustering Hall or Three Loch Lookout. The number of warriors received from mustering is increased by 75%. Comes with the option to muster a navy if constructed adjacent to water.",
+    "icon": "https://data.aoe4world.com/images/buildings/three-loch-lookout-3.png"
+  },
+  {
+    "id": "tower-of-skye-2",
+    "name": "Tower of Skye",
+    "civs": [
+      "sco"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Tower House equipped with arrowslits and a springald emplacement. Creates a local Stealth Forest and increases infantry damage by 15% while in Stealth Forests. Tower Houses unlock the ability to create additional Stealth Forests. Galleys unlock the Fairy's Chosen ability.",
+    "icon": "https://data.aoe4world.com/images/buildings/tower-of-skye-2.png"
+  },
+  {
     "id": "castle-of-the-crow-3",
     "name": "Castle of the Crow",
     "civs": [
       "sen"
     ],
     "builtInAge": 3,
-    "description": "Acts as a Castle. Reduces the cost of constructing Castles by 33%. Siege units nearby any Castle gain +10% damage and +1 tiles range.",
+    "description": "Acts as a Castle. Reduces the cost of constructing Castles by 33%. Ranged siege units nearby any Castle gain +10% damage and +1 tiles range.",
     "icon": "https://data.aoe4world.com/images/buildings/castle-of-the-crow-3.png"
   },
   {
@@ -1058,6 +1118,66 @@
     "builtInAge": 1,
     "description": "The Tower of Victory increases the attack speed of Elephants by +20% when produced from buildings within influence.",
     "icon": "https://data.aoe4world.com/images/buildings/tower-of-victory-1.png"
+  },
+  {
+    "id": "baugr-fort-1",
+    "name": "Baugr Fort",
+    "civs": [
+      "vik"
+    ],
+    "builtInAge": 1,
+    "description": "Acts as a Barracks with all units and technologies. All Barracks work +25% faster and reduces Barracks technology costs by 15%.\nImmediately upgrades Bondi and Berserkers to Hardened.",
+    "icon": "https://data.aoe4world.com/images/buildings/baugr-fort-1.png"
+  },
+  {
+    "id": "gullinn-temple-2",
+    "name": "Gullinn Temple",
+    "civs": [
+      "vik"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Sacred Grove. Allows Völur to establish Sacred Groves on Sacred Sites and unlock the Dreki Saga which increases Sacred Grove Berserker production by 15%.",
+    "icon": "https://data.aoe4world.com/images/buildings/gullinn-temple-2.png"
+  },
+  {
+    "id": "kongens-d-r-cathedral-3",
+    "name": "Kongens Dør Cathedral",
+    "civs": [
+      "vik"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Monastery. Increases population and maximum population by +10. Has a slowly expanding area that gathers a tithe of 12.5 Gold for each Longhouse every 30 seconds. Has a unique technology that further increases maximum population.",
+    "icon": "https://data.aoe4world.com/images/buildings/kongens-d-r-cathedral-3.png"
+  },
+  {
+    "id": "konungr-hall-1",
+    "name": "Konungr Hall",
+    "civs": [
+      "vik"
+    ],
+    "builtInAge": 1,
+    "description": "Hosts a feast every 60 seconds which provides 10 Food +5 Food for each Longhouse and has a one-time Shield Maiden rally.\nCan recruit Shield Maidens up to 1 +1 for each Longhouse constructed.",
+    "icon": "https://data.aoe4world.com/images/buildings/konungr-hall-1.png"
+  },
+  {
+    "id": "rikets-nyckel-castle-3",
+    "name": "Rikets Nyckel Castle",
+    "civs": [
+      "vik"
+    ],
+    "builtInAge": 3,
+    "description": "Acts as a Keep that fires volleys of arrows. Increases population and maximum population by +10. Reduces the cost of all unit tier technologies by 50%. Recruits 10 Skåne Crossbowmen upon construction completion.",
+    "icon": "https://data.aoe4world.com/images/buildings/rikets-nyckel-castle-3.png"
+  },
+  {
+    "id": "valdemar-castle-2",
+    "name": "Valdemar Castle",
+    "civs": [
+      "vik"
+    ],
+    "builtInAge": 2,
+    "description": "Acts as a Keep. Grants the Danevirke technology which replaces Palisades with stronger walls that have +5 fire armor. Jylland Knights grant 20 more Gold when they are killed.",
+    "icon": "https://data.aoe4world.com/images/buildings/valdemar-castle-2.png"
   },
   {
     "id": "jiangnan-tower-1",

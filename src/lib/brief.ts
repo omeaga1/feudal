@@ -42,7 +42,10 @@ export function buildBrief(myCivId: string, enemyCivId: string, pool: Unit[] = a
   const ages = BRIEF_AGES.map((age) => {
     const myRoster = rosterAt(me, age, pool);
     const enemyRoster = rosterAt(enemy, age, pool);
-    const earlierLines = new Set(rosterAt(enemy, (age - 1) as Age, pool).map((u) => u.baseId));
+    // The first brief age also lists Dark Age unique units (Berserkers,
+    // Samurai), since no earlier section shows them.
+    const earlier = rosterAt(enemy, (age - 1) as Age, pool).filter((u) => !(age === BRIEF_AGES[0] && u.unique));
+    const earlierLines = new Set(earlier.map((u) => u.baseId));
     return {
       age,
       threats: newThreats(enemyRoster, earlierLines).map((unit) => ({ enemy: unit, counters: rankCounters(unit, myRoster) })),
