@@ -3,6 +3,8 @@ use sha2::{Digest, Sha256};
 use std::io::Read;
 use tauri::Manager;
 
+mod steam;
+
 #[derive(Serialize)]
 struct KeybindProfile {
     name: String,
@@ -103,14 +105,20 @@ async fn install_update(app: tauri::AppHandle, url: String, sha256: String) -> R
 
 // Feudal never touches the game process. Everything it knows about a match
 // comes from the public AoE4 World API, fetched through the HTTP plugin. The
-// only local files it reads are the player's keybinding profiles, and the
-// only thing it writes is its own update installer, to the temp folder.
+// only local files it reads are the player's keybinding profiles and Steam's
+// list of accounts signed in on this PC, and the only thing it writes is its
+// own update installer, to the temp folder.
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![read_keybind_profiles, install_update])
+        .invoke_handler(tauri::generate_handler![
+            read_keybind_profiles,
+            install_update,
+            steam::detect_steam_accounts,
+            steam::steam_sign_in
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

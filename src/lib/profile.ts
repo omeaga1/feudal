@@ -37,14 +37,21 @@ export interface FoundPlayer {
   name: string;
   rating?: number | null;
   lastGameAt?: string | null;
+  avatar?: string | null;
+  country?: string | null;
+  rankLevel?: string | null;
 }
 
 interface ApiPlayer {
   profile_id: number;
   name: string;
   rating?: number | null;
+  rank_level?: string | null;
   last_game_at?: string | null;
   steam_id?: string | null;
+  country?: string | null;
+  avatars?: { small?: string | null; medium?: string | null };
+  leaderboards?: { rm_solo?: { rating?: number | null; rank_level?: string | null } };
 }
 
 async function get(fetchFn: FetchFn, path: string): Promise<Response> {
@@ -52,7 +59,29 @@ async function get(fetchFn: FetchFn, path: string): Promise<Response> {
 }
 
 function toFound(p: ApiPlayer): FoundPlayer {
-  return { profileId: p.profile_id, name: p.name, rating: p.rating ?? null, lastGameAt: p.last_game_at ?? null };
+  return {
+    profileId: p.profile_id,
+    name: p.name,
+    rating: p.rating ?? p.leaderboards?.rm_solo?.rating ?? null,
+    lastGameAt: p.last_game_at ?? null,
+    avatar: p.avatars?.medium ?? p.avatars?.small ?? null,
+    country: p.country ?? null,
+    rankLevel: p.rank_level ?? p.leaderboards?.rm_solo?.rank_level ?? null,
+  };
+}
+
+/** Players whose name starts like the query, best matches first, for a search-as-you-type list. */
+export async function suggestPlayers(fetchFn: FetchFn, query: string, limit = 8): Promise<FoundPlayer[]> {
+  const res = await get(fetchFn, `/players/autocomplete?leaderboard=rm_solo&limit=${limit}&query=${encodeURIComponent(query)}`);
+  if (!res.ok) throw new Error(`AoE4 World search failed (HTTP ${res.status})`);
+  const body = (await res.json()) as { players?: ApiPlayer[] };
+  return (body.players ?? []).map(toFound);
+}
+
+/** The AoE4 World player for a Steam account, if AoE4 World knows it. */
+export async function playerForSteamId(fetchFn: FetchFn, steamId: string): Promise<FoundPlayer | null> {
+  const players = await search(fetchFn, steamId, false);
+  return players[0] ?? null;
 }
 
 async function search(fetchFn: FetchFn, query: string, exact: boolean): Promise<FoundPlayer[]> {
@@ -80,14 +109,14 @@ export async function resolveProfile(fetchFn: FetchFn, query: ProfileQuery): Pro
     return { kind: "found", player: toFound((await res.json()) as ApiPlayer) };
   }
   if (query.kind === "steam") {
-    const players = await search(fetchFn, query.steamId, false);
-    if (players.length === 0) {
+    const player = await playerForSteamId(fetchFn, query.steamId);
+    if (!player) {
       return {
         kind: "none",
         message: `AoE4 World doesn't know Steam account ${query.steamId}. It may not be the account you play on, or you may play through Xbox. Try typing your in-game name instead.`,
       };
     }
-    return { kind: "found", player: players[0] };
+    return { kind: "found", player };
   }
   let players = await search(fetchFn, query.name, true);
   if (players.length === 0) players = await search(fetchFn, query.name, false);

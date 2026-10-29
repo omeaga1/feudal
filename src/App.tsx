@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState, type ComponentType } from "react";
-import { GiCrossedSwords, GiKnightBanner, GiRadarSweep } from "react-icons/gi";
+import { GiCrossedSwords, GiKnightBanner, GiPodium, GiRadarSweep } from "react-icons/gi";
 import { MdKeyboard } from "react-icons/md";
 import { Toaster, toast } from "sonner";
 import { CivAnalysis } from "./components/CivAnalysis";
@@ -8,6 +8,7 @@ import { Keybinds } from "./components/Keybinds";
 import { LiveMatch } from "./components/LiveMatch";
 import { Flag } from "./components/Flag";
 import { MatchupBrowser } from "./components/MatchupBrowser";
+import { PlayerStats } from "./components/PlayerStats";
 import { Tip, TipProvider } from "./components/ui";
 import { UpdateNotice } from "./components/UpdateNotice";
 import { dataMeta, getCiv } from "./lib/gameData";
@@ -15,10 +16,11 @@ import { appFetch } from "./lib/http";
 import { useLiveMatch } from "./lib/liveMatch";
 import { loadProfileId, loadProfileName, saveProfileId } from "./lib/profile";
 
-type View = "live" | "matchups" | "civs" | "keybinds";
+type View = "live" | "stats" | "matchups" | "civs" | "keybinds";
 
 const VIEWS: { id: View; label: string; hint: string; icon: ComponentType }[] = [
   { id: "live", label: "Live", hint: "Your current game, opened on its own", icon: GiRadarSweep },
+  { id: "stats", label: "Stats", hint: "Your rating, civs, maps and recent games", icon: GiPodium },
   { id: "matchups", label: "Matchups", hint: "Read any matchup before a game", icon: GiCrossedSwords },
   { id: "civs", label: "Civs", hint: "Game plans and units for each civ", icon: GiKnightBanner },
   { id: "keybinds", label: "Keys", hint: "Hotkeys and the counter chart", icon: MdKeyboard },
@@ -111,6 +113,7 @@ export default function App() {
               transition={{ duration: 0.18 }}
             >
               {view === "live" && <LiveMatch profileId={profileId} profileName={profileName} status={status} onProfileChange={changeProfile} />}
+              {view === "stats" && <PlayerStats profileId={profileId} />}
               {view === "matchups" && <MatchupBrowser defaultCiv={lastCiv} />}
               {view === "civs" && <CivAnalysis defaultCiv={lastCiv} />}
               {view === "keybinds" && <Keybinds />}

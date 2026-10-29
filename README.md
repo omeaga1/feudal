@@ -2,13 +2,14 @@
 
 A free desktop companion for Age of Empires IV. When your ranked or quick-match game starts, Feudal detects both civilizations and opens a matchup brief: when the enemy civ is dangerous, what each of their units is weak to, and what to build from your own roster.
 
-Feudal never touches the game. It doesn't read game memory, game files, network traffic or your screen, so it can't trip anti-cheat or put a ranked account at risk. Everything it knows about a live match comes from the public [AoE4 World API](https://aoe4world.com/api), the same data shown on your loading screen and on public profiles.
+Feudal never touches the game. It doesn't read game memory, game files, network traffic or your screen, so it can't trip anti-cheat or put a ranked account at risk. Everything it knows about a live match comes from the public [AoE4 World API](https://aoe4world.com/api), the same data shown on your loading screen and on public profiles. To find your profile it can read Steam's own list of accounts signed in on your PC, or send you to Steam's sign-in page, which hands Feudal your Steam ID and nothing else.
 
 ## Features
 
 | Screen | Status |
 | --- | --- |
-| **Live match**: link your AoE4 World profile once, and the brief opens on its own when a game starts | Working |
+| **Live match**: sign in through Steam (or pick the Steam account already on your PC, or search your in-game name for Xbox), and the brief opens on its own when a game starts | Working |
+| **Stats**: rating, league, ladder rank, rating history, win rate per civ and map, recent games and past seasons, for you or any player you look up | Working |
 | **Matchups**: pick any two civs and read the brief outside a game | Working |
 | **Counters**: computed from unit stats (bonus damage, armor, HP, cost) with a small override list | Working |
 | **Enemy player habits**: their most-played civs, win rate, and how often their games end before 15 minutes | Working |

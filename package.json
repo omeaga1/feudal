@@ -1,7 +1,7 @@
 {
   "name": "feudal",
   "private": true,
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "A free Age of Empires IV companion: automatic matchup briefs, counters and keybind reference.",
   "type": "module",
   "scripts": {

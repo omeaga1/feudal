@@ -1,108 +1,15 @@
-import { Link2, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import type { LiveStatus } from "../lib/liveMatch";
 import { getCiv } from "../lib/gameData";
-import { appFetch } from "../lib/http";
-import { parseProfileQuery, resolveProfile, type FoundPlayer } from "../lib/profile";
 import { BriefView } from "./BriefView";
 import { VersusBar } from "./CivPicker";
+import { ProfileLink } from "./ProfileLink";
 
 interface Props {
   profileId: number | null;
   profileName: string | null;
   status: LiveStatus;
   onProfileChange: (id: number | null, name?: string) => void;
-}
-
-function ProfileLink({ onLinked }: { onLinked: (player: FoundPlayer) => void }) {
-  const [draft, setDraft] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
-  const [choices, setChoices] = useState<FoundPlayer[]>([]);
-  const query = parseProfileQuery(draft);
-
-  const submit = async () => {
-    setChoices([]);
-    setMessage(null);
-    if (!query) {
-      setMessage("Paste your aoe4world.com profile link, your Steam profile link, or your in-game name.");
-      return;
-    }
-    setBusy(true);
-    try {
-      const result = await resolveProfile(appFetch, query);
-      if (result.kind === "found") onLinked(result.player);
-      else if (result.kind === "choose") setChoices(result.players);
-      else setMessage(result.message);
-    } catch (err) {
-      setMessage(`Couldn't reach AoE4 World: ${err instanceof Error ? err.message : String(err)}`);
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  return (
-    <section className="panel">
-      <h2>Link your AoE4 World profile</h2>
-      <ol className="onboard-steps">
-        <li>
-          <span className="onboard-num">1</span>
-          <span>
-            <b>Link once.</b> Your aoe4world.com link, Steam link, or in-game name.
-          </span>
-        </li>
-        <li>
-          <span className="onboard-num">2</span>
-          <span>
-            <b>Queue up.</b> Feudal checks AoE4 World every 15 seconds.
-          </span>
-        </li>
-        <li>
-          <span className="onboard-num">3</span>
-          <span>
-            <b>Read the brief.</b> It opens on its own when a ranked or quick match starts.
-          </span>
-        </li>
-      </ol>
-      <form
-        className="row profile-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          void submit();
-        }}
-      >
-        <Link2 className="input-icon" size={16} aria-hidden="true" />
-        <input
-          id="profile-id"
-          className="grow with-icon"
-          value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          placeholder="https://aoe4world.com/players/1234567 or your name"
-          autoFocus
-        />
-        <button type="submit" className="button-primary" disabled={busy || draft.trim() === ""}>
-          {busy && <LoaderCircle className="spin" size={16} aria-hidden="true" />}
-          {busy ? "Looking" : "Link"}
-        </button>
-      </form>
-      {message && <p className="error small">{message}</p>}
-      {choices.length > 0 && (
-        <div className="stack choices">
-          <p className="muted small">Several players have that name. Which one is you?</p>
-          {choices.map((p) => (
-            <button key={p.profileId} type="button" className="choice" onClick={() => onLinked(p)}>
-              <b>{p.name}</b>
-              <span className="muted small">
-                {[p.rating ? `${p.rating} rating` : null, p.lastGameAt ? `last game ${p.lastGameAt.slice(0, 10)}` : null, `#${p.profileId}`]
-                  .filter(Boolean)
-                  .join(" · ")}
-              </span>
-            </button>
-          ))}
-        </div>
-      )}
-    </section>
-  );
 }
 
 export function LiveMatch({ profileId, profileName, status, onProfileChange }: Props) {
