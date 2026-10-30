@@ -87,7 +87,8 @@ fn download_installer(url: &str, sha256: &str, dest: &std::path::Path) -> Result
 
 /// Updates Feudal in place: downloads the new installer, runs it in passive
 /// mode (a progress bar, no clicks) with relaunch, and quits so the installer
-/// can replace the running files. The front end only calls this outside games.
+/// can replace the running files. The front end only calls this when the
+/// player clicks Update, and never during a game.
 #[tauri::command]
 async fn install_update(app: tauri::AppHandle, url: String, sha256: String) -> Result<(), String> {
     let dest = std::env::temp_dir().join("Feudal-update-setup.exe");
