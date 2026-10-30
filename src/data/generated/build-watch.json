@@ -1,130 +1,160 @@
 {
-  "latestBuild": 11308,
-  "checkedAt": "2026-10-29T14:40:39.771Z",
+  "latestBuild": 12182,
+  "checkedAt": "2026-10-30T14:32:44.999Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "ayyubids": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "byzantines": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "chinese": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "delhi_sultanate": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "english": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "french": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "golden_horde": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "holy_roman_empire": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "house_of_lancaster": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "japanese": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "jeanne_darc": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "jin_dynasty": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "knights_templar": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "macedonian_dynasty": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "malians": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "mongols": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "order_of_the_dragon": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "ottomans": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "rus": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "scots": {
       "checkedBuild": 11308,
-      "stale": false,
-      "fresh": []
+      "stale": true,
+      "fresh": [
+        {
+          "title": " BO Écossais Fast Age 3 & rassemblement Jeando",
+          "author": "spikountry",
+          "url": "https://aoe4guides.com/builds/DdkFFBg7BCiL0fRMQXeE",
+          "video": "https://www.youtube.com/watch?v=fZtlXO4XZbU",
+          "updated": "2026-10-30"
+        }
+      ]
     },
     "sengoku_daimyo": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "tughlaq_dynasty": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     },
     "vikings": {
       "checkedBuild": 11308,
-      "stale": false,
-      "fresh": []
+      "stale": true,
+      "fresh": [
+        {
+          "title": "BO Vikings Maison longue Jeando",
+          "author": "spikountry",
+          "url": "https://aoe4guides.com/builds/xrXUig3REtxZKRSKXNIt",
+          "video": "https://www.youtube.com/watch?v=AtT1-omY8Ys",
+          "updated": "2026-10-30"
+        },
+        {
+          "title": "Swaggys: Vikings 2TC Baugr CHEEEESE (most detailed guide out right now)",
+          "author": "LouBuilds03",
+          "url": "https://aoe4guides.com/builds/f1cGuEvTi40uJGCon8KI",
+          "video": "https://www.youtube.com/watch?v=3AqIiuRbd_w",
+          "updated": "2026-10-30"
+        },
+        {
+          "title": "2TC Boom",
+          "author": "Jitterbug",
+          "url": "https://aoe4guides.com/builds/8vdjKt4BThjkZdytmw6C",
+          "video": "https://www.youtube.com/watch?v=TtDmif9HJe0",
+          "updated": "2026-10-30"
+        }
+      ]
     },
     "zhu_xis_legacy": {
       "checkedBuild": 11308,
-      "stale": false,
+      "stale": true,
       "fresh": []
     }
   }
