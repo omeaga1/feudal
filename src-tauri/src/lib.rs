@@ -1,6 +1,8 @@
 use serde::Serialize;
 use sha2::{Digest, Sha256};
+use std::collections::HashSet;
 use std::io::Read;
+use std::path::PathBuf;
 use tauri::Manager;
 
 mod steam;
@@ -9,6 +11,9 @@ mod steam;
 struct KeybindProfile {
     name: String,
     contents: String,
+    /// Last modified time in ms since the epoch; the newest profile is most
+    /// likely the one the player has selected in game.
+    modified: Option<u64>,
 }
 
 /// Decodes a profile file, which may be UTF-8 or UTF-16 with a byte order mark.
@@ -24,37 +29,72 @@ fn decode(bytes: &[u8]) -> String {
     String::from_utf8_lossy(bytes).into_owned()
 }
 
-/// Reads the player's AoE4 keybinding profiles so the Keybinds screen can show
-/// them. Read-only, and limited to the keyBindingProfiles folder.
+/// Every Documents folder AoE4 might save to. The known-folder lookup follows
+/// OneDrive and custom redirection; the rest cover PCs where that lookup fails
+/// or the game wrote to the un-redirected folder.
+fn documents_dirs(app: &tauri::AppHandle) -> Vec<PathBuf> {
+    let mut dirs = Vec::new();
+    if let Ok(dir) = app.path().document_dir() {
+        dirs.push(dir);
+    }
+    for var in ["OneDrive", "OneDriveConsumer", "OneDriveCommercial"] {
+        if let Some(root) = std::env::var_os(var) {
+            dirs.push(PathBuf::from(root).join("Documents"));
+        }
+    }
+    if let Ok(home) = app.path().home_dir() {
+        dirs.push(home.join("Documents"));
+        dirs.push(home.join("OneDrive").join("Documents"));
+    }
+    dirs
+}
+
+/// Reads the player's AoE4 keybinding profiles so the Keys screen can show
+/// them. Read-only, and limited to keyBindingProfiles folders.
 #[tauri::command]
 fn read_keybind_profiles(app: tauri::AppHandle) -> Result<Vec<KeybindProfile>, String> {
-    let dir = app
-        .path()
-        .document_dir()
-        .map_err(|e| e.to_string())?
-        .join("My Games")
-        .join("Age of Empires IV")
-        .join("keyBindingProfiles");
-    let Ok(entries) = std::fs::read_dir(&dir) else {
-        return Ok(Vec::new());
-    };
-    let mut profiles = Vec::new();
-    for entry in entries.flatten() {
-        let path = entry.path();
-        let is_rkp = path
-            .extension()
-            .and_then(|e| e.to_str())
-            .is_some_and(|e| e.eq_ignore_ascii_case("rkp"));
-        if !is_rkp {
+    let mut seen = HashSet::new();
+    let mut profiles: Vec<KeybindProfile> = Vec::new();
+    for docs in documents_dirs(&app) {
+        let dir = docs.join("My Games").join("Age of Empires IV").join("keyBindingProfiles");
+        let key = std::fs::canonicalize(&dir).unwrap_or_else(|_| dir.clone());
+        if !seen.insert(key) {
             continue;
         }
-        if let Ok(bytes) = std::fs::read(&path) {
+        let Ok(entries) = std::fs::read_dir(&dir) else {
+            continue;
+        };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            let is_rkp = path
+                .extension()
+                .and_then(|e| e.to_str())
+                .is_some_and(|e| e.eq_ignore_ascii_case("rkp"));
+            if !is_rkp {
+                continue;
+            }
+            let Ok(bytes) = std::fs::read(&path) else {
+                continue;
+            };
             let name = path
                 .file_stem()
                 .and_then(|s| s.to_str())
                 .unwrap_or("profile")
                 .to_string();
-            profiles.push(KeybindProfile { name, contents: decode(&bytes) });
+            let modified = entry
+                .metadata()
+                .and_then(|m| m.modified())
+                .ok()
+                .and_then(|t| t.duration_since(std::time::UNIX_EPOCH).ok())
+                .map(|d| d.as_millis() as u64);
+            // The same profile in two Documents folders: keep the newer copy.
+            if let Some(existing) = profiles.iter_mut().find(|p| p.name == name) {
+                if modified > existing.modified {
+                    *existing = KeybindProfile { name, contents: decode(&bytes), modified };
+                }
+                continue;
+            }
+            profiles.push(KeybindProfile { name, contents: decode(&bytes), modified });
         }
     }
     profiles.sort_by(|a, b| a.name.cmp(&b.name));

@@ -2,7 +2,7 @@ import { invoke, isTauri } from "@tauri-apps/api/core";
 import { Check, ChevronDown, FileUp } from "lucide-react";
 import { Select } from "radix-ui";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { commandLabel, comboKeys, groupKeybinds, parseRkp, type KeybindProfile } from "../lib/keybinds";
+import { commandLabel, comboKeys, groupKeybinds, parseRkp, resolveEssentials, type KeybindProfile } from "../lib/keybinds";
 import { CounterChart, KeyMap } from "./KeyMap";
 
 const PROFILE_KEY = "feudal.keybindProfile";
@@ -25,7 +25,7 @@ function Combo({ combo }: { combo: string }) {
   );
 }
 
-/** A glanceable view of the player's own hotkeys, read from their AoE4 keybinding profiles. */
+/** The player's essential hotkeys, read from their AoE4 keybinding profile, with AoE4 defaults as a fallback. */
 export function Keybinds() {
   const [profiles, setProfiles] = useState<KeybindProfile[] | null>(null);
   const [selected, setSelected] = useState<string | null>(savedProfileName);
@@ -43,7 +43,7 @@ export function Keybinds() {
   }, []);
 
   const loadFile = async (file: File) => {
-    const profile = { name: file.name.replace(/\.rkp$/i, ""), contents: await file.text() };
+    const profile = { name: file.name.replace(/\.rkp$/i, ""), contents: await file.text(), modified: Date.now() };
     setProfiles((list) => [...(list ?? []).filter((p) => p.name !== profile.name), profile]);
     choose(profile.name);
   };
@@ -57,27 +57,22 @@ export function Keybinds() {
     }
   };
 
-  const profile = profiles?.find((p) => p.name === selected) ?? profiles?.[0];
-  const groups = useMemo(() => (profile ? groupKeybinds(parseRkp(profile.contents), query) : []), [profile, query]);
+  const profile = profiles?.find((p) => p.name === selected) ?? newest(profiles ?? []);
+  const parsed = useMemo(() => (profile ? parseRkp(profile.contents) : null), [profile]);
+  const essentials = useMemo(() => resolveEssentials(parsed), [parsed]);
+  const results = useMemo(() => (parsed && query.trim() ? groupKeybinds(parsed, query) : []), [parsed, query]);
+
+  const note =
+    profiles === null
+      ? "Looking for your keybinding profile…"
+      : profile
+        ? `Read from your AoE4 keybind profile "${profile.name}" (read-only). Dashed keys are AoE4 defaults.`
+        : "No AoE4 keybind profile found, so these are AoE4's default keys.";
 
   return (
     <div className="stack">
-      <KeyMap />
-      <CounterChart />
-      {profiles === null ? (
-        <section className="panel muted">Looking for your keybinding profiles…</section>
-      ) : (
-        profileView()
-      )}
-    </div>
-  );
-
-  function profileView() {
-    return (
-    <div className="stack">
-      <h2 className="section-title">Your full keybinding profile</h2>
       <section className="panel row keybind-head">
-        {(profiles ?? []).length > 0 && (
+        {(profiles ?? []).length > 1 && (
           <div className="field">
             <span>Profile</span>
             <Select.Root value={profile?.name} onValueChange={choose}>
@@ -104,12 +99,12 @@ export function Keybinds() {
         )}
         {profile && (
           <label className="field grow">
-            <span>Search</span>
-            <input className="search-input wide" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="e.g. idle, town center, F1" />
+            <span>Find any hotkey</span>
+            <input className="search-input wide" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="e.g. monastery, camera, F1" />
           </label>
         )}
         <div className="field">
-          <span>Profile file</span>
+          <span>{profile ? "Different profile?" : "Profile somewhere else?"}</span>
           <button type="button" className="button-secondary" onClick={() => fileInput.current?.click()}>
             <FileUp size={16} aria-hidden="true" />
             Open .rkp file
@@ -124,21 +119,23 @@ export function Keybinds() {
         </div>
       </section>
 
-      {!profile && (
-        <section className="panel">
-          <h2>No keybinding profile found</h2>
-          <p className="muted">
-            AoE4 saves custom hotkeys in <code>Documents\My Games\Age of Empires IV\keyBindingProfiles</code> once you
-            make a profile under Settings › Hotkeys. Feudal reads those files (it never changes them). If yours live
-            somewhere else, open the <code>.rkp</code> file above.
-          </p>
-        </section>
+      {query.trim() ? searchResults() : <KeyMap essentials={essentials} note={note} />}
+
+      {profiles !== null && !profile && (
+        <p className="muted small">
+          AoE4 saves custom hotkeys in <code>Documents\My Games\Age of Empires IV\keyBindingProfiles</code> once you make
+          a profile under Settings › Controls. Feudal finds it there, and reads it without changing it.
+        </p>
       )}
+      <CounterChart />
+    </div>
+  );
 
-      {profile && groups.length === 0 && <section className="panel muted">No hotkeys match "{query}".</section>}
-
+  function searchResults() {
+    if (results.length === 0) return <section className="panel muted">No hotkeys match "{query}".</section>;
+    return (
       <div className="keybind-grid">
-        {groups.map(([group, binds]) => (
+        {results.map(([group, binds]) => (
           <section className="panel" key={group}>
             <h3>{group}</h3>
             <table className="keybinds">
@@ -161,7 +158,11 @@ export function Keybinds() {
           </section>
         ))}
       </div>
-    </div>
     );
   }
+}
+
+/** The most recently saved profile is most likely the one the player uses. */
+function newest(profiles: KeybindProfile[]): KeybindProfile | undefined {
+  return [...profiles].sort((a, b) => (b.modified ?? 0) - (a.modified ?? 0))[0];
 }

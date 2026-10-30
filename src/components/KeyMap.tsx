@@ -1,20 +1,20 @@
 import { motion } from "motion/react";
 import { ToggleGroup } from "radix-ui";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import essentials from "../data/essentials.json";
+import { comboKeys, ESSENTIAL_GROUPS, type EssentialBind } from "../lib/keybinds";
 import { findUnit } from "../lib/gamePlans";
 import { CounterRow, type CounterUnit } from "./CounterRow";
 
 interface Bind {
-  keys: string[];
+  /** Each way to press it, as display keys: [["Ctrl", "."], ["F1"]]. */
+  combos: string[][];
   action: string;
   group: string;
+  source: EssentialBind["source"];
 }
 
-const groups = essentials.groups;
-const allBinds: Bind[] = groups.flatMap((g) => g.binds.map((b) => ({ ...b, group: g.id })));
-
-// Keyboard rows: [label, width in key units]. Labels match the keys used in essentials.json.
+// Keyboard rows: [label, width in key units]. Labels match comboKeys() output.
 const ROWS: [string, number][][] = [
   [["Esc", 1], ["F1", 1], ["F2", 1], ["F3", 1], ["F4", 1], ["F5", 1], ["F6", 1], ["F7", 1], ["F8", 1], ["F9", 1], ["F10", 1], ["F11", 1], ["F12", 1]],
   [["`", 1], ["1", 1], ["2", 1], ["3", 1], ["4", 1], ["5", 1], ["6", 1], ["7", 1], ["8", 1], ["9", 1], ["0", 1], ["-", 1], ["=", 1], ["Back", 2]],
@@ -24,11 +24,15 @@ const ROWS: [string, number][][] = [
   [["Ctrl", 1.5], ["Win", 1.25], ["Alt", 1.25], ["Space", 6.25], ["RAlt", 1.25], ["Menu", 1.25], ["RCtrl", 1.5]],
 ];
 const MODIFIERS = new Set(["Ctrl", "Shift", "Alt"]);
-const G_KEYS = ["G1", "G2", "G3", "G4", "G5", "G6", "G7"];
+const isModifierOnly = (keys: string[]) => keys.every((k) => MODIFIERS.has(k));
 
 /** The physical keys a bind touches; "1-9" lights the number row. */
 function physicalKeys(bind: Bind): string[] {
-  return bind.keys.flatMap((k) => (k === "1-9" ? ["1", "2", "3", "4", "5", "6", "7", "8", "9"] : [k]));
+  return bind.combos.flat().flatMap((k) => {
+    const range = k.match(/^(\d)-(\d)$/);
+    if (!range) return [k];
+    return Array.from({ length: Number(range[2]) - Number(range[1]) + 1 }, (_, i) => String(Number(range[1]) + i));
+  });
 }
 
 function KeyCap({
@@ -44,7 +48,7 @@ function KeyCap({
   focus: string | null;
   onHover: (key: string | null) => void;
 }) {
-  const main = binds.find((b) => !b.keys.every((k) => MODIFIERS.has(k)) && physicalKeys(b).includes(label) && !MODIFIERS.has(label));
+  const main = binds.find((b) => physicalKeys(b).includes(label) && !MODIFIERS.has(label));
   const group = main?.group ?? (binds.length ? "modifier" : null);
   const lit = group !== null && (focus === null || binds.some((b) => b.group === focus));
   const display = label === "RShift" ? "Shift" : label === "RCtrl" ? "Ctrl" : label === "RAlt" ? "Alt" : label;
@@ -60,24 +64,29 @@ function KeyCap({
   );
 }
 
-/** A lit-up keyboard, mouse and G-key pad for the hotkeys that matter most, colored by group. */
-export function KeyMap() {
+/** A lit-up keyboard and mouse for the hotkeys that matter most, colored by group. */
+export function KeyMap({ essentials: list, note }: { essentials: EssentialBind[]; note: ReactNode }) {
   const [focus, setFocus] = useState<string | null>(null);
   const [hoverKey, setHoverKey] = useState<string | null>(null);
 
+  const allBinds: Bind[] = useMemo(
+    () => list.map((e) => ({ combos: e.combos.map(comboKeys).filter((c) => !isModifierOnly(c)), action: e.label, group: e.group, source: e.source })).filter((b) => b.combos.length),
+    [list],
+  );
+  const groups = ESSENTIAL_GROUPS.map((g) => ({ ...g, binds: allBinds.filter((b) => b.group === g.id) })).filter((g) => g.binds.length);
   const bindsByKey = useMemo(() => {
     const map = new Map<string, Bind[]>();
-    for (const b of allBinds) for (const k of physicalKeys(b)) map.set(k, [...(map.get(k) ?? []), b]);
+    for (const b of allBinds) for (const k of new Set(physicalKeys(b))) map.set(k, [...(map.get(k) ?? []), b]);
     return map;
-  }, []);
+  }, [allBinds]);
   const binds = (k: string) => bindsByKey.get(k) ?? [];
-  const hovered = hoverKey ? binds(hoverKey).filter((b) => !b.keys.every((k) => MODIFIERS.has(k))) : [];
+  const hovered = hoverKey ? binds(hoverKey) : [];
 
   return (
     <section className="panel keymap">
       <div className="panel-head">
         <h3>Essential hotkeys</h3>
-        <span className="muted small">From your keybind sheet. Hover a key or a group.</span>
+        <span className="muted small">{note}</span>
       </div>
       <div className="group-legend">
         {groups.map((g) => (
@@ -121,25 +130,13 @@ export function KeyMap() {
               ))}
             </div>
           </div>
-          <div className="gpad" aria-label="G keys">
-            {G_KEYS.map((g) => (
-              <span
-                key={g}
-                className={`keycap gkey${binds(g).length ? ` g-${binds(g)[0].group} lit` : ""}${focus && !binds(g).some((b) => b.group === focus) ? " dim" : ""}`}
-                onMouseEnter={() => setHoverKey(g)}
-                onMouseLeave={() => setHoverKey(null)}
-              >
-                {g}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
       <div className="keymap-readout">
         {hovered.length > 0 ? (
           hovered.map((b) => (
             <motion.span key={b.action} className={`readout g-${b.group}`} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}>
-              <Combo keys={b.keys} /> {b.action}
+              <Combos combos={b.combos} /> {b.action}
             </motion.span>
           ))
         ) : (
@@ -153,8 +150,8 @@ export function KeyMap() {
           <div key={g.id} className={`group-card g-${g.id}${focus && focus !== g.id ? " dim" : ""}`} onMouseEnter={() => setFocus(g.id)} onMouseLeave={() => setFocus(null)}>
             <div className="group-card-name">{g.name}</div>
             {g.binds.map((b) => (
-              <div key={b.action} className="group-bind">
-                <Combo keys={b.keys} />
+              <div key={b.action} className={`group-bind${b.source === "default" ? " is-default" : ""}`} title={b.source === "default" ? "AoE4 default" : undefined}>
+                <Combos combos={b.combos} />
                 <span>{b.action}</span>
               </div>
             ))}
@@ -165,14 +162,18 @@ export function KeyMap() {
   );
 }
 
-function Combo({ keys }: { keys: string[] }) {
-  const sep = keys.length === 2 && keys[0] === "." ? "then" : "+";
+function Combos({ combos }: { combos: string[][] }) {
   return (
-    <span className="combo">
-      {keys.map((k, i) => (
-        <span key={k}>
-          {i > 0 && <span className="combo-sep">{sep}</span>}
-          <kbd>{k.replace("Mouse", "M")}</kbd>
+    <span className="combos">
+      {combos.slice(0, 2).map((keys, j) => (
+        <span key={j} className="combo">
+          {j > 0 && <span className="combo-sep">or</span>}
+          {keys.map((k, i) => (
+            <span key={k}>
+              {i > 0 && <span className="combo-sep">+</span>}
+              <kbd>{k.replace(/^Mouse(\d)$/, "M$1")}</kbd>
+            </span>
+          ))}
         </span>
       ))}
     </span>
