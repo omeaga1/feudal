@@ -1,13 +1,12 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
-import { fetchMatchupStat, fetchRecentGames, type Match, type MatchPlayer, type MatchupStat } from "../lib/aoe4world";
+import type { Match, MatchPlayer } from "../lib/aoe4world";
 import { buildBrief } from "../lib/brief";
 import { civColor } from "../lib/civColors";
 import { dangerWindows } from "../lib/dangerWindows";
 import { getCiv, type Unit } from "../lib/gameData";
-import { clock, formatClock, getGamePlan, landmarkIcon, pathSteps, STYLE_LABELS } from "../lib/gamePlans";
-import { elapsedSeconds, firstSentence, glanceThreats, stepWindow, windowAt } from "../lib/glance";
-import { appFetch } from "../lib/http";
-import { summarizePlayer, type PlayerProfile } from "../lib/opponent";
+import { clock, formatClock, getGamePlan, pathSteps, type GamePlan } from "../lib/gamePlans";
+import { glanceThreats } from "../lib/glance";
+import { chartSpan, enemyTimings, gameSeconds, LOADING_SECONDS, timingState, villagersAt, villagerTargets, type Timing } from "../lib/liveView";
 import { usePersisted } from "../lib/persisted";
 import { getPlaybook } from "../lib/playbooks";
 import { useDangerData } from "./DangerTimeline";
@@ -16,10 +15,9 @@ import { resolveSelection, SplitChips, UnitIcons, type PlanSelection } from "./P
 import { AgeMark, UnitHover } from "./ui";
 
 const shortName = (name: string) => name.replace(/^(Early|Hardened|Veteran|Elite) /, "");
-const percent = (v: number) => `${Math.round(v * 100)}%`;
 
-/** Ticks once every few seconds so the clock and the "now" window move on their own. */
-function useNow(intervalMs = 5000): number {
+/** Ticks every second so the clock, the timings and the villager graph play along with the game. */
+function useNow(intervalMs = 1000): number {
   const [now, setNow] = useState(Date.now);
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), intervalMs);
@@ -40,7 +38,7 @@ function useFitToScreen(ref: RefObject<HTMLElement | null>, contentKey: string) 
     const fit = () => {
       el.style.fontSize = "";
       let size = parseFloat(getComputedStyle(el).fontSize);
-      const overflows = () => [...el.querySelectorAll<HTMLElement>(".g-card, .g-head")].some((c) => c.scrollHeight > c.clientHeight + 1 || c.scrollWidth > c.clientWidth + 1);
+      const overflows = () => [...el.querySelectorAll<HTMLElement>(".lv-card, .lv-head")].some((c) => c.scrollHeight > c.clientHeight + 1 || c.scrollWidth > c.clientWidth + 1);
       while (overflows() && size > 9) {
         size -= 0.5;
         el.style.fontSize = `${size}px`;
@@ -53,40 +51,10 @@ function useFitToScreen(ref: RefObject<HTMLElement | null>, contentKey: string) 
   }, [ref, contentKey]);
 }
 
-function useMatchupStat(me: string, them: string): MatchupStat | null {
-  const [stat, setStat] = useState<MatchupStat | null>(null);
-  useEffect(() => {
-    let cancelled = false;
-    setStat(null);
-    fetchMatchupStat(appFetch, me, them)
-      .then((s) => !cancelled && setStat(s))
-      .catch(() => undefined);
-    return () => {
-      cancelled = true;
-    };
-  }, [me, them]);
-  return stat;
-}
-
-function useOpponentProfile(profileId: number): PlayerProfile | null {
-  const [profile, setProfile] = useState<PlayerProfile | null>(null);
-  useEffect(() => {
-    let cancelled = false;
-    setProfile(null);
-    fetchRecentGames(appFetch, profileId)
-      .then((games) => !cancelled && setProfile(summarizePlayer(games, profileId)))
-      .catch(() => undefined);
-    return () => {
-      cancelled = true;
-    };
-  }, [profileId]);
-  return profile;
-}
-
 function Icon({ unit, big }: { unit: Unit; big?: boolean }) {
   return (
     <UnitHover unit={unit}>
-      <span className={big ? "g-unit big" : "g-unit"}>
+      <span className={big ? "lv-unit big" : "lv-unit"}>
         <img src={unit.icon} alt="" loading="lazy" />
         <span>{shortName(unit.name)}</span>
       </span>
@@ -94,65 +62,226 @@ function Icon({ unit, big }: { unit: Unit; big?: boolean }) {
   );
 }
 
-function LandmarkIcon({ name }: { name?: string }) {
-  if (!name) return null;
-  const icon = landmarkIcon(name);
-  return icon ? <img className="g-landmark" src={icon} alt={name} title={name} /> : <span className="g-landmark blank">{name[0]}</span>;
+/** Their units on the left, what beats them on the right, by age. */
+function Counters({ me, them }: { me: string; them: string }) {
+  const brief = useMemo(() => buildBrief(me, them), [me, them]);
+  const ages = brief ? glanceThreats(brief, 3, 2) : [];
+  return (
+    <section className="lv-card lv-counters">
+      <h3>What counters what</h3>
+      {ages.map(({ age, threats }) => (
+        <div key={age} className="lv-age">
+          <AgeMark age={age} label={false} />
+          <div className="lv-threats">
+            {threats.map(({ enemy, answers }) => (
+              <div key={enemy.id} className={enemy.unique ? "lv-threat unique" : "lv-threat"}>
+                <Icon unit={enemy} big />
+                <span className="lv-arrow">›</span>
+                {answers.length > 0 ? answers.map((a) => <Icon key={a.id} unit={a} />) : <span className="muted">Mixed army</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+  );
 }
 
-const AGE_SHORT = { 1: "Dark", 2: "Feudal", 3: "Castle" } as const;
+const KIND_LABEL: Record<Timing["kind"], string> = {
+  rush: "Rush",
+  spike: "Spike",
+  weak: "Weak",
+  yours: "Attack",
+  theirs: "Hold",
+};
 
-/**
- * Your own build for this civ: the path you picked in Matchups or Civs (or
- * the first one), your age-up targets, and the step you should be on now with
- * the next few. It follows the game clock on its own.
- */
-function YourBuild({ civ, elapsed }: { civ: string; elapsed: number | null }) {
-  const plan = getGamePlan(civ);
-  const [selection] = usePersisted<PlanSelection | null>(`feudal.plan.${civ}`, null);
-  if (!plan) return null;
-  const path = resolveSelection(plan, selection);
-  const steps = pathSteps(plan, path);
-  const { items, current, offset } = stepWindow(steps, elapsed);
-  const targets = [
-    { age: 2, node: path.feudal },
-    { age: 3, node: path.castle },
-  ];
-  const next = targets.find((t) => elapsed === null || clock(t.node.ageUp) > elapsed);
+const span = (t: Timing) => (t.to === null ? `${formatClock(t.from)}+` : `${formatClock(t.from)}–${formatClock(t.to)}`);
+
+/** When their civ hits and when it's open, on a strip with a moving Now line and a short list. */
+function Timings({ them, me, seconds }: { them: string; me: string; seconds: number | null }) {
+  const dangerData = useDangerData();
+  const danger = useMemo(() => dangerWindows(me, them, dangerData), [me, them, dangerData]);
+  const timings = useMemo(() => enemyTimings(getGamePlan(them), getPlaybook(them), danger), [them, danger]);
+  // The strip covers the first 20 minutes and grows with the game.
+  const end = Math.max(20 * 60, Math.ceil(((seconds ?? 0) + 120) / 300) * 300);
+  const x = (s: number) => `${(Math.min(s, end) / end) * 100}%`;
+  const states = timings.map((t) => timingState(t, seconds));
+  const nextIndex = states.indexOf("later");
+  // Once a timing is over it only takes room, unless the list is short.
+  const shown = timings.map((t, i) => ({ t, i })).filter(({ i }) => states[i] !== "past" || timings.length <= 4);
+  const theirName = getCiv(them)?.name ?? them;
 
   return (
-    <section className={`g-card g-mine style-${path.feudal.style}`}>
-      <div className="g-mine-head">
-        <h3>Your build</h3>
-        <b className="g-mine-name">
-          {path.feudal.name} › <span className={`style-${path.castle.style}`}>{path.castle.name}</span>
-        </b>
-        <span className="spacer" />
-        {targets.map(({ age, node }) => (
-          <span key={age} className={next?.age === age ? "g-target next" : "g-target"}>
-            <AgeMark age={age} label={false} />
-            <LandmarkIcon name={node.landmark} />
-            <b>{node.ageUp}</b>
+    <section className="lv-card lv-timings">
+      <h3>Watch {theirName}: timings</h3>
+      <div className="lv-strip" aria-hidden="true">
+        {timings.map((t, i) => (
+          <span
+            key={i}
+            className={`lv-band ${t.kind}`}
+            style={{
+              left: x(t.from),
+              width: `calc(${x(t.to ?? end)} - ${x(t.from)})`,
+            }}
+          />
+        ))}
+        {Array.from({ length: end / 300 }, (_, k) => k * 5).map((m) => (
+          <span key={m} className="lv-tick" style={{ left: x(m * 60) }}>
+            {m}m
           </span>
         ))}
-        <UnitIcons names={path.castle.army?.slice(0, 4)} civ={civ} />
+        {seconds !== null && <span className="lv-nowline" style={{ left: x(seconds) }} />}
       </div>
-      <div className="g-steps">
-        {items.map(({ age, step }, i) => {
-          const index = offset + i;
-          const state = index < current ? " done" : index === current ? " now" : "";
-          return (
-            <div key={index} className={`g-step age-${age}${state}`}>
-              <div className="g-step-top">
-                <b>{step.t}</b>
-                <span className="g-step-age">{AGE_SHORT[age]}</span>
-                {index === current && elapsed !== null && <span className="g-now inline">Now</span>}
+      {timings.length === 0 ? (
+        <p className="muted">No timing data for {theirName} yet.</p>
+      ) : (
+        <div className="lv-list">
+          {shown.map(({ t, i }) => {
+            const state = states[i] === "later" && i === nextIndex ? "next" : states[i];
+            return (
+              <div key={i} className={`lv-timing ${t.kind} ${state}`}>
+                <span className="lv-kind">{KIND_LABEL[t.kind]}</span>
+                <b className="lv-when">{span(t)}</b>
+                <div className="lv-what">
+                  <b>{t.title}</b>
+                  <span>{t.tip}</span>
+                </div>
+                <UnitIcons names={t.units} civ={them} />
+                {state === "now" && <span className="lv-badge">Now</span>}
+                {state === "next" && seconds !== null && <span className="lv-badge soon">in {formatClock(t.from - seconds)}</span>}
               </div>
-              <SplitChips split={step.v} builders={step.b} />
-              <span className="g-step-do">{step.do}</span>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+      )}
+    </section>
+  );
+}
+
+/** The pixel size of an element, so the chart draws at its real size instead of stretching. */
+function useSize(ref: RefObject<HTMLElement | null>): {
+  width: number;
+  height: number;
+} {
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => setSize({ width: el.clientWidth, height: el.clientHeight });
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [ref]);
+  return size;
+}
+
+/**
+ * Where your villager count should be, from your build's production rules,
+ * with a Now line that moves with the game clock.
+ */
+function Villagers({ civ, plan, seconds }: { civ: string; plan: GamePlan; seconds: number | null }) {
+  const [selection] = usePersisted<PlanSelection | null>(`feudal.plan.${civ}`, null);
+  const path = resolveSelection(plan, selection);
+  const feudalAt = clock(path.feudal.ageUp);
+  const castleAt = clock(path.castle.ageUp);
+  const { from, to } = chartSpan(seconds, castleAt);
+  const prod = useMemo(() => villagerTargets(plan, path, to), [plan, path.feudal, path.castle, to]);
+  const steps = useMemo(() => pathSteps(plan, path).filter(({ step }) => step.v), [plan, path.feudal, path.castle]);
+  const box = useRef<HTMLDivElement>(null);
+  const size = useSize(box);
+  const AXIS = 16;
+  const W = Math.max(1, size.width);
+  const H = Math.max(1, size.height - AXIS);
+
+  const max = Math.max(villagersAt(prod, to), 20);
+  const top = Math.ceil(max / 20) * 20;
+  const x = (s: number) => ((s - from) / (to - from)) * W;
+  const y = (n: number) => H - (n / top) * H;
+
+  // Step-after line: the count holds until the next villager walks out.
+  const born = [...prod.born.filter((b) => b > from && b <= to)];
+  const pts: string[] = [`${x(from)},${y(villagersAt(prod, from))}`];
+  for (const b of born) {
+    pts.push(`${x(b)},${y(villagersAt(prod, b - 0.001))}`, `${x(b)},${y(villagersAt(prod, b))}`);
+  }
+  pts.push(`${x(to)},${y(villagersAt(prod, to))}`);
+  const line = `M${pts.join(" L")}`;
+  const area = `${line} L${x(to)},${H} L${x(from)},${H} Z`;
+
+  const t = seconds ?? 0;
+  const now = villagersAt(prod, t);
+  const nextMinute = (Math.floor(t / 60) + 1) * 60;
+  const step = [...steps].reverse().find(({ step: s }) => clock(s.t) <= t) ?? steps[0];
+  const nextAge = [
+    { age: 2, at: feudalAt },
+    { age: 3, at: castleAt },
+  ].find((a) => a.at > t);
+
+  const bands = [
+    { age: 1, a: 0, b: feudalAt },
+    { age: 2, a: feudalAt, b: castleAt },
+    { age: 3, a: castleAt, b: Infinity },
+  ]
+    .map((band) => ({
+      ...band,
+      a: Math.max(band.a, from),
+      b: Math.min(band.b, to),
+    }))
+    .filter((band) => band.b > band.a);
+  const ticks = Array.from({ length: Math.floor(to / 60) + 1 }, (_, m) => m * 60).filter((s) => s >= from && s % (to - from > 1200 ? 300 : 120) === 0);
+  const gridLines = Array.from({ length: top / 20 + 1 }, (_, i) => i * 20);
+
+  return (
+    <section className="lv-card lv-villagers">
+      <div className="lv-vil-head">
+        <h3>Villagers</h3>
+        <div className="lv-vil-now">
+          <b>{now}</b>
+          <span>{seconds === null ? "at start" : "by now"}</span>
+        </div>
+        <div className="lv-vil-next">
+          <b>{villagersAt(prod, nextMinute)}</b>
+          <span>by {formatClock(nextMinute)}</span>
+        </div>
+        {step && <SplitChips split={step.step.v} builders={step.step.b} />}
+        <span className="spacer" />
+        {nextAge && (
+          <span className="lv-age-target">
+            <AgeMark age={nextAge.age} label={false} /> <b>{formatClock(nextAge.at)}</b>
+          </span>
+        )}
+        <span className="lv-path muted">{path.feudal.name}</span>
+      </div>
+      <div ref={box} className="lv-vil-box">
+        <svg width={W} height={H + AXIS} className="lv-vil-svg" role="img" aria-label="Villager count to aim for over the game">
+          {bands.map((band) => (
+            <rect key={band.age} x={x(band.a)} y={0} width={x(band.b) - x(band.a)} height={H} className={`lv-age-band age-${band.age}`} />
+          ))}
+          {gridLines.map((n) => (
+            <g key={n}>
+              <line x1={0} x2={W} y1={y(n)} y2={y(n)} className="lv-grid" />
+              {n > 0 && (
+                <text x={4} y={y(n) + 12} className="lv-axis">
+                  {n}
+                </text>
+              )}
+            </g>
+          ))}
+          <path d={area} className="lv-vil-area" />
+          <path d={line} className="lv-vil-line" />
+          {seconds !== null && (
+            <>
+              <rect x={x(from)} y={0} width={Math.max(0, x(t) - x(from))} height={H} className="lv-past" />
+              <line x1={x(t)} x2={x(t)} y1={0} y2={H} className="lv-vil-nowline" />
+            </>
+          )}
+          {ticks.map((s) => (
+            <text key={s} x={x(s)} y={H + 13} className={s === from ? "lv-axis" : "lv-axis tick"}>
+              {s / 60}m
+            </text>
+          ))}
+        </svg>
       </div>
     </section>
   );
@@ -160,154 +289,54 @@ function YourBuild({ civ, elapsed }: { civ: string; elapsed: number | null }) {
 
 /**
  * The in-game Live view: one screen, no scrolling, nothing to click. What
- * they'll open with, what to build against their units, and when the game
- * tends to swing. Everything else lives in Matchups.
+ * counters what, when their civ hits or is open, and where your villager count
+ * should be right now. Everything else lives in Matchups.
  */
 export function LiveGlance({ match, opponent }: { match: Match; opponent: MatchPlayer }) {
   const me = match.me.civ;
   const them = opponent.civ;
-  const brief = useMemo(() => buildBrief(me, them), [me, them]);
-  const plan = getGamePlan(them);
-  const playbook = getPlaybook(them);
-  const stat = useMatchupStat(me, them);
-  const profile = useOpponentProfile(opponent.profileId);
-  const dangerData = useDangerData();
-  const danger = useMemo(() => dangerWindows(me, them, dangerData), [me, them, dangerData]);
+  const myPlan = getGamePlan(me);
   const now = useNow();
-  const elapsed = elapsedSeconds(match.startedAt, now);
-  const nowWindow = danger && elapsed !== null ? windowAt(danger.windows, elapsed) : -1;
-  const threats = brief ? glanceThreats(brief) : [];
-  const theirName = getCiv(them)?.name ?? them;
+  const seconds = gameSeconds(match.startedAt, now);
   const root = useRef<HTMLDivElement>(null);
-  useFitToScreen(root, `${me}|${them}|${!!profile}|${!!stat}|${!!danger}`);
-  const winTone = stat ? (stat.win_rate >= 52 ? "good" : stat.win_rate <= 48 ? "bad" : "even") : "";
+  useFitToScreen(root, `${me}|${them}`);
 
   return (
-    <div ref={root} className="glance" style={{ "--civ": civColor(them) } as React.CSSProperties}>
-      <header className="g-head">
+    <div ref={root} className="lv" style={{ "--civ": civColor(them) } as React.CSSProperties}>
+      <header className="lv-head">
         <span className="pill live">
           <span className="pulse" /> Live
         </span>
-        <div className="g-side">
+        <div className="lv-side">
           <Flag civ={me} size="md" />
           <b>{getCiv(me)?.name ?? me}</b>
         </div>
-        <span className="g-vs">VS</span>
-        <div className="g-side">
+        <span className="lv-vs">VS</span>
+        <div className="lv-side">
           <Flag civ={them} size="md" />
-          <div className="g-who">
-            <b>{theirName}</b>
-            <span className="muted">
-              {opponent.name}
-              {opponent.rating ? ` · ${opponent.rating}` : ""}
-            </span>
-          </div>
+          <b>{getCiv(them)?.name ?? them}</b>
+          <span className="muted lv-opp">
+            {opponent.name}
+            {opponent.rating ? ` · ${opponent.rating}` : ""}
+          </span>
         </div>
-        {profile && (
-          <div className="g-habits" title={`Their last ${profile.games} games`}>
-            <span>
-              <b>{percent(profile.winRate)}</b> won
-            </span>
-            <span className={profile.shortGameShare >= 0.4 ? "hot" : undefined}>
-              <b>{percent(profile.shortGameShare)}</b> end &lt;15m
-            </span>
-          </div>
-        )}
         <span className="spacer" />
-        <span className="g-map muted">{match.map}</span>
-        {stat && (
-          <div className={`g-win ${winTone}`}>
-            <b>{Math.round(stat.win_rate)}%</b>
-            <span>win rate</span>
-          </div>
-        )}
-        {elapsed !== null && (
-          <div className="g-clock" title="From when AoE4 World saw the game start, so it runs a little ahead">
-            <b>≈{formatClock(elapsed)}</b>
+        {seconds !== null && (
+          <div className="lv-clock" title={`From when AoE4 World saw the game start, less about ${LOADING_SECONDS}s of loading`}>
+            <b>≈{formatClock(seconds)}</b>
             <span>game time</span>
           </div>
         )}
       </header>
 
-      <YourBuild civ={me} elapsed={elapsed} />
-
-      <section className="g-card g-plan">
-        <h3>Their opening</h3>
-        {plan ? (
-          <div className="g-paths">
-            {plan.feudal.slice(0, 2).map((f) => (
-              <div key={f.id} className={`g-path style-${f.style}`}>
-                <div className="g-path-main">
-                  <LandmarkIcon name={f.landmark} />
-                  <div className="g-path-text">
-                    <b>{f.name}</b>
-                    <span className="muted">
-                      {STYLE_LABELS[f.style]} · Feudal <b className="ink">{f.ageUp}</b>
-                    </span>
-                  </div>
-                  <UnitIcons names={f.army?.slice(0, 4)} civ={them} size="md" />
-                </div>
-                <div className="g-castles">
-                  {f.castle.slice(0, 2).map((c) => (
-                    <div key={c.id} className={`g-castle style-${c.style}`}>
-                      <LandmarkIcon name={c.landmark} />
-                      <span className="g-castle-name">{c.name}</span>
-                      <span className="age-time">{c.ageUp}</span>
-                      <UnitIcons names={c.army?.slice(0, 3)} civ={them} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="muted">No build plan for {theirName} yet.</p>
-        )}
-        {playbook && playbook.spikes.length > 0 && (
-          <div className="g-spikes">
-            {playbook.spikes.slice(0, 3).map((s) => (
-              <div key={s.label} className="g-spike">
-                <AgeMark age={s.age} label={false} />
-                <b>{s.label}</b>
-                <span className="g-answer">{firstSentence(s.answer)}</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      <section className="g-card g-counters">
-        <h3>Build against</h3>
-        {threats.map(({ age, threats: list }) => (
-          <div key={age} className="g-age">
-            <AgeMark age={age} label={false} />
-            <div className="g-threats">
-              {list.map(({ enemy, answers }) => (
-                <div key={enemy.id} className={enemy.unique ? "g-threat unique" : "g-threat"}>
-                  <Icon unit={enemy} big />
-                  <span className="g-arrow">›</span>
-                  {answers.length > 0 ? answers.map((a) => <Icon key={a.id} unit={a} />) : <span className="muted">Mixed army</span>}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {danger && !danger.windows.every((w) => w.thin) && (
-        <section className="g-card g-danger">
-          <h3>Danger windows</h3>
-          <div className="g-windows" role="table" aria-label="Your win rate by game length">
-            {danger.windows.map((w, i) => (
-              <div key={w.label} role="row" className={`g-window ${w.kind}${w.thin ? " thin" : ""}${i === nowWindow ? " now" : ""}`}>
-                <span role="cell" className="g-window-label">
-                  {w.label.replace(" min", "m")}
-                </span>
-                <b role="cell">{w.thin ? "–" : percent(w.winRate)}</b>
-                {i === nowWindow && <span className="g-now">Now</span>}
-              </div>
-            ))}
-          </div>
+      <Counters me={me} them={them} />
+      <Timings me={me} them={them} seconds={seconds} />
+      {myPlan ? (
+        <Villagers civ={me} plan={myPlan} seconds={seconds} />
+      ) : (
+        <section className="lv-card lv-villagers">
+          <h3>Villagers</h3>
+          <p className="muted">No build plan for {getCiv(me)?.name ?? me} yet.</p>
         </section>
       )}
     </div>
