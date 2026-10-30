@@ -3,9 +3,11 @@
   "patch": null,
   "draftedForBuild": 11308,
   "status": "draft",
-  "summary": "New in Update 17.0. A cow-boom infantry civ: Highland Cattle on berries feed the TC so almost no villagers farm, and Beasty calls it made for 2 TC. Stone of Destiny is the Feudal landmark pros prefer; Men-at-Arms and Pikemen are the strong units. Beasty rates them behind Vikings and harder to play.",
+  "summary": "New in Update 17.0. A cow-boom civ: Highland Cattle on berries feed the TC so almost no villagers farm, and Beasty calls it made for 2 TC. Stone of Destiny is the Feudal landmark pros prefer; Beasty's build guide goes Horsemen and Highland Archers off it, and Men-at-Arms and Pikemen are the strong infantry. Beasty rates them behind Vikings and harder to play.",
   "openings": [
-    "Stone of Destiny eco (Swaggy, Beasty): Tower House covering gold and berries, 5 to 6 cows on berries, everyone to wood once you click up, Feudal around 4:55, Kirkman Fishponds for gold.",
+    "Beasty's Stone of Destiny build: Tower House behind the berries, 3 on gold to pay for cows (each is about three quarters of a villager of food), up to 9 cows, 4 villagers build the Stone at 3:20, Feudal around 5:00.",
+    "Off the Stone, Beasty builds a Stable and Archery Range in its range for the gold rebate, two Kirkman Fishponds, then a 2nd Stable and Range and a Mustering Hall; he raids at 9:00 with about 9 Horsemen and 12 Highland Archers.",
+    "Swaggy's Stone of Destiny variant goes Kirkmen and infantry instead, with Fishponds for gold.",
     "Cows make 2 TC possible with almost no villagers on food (Beasty).",
     "Abbey of the Isles Men-at-Arms all-in: Beasty lost with it and calls it weak in 1v1, maybe fine in team games."
   ],
@@ -15,6 +17,12 @@
       "label": "Armored Men-at-Arms and Pikemen",
       "detail": "Beasty calls Feudal Men-at-Arms armor broken, and Scots Pikemen have extra armor and attack in 2 to 3 ranks; they beat his knights.",
       "answer": "Don't send knights or archers into them head-on; use your own heavy infantry or crossbows."
+    },
+    {
+      "age": 2,
+      "label": "9:00 Horseman and archer raid",
+      "detail": "Beasty's build runs 2 Stables and 2 Ranges off a cow economy and leaves with about 9 Horsemen and 12 Highland Archers at 9:00, with a Mustering Hall behind it.",
+      "answer": "Spearmen and a tower at each resource, wall the wood line, and hit their cows on the berries while their army is out."
     },
     {
       "age": 2,
@@ -38,10 +46,15 @@
   "scout": [
     "Tower House on gold and cows on berries is the normal start",
     "Stone of Destiny means eco; Abbey of the Isles means a Men-at-Arms all-in",
+    "A Stable and Archery Range beside the Stone: Beasty's Horseman and archer raid around 9:00",
     "Stone villagers or a 2nd TC: the cow-boom 2 TC",
     "A Mustering Hall and how many military buildings sit near it"
   ],
   "pairings": [
+    {
+      "units": "Horsemen + Highland Archers",
+      "why": "Beasty's build guide: Horsemen raid and kill archers while Highland Archers hit harder than normal archers."
+    },
     {
       "units": "Men-at-Arms + Highland Archers",
       "why": "Beasty's main comp: armored front line with archers that hit frontlines harder (shorter range, more damage)."
@@ -72,11 +85,18 @@
   "howToBeat": [
     "Tower rush, or at least a tower plus barracks, to stop the cow boom (Beasty).",
     "An early spear opening punishes their scouts and cows; cows on the berries are their food.",
+    "Against the Horseman and archer build, spearmen behind towers hold the 9:00 raid; then hit the cows on the berries while their army is away.",
     "Out-range Highland Archers: they have 4.5 range and lose archer duels.",
     "Mass armored infantry beats their melee and archer army (Beasty's Vikings won this way).",
     "Don't trade knights into their Pikemen and Men-at-Arms."
   ],
   "sources": [
+    {
+      "title": "Beasty: Simple Build Order Guide With Scots",
+      "url": "https://www.youtube.com/watch?v=m2rgwmCQRcA",
+      "date": "2026-10-29",
+      "kind": "video"
+    },
     {
       "title": "Beasty: My First 1v1 Games With Scots... OP?",
       "url": "https://www.youtube.com/watch?v=cPjX-wFhvDA",
