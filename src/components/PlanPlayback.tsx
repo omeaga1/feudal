@@ -26,7 +26,7 @@ import { getCiv } from "../lib/gameData";
 import { findUnit, formatClock, landmarkIcon, type GamePlan, type PlanNode, type SelectedPath } from "../lib/gamePlans";
 import { usePersisted } from "../lib/persisted";
 import { buildPlayback, frameAt, landmarkStart, SLOTS, type Move, villagerAt, villagerMoves, type BuildingKind, type Playback, type Slot, type VillagerMove } from "../lib/playback";
-import { MoveChips, PlanTimeline } from "./PlanTimeline";
+import { MoveChips } from "./MoveChips";
 import { Tip } from "./ui";
 
 // A top-down mini base in a 960x500 scene: the Town Center in the middle,
@@ -596,7 +596,6 @@ function Timeline({ end, feudalAt, castleAt, steps, onSeek }: { end: number; feu
 /** The sandbox: your base, playing the chosen path on a running game clock. */
 export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPath }) {
   const pb = useMemo(() => buildPlayback(plan, path), [plan, path]);
-  const [view, setView] = usePersisted<"timeline" | "base">("feudal.playback.view3", "timeline");
   const steps = useMemo(() => pb.events.map((e) => e.seconds), [pb]);
   const { t, setT, playing, setPlaying, toggle, mode, setMode, speed, setSpeed, pace, setPace } = useGameClock(pb.end, steps);
   const frame = frameAt(pb, t);
@@ -634,14 +633,6 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
     <MotionConfig reducedMotion="user">
       <div className="pb">
         <div className="pb-views">
-          <ToggleGroup.Root className="segmented" type="single" value={view} onValueChange={(v) => v && setView(v as "timeline" | "base")} aria-label="View">
-            {(["timeline", "base"] as const).map((v) => (
-              <ToggleGroup.Item key={v} value={v} className="segmented-item">
-                {v === view && <motion.span layoutId="pb-view" className="segmented-thumb" transition={{ type: "spring", stiffness: 500, damping: 38 }} />}
-                <span>{v === "timeline" ? "Timeline" : "Base"}</span>
-              </ToggleGroup.Item>
-            ))}
-          </ToggleGroup.Root>
           <ToggleGroup.Root className="segmented" type="single" value={mode} onValueChange={(v) => v && setMode(v as ClockMode)} aria-label="Time">
             {(["steps", "real"] as const).map((m) => (
               <ToggleGroup.Item key={m} value={m} className="segmented-item">
@@ -651,9 +642,6 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
             ))}
           </ToggleGroup.Root>
         </div>
-        {view === "timeline" ? (
-          <PlanTimeline pb={pb} plan={plan} path={path} t={t} onSeek={(s) => setT(s)} buildings={BUILDINGS} />
-        ) : (
         <div className="pb-stage">
           <Scene pb={pb} path={path} plan={plan} t={t} />
           <div className="sb-badges" aria-hidden="true">
@@ -758,7 +746,6 @@ export function PlanPlayback({ plan, path }: { plan: GamePlan; path: SelectedPat
             )}
           </AnimatePresence>
         </div>
-        )}
 
         <div className="pb-transport">
           <div className="pb-buttons">
