@@ -56,3 +56,6 @@ jobs:
           shared-key: windows-release
       - run: npm ci
       - run: npm run tauri build -- --no-bundle
+      - name: App size
+        shell: bash
+        run: ls -l src-tauri/target/release/feudal.exe
