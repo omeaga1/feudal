@@ -245,6 +245,39 @@ kbd {
   line-height: 1.2;
 }
 
+.rail .update-ready {
+  margin: 0 8px 8px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  border: 1px solid #f6d27e;
+  background: linear-gradient(180deg, #f6d27e, #d9a74a 55%, #b9832f);
+  color: #22180a;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(246, 210, 126, 0.5);
+  animation: update-glow 2.4s infinite;
+}
+
+.rail .update-ready:hover {
+  filter: brightness(1.08);
+}
+
+.rail .update-wait {
+  color: var(--muted);
+}
+
+@keyframes update-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(246, 210, 126, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(246, 210, 126, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(246, 210, 126, 0);
+  }
+}
+
 .spacer {
   flex: 1;
 }
@@ -2877,6 +2910,7 @@ input.with-icon {
   .select-menu,
   .flag-popover,
   .skeleton,
+  .rail .update-ready,
   .spin {
     animation: none;
   }

@@ -42,3 +42,27 @@ export async function checkForUpdate(fetchFn: FetchFn, current: string): Promise
     return null;
   }
 }
+
+export type InstallPhase = "idle" | "installing" | "failed";
+
+/**
+ * What the update notice shows. Feudal never installs on its own: it offers
+ * the update and installs only when the player clicks. During a game the
+ * offer waits ("after this game") so nothing pops up or relaunches mid-match.
+ */
+export type UpdateStage =
+  | { kind: "none" }
+  | { kind: "after-game"; release: Release }
+  | { kind: "ready"; release: Release }
+  | { kind: "installing"; release: Release }
+  | { kind: "download"; release: Release };
+
+export function updateStage(release: Release | null, opts: { desktop: boolean; inGame: boolean; phase: InstallPhase }): UpdateStage {
+  if (!release) return { kind: "none" };
+  if (opts.phase === "installing") return { kind: "installing", release };
+  // Outside the desktop app, without a checked installer, or after a failed
+  // install, the player gets the release page instead.
+  if (!opts.desktop || !release.installer || opts.phase === "failed") return { kind: "download", release };
+  if (opts.inGame) return { kind: "after-game", release };
+  return { kind: "ready", release };
+}
