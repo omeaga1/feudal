@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { FetchFn } from "./aoe4world";
-import { checkForUpdate, compareVersions, updateStage, type Release } from "./updates";
+import { checkForUpdate, checkLatest, compareVersions, updateStage, type Release } from "./updates";
 
 const reply =
   (status: number, body: unknown): FetchFn =>
@@ -65,5 +65,14 @@ describe("update prompt", () => {
 
   it("shows progress once the player accepts", () => {
     expect(updateStage(release, { ...idle, phase: "installing" }).kind).toBe("installing");
+  });
+});
+
+describe("manual update check", () => {
+  it("tells up to date apart from a failed check", async () => {
+    const latest = { tag_name: "v0.6.0", html_url: "https://github.com/omeaga1/feudal/releases/tag/v0.6.0", assets: [] };
+    expect(await checkLatest(reply(200, latest), "0.6.0")).toEqual({ kind: "current" });
+    expect(await checkLatest(reply(403, {}), "0.6.0")).toEqual({ kind: "error" });
+    expect((await checkLatest(reply(200, latest), "0.5.1")).kind).toBe("update");
   });
 });
