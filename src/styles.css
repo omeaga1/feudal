@@ -2149,16 +2149,6 @@ ul.tight li {
   cursor: help;
 }
 
-.gpad {
-  display: grid;
-  grid-template-columns: repeat(2, 46px);
-  gap: 6px;
-}
-
-.gkey {
-  height: 40px;
-}
-
 .keymap-readout {
   min-height: 34px;
   display: flex;
@@ -2218,9 +2208,21 @@ ul.tight li {
   margin-bottom: 6px;
 }
 
+.combos {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+}
+.group-bind .combo {
+  flex-wrap: nowrap;
+}
+.group-bind.is-default kbd {
+  border-style: dashed;
+}
 .group-bind {
   display: grid;
-  grid-template-columns: 110px 1fr;
+  grid-template-columns: 170px 1fr;
   align-items: center;
   gap: 10px;
   padding: 3px 0;

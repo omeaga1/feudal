@@ -21,7 +21,7 @@ Feudal never touches the game. It doesn't read game memory, game files, network 
 | **Game plans**: a branching timeline for every civ (opening, two Feudal paths, two Castle paths each) with villager splits over time, condensed from pro guides on aoe4guides.com | Working |
 | **Civ analysis**: one screen per civ with the full plan tree, signature armies, win conditions and new units per age | Working |
 | **Update prompts**: when a new version is out, Feudal tells you and installs it only when you click Update now. It never prompts or restarts during a game. The sidebar shows the running version and a Check for updates button | Working |
-| **Keybinds**: a lit-up keyboard of the essential hotkeys plus a counter chart, then your own profile | Working |
+| **Keys**: a lit-up keyboard of the ~30 hotkeys you use every game, read from your own AoE4 keybind profile (read-only, AoE4 defaults as fallback), plus a counter chart | Working |
 
 ## Development
 
