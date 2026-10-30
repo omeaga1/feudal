@@ -13,6 +13,7 @@ import { useDangerData } from "./DangerTimeline";
 import { Flag } from "./Flag";
 import { resolveSelection, UnitIcons, type PlanSelection } from "./PlanTree";
 import { AgeMark, UnitHover } from "./ui";
+import { StepTrack } from "./StepTrack";
 import { VillagerChart } from "./VillagerChart";
 
 const shortName = (name: string) => name.replace(/^(Early|Hardened|Veteran|Elite) /, "");
@@ -52,33 +53,35 @@ function useFitToScreen(ref: RefObject<HTMLElement | null>, contentKey: string) 
   }, [ref, contentKey]);
 }
 
-function Icon({ unit, big }: { unit: Unit; big?: boolean }) {
+function Icon({ unit, named, enemy }: { unit: Unit; named?: boolean; enemy?: boolean }) {
   return (
     <UnitHover unit={unit}>
-      <span className={big ? "lv-unit big" : "lv-unit"}>
-        <img src={unit.icon} alt="" loading="lazy" />
-        <span>{shortName(unit.name)}</span>
+      <span className={enemy ? "lv-unit enemy" : "lv-unit"}>
+        <img src={unit.icon} alt={unit.name} loading="lazy" />
+        {named && <span>{shortName(unit.name)}</span>}
       </span>
     </UnitHover>
   );
 }
 
-/** Their units on the left, what beats them on the right, by age. */
+/** What you build, and the enemy unit it beats, by age. */
 function Counters({ me, them }: { me: string; them: string }) {
   const brief = useMemo(() => buildBrief(me, them), [me, them]);
-  const ages = brief ? glanceThreats(brief, 3, 2) : [];
+  const ages = brief ? glanceThreats(brief, 2, 1) : [];
   return (
     <section className="lv-card lv-counters">
-      <h3>What counters what</h3>
+      <h3>
+        Build this <span className="lv-beats">›</span> to beat theirs
+      </h3>
       {ages.map(({ age, threats }) => (
         <div key={age} className="lv-age">
           <AgeMark age={age} label={false} />
           <div className="lv-threats">
             {threats.map(({ enemy, answers }) => (
               <div key={enemy.id} className={enemy.unique ? "lv-threat unique" : "lv-threat"}>
-                <Icon unit={enemy} big />
+                <span className="lv-mine">{answers.length > 0 ? <Icon unit={answers[0]} named /> : <span className="muted">Mixed</span>}</span>
                 <span className="lv-arrow">›</span>
-                {answers.length > 0 ? answers.map((a) => <Icon key={a.id} unit={a} />) : <span className="muted">Mixed army</span>}
+                <Icon unit={enemy} named enemy />
               </div>
             ))}
           </div>
@@ -196,7 +199,10 @@ function Villagers({ civ, plan, seconds }: { civ: string; plan: GamePlan; second
         )}
         <span className="lv-path muted">{path.feudal.name}</span>
       </div>
-      <VillagerChart plan={plan} path={path} now={seconds} />
+      <div className="lv-vil-body">
+        <VillagerChart plan={plan} path={path} now={seconds} />
+        <StepTrack plan={plan} path={path} now={seconds} limit={6} />
+      </div>
     </section>
   );
 }

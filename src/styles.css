@@ -5521,12 +5521,12 @@ select,
 
 .lv {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
-  grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) minmax(0, 1.2fr);
   grid-template-areas:
     "head head"
     "counters timings"
-    "counters villagers";
+    "villagers villagers";
   gap: 10px;
   flex: 1;
   min-height: 0;
@@ -5538,7 +5538,7 @@ select,
 @media (max-aspect-ratio: 1/1) {
   .lv {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr);
     grid-template-areas: "head" "counters" "timings" "villagers";
   }
 }
@@ -5624,19 +5624,19 @@ select,
   gap: 0.6em;
 }
 
-.lv-age {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6em;
+.lv-beats {
+  color: var(--good);
 }
 
-.lv-age > .age-mark {
-  margin-top: 0.7em;
+.lv-age {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .lv-threats {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.35em;
   flex: 1;
   min-width: 0;
@@ -5645,8 +5645,9 @@ select,
 .lv-threat {
   display: flex;
   align-items: center;
-  gap: 0.4em;
-  padding: 0.25em 0.5em;
+  gap: 0.3em;
+  min-width: 0;
+  padding: 0.35em 0.45em;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--bg-2);
@@ -5656,29 +5657,37 @@ select,
   border-color: rgba(217, 167, 74, 0.55);
 }
 
+.lv-mine {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  flex: 1;
+  min-width: 0;
+}
+
 .lv-arrow {
-  margin: 0 0.3em;
-  font-size: 1.4em;
+  flex: none;
+  font-size: 1.2em;
+  line-height: 1;
   color: var(--good);
 }
 
 .lv-unit {
   display: flex;
   align-items: center;
-  gap: 0.45em;
+  gap: 0.3em;
   min-width: 0;
-  flex: 1;
-  font-size: 0.8em;
+  font-size: 0.78em;
   line-height: 1.1;
-  color: var(--muted);
+  color: var(--ink);
 }
 
 .lv-unit img {
   flex: none;
-  width: 2.2em;
-  height: 2.2em;
-  border-radius: 6px;
-  border: 1px solid var(--line-2);
+  width: 2.1em;
+  height: 2.1em;
+  border-radius: 5px;
+  border: 1px solid rgba(95, 191, 122, 0.5);
   background: radial-gradient(circle at 50% 30%, #382e23, #18140f);
 }
 
@@ -5688,15 +5697,13 @@ select,
   white-space: nowrap;
 }
 
-.lv-unit.big {
-  flex: 1.2;
-  font-size: 0.9em;
-  font-weight: 600;
-  color: var(--ink);
+.lv-unit.enemy {
+  flex: 1;
+  color: var(--muted);
 }
 
-.lv-unit.big img {
-  border-color: rgba(239, 107, 94, 0.55);
+.lv-unit.enemy img {
+  border-color: rgba(239, 107, 94, 0.6);
 }
 
 /* Their timings */
@@ -5920,6 +5927,51 @@ select,
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.78em;
+}
+
+.lv-vil-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 1em;
+  flex: 1;
+  min-height: 0;
+}
+
+.lv-villagers .step-track {
+  min-height: 0;
+  overflow: hidden;
+  font-size: 0.8em;
+}
+
+.lv-villagers .step {
+  grid-template-columns: 3.6em 3em 1fr;
+  padding: 0.3em 0.4em;
+}
+
+.lv-villagers .step.new-age {
+  margin-top: 0.3em;
+  padding-top: 0.4em;
+}
+
+.lv-villagers .step-age {
+  font-size: 0.7em;
+}
+
+.lv-villagers .step-do {
+  font-size: 0.95em;
+}
+
+.lv-villagers .step.done {
+  opacity: 0.4;
+}
+
+.lv-villagers .step.now {
+  background: color-mix(in srgb, var(--accent-2) 14%, transparent);
+  box-shadow: inset 3px 0 0 var(--accent-2);
+}
+
+.lv-villagers .step.now .step-time {
+  color: var(--accent-2);
 }
 
 .lv-villagers .vil-chart {
