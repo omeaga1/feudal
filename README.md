@@ -9,6 +9,7 @@ Feudal never touches the game. It doesn't read game memory, game files, network 
 | Screen | Status |
 | --- | --- |
 | **Live match**: sign in through Steam (or pick the Steam account already on your PC, or search your in-game name for Xbox), and the brief opens on its own when a game starts | Working |
+| **In-game Live view**: one screen, no scrolling: what counters what, the enemy civ's rush, weak and spike timings, and a villager graph that follows the game clock to show where your count should be now | Working |
 | **Stats**: rating, league, ladder rank, rating history, win rate per civ and map, recent games and past seasons, for you or any player you look up | Working |
 | **Matchups**: pick any two civs and read the brief outside a game | Working |
 | **Counters**: computed from unit stats (bonus damage, armor, HP, cost) with a small override list | Working |

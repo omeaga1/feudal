@@ -1229,6 +1229,11 @@ ul.tight li {
   stroke-width: 1;
 }
 
+.now-line {
+  stroke: var(--accent-2);
+  stroke-width: 2.5;
+}
+
 .step-dot {
   fill: var(--accent-2);
 }
@@ -5514,15 +5519,14 @@ select,
   font-size: 0.8rem;
 }
 
-.glance {
+.lv {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) minmax(0, 1.2fr);
   grid-template-areas:
     "head head"
-    "mine mine"
-    "plan counters"
-    "danger danger";
+    "counters timings"
+    "villagers villagers";
   gap: 10px;
   flex: 1;
   min-height: 0;
@@ -5530,545 +5534,461 @@ select,
   animation: rise 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
-/* A tall, narrow window stacks the two cards. */
+/* A tall, narrow window stacks the cards. */
 @media (max-aspect-ratio: 1/1) {
-  .glance {
+  .lv {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto auto minmax(0, 1.1fr) minmax(0, 1fr) auto;
-    grid-template-areas: "head" "mine" "plan" "counters" "danger";
+    grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr);
+    grid-template-areas: "head" "counters" "timings" "villagers";
   }
 }
 
-.g-card {
+.lv-card {
+  display: flex;
+  flex-direction: column;
   min-height: 0;
   overflow: hidden;
-  padding: 0.8em 0.95em;
+  padding: 0.75em 0.95em;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--panel-grad);
   box-shadow: inset 0 1px 0 rgba(255, 226, 170, 0.06);
 }
 
-.g-card h3 {
-  margin-bottom: 0.55em;
+.lv-card h3 {
+  margin: 0 0 0.55em;
   font-size: 0.78em;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
 }
 
-.g-head {
+.lv-head {
   grid-area: head;
   display: flex;
   align-items: center;
   gap: 0.9em;
-  padding: 0.5em 0.9em;
+  padding: 0.45em 0.9em;
   border: 1px solid var(--line);
   border-left: 4px solid var(--civ);
   border-radius: 10px;
   background: var(--panel-grad);
   white-space: nowrap;
+  overflow: hidden;
 }
 
-.g-side {
+.lv-side {
   display: flex;
   align-items: center;
-  gap: 0.6em;
+  gap: 0.55em;
   font-size: 1.1em;
 }
 
-.g-side b {
+.lv-side b {
   font-family: var(--display);
 }
 
-.g-who {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.15;
-}
-
-.g-who .muted {
+.lv-opp {
   font-size: 0.72em;
 }
 
-.g-vs {
+.lv-vs {
   font: 700 0.85em var(--display);
   color: var(--accent);
 }
 
-.g-habits {
-  display: flex;
-  gap: 0.8em;
-  padding-left: 0.9em;
-  border-left: 1px solid var(--line-2);
-  font-size: 0.8em;
-  color: var(--muted);
-}
-
-.g-habits b {
-  color: var(--ink);
-}
-
-.g-habits .hot b {
-  color: var(--danger);
-}
-
-.g-map {
-  font-size: 0.85em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.g-win,
-.g-clock {
+.lv-clock {
   display: flex;
   flex-direction: column;
   align-items: center;
   line-height: 1.1;
 }
 
-.g-win b,
-.g-clock b {
+.lv-clock b {
   font-size: 1.35em;
+  font-variant-numeric: tabular-nums;
 }
 
-.g-win span,
-.g-clock span {
+.lv-clock span,
+.lv-vil-now span,
+.lv-vil-next span {
   font-size: 0.62em;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-.g-win.good b {
-  color: var(--good);
-}
-
-.g-win.bad b {
-  color: var(--danger);
-}
-
-.g-plan {
-  grid-area: plan;
-  display: flex;
-  flex-direction: column;
-}
-
-.g-paths {
-  display: flex;
-  flex-direction: column;
+/* What counters what */
+.lv-counters {
+  grid-area: counters;
   gap: 0.6em;
 }
 
-.g-path {
-  padding: 0.55em 0.7em;
+.lv-beats {
+  color: var(--good);
+}
+
+.lv-age {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.lv-threats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35em;
+  flex: 1;
+  min-width: 0;
+}
+
+.lv-threat {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  min-width: 0;
+  padding: 0.35em 0.45em;
   border: 1px solid var(--line);
-  border-left: 3px solid var(--c);
   border-radius: 8px;
   background: var(--bg-2);
 }
 
-.g-path-main {
-  display: flex;
-  align-items: center;
-  gap: 0.7em;
+.lv-threat.unique {
+  border-color: rgba(217, 167, 74, 0.55);
 }
 
-.g-path-text {
+.lv-mine {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  flex: 1;
+  min-width: 0;
+}
+
+.lv-arrow {
+  flex: none;
+  font-size: 1.2em;
+  line-height: 1;
+  color: var(--good);
+}
+
+.lv-unit {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  min-width: 0;
+  font-size: 0.78em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.lv-unit img {
+  flex: none;
+  width: 2.1em;
+  height: 2.1em;
+  border-radius: 5px;
+  border: 1px solid rgba(95, 191, 122, 0.5);
+  background: radial-gradient(circle at 50% 30%, #382e23, #18140f);
+}
+
+.lv-unit span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lv-unit.enemy {
+  flex: 1;
+  color: var(--muted);
+}
+
+.lv-unit.enemy img {
+  border-color: rgba(239, 107, 94, 0.6);
+}
+
+/* Their timings */
+.lv-timings {
+  grid-area: timings;
+  --rush: var(--danger);
+  --spike: #e59a3d;
+  --weak: var(--good);
+}
+
+.lv-strip {
+  position: relative;
+  flex: none;
+  height: 1.5em;
+  margin-bottom: 1.1em;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+}
+
+.lv-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 4px;
+  opacity: 0.75;
+}
+
+.lv-band.rush,
+.lv-timing.rush {
+  --k: var(--rush);
+}
+
+.lv-band.spike,
+.lv-timing.spike {
+  --k: var(--spike);
+}
+
+.lv-band.weak,
+.lv-band.yours,
+.lv-timing.weak,
+.lv-timing.yours {
+  --k: var(--weak);
+}
+
+.lv-band.theirs,
+.lv-timing.theirs {
+  --k: var(--rush);
+}
+
+.lv-band {
+  background: color-mix(in srgb, var(--k) 55%, transparent);
+}
+
+.lv-band.yours,
+.lv-band.theirs {
+  top: auto;
+  height: 30%;
+  opacity: 0.6;
+}
+
+.lv-tick {
+  position: absolute;
+  top: 100%;
+  margin-top: 0.15em;
+  transform: translateX(-50%);
+  font-size: 0.6em;
+  color: var(--muted);
+}
+
+.lv-tick:first-of-type {
+  transform: none;
+}
+
+.lv-nowline {
+  position: absolute;
+  top: -0.3em;
+  bottom: -0.3em;
+  width: 3px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--accent-2);
+  box-shadow: 0 0 6px var(--accent-2);
+}
+
+.lv-list {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  gap: 0.35em;
+  min-height: 0;
+}
+
+.lv-timing {
+  display: grid;
+  grid-template-columns: 4.2em 6.6em minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.3em 0.6em;
+  border: 1px solid color-mix(in srgb, var(--k) 35%, transparent);
+  border-left: 3px solid var(--k);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--k) 8%, transparent);
+}
+
+.lv-timing.past {
+  opacity: 0.4;
+}
+
+.lv-timing.now {
+  background: color-mix(in srgb, var(--k) 22%, transparent);
+  box-shadow: 0 0 0 1px var(--k);
+}
+
+.lv-kind {
+  font-size: 0.66em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--k);
+}
+
+.lv-when {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.lv-what {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
   line-height: 1.2;
 }
 
-.g-path-text > b {
-  font-family: var(--display);
-  color: var(--c);
-}
-
-.g-path-text .muted {
-  font-size: 0.8em;
-}
-
-.ink {
-  color: var(--ink);
-}
-
-.g-landmark {
-  flex: none;
-  width: 2.6em;
-  height: 2.6em;
-  border-radius: 6px;
-  border: 1px solid var(--line-2);
-  background: rgba(0, 0, 0, 0.3);
-}
-
-.g-landmark.blank {
-  display: grid;
-  place-items: center;
-  font: 700 1em var(--display);
-}
-
-.g-path .unit-icons img {
-  width: 2.5em;
-  height: 2.5em;
-}
-
-.g-castles {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3em;
-  margin-top: 0.45em;
-  padding-left: 3.3em;
-}
-
-.g-castle {
-  display: flex;
-  align-items: center;
-  gap: 0.45em;
-  font-size: 0.82em;
-}
-
-.g-castle .g-landmark {
-  width: 1.8em;
-  height: 1.8em;
-}
-
-.g-castle-name {
-  font-weight: 600;
-  color: var(--c);
-}
-
-.g-castle .age-time {
-  font-size: 0.9em;
-}
-
-.g-castle .unit-icons img {
-  width: 1.9em;
-  height: 1.9em;
-}
-
-.g-spikes {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35em;
-  padding-top: 0.7em;
-}
-
-.g-spike {
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  align-items: center;
-  gap: 0.6em;
-  padding: 0.35em 0.6em;
-  border-radius: 8px;
-  background: rgba(239, 107, 94, 0.07);
-  border: 1px solid rgba(239, 107, 94, 0.25);
-}
-
-.g-spike > b {
-  white-space: nowrap;
-}
-
-.g-answer {
-  min-width: 0;
-  font-size: 0.9em;
-  line-height: 1.25;
-  color: var(--good);
-}
-
-.g-answer::before {
-  content: "➜ ";
-}
-
-.g-counters {
-  grid-area: counters;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-}
-
-.g-age {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6em;
-}
-
-.g-age > .age-mark {
-  margin-top: 0.6em;
-}
-
-.g-threats {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(13em, 1fr));
-  gap: 0.4em;
-  flex: 1;
-  min-width: 0;
-}
-
-.g-threat {
-  display: flex;
-  align-items: center;
-  gap: 0.3em;
-  padding: 0.3em 0.45em;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--bg-2);
-}
-
-.g-threat.unique {
-  border-color: rgba(217, 167, 74, 0.55);
-}
-
-.g-arrow {
-  font-size: 1.3em;
-  color: var(--good);
-}
-
-.g-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 5.8em;
-  font-size: 0.62em;
-  line-height: 1.1;
-  text-align: center;
-  color: var(--muted);
-}
-
-.g-unit img {
-  width: 2.7em;
-  height: 2.7em;
-  border-radius: 6px;
-  border: 1px solid var(--line-2);
-  background: radial-gradient(circle at 50% 30%, #382e23, #18140f);
-}
-
-.g-unit span {
-  width: 100%;
-  margin-top: 0.15em;
+.lv-what b,
+.lv-what span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.g-unit.big {
-  width: 6em;
-  color: var(--ink);
-}
-
-.g-unit.big img {
-  width: 3.4em;
-  height: 3.4em;
-  border-color: rgba(239, 107, 94, 0.5);
-}
-
-.g-danger {
-  grid-area: danger;
-  display: flex;
-  align-items: center;
-  gap: 1em;
-  padding: 0.5em 0.9em;
-}
-
-.g-danger h3 {
-  margin: 0;
-  white-space: nowrap;
-}
-
-.g-windows {
-  display: flex;
-  flex: 1;
-  gap: 4px;
-}
-
-.g-window {
-  position: relative;
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 0.5em;
-  flex: 1;
-  padding: 0.4em 0.5em;
-  border-radius: 6px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.g-window.danger {
-  background: rgba(239, 107, 94, 0.18);
-  border-color: rgba(239, 107, 94, 0.5);
-}
-
-.g-window.danger b {
-  color: var(--danger);
-}
-
-.g-window.yours {
-  background: rgba(95, 191, 122, 0.16);
-  border-color: rgba(95, 191, 122, 0.5);
-}
-
-.g-window.yours b {
-  color: var(--good);
-}
-
-.g-window.thin {
-  opacity: 0.55;
-}
-
-.g-window.now {
-  outline: 2px solid var(--accent-2);
-  outline-offset: 1px;
-}
-
-.g-window-label {
-  font-size: 0.78em;
+.lv-what span {
+  font-size: 0.82em;
   color: var(--muted);
 }
 
-.g-now {
-  position: absolute;
-  top: -0.75em;
-  right: 0.5em;
-  padding: 0 0.4em;
+.lv-timing .unit-icons img {
+  width: 1.8em;
+  height: 1.8em;
+}
+
+.lv-badge {
+  padding: 0.05em 0.45em;
   border-radius: 4px;
   background: var(--accent-2);
   color: #1a140c;
-  font-size: 0.6em;
+  font-size: 0.62em;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-}
-
-.g-mine {
-  grid-area: mine;
-  border-left: 3px solid var(--c);
-}
-
-.g-mine-head {
-  display: flex;
-  align-items: center;
-  gap: 0.8em;
-  margin-bottom: 0.5em;
   white-space: nowrap;
 }
 
-.g-mine-head h3 {
+.lv-badge.soon {
+  background: transparent;
+  border: 1px solid var(--accent-2);
+  color: var(--accent-2);
+}
+
+/* Villager graph */
+.lv-villagers {
+  grid-area: villagers;
+}
+
+.lv-vil-head {
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  margin-bottom: 0.4em;
+  white-space: nowrap;
+}
+
+.lv-vil-head h3 {
   margin: 0;
 }
 
-.g-mine-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: var(--display);
-  color: var(--c);
-}
-
-.g-mine-name span {
-  color: var(--c);
-}
-
-.g-target {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35em;
-  padding: 0.15em 0.5em 0.15em 0.2em;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  opacity: 0.7;
-}
-
-.g-target.next {
-  border-color: var(--accent-2);
-  opacity: 1;
-}
-
-.g-target .g-landmark {
-  width: 1.6em;
-  height: 1.6em;
-}
-
-.g-mine-head .unit-icons img {
-  width: 1.8em;
-  height: 1.8em;
-}
-
-.g-steps {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.45em;
-}
-
-.g-step {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3em;
-  min-width: 0;
-  padding: 0.45em 0.6em;
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--a, var(--age-1));
-  border-radius: 8px;
-  background: var(--bg-2);
-}
-
-.g-step.age-2 {
-  --a: var(--age-2);
-}
-
-.g-step.age-3 {
-  --a: var(--age-3);
-}
-
-.g-step.done {
-  opacity: 0.45;
-}
-
-.g-step.now {
-  border-color: var(--accent-2);
-  border-top-color: var(--accent-2);
-  box-shadow: 0 0 0 1px var(--accent-2);
-}
-
-.g-step-top {
+.lv-vil-now,
+.lv-vil-next {
   display: flex;
   align-items: baseline;
-  gap: 0.5em;
+  gap: 0.35em;
 }
 
-.g-step-top b {
+.lv-vil-now b {
+  font-size: 1.7em;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-2);
+}
+
+.lv-vil-next b {
   font-size: 1.1em;
+  font-variant-numeric: tabular-nums;
 }
 
-.g-step-age {
-  font-size: 0.68em;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--a, var(--age-1));
+.lv-vil-head .split-chip {
+  font-size: 0.8em;
 }
 
-.g-now.inline {
-  position: static;
-  margin-left: auto;
-}
-
-.g-step .split-chip {
-  font-size: 0.78em;
-}
-
-.g-step .split-chip img {
+.lv-vil-head .split-chip img {
   width: 1.1em;
   height: 1.1em;
 }
 
-.g-step-do {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+.lv-age-target {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.lv-path {
+  max-width: 12em;
   overflow: hidden;
-  font-size: 0.85em;
-  line-height: 1.25;
+  text-overflow: ellipsis;
+  font-size: 0.78em;
+}
+
+.lv-vil-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 1em;
+  flex: 1;
+  min-height: 0;
+}
+
+.lv-villagers .step-track {
+  min-height: 0;
+  overflow: hidden;
+  font-size: 0.8em;
+}
+
+.lv-villagers .step {
+  grid-template-columns: 3.6em 3em 1fr;
+  padding: 0.3em 0.4em;
+}
+
+.lv-villagers .step.new-age {
+  margin-top: 0.3em;
+  padding-top: 0.4em;
+}
+
+.lv-villagers .step-age {
+  font-size: 0.7em;
+}
+
+.lv-villagers .step-do {
+  font-size: 0.95em;
+}
+
+.lv-villagers .step.done {
+  opacity: 0.4;
+}
+
+.lv-villagers .step.now {
+  background: color-mix(in srgb, var(--accent-2) 14%, transparent);
+  box-shadow: inset 3px 0 0 var(--accent-2);
+}
+
+.lv-villagers .step.now .step-time {
+  color: var(--accent-2);
+}
+
+.lv-villagers .vil-chart {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.lv-villagers .vil-chart-head .section-kicker {
+  display: none;
+}
+
+.lv-villagers .vil-svg {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
 }
 
 /* Villager production from the game's rules */
