@@ -2,41 +2,41 @@
   "civ": "scots",
   "season": "Season 14",
   "checkedBuild": 11308,
-  "updated": "2026-10-29",
+  "updated": "2026-10-30",
   "opening": {
     "decideAt": "2:55",
     "steps": [
       {
         "t": "0:00",
         "v": [
-          2,
           3,
+          2,
           0,
           0
         ],
         "b": 1,
-        "do": "Cow to berries; 1 builds a Tower House + mining camp on gold; 3 chop one trip"
+        "do": "Cow to berries; 1 builds a Tower House on the far side of the berries; 2 chop for the mining camp; rally to sheep"
       },
       {
-        "t": "0:30",
+        "t": "0:45",
         "v": [
           5,
           0,
-          0,
+          2,
           0
         ],
-        "b": 2,
-        "do": "Wood villagers back to sheep; 2 more help on gold"
+        "b": 1,
+        "do": "At 50 wood, both wood villagers build a mining camp on gold"
       },
       {
-        "t": "1:05",
+        "t": "1:20",
         "v": [
-          6,
+          7,
           0,
           3,
           0
         ],
-        "do": "Tower House up: 5 more Highland Cattle onto berries; rally to sheep"
+        "do": "Tower House up: its builder to gold (3 on gold pays for cows); queue Highland Cattle up to 6"
       },
       {
         "t": "2:20",
@@ -46,88 +46,142 @@
           3,
           0
         ],
-        "do": "Scout their base: barracks means an early attack"
+        "do": "Scout their base: a barracks means an early attack; a Ghillie from the Tower House if they rush"
       }
     ]
   },
   "feudal": [
     {
       "id": "stone-of-destiny",
-      "name": "Stone of Destiny eco",
+      "name": "Stone of Destiny horse and archers",
       "style": "boom",
       "landmark": "Stone of Destiny",
-      "ageUp": "4:55",
-      "pick": "Default (Beasty, Swaggy): cows feed the TC, Fishponds add gold",
+      "ageUp": "5:00",
+      "pick": "Default (Beasty's guide): cows feed the TC, Horsemen and Highland Archers raid at 9:00",
       "steps": [
         {
           "t": "3:20",
           "v": [
             0,
-            8,
+            9,
             3,
             0
           ],
-          "b": 5,
-          "do": "5 sheep build Stone of Destiny; other sheep to wood"
+          "b": 4,
+          "do": "4 sheep villagers build Stone of Destiny in the open (buildings around it pay back 30% as gold); the rest to wood"
+        },
+        {
+          "t": "3:45",
+          "v": [
+            0,
+            10,
+            3,
+            0
+          ],
+          "b": 4,
+          "do": "10 on wood: rally to food; the cows still feed the TC"
         },
         {
           "t": "4:30",
           "v": [
-            0,
-            11,
+            2,
+            10,
             3,
             0
           ],
-          "b": 5,
-          "do": "Barracks next to the Stone for the gold rebate"
+          "b": 4,
+          "do": "A food villager builds a Tower House on another berry patch for pop and vision; cows up to 9"
         },
         {
-          "t": "4:55",
+          "t": "5:00",
           "v": [
-            5,
-            12,
+            8,
+            9,
             3,
             0
           ],
-          "do": "Feudal: 2 Kirkmen, archery range, rally to food"
+          "b": 1,
+          "do": "Feudal: Kirkman right away; a wood villager builds a Stable in the Stone's range"
         },
         {
-          "t": "5:45",
+          "t": "5:30",
           "v": [
-            7,
-            13,
+            9,
+            8,
             3,
             0
           ],
-          "do": "Kirkman builds a Fishpond by the wood for gold"
+          "b": 2,
+          "do": "Archery Range by the Stable; Kirkman builds a Fishpond between sheep and wood; Horsemen nonstop"
         },
         {
           "t": "6:00",
           "v": [
-            7,
-            14,
-            0,
+            10,
+            11,
+            3,
             0
           ],
-          "b": 3,
-          "do": "Gold villagers build a 2nd Tower House with a 2nd pond"
+          "do": "10 villagers and 9 cows on food: rally to wood; Double Broadaxe; Horsemen and Highland Archers nonstop"
+        },
+        {
+          "t": "6:30",
+          "v": [
+            10,
+            11,
+            3,
+            0
+          ],
+          "b": 1,
+          "do": "Mill on the berries and a house by the Stone"
+        },
+        {
+          "t": "7:00",
+          "v": [
+            10,
+            14,
+            3,
+            0
+          ],
+          "do": "Horticulture; a 2nd Stable and Range"
         },
         {
           "t": "7:30",
           "v": [
-            12,
+            10,
             14,
             4,
             0
           ],
-          "do": "Meeting House; more barracks and ranges"
+          "do": "2nd Kirkman: Fishpond by the gold"
+        },
+        {
+          "t": "8:00",
+          "v": [
+            10,
+            16,
+            4,
+            0
+          ],
+          "do": "Wheelbarrow and Forestry; about 5 Horsemen and 7 archers"
+        },
+        {
+          "t": "9:00",
+          "v": [
+            10,
+            18,
+            4,
+            0
+          ],
+          "b": 1,
+          "do": "Blacksmith and a Mustering Hall by the stables and ranges; Steeled Arrow; raid with about 9 Horsemen and 12 archers"
         }
       ],
       "army": [
-        "Man-at-Arms",
+        "Horseman",
         "Highland Archer",
-        "Pikeman",
-        "Cateran"
+        "Man-at-Arms",
+        "Pikeman"
       ],
       "castle": [
         {
@@ -136,32 +190,32 @@
           "style": "timing",
           "landmark": "Snowdoun Gate",
           "ageUp": "10:30",
-          "pick": "Default: free infantry flood into a Castle push",
+          "pick": "Default (Beasty): free infantry, and Beasty uses it for cheaper Lowland upgrades",
           "steps": [
             {
               "t": "9:30",
               "v": [
-                14,
                 10,
-                6,
+                16,
+                4,
                 0
               ],
-              "b": 6,
-              "do": "Build Snowdoun Gate near your army's path"
+              "b": 4,
+              "do": "4 villagers build Snowdoun Gate near your army's path while the raid hits"
             },
             {
               "t": "10:30",
               "v": [
                 16,
                 12,
-                10,
+                9,
                 0
               ],
               "do": "Gate trickles free infantry; Mustering Hall techs"
             },
             {
               "t": "11:30",
-              "do": "Gallowglass + Highland Archers push with musters"
+              "do": "Gallowglass + Highland Archers push with musters, Horsemen keep raiding"
             }
           ],
           "army": [
@@ -182,19 +236,19 @@
             {
               "t": "9:30",
               "v": [
-                13,
                 10,
-                6,
+                16,
+                4,
                 0
               ],
-              "b": 6,
-              "do": "Build Tower of Skye; it is a Tower House with a springald"
+              "b": 4,
+              "do": "4 villagers build Tower of Skye; it is a Tower House with a springald"
             },
             {
               "t": "10:00",
               "v": [
-                16,
-                12,
+                14,
+                13,
                 9,
                 0
               ],
@@ -366,6 +420,11 @@
     }
   ],
   "sources": [
+    {
+      "title": "Beasty: Simple Build Order Guide With Scots",
+      "url": "https://aoe4guides.com/builds/yL9jKN3ctmvmz1yLDSCK",
+      "video": "https://www.youtube.com/watch?v=m2rgwmCQRcA"
+    },
     {
       "title": "Beasty: My First 1v1 Games With Scots",
       "url": "https://www.youtube.com/watch?v=cPjX-wFhvDA",
