@@ -5917,62 +5917,128 @@ select,
   font-size: 0.78em;
 }
 
-.lv-vil-box {
+.lv-bars {
+  display: flex;
+  align-items: stretch;
+  gap: 0.3em;
+  flex: 1;
+  min-height: 0;
+  padding-top: 1.6em;
+}
+
+.lv-col {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1;
+  min-width: 0;
+}
+
+.lv-col.age-up {
+  margin-left: 0.5em;
+}
+
+.lv-col.age-up::before {
+  content: "";
+  position: absolute;
+  left: -0.45em;
+  top: -1.2em;
+  bottom: 1.3em;
+  border-left: 2px dashed var(--line-2);
+}
+
+.lv-col-age {
+  position: absolute;
+  top: -1.6em;
+  left: 0;
+  font-size: 0.8em;
+}
+
+.lv-bar {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
   flex: 1;
   min-height: 0;
 }
 
-.lv-vil-svg {
-  position: absolute;
-  inset: 0;
+.lv-col-total {
+  order: 99;
+  margin-bottom: 0.1em;
+  text-align: center;
+  font-size: 0.78em;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
 }
 
-.lv-age-band.age-1 {
-  fill: color-mix(in srgb, var(--age-1) 7%, transparent);
+.lv-seg {
+  --rc: var(--builders);
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--rc);
+  border-top: 1px solid rgb(0 0 0 / 0.35);
+  color: #fff;
+  font-size: 0.66em;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.6);
 }
 
-.lv-age-band.age-2 {
-  fill: color-mix(in srgb, var(--age-2) 9%, transparent);
+.lv-seg:first-child {
+  border-radius: 0 0 5px 5px;
 }
 
-.lv-age-band.age-3 {
-  fill: color-mix(in srgb, var(--age-3) 9%, transparent);
+.lv-seg:nth-last-child(2) {
+  border-radius: 5px 5px 0 0;
 }
 
-.lv-grid {
-  stroke: var(--line);
-  stroke-width: 0.5;
+.lv-seg.food {
+  --rc: var(--food);
 }
 
-.lv-axis {
-  font-size: 11px;
-  fill: var(--muted);
+.lv-seg.wood {
+  --rc: var(--wood);
 }
 
-.lv-axis.tick {
-  text-anchor: middle;
+.lv-seg.gold {
+  --rc: var(--gold);
 }
 
-.lv-vil-area {
-  fill: color-mix(in srgb, var(--accent) 22%, transparent);
+.lv-seg.stone {
+  --rc: var(--stone);
 }
 
-.lv-vil-line {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 2;
+.lv-seg.more {
+  --rc: color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 5px 5px 0 0;
 }
 
-.lv-past {
-  fill: rgba(0, 0, 0, 0.25);
+.lv-col-t {
+  margin-top: 0.25em;
+  text-align: center;
+  font-size: 0.6em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
-.lv-vil-nowline {
-  stroke: var(--accent-2);
-  stroke-width: 3;
+.lv-col.done .lv-bar {
+  opacity: 0.4;
 }
 
+.lv-col.now .lv-bar {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+  border-radius: 5px;
+}
+
+.lv-col.now .lv-col-total,
+.lv-col.now .lv-col-t {
+  color: var(--accent-2);
+}
 
 /* Villager production from the game's rules */
 .tl-prod {

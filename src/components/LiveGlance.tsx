@@ -4,10 +4,11 @@ import { buildBrief } from "../lib/brief";
 import { civColor } from "../lib/civColors";
 import { dangerWindows } from "../lib/dangerWindows";
 import { getCiv, type Unit } from "../lib/gameData";
-import { clock, formatClock, getGamePlan, pathSteps, type GamePlan } from "../lib/gamePlans";
+import { formatClock, getGamePlan, RESOURCES, type GamePlan, type Split } from "../lib/gamePlans";
 import { glanceThreats } from "../lib/glance";
-import { chartSpan, enemyTimings, gameSeconds, LOADING_SECONDS, timingState, villagersAt, villagerTargets, type Timing } from "../lib/liveView";
+import { enemyTimings, gameSeconds, LOADING_SECONDS, timingState, villagersAt, villagerTargets, type Timing } from "../lib/liveView";
 import { usePersisted } from "../lib/persisted";
+import { buildPlayback, frameAt } from "../lib/playback";
 import { getPlaybook } from "../lib/playbooks";
 import { useDangerData } from "./DangerTimeline";
 import { Flag } from "./Flag";
@@ -158,79 +159,61 @@ function Timings({ them, me, seconds }: { them: string; me: string; seconds: num
   );
 }
 
-/** The pixel size of an element, so the chart draws at its real size instead of stretching. */
-function useSize(ref: RefObject<HTMLElement | null>): {
-  width: number;
-  height: number;
-} {
-  const [size, setSize] = useState({ width: 0, height: 0 });
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const measure = () => setSize({ width: el.clientWidth, height: el.clientHeight });
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [ref]);
-  return size;
-}
+const SEGMENTS = [...RESOURCES, "build"] as const;
+
+type VilColumn = { key: string; at: number; label: string; counts: number[] | null; total: number; age: 1 | 2 | 3; ageUp?: 2 | 3 };
 
 /**
- * Where your villager count should be, from your build's production rules,
- * with a Now line that moves with the game clock.
+ * Where your villagers should be, as the same color-coded bars as Play
+ * build: one column per build step, stacked by resource, with the count on
+ * top. After the plan ends, a column a minute carries the count on from the
+ * production rules. The column for the current game time lights up.
  */
 function Villagers({ civ, plan, seconds }: { civ: string; plan: GamePlan; seconds: number | null }) {
   const [selection] = usePersisted<PlanSelection | null>(`feudal.plan.${civ}`, null);
   const path = resolveSelection(plan, selection);
-  const feudalAt = clock(path.feudal.ageUp);
-  const castleAt = clock(path.castle.ageUp);
-  const { from, to } = chartSpan(seconds, castleAt);
-  const prod = useMemo(() => villagerTargets(plan, path, to), [plan, path.feudal, path.castle, to]);
-  const steps = useMemo(() => pathSteps(plan, path).filter(({ step }) => step.v), [plan, path.feudal, path.castle]);
-  const box = useRef<HTMLDivElement>(null);
-  const size = useSize(box);
-  const AXIS = 16;
-  const W = Math.max(1, size.width);
-  const H = Math.max(1, size.height - AXIS);
-
-  const max = Math.max(villagersAt(prod, to), 20);
-  const top = Math.ceil(max / 20) * 20;
-  const x = (s: number) => ((s - from) / (to - from)) * W;
-  const y = (n: number) => H - (n / top) * H;
-
-  // Step-after line: the count holds until the next villager walks out.
-  const born = [...prod.born.filter((b) => b > from && b <= to)];
-  const pts: string[] = [`${x(from)},${y(villagersAt(prod, from))}`];
-  for (const b of born) {
-    pts.push(`${x(b)},${y(villagersAt(prod, b - 0.001))}`, `${x(b)},${y(villagersAt(prod, b))}`);
-  }
-  pts.push(`${x(to)},${y(villagersAt(prod, to))}`);
-  const line = `M${pts.join(" L")}`;
-  const area = `${line} L${x(to)},${H} L${x(from)},${H} Z`;
-
+  const pb = useMemo(() => buildPlayback(plan, path), [plan, path.feudal, path.castle]);
   const t = seconds ?? 0;
+  // Keep a few minutes past the plan (and past now) so the count keeps going.
+  const until = Math.max(pb.end + 180, t + 120);
+  const prod = useMemo(() => villagerTargets(plan, path, until), [plan, path.feudal, path.castle, until]);
+
+  const columns = useMemo(() => {
+    const out: VilColumn[] = pb.events.map((e, i) => ({
+      key: `s${i}`,
+      at: e.seconds,
+      label: e.step.t,
+      counts: SEGMENTS.map((s) => e.reached.filter((v) => v.at === s).length),
+      total: e.reached.length,
+      age: e.seconds >= pb.castleAt ? 3 : e.seconds >= pb.feudalAt ? 2 : 1,
+    }));
+    for (let m = Math.ceil(pb.end / 60) * 60; m <= until; m += 60) {
+      out.push({ key: `m${m}`, at: m, label: formatClock(m), counts: null, total: villagersAt(prod, m + 59), age: 3 });
+    }
+    // Mark the first column of each new age.
+    for (const age of [2, 3] as const) {
+      const first = out.find((c) => c.age === age);
+      if (first) first.ageUp = age;
+    }
+    return out;
+  }, [pb, prod, until]);
+
+  // Too many columns to read on one screen: keep the newest ones around now.
+  const MAX_COLUMNS = 22;
+  let current = -1;
+  columns.forEach((c, i) => c.at <= t && (current = i));
+  const start = Math.max(0, Math.min(current - 6, columns.length - MAX_COLUMNS));
+  const shown = columns.slice(start, start + MAX_COLUMNS);
+  const max = Math.max(10, ...shown.map((c) => c.total));
+
+  const frame = frameAt(pb, t);
   const now = villagersAt(prod, t);
   const nextMinute = (Math.floor(t / 60) + 1) * 60;
-  const step = [...steps].reverse().find(({ step: s }) => clock(s.t) <= t) ?? steps[0];
   const nextAge = [
-    { age: 2, at: feudalAt },
-    { age: 3, at: castleAt },
+    { age: 2, at: pb.feudalAt },
+    { age: 3, at: pb.castleAt },
   ].find((a) => a.at > t);
-
-  const bands = [
-    { age: 1, a: 0, b: feudalAt },
-    { age: 2, a: feudalAt, b: castleAt },
-    { age: 3, a: castleAt, b: Infinity },
-  ]
-    .map((band) => ({
-      ...band,
-      a: Math.max(band.a, from),
-      b: Math.min(band.b, to),
-    }))
-    .filter((band) => band.b > band.a);
-  const ticks = Array.from({ length: Math.floor(to / 60) + 1 }, (_, m) => m * 60).filter((s) => s >= from && s % (to - from > 1200 ? 300 : 120) === 0);
-  const gridLines = Array.from({ length: top / 20 + 1 }, (_, i) => i * 20);
+  const split = t <= pb.end ? RESOURCES.map((r) => frame.villagers.filter((v) => v.at === r).length) : null;
 
   return (
     <section className="lv-card lv-villagers">
@@ -244,7 +227,7 @@ function Villagers({ civ, plan, seconds }: { civ: string; plan: GamePlan; second
           <b>{villagersAt(prod, nextMinute)}</b>
           <span>by {formatClock(nextMinute)}</span>
         </div>
-        {step && <SplitChips split={step.step.v} builders={step.step.b} />}
+        {split && <SplitChips split={split as Split} builders={frame.villagers.filter((v) => v.at === "build").length} />}
         <span className="spacer" />
         {nextAge && (
           <span className="lv-age-target">
@@ -253,35 +236,35 @@ function Villagers({ civ, plan, seconds }: { civ: string; plan: GamePlan; second
         )}
         <span className="lv-path muted">{path.feudal.name}</span>
       </div>
-      <div ref={box} className="lv-vil-box">
-        <svg width={W} height={H + AXIS} className="lv-vil-svg" role="img" aria-label="Villager count to aim for over the game">
-          {bands.map((band) => (
-            <rect key={band.age} x={x(band.a)} y={0} width={x(band.b) - x(band.a)} height={H} className={`lv-age-band age-${band.age}`} />
-          ))}
-          {gridLines.map((n) => (
-            <g key={n}>
-              <line x1={0} x2={W} y1={y(n)} y2={y(n)} className="lv-grid" />
-              {n > 0 && (
-                <text x={4} y={y(n) + 12} className="lv-axis">
-                  {n}
-                </text>
+      <div className="lv-bars" role="img" aria-label="Villagers to aim for at each step, by resource">
+        {shown.map((c, k) => {
+          const i = start + k;
+          const state = i === current ? " now" : i < current ? " done" : "";
+          return (
+            <div key={c.key} className={`lv-col age-${c.age}${state}${c.ageUp ? " age-up" : ""}`}>
+              {c.ageUp && (
+                <span className="lv-col-age">
+                  <AgeMark age={c.ageUp} label={false} />
+                </span>
               )}
-            </g>
-          ))}
-          <path d={area} className="lv-vil-area" />
-          <path d={line} className="lv-vil-line" />
-          {seconds !== null && (
-            <>
-              <rect x={x(from)} y={0} width={Math.max(0, x(t) - x(from))} height={H} className="lv-past" />
-              <line x1={x(t)} x2={x(t)} y1={0} y2={H} className="lv-vil-nowline" />
-            </>
-          )}
-          {ticks.map((s) => (
-            <text key={s} x={x(s)} y={H + 13} className={s === from ? "lv-axis" : "lv-axis tick"}>
-              {s / 60}m
-            </text>
-          ))}
-        </svg>
+              <span className="lv-bar">
+                <span className="lv-col-total">{c.total}</span>
+                {c.counts ? (
+                  SEGMENTS.map((s, n) =>
+                    c.counts![n] ? (
+                      <span key={s} className={`lv-seg ${s}`} style={{ height: `${(c.counts![n] / max) * 100}%` }}>
+                        {c.counts![n] / max >= 0.06 && <span>{c.counts![n]}</span>}
+                      </span>
+                    ) : null,
+                  )
+                ) : (
+                  <span className="lv-seg more" style={{ height: `${(c.total / max) * 100}%` }} />
+                )}
+              </span>
+              <span className="lv-col-t">{c.label}</span>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

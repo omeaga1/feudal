@@ -171,10 +171,3 @@ export function villagersAt(prod: Production, seconds: number): number {
   while (n < prod.born.length && prod.born[n] <= seconds) n++;
   return Math.min(VILLAGER_CAP, prod.start + n);
 }
-
-/** The time window the villager chart shows: the first 15 minutes, sliding along once the game runs past them. */
-export function chartSpan(seconds: number | null, castleAt: number): { from: number; to: number } {
-  const width = Math.max(15 * 60, castleAt + 180);
-  const to = Math.max(width, (seconds ?? 0) + 180);
-  return { from: to - width, to };
-}

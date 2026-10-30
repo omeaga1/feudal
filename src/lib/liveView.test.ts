@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { dangerWindows } from "./dangerWindows";
 import { clock, gamePlans, getGamePlan } from "./gamePlans";
-import { chartSpan, enemyTimings, gameSeconds, LOADING_SECONDS, timingState, VILLAGER_CAP, villagersAt, villagerTargets } from "./liveView";
+import { enemyTimings, gameSeconds, LOADING_SECONDS, timingState, VILLAGER_CAP, villagersAt, villagerTargets } from "./liveView";
 import { getPlaybook } from "./playbooks";
 
 describe("gameSeconds", () => {
@@ -73,17 +73,6 @@ describe("villagerTargets", () => {
     const plan = getGamePlan("english")!;
     const prod = villagerTargets(plan, { feudal: plan.feudal[0], castle: plan.feudal[0].castle[0] }, 600);
     expect(villagersAt(prod, 100)).toBe(prod.start + 5);
-  });
-});
-
-describe("chartSpan", () => {
-  it("shows the first 15 minutes, then slides with the game", () => {
-    expect(chartSpan(null, 600)).toEqual({ from: 0, to: 900 });
-    expect(chartSpan(300, 600)).toEqual({ from: 0, to: 900 });
-    expect(chartSpan(1200, 600)).toEqual({ from: 480, to: 1380 });
-  });
-  it("widens for a late Castle", () => {
-    expect(chartSpan(0, 840).to).toBe(1020);
   });
 });
 
