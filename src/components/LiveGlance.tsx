@@ -4,16 +4,16 @@ import { buildBrief } from "../lib/brief";
 import { civColor } from "../lib/civColors";
 import { dangerWindows } from "../lib/dangerWindows";
 import { getCiv, type Unit } from "../lib/gameData";
-import { formatClock, getGamePlan, RESOURCES, type GamePlan, type Split } from "../lib/gamePlans";
+import { clock, formatClock, getGamePlan, type GamePlan } from "../lib/gamePlans";
 import { glanceThreats } from "../lib/glance";
 import { enemyTimings, gameSeconds, LOADING_SECONDS, timingState, villagersAt, villagerTargets, type Timing } from "../lib/liveView";
 import { usePersisted } from "../lib/persisted";
-import { buildPlayback, frameAt } from "../lib/playback";
 import { getPlaybook } from "../lib/playbooks";
 import { useDangerData } from "./DangerTimeline";
 import { Flag } from "./Flag";
-import { resolveSelection, SplitChips, UnitIcons, type PlanSelection } from "./PlanTree";
+import { resolveSelection, UnitIcons, type PlanSelection } from "./PlanTree";
 import { AgeMark, UnitHover } from "./ui";
+import { VillagerChart } from "./VillagerChart";
 
 const shortName = (name: string) => name.replace(/^(Early|Hardened|Veteran|Elite) /, "");
 
@@ -159,75 +159,35 @@ function Timings({ them, me, seconds }: { them: string; me: string; seconds: num
   );
 }
 
-const SEGMENTS = [...RESOURCES, "build"] as const;
-
-type VilColumn = { key: string; at: number; label: string; counts: number[] | null; total: number; age: 1 | 2 | 3; ageUp?: 2 | 3 };
-
 /**
- * Where your villagers should be, as the same color-coded bars as Play
- * build: one column per build step, stacked by resource, with the count on
- * top. After the plan ends, a column a minute carries the count on from the
- * production rules. The column for the current game time lights up.
+ * Where your villagers should be: the same stacked chart as Matchups, with a
+ * Now line that follows the game clock, plus the count you should have now
+ * from the production rules.
  */
 function Villagers({ civ, plan, seconds }: { civ: string; plan: GamePlan; seconds: number | null }) {
   const [selection] = usePersisted<PlanSelection | null>(`feudal.plan.${civ}`, null);
   const path = resolveSelection(plan, selection);
-  const pb = useMemo(() => buildPlayback(plan, path), [plan, path.feudal, path.castle]);
   const t = seconds ?? 0;
-  // Keep a few minutes past the plan (and past now) so the count keeps going.
-  const until = Math.max(pb.end + 180, t + 120);
+  const until = Math.max(clock(path.castle.ageUp) + 600, t + 120);
   const prod = useMemo(() => villagerTargets(plan, path, until), [plan, path.feudal, path.castle, until]);
-
-  const columns = useMemo(() => {
-    const out: VilColumn[] = pb.events.map((e, i) => ({
-      key: `s${i}`,
-      at: e.seconds,
-      label: e.step.t,
-      counts: SEGMENTS.map((s) => e.reached.filter((v) => v.at === s).length),
-      total: e.reached.length,
-      age: e.seconds >= pb.castleAt ? 3 : e.seconds >= pb.feudalAt ? 2 : 1,
-    }));
-    for (let m = Math.ceil(pb.end / 60) * 60; m <= until; m += 60) {
-      out.push({ key: `m${m}`, at: m, label: formatClock(m), counts: null, total: villagersAt(prod, m + 59), age: 3 });
-    }
-    // Mark the first column of each new age.
-    for (const age of [2, 3] as const) {
-      const first = out.find((c) => c.age === age);
-      if (first) first.ageUp = age;
-    }
-    return out;
-  }, [pb, prod, until]);
-
-  // Too many columns to read on one screen: keep the newest ones around now.
-  const MAX_COLUMNS = 22;
-  let current = -1;
-  columns.forEach((c, i) => c.at <= t && (current = i));
-  const start = Math.max(0, Math.min(current - 6, columns.length - MAX_COLUMNS));
-  const shown = columns.slice(start, start + MAX_COLUMNS);
-  const max = Math.max(10, ...shown.map((c) => c.total));
-
-  const frame = frameAt(pb, t);
-  const now = villagersAt(prod, t);
   const nextMinute = (Math.floor(t / 60) + 1) * 60;
   const nextAge = [
-    { age: 2, at: pb.feudalAt },
-    { age: 3, at: pb.castleAt },
+    { age: 2, at: clock(path.feudal.ageUp) },
+    { age: 3, at: clock(path.castle.ageUp) },
   ].find((a) => a.at > t);
-  const split = t <= pb.end ? RESOURCES.map((r) => frame.villagers.filter((v) => v.at === r).length) : null;
 
   return (
     <section className="lv-card lv-villagers">
       <div className="lv-vil-head">
         <h3>Villagers</h3>
         <div className="lv-vil-now">
-          <b>{now}</b>
+          <b>{villagersAt(prod, t)}</b>
           <span>{seconds === null ? "at start" : "by now"}</span>
         </div>
         <div className="lv-vil-next">
           <b>{villagersAt(prod, nextMinute)}</b>
           <span>by {formatClock(nextMinute)}</span>
         </div>
-        {split && <SplitChips split={split as Split} builders={frame.villagers.filter((v) => v.at === "build").length} />}
         <span className="spacer" />
         {nextAge && (
           <span className="lv-age-target">
@@ -236,36 +196,7 @@ function Villagers({ civ, plan, seconds }: { civ: string; plan: GamePlan; second
         )}
         <span className="lv-path muted">{path.feudal.name}</span>
       </div>
-      <div className="lv-bars" role="img" aria-label="Villagers to aim for at each step, by resource">
-        {shown.map((c, k) => {
-          const i = start + k;
-          const state = i === current ? " now" : i < current ? " done" : "";
-          return (
-            <div key={c.key} className={`lv-col age-${c.age}${state}${c.ageUp ? " age-up" : ""}`}>
-              {c.ageUp && (
-                <span className="lv-col-age">
-                  <AgeMark age={c.ageUp} label={false} />
-                </span>
-              )}
-              <span className="lv-bar">
-                <span className="lv-col-total">{c.total}</span>
-                {c.counts ? (
-                  SEGMENTS.map((s, n) =>
-                    c.counts![n] ? (
-                      <span key={s} className={`lv-seg ${s}`} style={{ height: `${(c.counts![n] / max) * 100}%` }}>
-                        {c.counts![n] / max >= 0.06 && <span>{c.counts![n]}</span>}
-                      </span>
-                    ) : null,
-                  )
-                ) : (
-                  <span className="lv-seg more" style={{ height: `${(c.total / max) * 100}%` }} />
-                )}
-              </span>
-              <span className="lv-col-t">{c.label}</span>
-            </div>
-          );
-        })}
-      </div>
+      <VillagerChart plan={plan} path={path} now={seconds} />
     </section>
   );
 }

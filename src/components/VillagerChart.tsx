@@ -10,8 +10,10 @@ const PAD_TOP = 18;
 /**
  * Villagers on each resource over the chosen path, as stacked bands: the
  * shape shows at a glance when to shift from sheep to wood, gold or stone.
+ * With `now` (seconds into a live game) a Now line follows the game and the
+ * readout shows the split you should have at that moment.
  */
-export function VillagerChart({ plan, path }: { plan: GamePlan; path: SelectedPath }) {
+export function VillagerChart({ plan, path, now }: { plan: GamePlan; path: SelectedPath; now?: number | null }) {
   const points = useMemo(() => villagerTimeline(plan, path), [plan, path]);
   const ref = useRef<SVGSVGElement>(null);
   const [hover, setHover] = useState<number | null>(null);
@@ -19,7 +21,7 @@ export function VillagerChart({ plan, path }: { plan: GamePlan; path: SelectedPa
   if (points.length < 2) return null;
   const feudalAt = clock(path.feudal.ageUp);
   const castleAt = clock(path.castle.ageUp);
-  const end = Math.max(points[points.length - 1].seconds + 45, castleAt + 30);
+  const end = Math.max(points[points.length - 1].seconds + 45, castleAt + 30, now != null ? now + 30 : 0);
   const maxVils = Math.max(...points.map(totalVillagers), 10);
   const x = (s: number) => (s / end) * W;
   const y = (n: number) => H - (n / maxVils) * (H - PAD_TOP);
@@ -38,7 +40,8 @@ export function VillagerChart({ plan, path }: { plan: GamePlan; path: SelectedPa
     return { layer, d: `M${top.join(" L")} L${bottom.join(" L")} Z` };
   });
 
-  const active = hover === null ? null : [...points].reverse().find((p) => p.seconds <= hover) ?? points[0];
+  const at = hover ?? now ?? null;
+  const active = at === null ? null : ([...points].reverse().find((p) => p.seconds <= at) ?? points[0]);
   const onMove = (e: React.MouseEvent) => {
     const box = ref.current?.getBoundingClientRect();
     if (!box) return;
@@ -103,6 +106,7 @@ export function VillagerChart({ plan, path }: { plan: GamePlan; path: SelectedPa
             {s / 60}m
           </text>
         ))}
+        {now != null && <line x1={x(now)} x2={x(now)} y1={0} y2={H} className="now-line" />}
         {hover !== null && <line x1={x(hover)} x2={x(hover)} y1={0} y2={H} className="hover-line" />}
       </svg>
     </div>
