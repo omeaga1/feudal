@@ -26,21 +26,29 @@ export function compareVersions(a: string, b: string): number {
   return 0;
 }
 
-/** The newest published release when it's newer than `current`, else null. Never throws. */
-export async function checkForUpdate(fetchFn: FetchFn, current: string): Promise<Release | null> {
+export type UpdateCheck = { kind: "update"; release: Release } | { kind: "current" } | { kind: "error" };
+
+/** Asks GitHub for the newest release and compares it with `current`. Never throws. */
+export async function checkLatest(fetchFn: FetchFn, current: string): Promise<UpdateCheck> {
   try {
     const res = await fetchFn(RELEASES_API, { headers: { Accept: "application/vnd.github+json" } });
-    if (!res.ok) return null;
+    if (!res.ok) return { kind: "error" };
     const body = (await res.json()) as { tag_name?: string; html_url?: string; assets?: ReleaseAsset[] };
-    if (!body.tag_name || !body.html_url) return null;
-    if (compareVersions(body.tag_name, current) <= 0) return null;
+    if (!body.tag_name || !body.html_url) return { kind: "error" };
+    if (compareVersions(body.tag_name, current) <= 0) return { kind: "current" };
     const release: Release = { version: body.tag_name.replace(/^v/, ""), url: body.html_url };
     const setup = body.assets?.find((a) => a.name?.endsWith("-setup.exe") && a.browser_download_url && a.digest?.startsWith("sha256:"));
     if (setup) release.installer = { url: setup.browser_download_url!, sha256: setup.digest! };
-    return release;
+    return { kind: "update", release };
   } catch {
-    return null;
+    return { kind: "error" };
   }
+}
+
+/** The newest published release when it's newer than `current`, else null. Never throws. */
+export async function checkForUpdate(fetchFn: FetchFn, current: string): Promise<Release | null> {
+  const result = await checkLatest(fetchFn, current);
+  return result.kind === "update" ? result.release : null;
 }
 
 export type InstallPhase = "idle" | "installing" | "failed";
