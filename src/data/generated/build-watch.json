@@ -1,6 +1,6 @@
 {
   "latestBuild": 12182,
-  "checkedAt": "2026-10-30T14:32:44.999Z",
+  "checkedAt": "2026-10-31T13:55:03.014Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -80,7 +80,14 @@
     "malians": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "Mali for Reeve Overlay",
+          "author": "kndhvh",
+          "url": "https://aoe4guides.com/builds/hXttcVQcMxTniZjgS79s",
+          "updated": "2026-10-30"
+        }
+      ]
     },
     "mongols": {
       "checkedBuild": 11308,
@@ -107,11 +114,10 @@
       "stale": true,
       "fresh": [
         {
-          "title": " BO Écossais Fast Age 3 & rassemblement Jeando",
-          "author": "spikountry",
-          "url": "https://aoe4guides.com/builds/DdkFFBg7BCiL0fRMQXeE",
-          "video": "https://www.youtube.com/watch?v=fZtlXO4XZbU",
-          "updated": "2026-10-30"
+          "title": "Dark Age Cattle Boom - 2TC",
+          "author": "Mango",
+          "url": "https://aoe4guides.com/builds/UKoPjtsbOrfRwydUySsG",
+          "updated": "2026-10-31"
         }
       ]
     },
@@ -137,17 +143,16 @@
           "updated": "2026-10-30"
         },
         {
+          "title": "Bees & Wheelbarrow in DA",
+          "author": "Sofianosss",
+          "url": "https://aoe4guides.com/builds/svQMPDHZBTWGdS0voCRH",
+          "updated": "2026-10-31"
+        },
+        {
           "title": "Swaggys: Vikings 2TC Baugr CHEEEESE (most detailed guide out right now)",
           "author": "LouBuilds03",
           "url": "https://aoe4guides.com/builds/f1cGuEvTi40uJGCon8KI",
           "video": "https://www.youtube.com/watch?v=3AqIiuRbd_w",
-          "updated": "2026-10-30"
-        },
-        {
-          "title": "2TC Boom",
-          "author": "Jitterbug",
-          "url": "https://aoe4guides.com/builds/8vdjKt4BThjkZdytmw6C",
-          "video": "https://www.youtube.com/watch?v=TtDmif9HJe0",
           "updated": "2026-10-30"
         }
       ]
