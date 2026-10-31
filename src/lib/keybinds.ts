@@ -23,8 +23,23 @@ export interface KeybindProfile {
 
 const TOKEN = /(\w+)\s*=\s*(?:"([^"]*)"|\{)/g;
 
-/** Parses an .rkp file into its bindings, in file order. Bindings with no keys are kept with an empty combo list. */
-export function parseRkp(text: string): Keybind[] {
+// Current profiles hold two full sets of bindings: `bindingGroups` and
+// `fullyRemappableBindingGroups`. The game uses the second only when
+// `fullyRemappable = true`, so read just the set that's live.
+const LAYERS = /\b(bindingGroups|fullyRemappableBindingGroups)\s*=\s*\{/g;
+
+function liveLayer(text: string): string {
+  const starts = [...text.matchAll(LAYERS)].map((m) => ({ name: m[1], at: m.index }));
+  if (starts.length < 2) return text;
+  const want = /\bfullyRemappable\s*=\s*true\b/.test(text) ? "fullyRemappableBindingGroups" : "bindingGroups";
+  const i = starts.findIndex((s) => s.name === want);
+  if (i < 0) return text;
+  return text.slice(starts[i].at, starts[i + 1]?.at ?? text.length);
+}
+
+/** Parses an .rkp file into its live bindings, in file order. Bindings with no keys are kept with an empty combo list. */
+export function parseRkp(file: string): Keybind[] {
+  const text = liveLayer(file);
   const binds: Keybind[] = [];
   let current: Keybind | null = null;
   let section: string | null = null;
@@ -179,10 +194,11 @@ const ESSENTIALS: Essential[] = [
   { label: "All military", group: "military", commands: ["pick_all_military"] },
   { label: "Idle military", group: "military", commands: ["pick_all_idle_military"], defaults: ["Control+Comma"] },
   { label: "Next idle military", group: "military", commands: ["pick_next_idle_military"], defaults: ["Comma"] },
-  { label: "All infantry", group: "military", commands: ["pick_all_infantry", "pick_all_military_infantry"], match: /^(pick|select)_all_\w*infantry/ },
-  { label: "All ranged", group: "military", commands: ["pick_all_ranged", "pick_all_military_ranged"], match: /^(pick|select)_all_\w*ranged/ },
-  { label: "All cavalry", group: "military", commands: ["pick_all_cavalry", "pick_all_military_cavalry"], match: /^(pick|select)_all_\w*cavalry/ },
-  { label: "All siege", group: "military", commands: ["pick_all_siege", "pick_all_military_siege"], match: /^(pick|select)_all_\w*siege(?!_workshop)/ },
+  { label: "All infantry", group: "military", commands: ["pick_all_infantry", "pick_all_military_infantry"], match: /^(pick|select)_all_\w*infantry$/ },
+  { label: "All ranged", group: "military", commands: ["pick_all_archers", "pick_all_ranged", "pick_all_military_ranged"], match: /^(pick|select)_all_\w*(ranged|archers)$/ },
+  { label: "All cavalry", group: "military", commands: ["pick_all_cavalry", "pick_all_military_cavalry"], match: /^(pick|select)_all_\w*cavalry$/ },
+  { label: "All siege", group: "military", commands: ["pick_all_siege", "pick_all_military_siege"], match: /^(pick|select)_all_\w*siege$/ },
+  { label: "Military on screen", group: "military", commands: ["pick_all_military_on_screen"] },
   { label: "All units on screen", group: "military", commands: ["select_all_special"], defaults: ["Control+A"] },
 
   { label: "Town centers", group: "main", commands: ["select_all_town_centers"], defaults: ["H"] },
@@ -194,6 +210,7 @@ const ESSENTIALS: Essential[] = [
   { label: "Archery ranges", group: "main", commands: ["pick_all_archery_range"] },
   { label: "Stables", group: "main", commands: ["pick_all_stables"] },
   { label: "Siege workshops", group: "main", commands: ["pick_all_siege_workshop"] },
+  { label: "Docks", group: "main", commands: ["pick_all_dock"] },
 
   { label: "Select group", group: "groups", commands: [], series: "hkgroup_select", defaults: ["1-9"] },
   { label: "Set group", group: "groups", commands: [], series: "hkgroup_set", defaults: ["Control+1-9"] },
@@ -202,6 +219,8 @@ const ESSENTIALS: Essential[] = [
   { label: "Last alert", group: "camera", commands: ["focus_event_cue"], match: /(last|latest)_(event|alert|attack)/ },
   { label: "Follow selected", group: "camera", commands: ["follow_selected"] },
   { label: "Center on selected", group: "camera", commands: ["focus_selected"] },
+  { label: "Go to camera spot 1", group: "camera", commands: ["apply_camera_location_1"] },
+  { label: "Save camera spot 1", group: "camera", commands: ["save_camera_location_1"] },
   { label: "Reset camera", group: "camera", commands: ["default"], defaults: ["Backspace"] },
 
   { label: "Cycle selection", group: "qol", commands: ["subselect_next"], defaults: ["Tab"] },
@@ -231,7 +250,9 @@ function seriesCombos(byCommand: Map<string, Keybind>, series: string): string[]
 
 /** The essential hotkeys, read from a parsed profile (or AoE4's defaults when there is none). Unbound ones are left out. */
 export function resolveEssentials(binds: Keybind[] | null): EssentialBind[] {
-  const byCommand = new Map((binds ?? []).map((b) => [b.command, b]));
+  // A command can sit in more than one binding group; keep the first one that has keys.
+  const byCommand = new Map<string, Keybind>();
+  for (const b of binds ?? []) if (!byCommand.get(b.command)?.combos.length) byCommand.set(b.command, b);
   const out: EssentialBind[] = [];
   for (const e of ESSENTIALS) {
     let found: string[] | null = null;

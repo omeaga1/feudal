@@ -97,4 +97,16 @@ describe("keybind profiles", () => {
     expect(defaults.every((e) => e.source === "default")).toBe(true);
     expect(defaults.length).toBeLessThan(20);
   });
+
+  it("reads only the binding set the game uses", () => {
+    const profile = (remappable: boolean) => `
+profile = {
+	bindingGroups = { hud = { { command = "pick_next_idle_worker", keycombos = { { combo = "F1", }, }, }, }, },
+	fullyRemappable = ${remappable},
+	fullyRemappableBindingGroups = { hud = { { command = "pick_next_idle_worker", keycombos = { { combo = "Period", }, }, }, }, },
+	name = "test",
+}`;
+    expect(parseRkp(profile(false)).map((b) => b.combos)).toEqual([["F1"]]);
+    expect(parseRkp(profile(true)).map((b) => b.combos)).toEqual([["Period"]]);
+  });
 });
