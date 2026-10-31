@@ -2149,6 +2149,16 @@ ul.tight li {
   cursor: help;
 }
 
+.extra-keys {
+  display: grid;
+  grid-template-columns: repeat(2, 46px);
+  gap: 6px;
+}
+
+.extra-key {
+  height: 40px;
+}
+
 .keymap-readout {
   min-height: 34px;
   display: flex;

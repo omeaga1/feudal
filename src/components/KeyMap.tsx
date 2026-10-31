@@ -80,6 +80,8 @@ export function KeyMap({ essentials: list, note }: { essentials: EssentialBind[]
     return map;
   }, [allBinds]);
   const binds = (k: string) => bindsByKey.get(k) ?? [];
+  // F13-F24 aren't on a normal keyboard; G-keys and mouse macros usually send them.
+  const extraKeys = [...bindsByKey.keys()].filter((k) => /^F(1[3-9]|2[0-4])$/.test(k)).sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
   const hovered = hoverKey ? binds(hoverKey) : [];
 
   return (
@@ -115,6 +117,20 @@ export function KeyMap({ essentials: list, note }: { essentials: EssentialBind[]
           ))}
         </div>
         <div className="mouse-and-pad">
+          {extraKeys.length > 0 && (
+            <div className="extra-keys" aria-label="Extra keys such as G-keys">
+              {extraKeys.map((k) => (
+                <span
+                  key={k}
+                  className={`keycap extra-key g-${binds(k)[0].group} lit${focus && !binds(k).some((b) => b.group === focus) ? " dim" : ""}`}
+                  onMouseEnter={() => setHoverKey(k)}
+                  onMouseLeave={() => setHoverKey(null)}
+                >
+                  {k}
+                </span>
+              ))}
+            </div>
+          )}
           <div className="mouse" aria-label="Mouse side buttons">
             <div className="mouse-shell">
               <span className="mouse-split" />
