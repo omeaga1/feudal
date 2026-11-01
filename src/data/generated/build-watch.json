@@ -1,6 +1,6 @@
 {
   "latestBuild": 12182,
-  "checkedAt": "2026-10-31T13:55:03.014Z",
+  "checkedAt": "2026-11-01T14:32:31.204Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -136,6 +136,12 @@
       "stale": true,
       "fresh": [
         {
+          "title": "Tulilord VIKING PUSHH",
+          "author": "Filson",
+          "url": "https://aoe4guides.com/builds/zGUovupZhIJxyqWrAqk5",
+          "updated": "2026-10-31"
+        },
+        {
           "title": "BO Vikings Maison longue Jeando",
           "author": "spikountry",
           "url": "https://aoe4guides.com/builds/xrXUig3REtxZKRSKXNIt",
@@ -147,13 +153,6 @@
           "author": "Sofianosss",
           "url": "https://aoe4guides.com/builds/svQMPDHZBTWGdS0voCRH",
           "updated": "2026-10-31"
-        },
-        {
-          "title": "Swaggys: Vikings 2TC Baugr CHEEEESE (most detailed guide out right now)",
-          "author": "LouBuilds03",
-          "url": "https://aoe4guides.com/builds/f1cGuEvTi40uJGCon8KI",
-          "video": "https://www.youtube.com/watch?v=3AqIiuRbd_w",
-          "updated": "2026-10-30"
         }
       ]
     },
