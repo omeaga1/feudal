@@ -1,6 +1,6 @@
 {
   "latestBuild": 12260,
-  "checkedAt": "2026-11-04T15:46:59.423Z",
+  "checkedAt": "2026-11-05T15:50:39.288Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -114,23 +114,23 @@
       "stale": true,
       "fresh": [
         {
+          "title": " The Only SCOTS Build You'll Need To Get Conqueror",
+          "author": "Pavani",
+          "url": "https://aoe4guides.com/builds/ccVjKpIlNutx5DqzpGPM",
+          "video": "https://www.youtube.com/watch?v=H37JNp7pVBU",
+          "updated": "2026-11-05"
+        },
+        {
+          "title": "Conquistadores Escoceses",
+          "author": "ImpulseGold",
+          "url": "https://aoe4guides.com/builds/XuZvmeM9hNwWEkfQoLWh",
+          "updated": "2026-11-05"
+        },
+        {
           "title": "Dark Age Cattle Boom - 2TC",
           "author": "Mango",
           "url": "https://aoe4guides.com/builds/UKoPjtsbOrfRwydUySsG",
           "updated": "2026-10-31"
-        },
-        {
-          "title": "Aquí llega Wallace!!",
-          "author": "ImpulseGold",
-          "url": "https://aoe4guides.com/builds/U91jpn43QhIDpvuoe1bC",
-          "updated": "2026-11-04"
-        },
-        {
-          "title": " BO Écossais Fast Age 3 & rassemblement Jeando",
-          "author": "spikountry",
-          "url": "https://aoe4guides.com/builds/DdkFFBg7BCiL0fRMQXeE",
-          "video": "https://www.youtube.com/watch?v=fZtlXO4XZbU",
-          "updated": "2026-11-01"
         }
       ]
     },
