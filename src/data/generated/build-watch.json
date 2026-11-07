@@ -1,6 +1,6 @@
 {
   "latestBuild": 12260,
-  "checkedAt": "2026-11-06T15:24:36.225Z",
+  "checkedAt": "2026-11-07T14:22:16.416Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -199,9 +199,9 @@
           "updated": "2026-10-30"
         },
         {
-          "title": "Bees & Wheelbarrow in DA",
-          "author": "Sofianosss",
-          "url": "https://aoe4guides.com/builds/svQMPDHZBTWGdS0voCRH",
+          "title": "Tulilord VIKING PUSHH",
+          "author": "Filson",
+          "url": "https://aoe4guides.com/builds/zGUovupZhIJxyqWrAqk5",
           "updated": "2026-10-31"
         }
       ]
@@ -209,7 +209,14 @@
     "zhu_xis_legacy": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "Zhuxi proscout",
+          "author": "Gissa777",
+          "url": "https://aoe4guides.com/builds/3fquM3YpE1JXU1FJF5mC",
+          "updated": "2026-11-07"
+        }
+      ]
     }
   }
 }
