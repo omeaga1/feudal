@@ -1,6 +1,6 @@
 {
   "latestBuild": 12260,
-  "checkedAt": "2026-11-07T14:22:16.416Z",
+  "checkedAt": "2026-11-09T17:49:32.220Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -210,6 +210,12 @@
       "checkedBuild": 11308,
       "stale": true,
       "fresh": [
+        {
+          "title": "Zhu Xi All in Feudal",
+          "author": "Gissa777",
+          "url": "https://aoe4guides.com/builds/fbXTFZVI8H5qigmkix0J",
+          "updated": "2026-11-09"
+        },
         {
           "title": "Zhuxi proscout",
           "author": "Gissa777",
