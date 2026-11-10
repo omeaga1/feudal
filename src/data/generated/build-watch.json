@@ -1,6 +1,6 @@
 {
   "latestBuild": 12260,
-  "checkedAt": "2026-11-09T17:49:32.220Z",
+  "checkedAt": "2026-11-10T15:47:43.323Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -77,7 +77,15 @@
     "japanese": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "Fast Bannerman Into Horsemen/Yumi ",
+          "author": "Ehounds",
+          "url": "https://aoe4guides.com/builds/T6V0f26upw94riMLkajV",
+          "video": "https://www.youtube.com/watch?v=0_DcTxTqB7I",
+          "updated": "2026-11-08"
+        }
+      ]
     },
     "jeanne_darc": {
       "checkedBuild": 11308,
@@ -142,12 +150,26 @@
     "rus": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "RUSSSS 2TC",
+          "author": "ImpulseGold",
+          "url": "https://aoe4guides.com/builds/DTjekLOwmQHx2dZCAU1a",
+          "updated": "2026-11-07"
+        }
+      ]
     },
     "scots": {
       "checkedBuild": 11308,
       "stale": true,
       "fresh": [
+        {
+          "title": " The Only SCOTS Build You'll Need To Get Conqueror",
+          "author": "Pavani",
+          "url": "https://aoe4guides.com/builds/ccVjKpIlNutx5DqzpGPM",
+          "video": "https://www.youtube.com/watch?v=H37JNp7pVBU",
+          "updated": "2026-11-05"
+        },
         {
           "title": "Dark Age Cattle Boom - 2TC",
           "author": "Mango",
@@ -155,18 +177,10 @@
           "updated": "2026-10-31"
         },
         {
-          "title": " BO Écossais Fast Age 3 & rassemblement Jeando",
-          "author": "spikountry",
-          "url": "https://aoe4guides.com/builds/DdkFFBg7BCiL0fRMQXeE",
-          "video": "https://www.youtube.com/watch?v=fZtlXO4XZbU",
-          "updated": "2026-11-01"
-        },
-        {
-          "title": " The Only SCOTS Build You'll Need To Get Conqueror",
-          "author": "Pavani",
-          "url": "https://aoe4guides.com/builds/ccVjKpIlNutx5DqzpGPM",
-          "video": "https://www.youtube.com/watch?v=H37JNp7pVBU",
-          "updated": "2026-11-05"
+          "title": "Build Order: Escocia Fast Imperial para Equipos (3v3 / 4v4)",
+          "author": "Leo Arminio",
+          "url": "https://aoe4guides.com/builds/cxu2K3QunkkpC5o1hNY0",
+          "updated": "2026-11-08"
         }
       ]
     },
@@ -185,6 +199,13 @@
       "stale": true,
       "fresh": [
         {
+          "title": "Vikings Feudal All In - Valdy",
+          "author": "Valdemar1902",
+          "url": "https://aoe4guides.com/builds/WiWD5PRXgC5LVHet9Hth",
+          "video": "https://www.youtube.com/watch?v=GR8f06In3Fw",
+          "updated": "2026-11-04"
+        },
+        {
           "title": "Swaggys: Vikings 2TC Baugr CHEEEESE (most detailed guide out right now)",
           "author": "LouBuilds03",
           "url": "https://aoe4guides.com/builds/f1cGuEvTi40uJGCon8KI",
@@ -192,17 +213,11 @@
           "updated": "2026-10-30"
         },
         {
-          "title": "BO Vikings Maison longue Jeando",
-          "author": "spikountry",
-          "url": "https://aoe4guides.com/builds/xrXUig3REtxZKRSKXNIt",
-          "video": "https://www.youtube.com/watch?v=AtT1-omY8Ys",
-          "updated": "2026-10-30"
-        },
-        {
-          "title": "Tulilord VIKING PUSHH",
-          "author": "Filson",
-          "url": "https://aoe4guides.com/builds/zGUovupZhIJxyqWrAqk5",
-          "updated": "2026-10-31"
+          "title": "2TC Fast Castle - Vikings - Swaggy Professor",
+          "author": "Krayt",
+          "url": "https://aoe4guides.com/builds/o2p2pU3NdBy8bxvtx209",
+          "video": "https://www.youtube.com/watch?v=zHsi3mVJg3Y",
+          "updated": "2026-11-05"
         }
       ]
     },
