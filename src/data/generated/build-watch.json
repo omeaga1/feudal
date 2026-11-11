@@ -1,6 +1,6 @@
 {
   "latestBuild": 12260,
-  "checkedAt": "2026-11-10T15:47:43.323Z",
+  "checkedAt": "2026-11-11T15:38:40.068Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -15,7 +15,14 @@
     "byzantines": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "jeando grand vignoble ",
+          "author": "GAMREEP",
+          "url": "https://aoe4guides.com/builds/MTkqG9V9Nb9kmVKiZQSs",
+          "updated": "2026-11-10"
+        }
+      ]
     },
     "chinese": {
       "checkedBuild": 11308,
@@ -100,7 +107,14 @@
     "knights_templar": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "KT - Racks First",
+          "author": "LMB",
+          "url": "https://aoe4guides.com/builds/69H0XAA1RSx4JVwm7C40",
+          "updated": "2026-11-10"
+        }
+      ]
     },
     "macedonian_dynasty": {
       "checkedBuild": 11308,
@@ -206,18 +220,18 @@
           "updated": "2026-11-04"
         },
         {
-          "title": "Swaggys: Vikings 2TC Baugr CHEEEESE (most detailed guide out right now)",
-          "author": "LouBuilds03",
-          "url": "https://aoe4guides.com/builds/f1cGuEvTi40uJGCon8KI",
-          "video": "https://www.youtube.com/watch?v=3AqIiuRbd_w",
-          "updated": "2026-10-30"
-        },
-        {
           "title": "2TC Fast Castle - Vikings - Swaggy Professor",
           "author": "Krayt",
           "url": "https://aoe4guides.com/builds/o2p2pU3NdBy8bxvtx209",
           "video": "https://www.youtube.com/watch?v=zHsi3mVJg3Y",
           "updated": "2026-11-05"
+        },
+        {
+          "title": "Swaggys: Vikings 2TC Baugr CHEEEESE (most detailed guide out right now)",
+          "author": "LouBuilds03",
+          "url": "https://aoe4guides.com/builds/f1cGuEvTi40uJGCon8KI",
+          "video": "https://www.youtube.com/watch?v=3AqIiuRbd_w",
+          "updated": "2026-10-30"
         }
       ]
     },
