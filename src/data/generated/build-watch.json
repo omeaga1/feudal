@@ -1,6 +1,6 @@
 {
-  "latestBuild": 12260,
-  "checkedAt": "2026-11-12T16:16:54.835Z",
+  "latestBuild": 12303,
+  "checkedAt": "2026-11-13T15:42:29.701Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -170,6 +170,12 @@
           "author": "ImpulseGold",
           "url": "https://aoe4guides.com/builds/DTjekLOwmQHx2dZCAU1a",
           "updated": "2026-11-07"
+        },
+        {
+          "title": "Rus S14 4:50 2TC",
+          "author": "Mango",
+          "url": "https://aoe4guides.com/builds/1WQbmsPAmsl3CNmLFJd7",
+          "updated": "2026-11-10"
         }
       ]
     },
@@ -227,10 +233,11 @@
           "updated": "2026-11-05"
         },
         {
-          "title": "Vikings - MarineLorD - 2TC + Bondi Aggression",
-          "author": "Alyos",
-          "url": "https://aoe4guides.com/builds/0l6iiRoXVuINAgjetD0c",
-          "updated": "2026-11-07"
+          "title": "Vikings - MarineLorD - Adaptive 2 TC",
+          "author": "Krayt",
+          "url": "https://aoe4guides.com/builds/mOEZof0dWcz6sO8PpzoM",
+          "video": "https://www.youtube.com/watch?v=49xTmjWxK_8",
+          "updated": "2026-11-08"
         }
       ]
     },
@@ -245,10 +252,11 @@
           "updated": "2026-11-09"
         },
         {
-          "title": "Zhuxi proscout",
+          "title": "Zhu xi vs most broken civ (french)",
           "author": "Gissa777",
-          "url": "https://aoe4guides.com/builds/3fquM3YpE1JXU1FJF5mC",
-          "updated": "2026-11-07"
+          "url": "https://aoe4guides.com/builds/bgWdKa4qVpr1PNXBaWXS",
+          "video": "https://www.youtube.com/watch?v=eakY7FWDvrM",
+          "updated": "2026-11-12"
         }
       ]
     }
