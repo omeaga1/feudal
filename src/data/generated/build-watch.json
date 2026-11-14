@@ -1,6 +1,6 @@
 {
   "latestBuild": 12303,
-  "checkedAt": "2026-11-13T15:42:29.701Z",
+  "checkedAt": "2026-11-14T14:31:59.704Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -52,7 +52,14 @@
     "holy_roman_empire": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "HRE FC -> IMP",
+          "author": "Daniel",
+          "url": "https://aoe4guides.com/builds/XjaLDu7gEyKJhU35Kd7v",
+          "updated": "2026-11-11"
+        }
+      ]
     },
     "house_of_lancaster": {
       "checkedBuild": 11308,
@@ -256,6 +263,12 @@
           "author": "Gissa777",
           "url": "https://aoe4guides.com/builds/bgWdKa4qVpr1PNXBaWXS",
           "video": "https://www.youtube.com/watch?v=eakY7FWDvrM",
+          "updated": "2026-11-12"
+        },
+        {
+          "title": "zhu xi no pro scouts all in",
+          "author": "mrpinstripesuit",
+          "url": "https://aoe4guides.com/builds/3IsD9WKQYqBQflWkSyZN",
           "updated": "2026-11-12"
         }
       ]
