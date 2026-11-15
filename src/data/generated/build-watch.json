@@ -1,6 +1,6 @@
 {
   "latestBuild": 12303,
-  "checkedAt": "2026-11-14T14:31:59.704Z",
+  "checkedAt": "2026-11-15T14:59:10.893Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -21,6 +21,13 @@
           "author": "GAMREEP",
           "url": "https://aoe4guides.com/builds/MTkqG9V9Nb9kmVKiZQSs",
           "updated": "2026-11-10"
+        },
+        {
+          "title": "BO FAST ÂGE 3 FR (BY JEANDO)",
+          "author": "GAMREEP",
+          "url": "https://aoe4guides.com/builds/KzUx5Uhr54VsrRy7SlrG",
+          "video": "https://www.youtube.com/watch?v=WgbD_9c2nIo",
+          "updated": "2026-11-11"
         }
       ]
     },
@@ -47,7 +54,15 @@
     "golden_horde": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "Golden Horde Feudal All In (remix)",
+          "author": "GAMREEP",
+          "url": "https://aoe4guides.com/builds/ntJxcQYWFR7WtGwwDkM2",
+          "video": "https://www.youtube.com/watch?v=FyQpW1huVQ0",
+          "updated": "2026-11-13"
+        }
+      ]
     },
     "holy_roman_empire": {
       "checkedBuild": 11308,
@@ -154,12 +169,6 @@
           "author": "psilocybee",
           "url": "https://aoe4guides.com/builds/h0PFP06M3krB1KFvsByE",
           "updated": "2026-11-01"
-        },
-        {
-          "title": "Ootd feudal rush proxy barracks",
-          "author": "psilocybee",
-          "url": "https://aoe4guides.com/builds/BnhtOSSUVTxr4NfQYt9X",
-          "updated": "2026-11-01"
         }
       ]
     },
@@ -179,10 +188,11 @@
           "updated": "2026-11-07"
         },
         {
-          "title": "Rus S14 4:50 2TC",
-          "author": "Mango",
-          "url": "https://aoe4guides.com/builds/1WQbmsPAmsl3CNmLFJd7",
-          "updated": "2026-11-10"
+          "title": "Rus One Trick Poney",
+          "author": "Asmitha",
+          "url": "https://aoe4guides.com/builds/s1n1G6EnwWpVDkUAIrPQ",
+          "video": "https://www.youtube.com/watch?v=Nl84Zk6Muvw",
+          "updated": "2026-11-12"
         }
       ]
     },
