@@ -1,6 +1,6 @@
 {
   "latestBuild": 12303,
-  "checkedAt": "2026-11-15T14:59:10.893Z",
+  "checkedAt": "2026-11-16T17:28:27.528Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -28,6 +28,13 @@
           "url": "https://aoe4guides.com/builds/KzUx5Uhr54VsrRy7SlrG",
           "video": "https://www.youtube.com/watch?v=WgbD_9c2nIo",
           "updated": "2026-11-11"
+        },
+        {
+          "title": "FAST AGE 3 BUILD ORDER (BY JEANDO)",
+          "author": "Xodus",
+          "url": "https://aoe4guides.com/builds/1qhJag8YWrHfoYlgCerO",
+          "video": "https://www.youtube.com/watch?v=WgbD_9c2nIo",
+          "updated": "2026-11-13"
         }
       ]
     },
@@ -81,17 +88,17 @@
       "stale": true,
       "fresh": [
         {
-          "title": "HOL 1 Manor 2 TC",
-          "author": "LMB",
-          "url": "https://aoe4guides.com/builds/6ibcly2m719buRkQ4lo8",
-          "video": "https://www.youtube.com/watch?v=2p50fdqe5IE",
-          "updated": "2026-11-02"
-        },
-        {
           "title": "HOL 1 Manor FC",
           "author": "LMB",
           "url": "https://aoe4guides.com/builds/foGVfcFxPwolz7ELPcA3",
           "video": "https://www.youtube.com/watch?v=Lkf9Ojbvp4o",
+          "updated": "2026-11-02"
+        },
+        {
+          "title": "HOL 1 Manor 2 TC",
+          "author": "LMB",
+          "url": "https://aoe4guides.com/builds/6ibcly2m719buRkQ4lo8",
+          "video": "https://www.youtube.com/watch?v=2p50fdqe5IE",
           "updated": "2026-11-02"
         },
         {
@@ -141,7 +148,15 @@
     "macedonian_dynasty": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "Best Macedonian Dynasty BO [Beasty] (remix)",
+          "author": "GAMREEP",
+          "url": "https://aoe4guides.com/builds/4uJ2iU656lf56fDDbgwC",
+          "video": "https://www.youtube.com/watch?v=GIErhV3Eeys",
+          "updated": "2026-11-14"
+        }
+      ]
     },
     "malians": {
       "checkedBuild": 11308,
@@ -214,10 +229,11 @@
           "updated": "2026-10-31"
         },
         {
-          "title": "Build Order: Escocia Fast Imperial para Equipos (3v3 / 4v4)",
-          "author": "Leo Arminio",
-          "url": "https://aoe4guides.com/builds/cxu2K3QunkkpC5o1hNY0",
-          "updated": "2026-11-08"
+          "title": "New Player Guide to Scots",
+          "author": "Shaada",
+          "url": "https://aoe4guides.com/builds/votoiVwKyd52EJHcCAdv",
+          "video": "https://www.youtube.com/watch?v=jaGrcoaU5eI",
+          "updated": "2026-11-12"
         }
       ]
     },
