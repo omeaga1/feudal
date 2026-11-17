@@ -1,6 +1,6 @@
 {
   "latestBuild": 12303,
-  "checkedAt": "2026-11-16T17:28:27.528Z",
+  "checkedAt": "2026-11-17T17:05:25.737Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -21,13 +21,6 @@
           "author": "GAMREEP",
           "url": "https://aoe4guides.com/builds/MTkqG9V9Nb9kmVKiZQSs",
           "updated": "2026-11-10"
-        },
-        {
-          "title": "BO FAST ÂGE 3 FR (BY JEANDO)",
-          "author": "GAMREEP",
-          "url": "https://aoe4guides.com/builds/KzUx5Uhr54VsrRy7SlrG",
-          "video": "https://www.youtube.com/watch?v=WgbD_9c2nIo",
-          "updated": "2026-11-11"
         },
         {
           "title": "FAST AGE 3 BUILD ORDER (BY JEANDO)",
@@ -138,9 +131,10 @@
       "stale": true,
       "fresh": [
         {
-          "title": "KT - Racks First",
+          "title": "KT - Pilgrim into 2 TC",
           "author": "LMB",
-          "url": "https://aoe4guides.com/builds/69H0XAA1RSx4JVwm7C40",
+          "url": "https://aoe4guides.com/builds/LVaP8fKgBNMBirZmbkW1",
+          "video": "https://www.youtube.com/watch?v=X-4eZNJY640",
           "updated": "2026-11-10"
         }
       ]
@@ -197,17 +191,17 @@
       "stale": true,
       "fresh": [
         {
-          "title": "RUSSSS 2TC",
-          "author": "ImpulseGold",
-          "url": "https://aoe4guides.com/builds/DTjekLOwmQHx2dZCAU1a",
-          "updated": "2026-11-07"
-        },
-        {
           "title": "Rus One Trick Poney",
           "author": "Asmitha",
           "url": "https://aoe4guides.com/builds/s1n1G6EnwWpVDkUAIrPQ",
           "video": "https://www.youtube.com/watch?v=Nl84Zk6Muvw",
           "updated": "2026-11-12"
+        },
+        {
+          "title": "RUSSSS 2TC",
+          "author": "ImpulseGold",
+          "url": "https://aoe4guides.com/builds/DTjekLOwmQHx2dZCAU1a",
+          "updated": "2026-11-07"
         }
       ]
     },
