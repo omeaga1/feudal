@@ -1,6 +1,6 @@
 {
   "latestBuild": 12303,
-  "checkedAt": "2026-11-17T17:05:25.737Z",
+  "checkedAt": "2026-11-18T16:44:14.481Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -17,17 +17,17 @@
       "stale": true,
       "fresh": [
         {
-          "title": "jeando grand vignoble ",
-          "author": "GAMREEP",
-          "url": "https://aoe4guides.com/builds/MTkqG9V9Nb9kmVKiZQSs",
-          "updated": "2026-11-10"
-        },
-        {
           "title": "FAST AGE 3 BUILD ORDER (BY JEANDO)",
           "author": "Xodus",
           "url": "https://aoe4guides.com/builds/1qhJag8YWrHfoYlgCerO",
           "video": "https://www.youtube.com/watch?v=WgbD_9c2nIo",
           "updated": "2026-11-13"
+        },
+        {
+          "title": "jeando grand vignoble ",
+          "author": "GAMREEP",
+          "url": "https://aoe4guides.com/builds/MTkqG9V9Nb9kmVKiZQSs",
+          "updated": "2026-11-10"
         }
       ]
     },
@@ -196,12 +196,6 @@
           "url": "https://aoe4guides.com/builds/s1n1G6EnwWpVDkUAIrPQ",
           "video": "https://www.youtube.com/watch?v=Nl84Zk6Muvw",
           "updated": "2026-11-12"
-        },
-        {
-          "title": "RUSSSS 2TC",
-          "author": "ImpulseGold",
-          "url": "https://aoe4guides.com/builds/DTjekLOwmQHx2dZCAU1a",
-          "updated": "2026-11-07"
         }
       ]
     },
