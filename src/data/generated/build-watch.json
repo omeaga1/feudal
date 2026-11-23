@@ -1,6 +1,6 @@
 {
   "latestBuild": 12303,
-  "checkedAt": "2026-11-19T16:49:03.675Z",
+  "checkedAt": "2026-11-23T19:30:43.535Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -49,7 +49,14 @@
     "french": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "FRENCH 3:40 HARRAS AND GET SECOND TC ALWAYS WIN",
+          "author": "mistiyos",
+          "url": "https://aoe4guides.com/builds/JI2UsEut9ZpF8PPwDUKE",
+          "updated": "2026-11-18"
+        }
+      ]
     },
     "golden_horde": {
       "checkedBuild": 11308,
@@ -131,6 +138,12 @@
       "stale": true,
       "fresh": [
         {
+          "title": "Fast Feudal, 2TC",
+          "author": "Ginngerninja07",
+          "url": "https://aoe4guides.com/builds/Z1QyLD7I3hTKmmtBuIsc",
+          "updated": "2026-11-20"
+        },
+        {
           "title": "KT - Pilgrim into 2 TC",
           "author": "LMB",
           "url": "https://aoe4guides.com/builds/LVaP8fKgBNMBirZmbkW1",
@@ -184,7 +197,14 @@
     "ottomans": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "Ottoman Team Guide (Land)",
+          "author": "saintjarvis",
+          "url": "https://aoe4guides.com/builds/LE9W78h2SbeOY8kdBhm2",
+          "updated": "2026-11-19"
+        }
+      ]
     },
     "rus": {
       "checkedBuild": 11308,
@@ -204,17 +224,17 @@
       "stale": true,
       "fresh": [
         {
+          "title": "Dark Age Cattle Boom - 2TC",
+          "author": "Mango",
+          "url": "https://aoe4guides.com/builds/UKoPjtsbOrfRwydUySsG",
+          "updated": "2026-10-31"
+        },
+        {
           "title": " The Only SCOTS Build You'll Need To Get Conqueror",
           "author": "Pavani",
           "url": "https://aoe4guides.com/builds/ccVjKpIlNutx5DqzpGPM",
           "video": "https://www.youtube.com/watch?v=H37JNp7pVBU",
           "updated": "2026-11-05"
-        },
-        {
-          "title": "Dark Age Cattle Boom - 2TC",
-          "author": "Mango",
-          "url": "https://aoe4guides.com/builds/UKoPjtsbOrfRwydUySsG",
-          "updated": "2026-10-31"
         },
         {
           "title": "New Player Guide to Scots",
