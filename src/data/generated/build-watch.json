@@ -1,6 +1,6 @@
 {
   "latestBuild": 12303,
-  "checkedAt": "2026-11-24T19:06:58.923Z",
+  "checkedAt": "2026-11-25T18:12:44.802Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -19,23 +19,30 @@
         {
           "title": "FAST AGE 3 BUILD ORDER (BY JEANDO)",
           "author": "Xodus",
-          "url": "https://aoe4guides.com/builds/1qhJag8YWrHfoYlgCerO",
+          "url": "https://aoe4guides.com/builds/C7fezED7QStFUtiOHtJf",
           "video": "https://www.youtube.com/watch?v=WgbD_9c2nIo",
           "updated": "2026-11-13"
         },
         {
-          "title": "FAST AGE 3 BUILD ORDER (BY JEANDO)",
-          "author": "Xodus",
-          "url": "https://aoe4guides.com/builds/C7fezED7QStFUtiOHtJf",
-          "video": "https://www.youtube.com/watch?v=WgbD_9c2nIo",
-          "updated": "2026-11-13"
+          "title": "jeando grand vignoble ",
+          "author": "GAMREEP",
+          "url": "https://aoe4guides.com/builds/MTkqG9V9Nb9kmVKiZQSs",
+          "updated": "2026-11-10"
         }
       ]
     },
     "chinese": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "rush chuko nu ",
+          "author": "Kygnon",
+          "url": "https://aoe4guides.com/builds/HoGeb5XMQoOT3UIHWI0U",
+          "video": "https://www.youtube.com/watch?v=0GcfJpg02fY",
+          "updated": "2026-11-19"
+        }
+      ]
     },
     "delhi_sultanate": {
       "checkedBuild": 11308,
