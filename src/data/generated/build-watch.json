@@ -1,6 +1,6 @@
 {
   "latestBuild": 12303,
-  "checkedAt": "2026-11-25T18:12:44.802Z",
+  "checkedAt": "2026-11-26T17:54:38.565Z",
   "civs": {
     "abbasid_dynasty": {
       "checkedBuild": 11308,
@@ -10,7 +10,15 @@
     "ayyubids": {
       "checkedBuild": 11308,
       "stale": true,
-      "fresh": []
+      "fresh": [
+        {
+          "title": "Ayyubids MOST BROKEN Meta Conqueror VortiX asd",
+          "author": "AdriaN",
+          "url": "https://aoe4guides.com/builds/t3iz4XENHhlmh9IkQK8P",
+          "video": "https://www.youtube.com/watch?v=x3FR24L3I8M",
+          "updated": "2026-11-24"
+        }
+      ]
     },
     "byzantines": {
       "checkedBuild": 11308,
@@ -217,6 +225,12 @@
           "url": "https://aoe4guides.com/builds/s1n1G6EnwWpVDkUAIrPQ",
           "video": "https://www.youtube.com/watch?v=Nl84Zk6Muvw",
           "updated": "2026-11-12"
+        },
+        {
+          "title": "Rus S14 4:50 2TC",
+          "author": "Mango",
+          "url": "https://aoe4guides.com/builds/1WQbmsPAmsl3CNmLFJd7",
+          "updated": "2026-11-10"
         }
       ]
     },
@@ -225,17 +239,17 @@
       "stale": true,
       "fresh": [
         {
-          "title": "Dark Age Cattle Boom - 2TC",
-          "author": "Mango",
-          "url": "https://aoe4guides.com/builds/UKoPjtsbOrfRwydUySsG",
-          "updated": "2026-10-31"
-        },
-        {
           "title": " The Only SCOTS Build You'll Need To Get Conqueror",
           "author": "Pavani",
           "url": "https://aoe4guides.com/builds/ccVjKpIlNutx5DqzpGPM",
           "video": "https://www.youtube.com/watch?v=H37JNp7pVBU",
           "updated": "2026-11-05"
+        },
+        {
+          "title": "Dark Age Cattle Boom - 2TC",
+          "author": "Mango",
+          "url": "https://aoe4guides.com/builds/UKoPjtsbOrfRwydUySsG",
+          "updated": "2026-10-31"
         },
         {
           "title": "New Player Guide to Scots",
@@ -268,18 +282,18 @@
           "updated": "2026-11-04"
         },
         {
-          "title": "2TC Fast Castle - Vikings - Swaggy Professor",
-          "author": "Krayt",
-          "url": "https://aoe4guides.com/builds/o2p2pU3NdBy8bxvtx209",
-          "video": "https://www.youtube.com/watch?v=zHsi3mVJg3Y",
-          "updated": "2026-11-05"
-        },
-        {
           "title": "Optimized 5:15 2TC -> Fast Valdemar Castle [SwaggyProfessor]",
           "author": "skiv",
           "url": "https://aoe4guides.com/builds/kdGq2gFrKEl3RMsUSf4p",
           "video": "https://www.youtube.com/watch?v=0vXCj9Bq2pY",
           "updated": "2026-11-12"
+        },
+        {
+          "title": "2TC Fast Castle - Vikings - Swaggy Professor",
+          "author": "Krayt",
+          "url": "https://aoe4guides.com/builds/o2p2pU3NdBy8bxvtx209",
+          "video": "https://www.youtube.com/watch?v=zHsi3mVJg3Y",
+          "updated": "2026-11-05"
         }
       ]
     },
@@ -288,16 +302,16 @@
       "stale": true,
       "fresh": [
         {
-          "title": "Zhu Xi All in Feudal",
-          "author": "Gissa777",
-          "url": "https://aoe4guides.com/builds/fbXTFZVI8H5qigmkix0J",
-          "updated": "2026-11-09"
-        },
-        {
           "title": "zhu xi no pro scouts all in",
           "author": "mrpinstripesuit",
           "url": "https://aoe4guides.com/builds/3IsD9WKQYqBQflWkSyZN",
           "updated": "2026-11-12"
+        },
+        {
+          "title": "Zhu Xi All in Feudal",
+          "author": "Gissa777",
+          "url": "https://aoe4guides.com/builds/fbXTFZVI8H5qigmkix0J",
+          "updated": "2026-11-09"
         },
         {
           "title": "Zhu xi vs most broken civ (french)",
